@@ -1,2 +1,24 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+body {
+  font-family: 'Lato';
+}
+
+.fa-btn {
+  margin-right: 6px;
+}
+
+.navbar-c2l{
+  background-color: #28975e;
+  border-radius: 0px !important;
+}
+.navbar-c2l a{
+  color: floralwhite;
+}
+.nav>li>a:hover{
+  background-color: #1a643e; !important;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+  background-color: #1a643e; !important;
+  border-color: #1a643e; !important;
+}

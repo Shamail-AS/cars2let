@@ -15,9 +15,18 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     <style>
-        body {
+        html,body {
             font-family: 'Lato';
+            height: 100%;
+            width: 100%;
+        }
+        body{
+            margin-top: 50px;
         }
 
         .fa-btn {
@@ -39,9 +48,11 @@
             border-color: #1a643e; !important;
         }
     </style>
+
+
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-c2l">
+    <nav class="navbar navbar-c2l navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
 
@@ -91,8 +102,7 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
