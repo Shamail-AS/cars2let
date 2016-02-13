@@ -16,6 +16,7 @@ class CreateInvestorsTable extends Migration
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('name');
+            $table->dateTime('dob');
             $table->string('passport_num');
             $table->string('phone');
             $table->timestamps();
