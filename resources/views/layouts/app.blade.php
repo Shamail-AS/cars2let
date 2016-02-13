@@ -13,41 +13,12 @@
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
 
     <!-- JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-    <style>
-        html,body {
-            font-family: 'Lato';
-            height: 100%;
-            width: 100%;
-        }
-        body{
-            margin-top: 50px;
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-
-        .navbar-c2l{
-            background-color: #28975e;
-            border-radius: 0px !important;
-        }
-        .navbar-c2l a{
-            color: floralwhite;
-        }
-        .nav>li>a:hover{
-            background-color: #1a643e; !important;
-        }
-        .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
-            background-color: #1a643e; !important;
-            border-color: #1a643e; !important;
-        }
-    </style>
 
 
 </head>
@@ -86,7 +57,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->investor->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -103,6 +74,11 @@
 
     <!-- JavaScripts -->
 
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{asset('js/bootbox.min.js')}}"></script>
+    <script src="{{asset('js/angular/angular.js}}"></script>
+    <script src="{{asset('js/angular/angular-route.js}}"></script>
+
+    @yield('scripts')
 </body>
 </html>

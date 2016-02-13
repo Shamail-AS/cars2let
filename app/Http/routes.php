@@ -10,9 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +26,10 @@ Route::get('/', function () {
 Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
     Route::get('/myregister', function () {
         return view('auth.myregister');
@@ -56,5 +58,29 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/home', 'HomeController@index');
 
+    Route::get('/activate/email/{token}','InvestorController@activate');
+
+    Route::post('/password/first','InvestorController@resetFirstTimePassword');
+
+});
+
+Route::group(['prefix'=>'admin'],function(){
+
+    //show form page to register a new investor
+    Route::get('/investor/create',"InvestorController@create");
+
+    //save the data received from the form into the database
+    //create an investor
+    //create a user with sample password
+    //create email with password reset token
+    //send email
+    Route::post('/investor/store','InvestorController@store');
+
+    Route::get('/investor','InvestorController@index');
+});
+
+Route::group(['prefix'=>'api'],function(){
+
+    Route::get('/code/{code}/verify','MyAuthController@apiVerifyCode');
 
 });

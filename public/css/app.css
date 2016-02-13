@@ -1,5 +1,10 @@
-body {
+html,body {
     font-family: 'Lato';
+    height: 100%;
+    width: 100%;
+}
+body{
+    margin-top: 70px;
 }
 
 .fa-btn {

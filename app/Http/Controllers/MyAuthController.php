@@ -9,13 +9,43 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use Auth;
+use Session;
 
 class MyAuthController extends Controller
 {
+
+    public function apiVerifyCode($code)
+    {
+        $user = Auth::user();
+        $expectedCode = $user->codes()->latest();
+        if($expectedCode != $code)
+        {
+            return "Sorry, but the codes don't match";
+        }
+        else
+        {
+            $user->active = 1;
+            $user->save();
+            return "Success";
+        }
+    }
     //
+    public function getlogin()
+    {
+        return view('auth.login');
+    }
+    public function authenticate(Request $request)
+    {
+        if(Auth::attepmt(['email' => $request->input('email'), 'password' => $request->input('password')]))
+        {
+
+        }
+        else
+        {
+
+        }
+    }
 
     public function sendCode(Request $request)
     {

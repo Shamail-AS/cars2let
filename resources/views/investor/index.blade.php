@@ -1,183 +1,20 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+@endsection
+
+@section('scripts')
+
+    <script src="{{asset('Areas/Investor/module.js')}}"></script>
+    <script src="{{asset('Areas/Investor/controller.js')}}"></script>
+    <script src="{{asset('Areas/Investor/factory.js')}}"></script>
+
+@endsection
+
 @section('content')
-    <style>
-        .map-container{
-            height:40vh;
-            width:100%;
-            #position:absolute;
-        }
-        .sidebar{
-            background-color: rgba(239, 172, 11, 0.65);
-            margin:0;
-            padding:10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            overflow: auto;
-            height: inherit;
-        }
-        .sidebar-left{
-            position: absolute;
-            top:50px;
-            right:40px;
-        }
 
-        .sidebar-item{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-
-            flex: 1 1 auto;
-            margin: 5px;
-        }
-        .sidebar-item img{
-            border-radius: 90px;
-            width: 40px;
-            height: 40px;
-
-        }
-        .sidebar-item p.title{
-            font-weight: bold;
-            margin-bottom: 0;
-        }
-        .sidebar-item p.subtitle{
-            font-size: 0.75em;
-            font-style: italic;
-        }
-
-
-        ::-webkit-scrollbar{
-            display: none;
-        }
-        .revenue-container{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
-            width: 100%;
-            background-color: #f2f2f2;
-        }
-        .revenue-container > .heading{
-
-        }
-        .revenue-overview{
-            background-color: rgba(232, 232, 232, 0.65);
-            padding: 0;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-        }
-        .overview-item{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            padding:20px;
-
-            flex: 1 0 auto;
-        }
-        .overview-item *{
-            margin: 2px;
-            color: #ffffff;
-        }
-        .overview-item h1{
-            font-weight: 200;
-        }
-
-
-        .revenue-breakdown, .revenue-summary{
-            display: flex;
-            flex-flow: row wrap;
-
-            align-items: center;
-            justify-content: space-around;
-            padding: 0;
-            margin-bottom: 40px;
-
-        }
-        .summary-section-row{
-            display:flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-content: center;
-            flex: 1 1 70%;
-        }
-        .summary-section-row > .summary-section{
-            flex: 1 0 auto;
-        }
-        .summary-section-row > .summary-section:first-child{
-            flex:1 0 70%;
-        }
-        .breakdown-section, .summary-section{
-            flex: 1 0 auto;
-            padding: 10px;
-            margin:10px;
-            border-radius: 10px;
-            border: 1px solid #efac0b;
-            background-color: #ffffff;
-            box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
-            background-color: rgba(255, 255, 255, 0.70);
-
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-content: flex-start;
-        }
-        .breakdown-section{
-            flex-basis:40%;
-            max-width:50%;
-        }
-
-        .breakdown-section .data{
-            padding: 10px;
-
-        }
-        .breakdown-section-row .data table *{
-            text-align: center;
-        }
-        .breakdown-section i{
-            margin-right: 5px;
-        }
-        .collapsed{
-            display: none;
-        }
-        .group-row .data-names{
-            font-style: italic;
-            position: relative;
-            left: 20px;
-        }
-        .group-row .data-values{
-
-        }
-        .revenue-raw{
-            flex: 1 0 auto;
-            padding: 10px;
-            margin:10px;
-            border-radius: 10px;
-            border: 1px solid #efac0b;
-            background-color: #ffffff;
-            box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
-        }
-
-        .flex-container {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-        }
-        .heading{
-            text-align: center;
-            margin-bottom: 5px;
-            cursor:pointer;
-        }
-    </style>
-
-
-    <div class="flex-container">
+    <div class="flex-container" ng-app="cars2let" ng-controller="investorController">
         <div class="map-container">
             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d19846.006685263703!2d-1.7580300999999998!3d51.55446775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1453767116129" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
             <div class="sidebar sidebar-left">
@@ -817,15 +654,5 @@
 
         </div>
     </div>
-    <script>
-        $(document).ready(function(){
-           $('.group-row').click(function(){
-               $(this).find("[class^=data-]").toggleClass('collapsed');
-           });
-            $('.heading').click(function(){
-                $(this).next('.data').toggleClass('collapsed');
-            });
-        });
-    </script>
 
 @endsection
