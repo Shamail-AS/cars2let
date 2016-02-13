@@ -74,10 +74,10 @@
 
     <!-- JavaScripts -->
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{asset('js/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/bootbox.min.js')}}"></script>
-    <script src="{{asset('js/angular/angular.js}}"></script>
-    <script src="{{asset('js/angular/angular-route.js}}"></script>
+    <script src="{{asset('js/angular/angular.js')}}"></script>
+    <script src="{{asset('js/angular/angular-route.js')}}"></script>
 
     @yield('scripts')
 </body>
