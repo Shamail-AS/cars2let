@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->integer('reg_attempt')->unsigned();
             $table->integer('login_attempt')->unsigned();
             $table->string('status'); //awaiting activation, active
-            $table->string('type');
+            $table->string('type'); //admin // super-admin //customer
             $table->rememberToken();
             $table->timestamps();
         });

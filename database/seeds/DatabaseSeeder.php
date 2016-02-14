@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(InvestorsTableSeeder::class);
+        $this->call(SuperAdminUserSeeder::class);
 
         Model::reguard();
     }

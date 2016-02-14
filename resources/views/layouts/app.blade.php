@@ -16,8 +16,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
 
-    <!-- JavaScript -->
+    <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="{{asset('js/bootstrap/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/bootbox.min.js')}}"></script>
+    <script src="{{asset('js/angular/angular.js')}}"></script>
+
+
+    @yield('scripts')
 
 
 
@@ -72,13 +78,6 @@
 
     @yield('content')
 
-    <!-- JavaScripts -->
 
-    <script src="{{asset('js/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{asset('js/bootbox.min.js')}}"></script>
-    <script src="{{asset('js/angular/angular.js')}}"></script>
-    <script src="{{asset('js/angular/angular-route.js')}}"></script>
-
-    @yield('scripts')
 </body>
 </html>

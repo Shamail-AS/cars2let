@@ -1,4 +1,4 @@
-angular.module('cars2let').factory('investorDataFactory',['$http',function($http)
+app.factory('investorDataFactory',['$http',function($http)
 {
     var URL_BASE = '/api/investor';
     var investorDataFactory = {};
@@ -21,13 +21,25 @@ angular.module('cars2let').factory('investorDataFactory',['$http',function($http
     };
     investorDataFactory.getRevenueDetailed = function(id)
     {
-        $http.get(URL_BASE+'/'+id+'/revenue/detail')
+        return $http.get(URL_BASE+'/'+id+'/revenue/detail');
     };
 
     return investorDataFactory;
 }]);
 
-angular.module('cars2let').factory('investorDataModelFactory',['$http',function($http)
+app.factory('investorDataModelFactory',function()
 {
+    var investorDataModelFactory = {};
 
-}]);
+    investorDataModelFactory.groupDetailsByCar = function(jsonData)
+    {
+        return jsonData;
+    };
+
+    investorDataModelFactory.groupDetailsByDriver = function(jsonData)
+    {
+      return jsonData;
+    };
+
+    return investorDataModelFactory;
+});
