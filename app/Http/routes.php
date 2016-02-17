@@ -65,6 +65,17 @@ Route::group(['middleware' => 'web'], function () {
 });
 
 Route::group(['prefix'=>'admin'],function(){
+    //ADMINS//
+    Route::get('','AdminController@index');
+
+    //show form where registration can be done for admins (BY SUPER ADMIN ONLY)
+    Route::get('/create','AdminController@create');
+
+    //save data to create new user with admin rights or create one
+    Route::post('/store','AdminController@store');
+
+    //INVESTORS//
+    Route::get('/investor','InvestorController@index');
 
     //show form page to register a new investor
     Route::get('/investor/create',"InvestorController@create");
@@ -76,11 +87,30 @@ Route::group(['prefix'=>'admin'],function(){
     //send email
     Route::post('/investor/store','InvestorController@store');
 
-    Route::get('/investor','InvestorController@index');
+    //CARS//
+    Route::get('/car','CarController@index');
+
+    //show form to create car
+    Route::get('/car/create','CarController@create');
+
+    //save data received
+    Route::post('/car/store','CarController@store');
+
+    //DRIVERS//
+    Route::get('/driver','DriverController@index');
+
+    //show form to create driver
+    Route::get('/driver/create','DriverController@create');
+
+    //save data received
+    Route::post('/driver/store','DriverController@store');
+
+
 });
 
 Route::group(['prefix'=>'api'],function(){
 
     Route::get('/code/{code}/verify','MyAuthController@apiVerifyCode');
+    Route::get('/user/match/{text}','ApiController@matchUser');
 
 });

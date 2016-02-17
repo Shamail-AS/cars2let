@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','type','status'
     ];
 
     /**
@@ -31,5 +31,14 @@ class User extends Authenticatable
     public function investor()
     {
         return $this->belongsTo('App\Investor','email','email');
+    }
+
+    public function getAttributeIsSuperAdmin()
+    {
+        return $this->type == 'super-admin';
+    }
+    public function getAttributeIsAdmin()
+    {
+        return $this->type == 'admin';
     }
 }

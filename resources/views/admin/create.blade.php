@@ -7,6 +7,7 @@
             <div class="col-md-12">
                 <form class="form" method="POST" action="{{url("/admin/store")}}">
                     {!! csrf_field() !!}
+
                     <div class="form-group {{$errors->has('email') ? 'has-error':''}}">
                         <label class="form-control">Email</label>
                         <input class="form-control" type="text" name="email" value="{{old('email')}}">
@@ -34,9 +35,13 @@
                                     </span>
                         @endif
                     </div>
-                    <button class="btn btn-lg btn-primary" type="submit">
-                        <i class="fa fa-btn fa-user"></i>Register
-                    </button>
+                    <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-btn fa-car"></i>Register
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

@@ -17,7 +17,7 @@
                                <h1>Cars</h1>
                            </div>
                            <div class="breakdown-section">
-                               <i class="fa fa-lg fa-user"></i>
+                               <i class="fa f`a-lg fa-user"></i>
                                <h1>Drivers</h1>
                            </div>
                            @if($user->isSuperAdmin)

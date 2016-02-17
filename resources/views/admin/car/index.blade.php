@@ -1,7 +1,7 @@
 @extends("layouts.app")
 
 @section("content")
-
+    <h1>Manage Cars</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
