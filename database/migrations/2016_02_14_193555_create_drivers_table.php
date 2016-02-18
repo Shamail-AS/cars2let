@@ -17,6 +17,7 @@ class CreateDriversTable extends Migration
             $table->string('license_no')->unique();
             $table->string('email')->unique();
             $table->string('name');
+            $table->string('phone');
             $table->date('dob');
 
             $table->timestamps();

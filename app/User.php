@@ -33,12 +33,12 @@ class User extends Authenticatable
         return $this->belongsTo('App\Investor','email','email');
     }
 
-    public function getAttributeIsSuperAdmin()
+    public function getIsSuperAdminAttribute()
     {
         return $this->type == 'super-admin';
     }
-    public function getAttributeIsAdmin()
+    public function getIsAdminAttribute()
     {
-        return $this->type == 'admin';
+        return $this->type == 'admin' || $this->type == 'super-admin';
     }
 }

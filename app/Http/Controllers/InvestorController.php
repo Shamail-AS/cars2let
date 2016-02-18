@@ -17,11 +17,12 @@ class InvestorController extends Controller
     //
     public function index()
     {
-        return view('admin.investor.index');
+        $investorList = Investor::all();
+        return view('admin.investor.index',compact('investorList'));
     }
     public function create()
     {
-        return view("admin.investor.create");
+        return view('admin.investor.create');
     }
     public function store(RegisterInvestorRequest $request)
     {

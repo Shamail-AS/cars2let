@@ -11,6 +11,10 @@ use App\Http\Controllers\Controller;
 class AdminController extends Controller
 {
     //
+    public function home()
+    {
+        return view('admin.home');
+    }
     public function index()
     {
         $admins = User::where('type','=','admin')->get();

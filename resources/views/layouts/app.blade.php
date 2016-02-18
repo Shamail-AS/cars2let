@@ -51,6 +51,10 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
+
+                    @if(!Auth::guest() && Auth::user()->isAdmin)
+                        <li><a href="{{ url('/admin') }}">Admin Dashboard</a></li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -63,7 +67,8 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->investor->name }} <span class="caret"></span>
+                                {{Auth::user()->email}} <span class="caret"></span>
+{{--                                {{Auth::user()->isAdmin ? Auth::user()->email : Auth::user()->investor->name }} <span class="caret"></span>--}}
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
