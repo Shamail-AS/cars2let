@@ -25,6 +25,14 @@
     box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
 }
 
+table{
+    padding: 10px;
+    margin:10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
+}
+
 .admin-box:hover{
     box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.97);
 }
@@ -48,6 +56,9 @@ a.nostyle:visited {
     text-align: center;
 }
 .add-btn{
+    z-index: 100;
+    position: fixed;
+    right: 30px;
     float: right;
     box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
     border: 2px solid #1dbd48;
@@ -64,9 +75,9 @@ a.nostyle:visited {
     cursor: pointer;
 }
 .add-btn:hover{
-    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.97);
+    box-shadow: 0px 1px 8px rgba(112, 112, 112, 0.97);
 }
 .add-btn:active{
-    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.97);
+    box-shadow: 0px 1px 8px rgba(112, 112, 112, 0.97);
     border: 2px solid #1dbd48;
 }

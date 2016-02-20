@@ -647,7 +647,7 @@
 
         </div>
     </div>
-    @if(Auth::user()->active == 0))
+    @if(!Auth::user()->isActive))
     <div class="floater">
         <p>Your account is inactive. Please use the activation link sent to you to activate or enter code now</p>
         <button id="btn-code-enter" class="btn btn-sm btn-primary">Enter code</button>

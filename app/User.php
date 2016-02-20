@@ -41,4 +41,8 @@ class User extends Authenticatable
     {
         return $this->type == 'admin' || $this->type == 'super-admin';
     }
+    public function getIsActiveAttribute()
+    {
+        return $this->status == 'active';
+    }
 }

@@ -63,11 +63,18 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/password/first','InvestorController@resetFirstTimePassword');
 
 });
-Route::group(['prefix'=>'admin', 'middleware'=>['web','admin']],function(){
+Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(){
     //ADMINS//
     Route::get('/','AdminController@home');
 
+    //list all admins
     Route::get('/list','AdminController@index');
+
+    Route::get('/edit/{id}','AdminController@edit');
+
+    //update details for investor
+    Route::put('/edit/{id}','AdminController@update');
+
 
     //show form where registration can be done for admins (BY SUPER ADMIN ONLY)
     Route::get('/create','AdminController@create');
@@ -115,5 +122,6 @@ Route::group(['prefix'=>'api'],function(){
 
     Route::get('/code/{code}/verify','MyAuthController@apiVerifyCode');
     Route::get('/user/match/{text}','ApiController@matchUser');
+    Route::get('/user/edit/{id}/status/{value}','ApiController@setActive');
 
 });
