@@ -22,9 +22,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function redirect()
     {
-        //dd(Auth::user());
-        return view('investor.home');
+        $user = Auth::user();
+       if($user->isAdmin)
+           return redirect('/admin');
+        elseif($user->isInvestor)
+            return redirect('/investor');
+        elseif($user->isDriver)
+            return redirect('/driver');
+        else
+            return redirect('/');
+
     }
 }

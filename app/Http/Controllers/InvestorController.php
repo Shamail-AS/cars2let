@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Auth;
 class InvestorController extends Controller
 {
     //
+
+    public function home()
+    {
+        return view('investor.home');
+    }
     public function index()
     {
         $investorList = Investor::all();
@@ -31,7 +36,8 @@ class InvestorController extends Controller
         $user = User::create([
             'email'=>$request->input('email'),
             'password'=>bcrypt('sample'),
-            'status'=>'new'
+            'status'=>'new',
+            'type'=>'investor'
         ]);
         $user->save();
 

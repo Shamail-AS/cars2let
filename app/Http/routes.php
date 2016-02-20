@@ -56,13 +56,17 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/activate/{id}','MyAuthController@getActivate');
 
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home', 'HomeController@redirect');
 
     Route::get('/activate/email/{token}','InvestorController@activate');
 
     Route::post('/password/first','InvestorController@resetFirstTimePassword');
 
 });
+Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],function(){
+    Route::get('/','InvestorController@home');
+});
+
 Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(){
     //ADMINS//
     Route::get('/','AdminController@home');
