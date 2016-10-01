@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\AccountActivation;
+use App\Car;
+use App\Contract;
+use App\Driver;
 use App\Http\Requests\RegisterInvestorRequest;
 use App\Investor;
 use App\User;
@@ -16,9 +19,50 @@ class InvestorController extends Controller
 {
     //
 
+    public function RevenueSummary()
+    {
+        $investor = Auth::user()->investor;
+        $cars = $investor->cars()->count();
+        $contracts = $investor->contracts()->count();
+        $drivers = count($investor->drivers);
+
+    }
+    public function AssetsSummary()
+    {
+        $investor = Auth::user()->investor;
+        $cars = $investor->cars()->count();
+        $contracts = $investor->contracts()->count();
+        $drivers = count($investor->drivers);
+
+        return [
+            'cars' => $cars,
+            'contracts' => $contracts,
+            'drivers' => $drivers,
+        ];
+    }
+
     public function home()
     {
-        return view('investor.home');
+        $investor = Auth::user()->investor;
+        return view('investor.home',compact('investor'));
+    }
+    public function cars()
+    {
+        $cars = Auth::user()->investor->cars()->orderBy('created_at','desc')->get();
+        return view('investor.cars',compact('cars'));
+    }
+    public function contracts()
+    {
+        return view('investor.assets.contract.details');
+    }
+    public function drivers()
+    {
+        $drivers = Auth::user()->investor->drivers->sortByDesc('created_at');
+        return view('investor.assets.driver.all',compact('drivers'));
+    }
+    public function reports()
+    {
+        return view('investor.reports');
     }
     public function index()
     {
@@ -52,6 +96,7 @@ class InvestorController extends Controller
         return view('emails.firstPassword',compact('email'));
 
     }
+
     private function getToken()
     {
         return $this->GUID();
@@ -100,6 +145,7 @@ class InvestorController extends Controller
         $token = $request->input('token');
         $user = AccountActivation::where('code','=',$token)->valid()->latest()->user;
         $user->password = bcrypt($request->input('password'));
+        $user->status = 'active';
         $user->save();
         AccountActivation::where('code','=',$token)->delete();
 

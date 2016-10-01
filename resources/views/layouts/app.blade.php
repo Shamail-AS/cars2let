@@ -8,20 +8,29 @@
     <title>Cars2Let Monitor Station</title>
 
     <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
+    <link href="{{asset('css/fa/css/font-awesome.min.css')}}" rel='stylesheet' type='text/css'>
+    <link href="{{asset('css/lato-google.css')}}" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('css/jquery-ui.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+{{--    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet" />--}}
+    <link href="{{asset('css/ng-select.css')}}" rel="stylesheet" />
     @yield('styles')
 
     <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
     <script src="{{asset('js/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/bootbox.min.js')}}"></script>
+    <script src="{{asset('js/angular/lodash.js')}}"></script>
+    <script src="{{asset('js/angular/moment-with-locales.min.js')}}"></script>
+    {{--<script src="{{asset('js/select2.min.js')}}"></script>--}}
     <script src="{{asset('js/angular/angular.js')}}"></script>
-
+    <script src="{{asset('js/angular/angular-moment.min.js')}}"></script>
+    <script src="{{asset('js/angular/angular-sanitize.js')}}"></script>
+    <script src="{{asset('js/angular/ng-select.js')}}"></script>
 
     @yield('scripts')
 
@@ -50,7 +59,13 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <!--<li><a href="{{ url('/home') }}">Home</a></li>-->
+					@if (!Auth::guest())
+							<li><a href="{{ url('investor') }}">Overview</a></li>
+                        @if(Auth::user()->isInvestor)
+						<li><a href="{{ url('investor/cars') }}">Asset Reports</a></li>
+                        @endif
+					@endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -81,4 +96,10 @@
 
 
 </body>
+<script>
+
+    $('.dp').datepicker({
+        dateFormat: "dd-mm-yy"
+    });
+</script>
 </html>

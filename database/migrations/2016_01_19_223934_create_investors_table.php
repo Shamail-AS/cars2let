@@ -19,6 +19,7 @@ class CreateInvestorsTable extends Migration
             $table->date('dob');
             $table->string('passport_num')->unique();
             $table->string('phone');
+            $table->string('company');
             $table->timestamps();
         });
     }

@@ -18,5 +18,11 @@ class SuperAdminUserSeeder extends Seeder
             'status'=>'active',
             'type'=>'super-admin'
         ]);
+        \App\User::create([
+            'email'=> 'alpha@cars2let.com',
+            'password'=> bcrypt('1234'),
+            'status'=>'active',
+            'type'=>'investor'
+        ]);
     }
 }

@@ -27,12 +27,15 @@ class CarTableSeeder extends Seeder
     public function run()
     {
         //
-        for($i = 0; $i < 20; $i++)
+        $faker = Faker\Factory::create();
+        for($i = 0; $i < 50; $i++)
         {
             Car::create([
                 'reg_no'=> strtoupper(str_random(3))."-".strtoupper(str_random(3)),
-                'make'=>$this->getMake(),
-                'comments'=>''
+                'make'=>$faker->colorName,
+                'investor_id' => $faker->biasedNumberBetween(1,10),
+                'available_since'=>$faker->date('d-m-Y'),
+                'comments'=>'',
             ]);
         }
 

@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(InvestorsTableSeeder::class);
         $this->call(SuperAdminUserSeeder::class);
         $this->call(CarTableSeeder::class);
+        $this->call(ContractsTableSeeder::class);
+        $this->call(RevenuesTableSeeder::class);
         $this->call(DriverTableSeeder::class);
 
         Model::reguard();

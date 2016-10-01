@@ -14,11 +14,18 @@ class CreateCarsTable extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('reg_no');
+            $table->integer('investor_id');
+            $table->string('reg_no')->unique();
             $table->string('make');
+            $table->date('available_since');
             $table->string('comments');
 
             $table->timestamps();
+
+//            $table->foreign('investor')->references('id')->on('investors');
+//            $table->foreign('driver')->references('id')->on('drivers');
+//            $table->foreign('contract')->references('id')->on('contracts');
+
         });
     }
 

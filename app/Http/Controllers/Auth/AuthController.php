@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Investor;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -62,9 +63,16 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $in = Investor::create([
+            'email' => $data['email'],
+            'name' => $data['name'],
+        ]);
+
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'status' => 'active',
+            'type' => 'investor'
         ]);
     }
 

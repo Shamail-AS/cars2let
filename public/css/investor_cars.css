@@ -1,0 +1,123 @@
+.card-container
+{
+    display: none;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.card-container.column{
+    flex-direction: column;
+}
+.card-container .card
+{
+    padding: 12px;
+    border: thin solid #efac0b;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
+    margin: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 256px;
+    min-height: 256px;
+    width:auto;
+    height: auto;
+
+
+}
+.card-container a{
+    text-decoration: none;
+}
+
+
+.card.new
+{
+    border: medium dashed #bbbdb5;
+    box-shadow: none;
+    font-size: x-large;
+}
+.card *{
+    margin: 5px;
+}
+.card .img-badge{
+    width: 128px;
+    height: auto;
+    margin: 12px;
+}
+.img-badge > img{
+    width: inherit;
+    height: auto;
+}
+
+.search-container{
+
+    height: 46px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+
+}
+.search-bar{
+    padding-left: 43px;
+    padding-right: 43px;
+
+    height: 46px;
+
+    font-size: 18px;
+}
+.fixed-footer-button-container{
+    position: fixed;
+    right:0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 20px;
+}
+.fixed-footer-button{
+    border-radius: 180px;
+    background-color: #1dbd48;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5px;
+    padding: 15px;
+    height: 60px;
+    width:60px;
+
+    text-decoration: none;
+    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.87);
+
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out;
+
+
+}
+.clicked{
+    transform: rotate(-90deg);
+
+}
+.fixed-footer-button:hover{
+    color: #ffffff;!important;
+    cursor: pointer;
+    background-color: #ff4b37;
+    text-decoration: none;
+    box-shadow: 0px 1px 8px rgba(112, 112, 112, 1);
+
+
+}
+thead td{
+    font-weight: bolder;
+}

@@ -20,7 +20,7 @@ class InvestorMiddleware
             return redirect('/admin');
         elseif($user->isDriver)
             return redirect('/driver');
-
+        //allow investor type to follow through
 
         return $next($request);
     }

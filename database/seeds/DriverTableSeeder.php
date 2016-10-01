@@ -12,34 +12,17 @@ class DriverTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        Driver::create([
-            'email'=>'lemma@cars2let.com',
-            'name'=>'Lemma',
-            'phone'=>'07999978034',
-            'license_no'=> rand(100000,999999),
-            'dob' => \Carbon\Carbon::now()->addYears(rand(-50,-15))
-        ]);
-        Driver::create([
-            'email'=>'gemma@cars2let.com',
-            'name'=>'Gemma',
-            'phone'=>'074756978034',
-            'license_no'=> rand(100000,999999),
-            'dob' => \Carbon\Carbon::now()->addYears(rand(-50,-15))
-        ]);
-        Driver::create([
-            'email'=>'memma@cars2let.com',
-            'name'=>'Memma',
-            'phone'=>'074545238034',
-            'license_no'=> rand(100000,999999),
-            'dob' => \Carbon\Carbon::now()->addYears(rand(-50,-15))
-        ]);
-        Driver::create([
-            'email'=>'hemma@cars2let.com',
-            'name'=>'Hemma',
-            'phone'=>'07454929434',
-            'license_no'=> rand(100000,999999),
-            'dob' => \Carbon\Carbon::now()->addYears(rand(-50,-15))
-        ]);
+        $faker = Faker\Factory::create();
+        $limit = 40;
+        for($i = 0; $i < $limit; $i++)
+        {
+            Driver::create([
+                'email'=>$faker->unique()->email,
+                'name'=>$faker->firstName,
+                'phone'=>$faker->phoneNumber,
+                'license_no'=> rand(100000,999999),
+                'dob' => $faker->date('d-m-Y')
+            ]);
+        }
     }
 }

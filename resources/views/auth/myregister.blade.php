@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/check') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/myregister') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -24,33 +24,33 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('passport_num') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Passport Number</label>
+                        {{--<div class="form-group{{ $errors->has('pass') ? ' has-error' : '' }}">--}}
+                            {{--<label class="col-md-4 control-label">Password</label>--}}
 
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="passport_num" value="{{ old('passport_num') }}">
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="form-group{{ $errors->has('licence_num') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Licence Number</label>
+                            {{--<div class="col-md-6">--}}
+                                {{--<input type="password" class="form-control" name="pass" value="{{ old('pass') }}">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<hr>--}}
+                        {{--<div class="form-group{{ $errors->has('licence_num') ? ' has-error' : '' }}">--}}
+                            {{--<label class="col-md-4 control-label">Licence Number</label>--}}
 
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="licence_num" value="{{ old('licence_num') }}">
+                            {{--<div class="col-md-6">--}}
+                                {{--<input type="text" class="form-control" name="licence_num" value="{{ old('licence_num') }}">--}}
 
-                                @if (Session::has('detail_mismatch'))
-                                <span class="help-block">
-                                        <strong>{{ Session::get('detail_mismatch') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                                {{--@if (Session::has('detail_mismatch'))--}}
+                                {{--<span class="help-block">--}}
+                                        {{--<strong>{{ Session::get('detail_mismatch') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i>Check
+                                    <i class="fa fa-btn fa-user"></i>Send verification email
                                 </button>
                             </div>
                         </div>

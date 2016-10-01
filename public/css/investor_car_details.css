@@ -1,0 +1,166 @@
+.contract-details-table {
+    background-color: #ffffff;
+    padding: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: column;
+}
+.contract-details-table.row{
+    flex-direction: row;
+}
+.contract-details-table .cell{
+    margin: 0px;
+    padding: 0px 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.cell.row{
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-grow: 0;
+}
+.cell.bordered{
+    border: thin solid #cecece;
+}
+.cell.padded{
+    padding: 12px;
+    margin: 5px;
+}
+.cell.padded i p{
+    margin: 1px 4px 1px 15px;
+}
+.cell > *{
+    margin: 0px;
+}
+.contract-details-table .cell:last-child{
+    flex-grow: 1;
+}
+
+
+
+.card-container
+{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+.card-container.centered{
+    justify-content: center;
+}
+.card-container-vertical{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    align-items: stretch;
+    flex-grow: 1;
+    height: 100%;
+    overflow: scroll;
+}
+
+.card-container  .card
+{
+    border: thin solid #efac0b;
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
+    margin: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 256px;
+    height: auto;
+
+
+}
+.card .card-body{
+    padding: 12px;
+}
+.card-container > .card:first-child{
+    flex-grow: 0; !important;
+}
+.card-header{
+    margin:5px;
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+.card .tag-header{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+}
+.card .tag-header p{
+    margin: 0px 5px;
+}
+.tag-header.complete{
+    background-color: #68d000;
+}
+.tag-header.ongoing{
+    background-color: orangered;
+}
+.tag-header{
+    background-color: dodgerblue;
+    color: #ffffff;
+}
+.complete{
+    color: #68d000;
+}
+.ongoing{
+    color: gold;
+}
+.terminated{
+    color:orangered;
+}
+.suspended{
+    color: dodgerblue;
+}
+.card-container a{
+    text-decoration: none;
+}
+
+
+.card .img-badge{
+    width: 128px;
+    height: auto;
+    margin: 12px;
+}
+.img-badge > img{
+    width: inherit;
+    height: auto;
+}
+
+.contract td:first-child{
+    font-weight: bold;
+}
+thead td{
+    font-weight: bolder;
+}
+
+.select-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.select-group i{
+    margin-right: 12px;
+}

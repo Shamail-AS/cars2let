@@ -88,6 +88,7 @@ class MyAuthController extends Controller
             return view('auth.verify');
         }
     }
+
     public function check(Request $request)
     {
 
@@ -116,5 +117,14 @@ class MyAuthController extends Controller
             return redirect(url('/code/destination'));
         }
 
+    }
+
+    public function register(Request $request)
+    {
+        $investor = new Investor();
+        $investor->email = $request->input('email');
+        $investor->password = $request->input('pass');
+        $request->session()->put('investor',$investor);
+        return redirect(url('/code/destination'));
     }
 }

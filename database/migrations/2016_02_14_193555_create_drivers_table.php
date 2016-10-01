@@ -21,6 +21,9 @@ class CreateDriversTable extends Migration
             $table->date('dob');
 
             $table->timestamps();
+
+//            $table->foreign('contract')->references('id')->on('contracts');
+
         });
     }
 
