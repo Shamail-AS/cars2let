@@ -158,6 +158,7 @@ Route::group(['prefix'=>'api'],function(){
     Route::get('/investor/revenue/summary','InvestorController@RevenueSummary')->middleware('web','auth');
     Route::get('/investor/asset/summary','InvestorController@AssetsSummary')->middleware('web','auth');
 
+    Route::get('/email/test','ApiController@sendMail');
 
 
 
