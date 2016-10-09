@@ -1,0 +1,34 @@
+<?php
+
+namespace App;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+
+class Revenue extends Model
+{
+    //
+    protected $dates = ['paid_on'];
+    public function contract()
+    {
+        return $this->belongsTo('App\Contract');
+    }
+    public function scopeCurrentPeriod($query){
+        //ASSUMPTION period = month starting from Fridays
+
+        $period_start = new Carbon('first friday of this month');
+        $period_end = new Carbon('last Friday'); //previous or most recent Friday
+        $period_end->addDays(1)->addSecond(-1); //this includes all data on the Friday
+        return $query->where('paid_on','>=',$period_start)
+                     ->where('paid_on','<=',$period_end);
+    }
+
+    public function getWeekPaidOnAttribute()
+    {
+        $contract_start = $this->contract->start_date;
+        return $contract_start->diffInWeeks($this->paid_on,false);
+
+    }
+
+
+}
