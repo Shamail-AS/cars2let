@@ -5,7 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AdminMiddleWare;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
-use App\Http\Middleware\InvestorMiddleWare;
+use App\Http\Middleware\InvestorMiddleware;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -62,6 +62,6 @@ class Kernel extends HttpKernel
         'guest' => RedirectIfAuthenticated::class,
         'throttle' => ThrottleRequests::class,
         'admin' => AdminMiddleWare::class,
-        'investor' => InvestorMiddleWare::class
+        'investor' => InvestorMiddleware::class
     ];
 }
