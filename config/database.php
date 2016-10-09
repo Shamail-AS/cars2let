@@ -56,11 +56,11 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host' => $secrets['MYSQL']['HOST'] or env('DB_HOST', 'localhost'),
-            'port' => $secrets['MYSQL']['PORT'] or env('DB_PORT', '3306'),
-            'database' => $secrets['MYSQL']['DATABASE'] or env('DB_DATABASE', 'forge'),
-            'username' => $secrets['MYSQL']['USER'] or env('DB_USERNAME', 'forge'),
-            'password' => $secrets['MYSQL']['PASSWORD'] or env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST', 'laravel-tgyv.mysql.eu2.frbit.com'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'laravel-tgyv'),
+            'username' => env('DB_USERNAME', 'laravel-tgyv'),
+            'password' => env('DB_PASSWORD', 'J.6UiuN.HHVO52y4F1KOzGnL'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
