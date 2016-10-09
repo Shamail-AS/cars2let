@@ -1,5 +1,7 @@
 <?php
-
+if (isset($_SERVER['APP_SECRETS'])) {
+    $secrets = json_decode(file_get_contents($_SERVER['APP_SECRETS']), true);
+}
 return [
 
     /*
@@ -54,10 +56,11 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'forge'),
-            'username'  => env('DB_USERNAME', 'forge'),
-            'password'  => env('DB_PASSWORD', ''),
+            'host' => $secrets['MYSQL']['HOST'] or env('DB_HOST', 'localhost'),
+            'port' => $secrets['MYSQL']['PORT'] or env('DB_PORT', '3306'),
+            'database' => $secrets['MYSQL']['DATABASE'] or env('DB_DATABASE', 'forge'),
+            'username' => $secrets['MYSQL']['USER'] or env('DB_USERNAME', 'forge'),
+            'password' => $secrets['MYSQL']['PASSWORD'] or env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
