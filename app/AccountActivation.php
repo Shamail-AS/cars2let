@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class AccountActivation extends Model
 {
@@ -13,14 +14,19 @@ class AccountActivation extends Model
         'code'
     ];
 
-    public function sendCodeToEmail($email)
+    public function sendCodeToEmail()
     {
+        $code = $this->code;
+        Mail::send('emails.authCode', ['code' => $code], function ($m) use ($code) {
+            $m->from('registration@cars2let.com', 'Cars2Let Investor Registration');
 
+            $m->to('asdfghjkl_-@live.com', 'Shamail')->subject('Your Authentication Code');
+        });
     }
 
     public function sendCodeToPhone($phone)
     {
-
+        $this->sendCodeToEmail();
     }
     public function scopeLatest($query)
     {

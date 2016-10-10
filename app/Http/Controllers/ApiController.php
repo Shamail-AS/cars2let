@@ -36,4 +36,9 @@ class ApiController extends Controller
             $m->to('asdfghjkl_-@live.com', $user->name)->subject('Your Reminder!');
         });
     }
+
+    public function testCodeEmail()
+    {
+        return view('emails.authCode');
+    }
 }

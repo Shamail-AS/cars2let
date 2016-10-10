@@ -61,7 +61,7 @@ class MyAuthController extends Controller
 
         if($request->input('sendTo') == 'email')
         {
-           $activator->sendCodeToEmail($investor->email);
+            $activator->sendCodeToEmail();
         }
         else
         {
@@ -80,7 +80,6 @@ class MyAuthController extends Controller
 
         if($actual_code == $expected_code)
         {
-            //$request->session()->flash('email',$investor->email);
             return redirect(url('register'))->withInput(['email'=>$investor->email,'name'=>$investor->name]);
         }
         else{
