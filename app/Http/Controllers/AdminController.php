@@ -17,7 +17,7 @@ class AdminController extends Controller
     }
     public function index()
     {
-        $admins = User::where('type','=','admin')->get();
+        $admins = User::is('admin')->get();
         return view('admin.index',compact('admins'));
     }
     public function create()

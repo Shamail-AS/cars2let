@@ -37,10 +37,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/myregister','MyAuthController@register');
 
     //check if user is an investor in our database
-    Route::get('/check',function(){
-        return redirect(url('/myregister'));
-    });
-    Route::post('/check','MyAuthController@check');
+//    Route::get('/check',function(){
+//        return redirect(url('/myregister'));
+//    });
+//    Route::post('/check','MyAuthController@check');
 
 
     //show the page where user can chose where to get the code
@@ -51,18 +51,20 @@ Route::group(['middleware' => 'web'], function () {
     //send code to where user has specified
     Route::post('/code/send', 'MyAuthController@sendCode');
 
+//    //show the page where user can enter the code they received
+//    Route::get('/activate/{id}','MyAuthController@getActivate');
+
+    Route::get('/code/verify', function () {
+        return view('auth.verify');
+    });
     //verify the code that user entered to match with database
     Route::post('/code/verify','MyAuthController@verifyCode');
 
-    //show the page where user can enter the code they received
-    Route::get('/activate/{id}','MyAuthController@getActivate');
-
-
     Route::get('/home', 'HomeController@redirect');
 
-    Route::get('/activate/email/{token}','InvestorController@activate');
+//    Route::get('/activate/email/{token}','InvestorController@activate');
 
-    Route::post('/password/first','InvestorController@resetFirstTimePassword');
+//    Route::post('/password/first','InvestorController@resetFirstTimePassword');
 
 });
 Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],function(){
@@ -80,7 +82,6 @@ Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],func
     Route::post('/assets/driver/store','AssetController@storeDriver');
 
     Route::get('/partial/create/{item}','AssetController@partialCreate');
-
 
 });
 

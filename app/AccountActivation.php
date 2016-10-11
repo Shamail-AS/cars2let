@@ -37,6 +37,11 @@ class AccountActivation extends Model
         return $query->where('created_at','>',Carbon::now()->addMinutes(-10));
     }
 
+    public function scopeFor($query, $email)
+    {
+        return $query->where('email', $email);
+    }
+
     public function user(){
         return $this->belongsTo('App\User','email','email');
     }
