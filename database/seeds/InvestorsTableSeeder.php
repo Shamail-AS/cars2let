@@ -20,7 +20,7 @@ class InvestorsTableSeeder extends Seeder
                 'email'=>$faker->unique()->email,
                 'name'=>$faker->firstName,
                 'phone'=>$faker->phoneNumber,
-                'passport_num'=>$faker->bothify('????####'),
+                'passport_num' => strtoupper($faker->bothify('????####')),
                 'dob' => $faker->date()
             ]);
         }

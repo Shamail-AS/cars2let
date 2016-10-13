@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Revenue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,29 @@ use App\Http\Controllers\Controller;
 
 class DriverController extends Controller
 {
-    //
+    // API METHODS
+
+    public function api_all()
+    {
+        return Driver::all();
+    }
+
+    public function api_get($id)
+    {
+        return Driver::find($id);
+    }
+
+    public function api_update(Request $request)
+    {
+        dd($request);
+    }
+
+    public function api_new(Request $request)
+    {
+
+    }
+
+    //---------------
     public function index()
     {
         $driverList = Driver::all();

@@ -90,7 +90,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::get('/','AdminController@home');
 
     //list all admins
-    Route::get('/list','AdminController@index');
+    Route::get('/all', 'AdminController@index');
 
     Route::get('/edit/{id}','AdminController@edit');
 
@@ -105,7 +105,10 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::post('/store','AdminController@store');
 
     //INVESTORS//
-    Route::get('/investor','InvestorController@index');
+    Route::get('/investor/all', 'InvestorController@index');
+
+    //show the details page
+    Route::get('/investor/show/{id}', 'InvestorController@show');
 
     //show form page to register a new investor
     Route::get('/investor/create',"InvestorController@create");
@@ -118,7 +121,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::post('/investor/store','InvestorController@store');
 
     //CARS//
-    Route::get('/car','CarController@index');
+    Route::get('/car/all', 'CarController@index');
 
     //show form to create car
     Route::get('/car/create','CarController@create');
@@ -127,7 +130,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::post('/car/store','CarController@store');
 
     //DRIVERS//
-    Route::get('/driver','DriverController@index');
+    Route::get('/driver/all', 'DriverController@index');
 
     //show form to create driver
     Route::get('/driver/create','DriverController@create');
@@ -142,7 +145,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
 Route::group(['prefix'=>'api'],function(){
 
-    Route::get('/code/{code}/verify','MyAuthController@apiVerifyCode');
+    //Route::get('/code/{code}/verify','MyAuthController@apiVerifyCode');
     Route::get('/user/match/{text}','ApiController@matchUser');
     Route::get('/user/edit/{id}/status/{value}','ApiController@setActive');
     Route::get('/contract/all','ContractController@all')->middleware('web','auth');
@@ -162,6 +165,44 @@ Route::group(['prefix'=>'api'],function(){
     Route::get('/email/test','ApiController@sendMail');
     Route::get('/email/code', 'ApiController@testCodeEmail');
 
+    Route::group(['prefix' => 'admin'], function () {
+
+        Route::group(['prefix' => 'investors'], function () {
+            Route::get('/all', 'InvestorController@api_all');
+            Route::get('/{id}', 'InvestorController@api_get');
+            Route::put('/{id}/update', 'InvestorController@api_update');
+            Route::get('/{id}/revenues', 'InvestorController@api_revenues');
+            Route::get('/{id}/cars', 'InvestorController@api_cars');
+            Route::get('/{id}/contracts', 'InvestorController@api_contracts');
+            Route::get('/{id}/drivers', 'InvestorController@api_drivers');
+
+        });
+
+        Route::group(['prefix' => 'cars'], function () {
+            Route::get('/all', 'CarController@api_all');
+            Route::get('/{id}', 'CarController@api_get');
+            Route::put('/{id}/update', 'CarController@api_update');
+        });
+
+        Route::group(['prefix' => 'contracts'], function () {
+            Route::get('/all', 'ContractController@api_all');
+            Route::get('/{id}', 'ContractController@api_get');
+            Route::put('/{id}/update', 'ContractController@api_update');
+        });
+
+        Route::group(['prefix' => 'drivers'], function () {
+            Route::get('/all', 'DriverController@api_all');
+            Route::get('/{id}', 'DriverController@api_get');
+            Route::put('/{id}/update', 'DriverController@api_update');
+        });
+
+        Route::group(['prefix' => 'revenues'], function () {
+            Route::get('/all', 'RevenueController@api_all');
+            Route::get('/{id}', 'RevenueController@api_get');
+            Route::put('/{id}/update', 'RevenueController@api_update');
+            Route::put('/post', 'RevenueController@api_new');
+        });
+    });
 
 
 });

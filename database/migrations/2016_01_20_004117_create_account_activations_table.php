@@ -16,7 +16,11 @@ class CreateAccountActivationsTable extends Migration
             $table->increments('id');
             $table->string('email');
             $table->string('code');
+            $table->string('destination');
+            $table->boolean('active');
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

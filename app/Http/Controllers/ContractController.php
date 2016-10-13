@@ -11,7 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class ContractController extends Controller
 {
-    //
+    // API METHODS
+    public function api_all()
+    {
+        return Contract::all();
+    }
+
+    public function api_get($id)
+    {
+        return Contract::find($id);
+    }
+
+    public function api_update(Request $request)
+    {
+        dd($request);
+    }
+
+    //-----------------------//
     public function all()
     {
 

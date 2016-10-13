@@ -21,6 +21,7 @@ class DriverTableSeeder extends Seeder
                 'name'=>$faker->firstName,
                 'phone'=>$faker->phoneNumber,
                 'license_no'=> rand(100000,999999),
+                'pco_license_no' => rand(100000, 999999),
                 'dob' => $faker->date('d-m-Y')
             ]);
         }

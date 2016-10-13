@@ -4,11 +4,17 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property array|string amount_paid
+ */
 class Revenue extends Model
 {
+    use SoftDeletes;
     //
-    protected $dates = ['paid_on'];
+    protected $dates = ['paid_on', 'deleted_at'];
+
     public function contract()
     {
         return $this->belongsTo('App\Contract');

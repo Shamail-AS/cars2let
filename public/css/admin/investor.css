@@ -1,0 +1,221 @@
+.flex-container {
+    background-color: #ffffff;
+    padding: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.profile-section .body .pre-body {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.profile-section .body .main-body {
+    flex: 2 0 auto;
+
+}
+
+.profile-section .body .post-body {
+    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+
+}
+
+.pre-body {
+    margin-right: 20px;
+    padding: 5px;
+}
+
+.main-body {
+    padding: 5px;
+}
+
+.post-body {
+    margin-left: 20px;
+    padding: 5px;
+}
+
+.pre-body, .post-body * {
+    margin: 2px;
+}
+
+.sub-nav {
+    font-size: large;
+    color: #ffffff;
+}
+
+.asset-section {
+
+    padding: 12px;
+}
+
+.asset-header {
+    background-color: rgba(191, 191, 191, 0.30);
+}
+
+.asset-header .item {
+    padding: 10px;
+}
+
+.item .main-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.main-body .form-group {
+    flex: 1 0 auto;
+}
+
+.form-group.button {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.button button {
+    flex: 1 0 auto;
+}
+
+.item .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 0;
+}
+
+.main-body > * {
+    margin-right: 2px;
+}
+
+.asset-body {
+
+}
+
+.asset-body .body-container {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.body-container .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .field {
+    flex: 1 0 auto;
+    margin: 5px;
+}
+
+.header .action {
+    flex: 0 1 auto;
+
+    border-radius: 180px;
+    background-color: #1dbd48;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5px;
+    padding: 15px;
+    height: 60px;
+    width: 60px;
+
+    text-decoration: none;
+    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.87);
+}
+
+.action:hover {
+    cursor: pointer;
+}
+
+.placeholder {
+    text-align: center;
+    color: gray;
+    font-size: xx-large;
+    font-weight: 300;
+    padding: 70px 0 60px 0;
+    background-color: rgba(191, 191, 191, 0.11);
+}
+
+.complete {
+    color: #68d000;
+}
+
+.ongoing {
+    color: gold;
+}
+
+.terminated {
+    color: orangered;
+}
+
+.suspended {
+    color: dodgerblue;
+}
+
+thead td {
+    font-weight: bolder;
+}
+
+.select-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.select-group i {
+    margin-right: 12px;
+}
+
+a {
+    text-decoration: none;
+    color: darkgray;
+
+}
+
+a:visited, a:hover {
+    text-decoration: none;
+}
+
+a i {
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out;
+
+}
+
+a i:hover {
+    cursor: pointer;
+    color: #ff4b37;
+    text-decoration: none;
+
+}

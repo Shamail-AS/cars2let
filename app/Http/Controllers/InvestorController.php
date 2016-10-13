@@ -8,7 +8,9 @@ use App\Contract;
 use App\Driver;
 use App\Http\Requests\RegisterInvestorRequest;
 use App\Investor;
+use App\Revenue;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,6 +20,65 @@ use Illuminate\Support\Facades\Auth;
 class InvestorController extends Controller
 {
     //
+    //API METHODS
+
+    public function api_all()
+    {
+        return Investor::all();
+    }
+
+    public function api_get($id)
+    {
+
+        $investor = Investor::where('id', $id)->with('cars', 'contracts', 'contracts.driver', 'contracts.car')->first();
+        $investor->cars = $investor->cars->each(function ($car) {
+            $car->available = Carbon::parse($car->available_since)->toFormattedDateString();
+            $car->currentContract = $car->currentContract;
+            $car->totalContracts = $car->totalContracts;
+            $car->totalRevenue = $car->totalRevenue;
+            $car->totalRent = $car->totalRent;
+
+        });
+        $investor->drivers = $investor->drivers;
+        $investor->revenues = $investor->allRevenues;
+
+        return $investor;
+    }
+
+    public function api_update(Request $request)
+    {
+        $investor = Investor::find($request->input('id'));
+        $investor->email = $request->input('email');
+        $investor->name = $request->input('name');
+        $investor->passport_num = $request->input('passport_num');
+        $investor->dob = $request->input('dob');
+        $investor->phone = $request->input('phone');
+        $investor->save();
+        return;
+    }
+
+    public function api_revenues($id)
+    {
+        return Investor::find($id)->allRevenues;
+    }
+
+    public function api_cars($id)
+    {
+        return Investor::find($id)->cars;
+    }
+
+    public function api_contracts($id)
+    {
+        return Investor::find($id)->contracts()->with('car', 'driver')->get();
+    }
+
+    public function api_drivers($id)
+    {
+        return Investor::find($id)->drivers;
+    }
+
+
+    //-----------------//
 
     public function RevenueSummary()
     {
@@ -69,6 +130,11 @@ class InvestorController extends Controller
         $investorList = Investor::all();
         return view('admin.investor.index',compact('investorList'));
     }
+
+    public function show($id)
+    {
+        return view('admin.investor.show');
+    }
     public function create()
     {
         return view('admin.investor.create');
@@ -101,24 +167,8 @@ class InvestorController extends Controller
     {
         return $this->GUID();
     }
-    private function GUID()
-    {
-        if (function_exists('com_create_guid') === true)
-        {
-            return trim(com_create_guid(), '{}');
-        }
 
-        return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
-    }
-    private function getWelcomeEmail($investor,$activator)
-    {
-        $activationURL = url('/activate/email/'.$activator->code);
 
-        $email = "Welcome to cars2let, ".$investor->name
-                    ."please click the link below to activate your account
-                    <a href='$activationURL'>Activate now</a>";
-        return $email;
-    }
 
     public function activate($token)
     {

@@ -3,13 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Investor extends Model
 {
+    use SoftDeletes;
     //
     protected $fillable =['name','email','phone','passport_num','dob'];
 
-    protected $dates = ['dob'];
+    protected $dates = ['dob', 'deleted_at'];
 
     public function user()
     {
@@ -33,6 +35,17 @@ class Investor extends Model
         }
 
         return $drivers->unique('id')->flatten();
+    }
+
+    public function getAllRevenuesAttribute()
+    {
+        $contracts = $this->contracts;
+        $revenues = collect([]);
+        foreach ($contracts as $contract) {
+            $revenues->push($contract->revenues);
+        }
+
+        return $revenues->flatten();
     }
     public function getRevenueAttribute()
     {

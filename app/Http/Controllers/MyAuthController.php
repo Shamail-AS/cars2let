@@ -14,22 +14,6 @@ use Session;
 
 class MyAuthController extends Controller
 {
-
-    public function apiVerifyCode($code)
-    {
-        $user = Auth::user();
-        $expectedCode = $user->codes()->latest();
-        if($expectedCode != $code)
-        {
-            return "Sorry, but the codes don't match";
-        }
-        else
-        {
-            $user->active = 1;
-            $user->save();
-            return "Success";
-        }
-    }
     //
     public function getlogin()
     {
@@ -52,32 +36,44 @@ class MyAuthController extends Controller
         $email = $request->session()->get('email');
         if (!$email) return redirect(url('/myregister'));
 
-        $activator = AccountActivation::create([
-            'email' => $email,
-            'code' => random_int(1000,9999)
-        ]);
-
-        if($request->input('sendTo') == 'email')
+        $activator = AccountActivation::valid()->for($email)->latest();
+        if (isset($activator))
         {
-            $activator->sendCodeToEmail();
+            $activator->renew();
+            $activator->destination = $request->input('sendTo') == 'email' ? 'email' : 'phone';
         }
         else
         {
-            $activator->sendCodeToPhone($email);
+            $activator = AccountActivation::create([
+                'email' => $email,
+                'code' => random_int(1000, 9999),
+                'destination' => $request->input('sendTo') == 'email' ? 'email' : 'phone'
+            ]);
         }
+
+        $activator->send();
+
         return redirect(url('/code/verify'));
     }
 
+    public function resendCode(Request $request)
+    {
+        $email = $request->session()->get('email');
+        $activation = AccountActivation::valid()->for($email)->latest();
+        $activation->renew();
+        $activation->send();
+    }
 
     public function verifyCode(VerifyCodeRequest $request)
     {
         $email = $request->session()->get('email');
-
-        $expected_code = AccountActivation::valid()->for($email)->latest()->code;
+        $activator = AccountActivation::valid()->for($email)->latest();
+        $expected_code = $activator->code;
         $actual_code = $request->input('code');
 
         if($actual_code == $expected_code)
         {
+            $activator->deactivate();
             return redirect(url('register'))->withInput(['email' => $email]);
         }
         else{

@@ -38,7 +38,9 @@
                             <th>{{$investor->phone}}</th>
                             <th>{{$investor->created_at->toFormattedDateString()}}</th>
                             <th>
-                                <button class="btn btn-xs btn-primary">Some action</button>
+                                <a href="{{url('/admin/investor/show/'.$investor->id)}}" class="btn btn-xs btn-primary">View
+                                    Details</a>
+
                             </th>
                         </tr>
                     @endforeach

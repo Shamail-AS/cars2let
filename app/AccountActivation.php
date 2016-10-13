@@ -11,8 +11,23 @@ class AccountActivation extends Model
     //
     protected  $fillable = [
         'email',
-        'code'
+        'code',
+        'destination'
     ];
+
+    public function send()
+    {
+        if ($this->destination == 'email')
+            $this->sendCodeToEmail();
+        else
+            $this->sendCodeToPhone();
+    }
+
+    public function renew()
+    {
+        $this->code = random_int(1000, 9999);
+        $this->save();
+    }
 
     public function sendCodeToEmail()
     {
@@ -24,7 +39,7 @@ class AccountActivation extends Model
         });
     }
 
-    public function sendCodeToPhone($phone)
+    public function sendCodeToPhone()
     {
         $this->sendCodeToEmail();
     }
@@ -34,7 +49,8 @@ class AccountActivation extends Model
     }
     public function scopeValid($query)
     {
-        return $query->where('created_at','>',Carbon::now()->addMinutes(-10));
+        return $query->where('created_at', '>', Carbon::now()->addMinutes(-10))
+            ->where('active', true);
     }
 
     public function scopeFor($query, $email)
@@ -45,4 +61,12 @@ class AccountActivation extends Model
     public function user(){
         return $this->belongsTo('App\User','email','email');
     }
+
+    public function deactivate()
+    {
+        $this->active = false;
+        $this->save();
+    }
+
+
 }

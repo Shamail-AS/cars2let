@@ -19,6 +19,8 @@ class CreateRevenuesTable extends Migration
             $table->date('paid_on');
             $table->string('currency');
             $table->timestamps();
+            $table->softDeletes();
+
 
 //            $table->foreign('contract')->refernces('id')->on('contracts');
         });

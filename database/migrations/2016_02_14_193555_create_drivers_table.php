@@ -15,12 +15,14 @@ class CreateDriversTable extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('license_no')->unique();
+            $table->string('pco_license_no')->unique();
             $table->string('email')->unique();
             $table->string('name');
             $table->string('phone');
             $table->date('dob');
-
             $table->timestamps();
+            $table->softDeletes();
+
 
 //            $table->foreign('contract')->references('id')->on('contracts');
 

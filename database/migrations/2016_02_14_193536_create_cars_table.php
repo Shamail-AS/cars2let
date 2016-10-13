@@ -19,8 +19,9 @@ class CreateCarsTable extends Migration
             $table->string('make');
             $table->date('available_since');
             $table->string('comments');
-
             $table->timestamps();
+            $table->softDeletes();
+
 
 //            $table->foreign('investor')->references('id')->on('investors');
 //            $table->foreign('driver')->references('id')->on('drivers');

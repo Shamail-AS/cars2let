@@ -21,6 +21,7 @@ class CreateInvestorsTable extends Migration
             $table->string('phone');
             $table->string('company');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

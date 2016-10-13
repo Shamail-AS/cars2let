@@ -22,6 +22,8 @@ class CreateContractsTable extends Migration
             $table->decimal('rate');
             $table->string('currency');
             $table->timestamps();
+            $table->softDeletes();
+
 
 //            $table->foreign('car')->references('id')->on('cars');
 //            $table->foreign('driver')->references('id')->on('drivers');

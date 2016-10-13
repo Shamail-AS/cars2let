@@ -11,7 +11,24 @@ use App\Car;
 
 class CarController extends Controller
 {
-    //
+    // API METHODS
+
+    public function api_all()
+    {
+        return Car::all();
+    }
+
+    public function api_get($id)
+    {
+        return Car::find($id);
+    }
+
+    public function api_update(Request $request)
+    {
+        dd($request);
+    }
+
+    //---------------//
     public function index()
     {
         $carList = Car::all();

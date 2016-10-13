@@ -4,14 +4,16 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property mixed end_date
  */
 class Contract extends Model
 {
+    use SoftDeletes;
     //
-    protected $dates = ['start_date','end_date'];
+    protected $dates = ['start_date', 'end_date', 'deleted_at'];
 
     public function car()
     {
@@ -38,7 +40,7 @@ class Contract extends Model
     {
         return $this->hasMany('App\Revenue')
             ->where('paid_on','>=',$this->start_date)
-            ->where('paid_on','<=',min(Carbon::now(),$this->end_date));
+            ->where('paid_on', '<=', $this->end_date);
     }
     public function scopeLatest($query)
     {
