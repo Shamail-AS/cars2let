@@ -80,6 +80,8 @@ class Contract extends Model
     public function getWeeksDoneForCurrentPeriodAttribute()
     {
         //ASSUMPTION period is month from fridays
+        //TODO: MAKE USE OF ACC_PERIOD_DAYS
+
         $date_from = new Carbon('first friday of this month');
         $date_to = new Carbon('last friday');
         $diff_month = $date_to->diffInWeeks($date_from);

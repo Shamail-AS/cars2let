@@ -69,8 +69,8 @@
                 </tr>
                 <tr>
                     <td>Balance</td>
-                    <td>calculation?</td>
-                    <td>calculation?</td>
+                    <td>{{$car->totalRevenue - $car->totalRent}}</td>
+                    <td>{{$car->totalRevenueForCurrentPeriod - $car->totalRentForCurrentPeriod}}</td>
                 </tr>
             </table>
             <div class="heading">

@@ -19,6 +19,7 @@ class CreateInvestorsTable extends Migration
             $table->date('dob');
             $table->string('passport_num')->unique();
             $table->string('phone');
+            $table->integer('acc_period_days')->unsigned();
             $table->string('company');
             $table->timestamps();
             $table->softDeletes();

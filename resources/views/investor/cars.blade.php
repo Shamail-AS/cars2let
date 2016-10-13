@@ -24,7 +24,7 @@
                     <tr>
                         <td>Reg#</td>
                         <td>Available since</td>
-                        <td>Active Contract</td>
+                        <td>Active Contract #</td>
                         <td>Total contracts</td>
                         <td>Total revenue (£)</td>
                         <td>Paid to Investor (£)</td>
@@ -49,7 +49,19 @@
                         <td>@{{ car.totalRevenue }}</td>
                         <td>@{{ car.totalRent }}</td>
                     </tr>
+
                     </tbody>
+
+                    <thead>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>TOTAL</td>
+                        <td>@{{ vm.sum.totalContracts }}</td>
+                        <td>@{{ vm.sum.totalRevenue }}</td>
+                        <td>@{{ vm.sum.totalRent }}</td>
+                    </tr>
+                    </thead>
                 </table>
             </div>
         </div>

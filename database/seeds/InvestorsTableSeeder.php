@@ -14,6 +14,14 @@ class InvestorsTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
         $limit = 33;
+        Investor::create([
+            'email' => 'alpha@cars2let.com',
+            'name' => $faker->firstName,
+            'phone' => $faker->phoneNumber,
+            'passport_num' => strtoupper($faker->bothify('????####')),
+            'dob' => $faker->date(),
+            'acc_period_days' => 30
+        ]);
         for($i = 0; $i < $limit; $i++)
         {
             Investor::create([
@@ -21,8 +29,10 @@ class InvestorsTableSeeder extends Seeder
                 'name'=>$faker->firstName,
                 'phone'=>$faker->phoneNumber,
                 'passport_num' => strtoupper($faker->bothify('????####')),
-                'dob' => $faker->date()
+                'dob' => $faker->date(),
+                'acc_period_days' => 30
             ]);
         }
+
     }
 }

@@ -83,11 +83,11 @@ class Investor extends Model
     }
     public function getBalanceAttribute()
     {
-       return 0;
+        return $this->revenue - $this->paid;
     }
     public function getBalanceForCurrentPeriodAttribute()
     {
-       return 0;
+        return $this->revenueForCurrentPeriod - $this->paidForCurrentPeriod;
     }
 
 }

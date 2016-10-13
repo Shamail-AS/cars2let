@@ -6,7 +6,12 @@ app.controller('driverController',
 
             //Objects
             $scope.vm = {
-                'drivers': []
+                'drivers': [],
+                'sum': {
+                    'totalContracts': 0,
+                    'totalRevenue': 0,
+                    'totalRent': 0
+                }
             };
             $scope.filters = {
                 'search': ''
@@ -27,7 +32,19 @@ app.controller('driverController',
                 driverDataFactory.getDrivers()
                     .success(function (data) {
                         $scope.vm.drivers = data;
+                        get_sums();
                     });
+            };
+            var get_sums = function () {
+                $scope.vm.sum.totalContracts = _.sumBy($scope.vm.drivers, function (e) {
+                    return e.totalContracts
+                });
+                $scope.vm.sum.totalPaid = _.sumBy($scope.vm.drivers, function (e) {
+                    return e.totalPaid
+                });
+                $scope.vm.sum.totalRevenue = _.sumBy($scope.vm.drivers, function (e) {
+                    return e.totalRevenue
+                });
             };
 
 

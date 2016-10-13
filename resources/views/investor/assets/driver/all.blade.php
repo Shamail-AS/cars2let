@@ -54,10 +54,10 @@
                     <tr ng-repeat="driver in vm.drivers
                         | filter : {name : filters.search}">
                         <td><a href="{{ url('investor/drivers/')}}/@{{ driver.id }}">@{{ driver.name }}</a></td>
-                        <td>@{{ driver.email }}</td>
+                        {{--<td>@{{ driver.email }}</td>--}}
                         <td>@{{ driver.license_no }}</td>
                         <td>@{{ driver.birth_date }}</td>
-                        <td>@{{ driver.tel }}</td>
+                        {{--<td>@{{ driver.tel }}</td>--}}
                         <td>@{{ driver.reg_since }}</td>
                         <td>@{{ driver.active_contract }}</td>
                         <td>@{{ driver.totalContracts }}</td>
@@ -65,6 +65,20 @@
                         <td>@{{ driver.totalPaid }}</td>
                     </tr>
                     </tbody>
+                    <thead>
+                    <tr>
+                        <td></td>
+                        {{--<td></td>--}}
+                        <td></td>
+                        {{--<td></td>--}}
+                        <td></td>
+                        <td></td>
+                        <td>TOTAL</td>
+                        <td>@{{ vm.sum.totalContracts }}</td>
+                        <td>@{{ vm.sum.totalRevenue }}</td>
+                        <td>@{{ vm.sum.totalPaid }}</td>
+                    </tr>
+                    </thead>
                 </table>
             </div>
         </div>
