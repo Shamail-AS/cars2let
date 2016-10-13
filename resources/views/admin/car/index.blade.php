@@ -2,7 +2,7 @@
 
 @section("styles")
 
-    <link href="{{asset('css/admin.css')}}" rel="stylesheet">
+    <link href="{{asset('css/admin/admin.css')}}" rel="stylesheet">
 
 @endsection
 
