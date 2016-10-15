@@ -18,6 +18,8 @@
     height:40vh;
     width:100%;
     #position:absolute;
+    overflow: auto;
+
 }
 .sidebar{
     background-color: rgba(239, 172, 11, 0.65);
