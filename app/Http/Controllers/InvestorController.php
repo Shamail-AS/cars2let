@@ -53,6 +53,7 @@ class InvestorController extends Controller
         $investor->passport_num = $request->input('passport_num');
         $investor->dob = $request->input('dob');
         $investor->phone = $request->input('phone');
+        $investor->tracking_url = $request->input('tracking_url');
         $investor->save();
         return;
     }

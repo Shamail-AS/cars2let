@@ -26,6 +26,7 @@
                             <th>DOB</th>
                             <th>Phone</th>
                             <th>Joined</th>
+                            <th>Tracking URL</th>
                             <th></th>
 
                         </tr>
@@ -39,6 +40,7 @@
                             <td>@{{ vm.investor.dob }}</td>
                             <td>@{{ vm.investor.phone }}</td>
                             <td>@{{ vm.investor.created_at }}</td>
+                            <td>@{{ vm.investor.tracking_url }}</td>
 
                         </tr>
                         <tr ng-if="vm.edit_mode">
@@ -49,6 +51,8 @@
                             <td><input type="text" ng-model="vm.investor.dob"></td>
                             <td><input type="text" ng-model="vm.investor.phone"></td>
                             <td>@{{ vm.investor.created_at }}</td>
+                            <td><input type="text" ng-model="vm.investor.tracking_url"></td>
+
                         </tr>
                         </tbody>
                     </table>
