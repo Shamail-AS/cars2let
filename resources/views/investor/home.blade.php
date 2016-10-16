@@ -16,7 +16,7 @@
             </div>
             <div class="iframe-wrapper">
                 <iframe id="tracker" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen
-                        src="http://gpslive.co.uk/"
+                        src="{{$investor->tracking_url}}"
                         sandbox="allow-forms allow-same-origin allow-pointer-lock allow-scripts allow-top-navigation"></iframe>
             </div>
 

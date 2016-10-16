@@ -20,7 +20,8 @@ class InvestorsTableSeeder extends Seeder
             'phone' => $faker->phoneNumber,
             'passport_num' => strtoupper($faker->bothify('????####')),
             'dob' => $faker->date(),
-            'acc_period_days' => 30
+            'acc_period_days' => 30,
+            'tracking_url' => 'http://gpslive.co.uk/login.php?au=2FD967CDDADD7FA7F1C97DB8422CBF2E'
         ]);
         for($i = 0; $i < $limit; $i++)
         {
@@ -30,7 +31,8 @@ class InvestorsTableSeeder extends Seeder
                 'phone'=>$faker->phoneNumber,
                 'passport_num' => strtoupper($faker->bothify('????####')),
                 'dob' => $faker->date(),
-                'acc_period_days' => 30
+                'acc_period_days' => 30,
+                'tracking_url' => 'http://gpslive.co.uk/login.php?au=2FD967CDDADD7FA7F1C97DB8422CBF2E'
             ]);
         }
 

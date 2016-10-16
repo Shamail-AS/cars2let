@@ -20,6 +20,7 @@ class CreateInvestorsTable extends Migration
             $table->string('passport_num')->unique();
             $table->string('phone');
             $table->integer('acc_period_days')->unsigned();
+            $table->string('tracking_url');
             $table->string('company');
             $table->timestamps();
             $table->softDeletes();
