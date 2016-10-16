@@ -15,7 +15,7 @@
     font-size: medium;
 }
 .map-container{
-    height: 100%;
+    height: 50%;
     width:100%;
     -webkit-transition: height 0.2s;
     -moz-transition: height 0.2s;

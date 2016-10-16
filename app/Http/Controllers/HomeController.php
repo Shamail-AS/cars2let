@@ -35,4 +35,13 @@ class HomeController extends Controller
             return redirect('/');
 
     }
+
+    public function help()
+    {
+        $user = Auth::user();
+        if ($user->isInvestor)
+            return view('support.investor.help');
+        else
+            return view('support.investor.help');
+    }
 }

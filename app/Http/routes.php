@@ -62,6 +62,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/home', 'HomeController@redirect');
 
+    Route::get('/help', 'HomeController@help');
+
 //    Route::get('/activate/email/{token}','InvestorController@activate');
 
 //    Route::post('/password/first','InvestorController@resetFirstTimePassword');

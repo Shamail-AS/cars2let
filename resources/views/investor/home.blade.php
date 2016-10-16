@@ -11,8 +11,8 @@
 
             <div class="wrapper-cover">
                 <p onclick="toggleSize()"><i id="spinner" class="fa fa-spinner fa-spin"></i> Track Vehicles Now</p>
-                <span><p>GPS Live still loading. Please make sure that iframes are not blocked. Check any security icon
-                        in you address bar and allow content</p></span>
+                <span><p>GPS Live still loading. Please make sure that iframes are not blocked. <a
+                                href="{{url('/help')}}">See how</a></p></span>
             </div>
             <div class="iframe-wrapper">
                 <iframe id="tracker" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen
