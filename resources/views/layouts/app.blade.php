@@ -39,7 +39,7 @@
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-c2l navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -61,7 +61,7 @@
                 <ul class="nav navbar-nav">
                     <!--<li><a href="{{ url('/home') }}">Home</a></li>-->
 					@if (!Auth::guest())
-							<li><a href="{{ url('investor') }}">Overview</a></li>
+                        <li><a href="{{ url('investor') }}">Dashboard</a></li>
                         @if(Auth::user()->isInvestor)
 						<li><a href="{{ url('investor/cars') }}">Asset Reports</a></li>
                         @endif

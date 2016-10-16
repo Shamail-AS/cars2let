@@ -8,34 +8,48 @@
 
     <div class="flex-container">
         <div class="map-container">
-            <!--<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d19846.006685263703!2d-1.7580300999999998!3d51.55446775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1453767116129"
-                    width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
-            <div class="sidebar sidebar-left">
-                <div class="sidebar-item">
-                    <img src="http://mimedu.es/wp-content/uploads/2015/03/mercedes-logotipo.jpg">
 
-                    <p class="title">Mercedes</p>
+            <div class="wrapper-cover">
+                <p onclick="toggleSize()">Track Vehicles Now</p>
+            </div>
+            <div class="iframe-wrapper">
+                <iframe id="tracker" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen
+                        src="http://gpslive.co.uk/"
+                        sandbox="allow-forms allow-same-origin allow-pointer-lock allow-scripts allow-top-navigation"></iframe>
+            </div>
 
-                    <p class="subtitle">London,SW14 7NJ</p>
-                </div>
-                <div class="sidebar-item">
-                    <img src="http://mimedu.es/wp-content/uploads/2015/03/mercedes-logotipo.jpg">
+        </div>
+        <div class="resizer">
+            <p onclick="toggleSize()">Pause Live Tracking</p>
+            <script>
+                var isFullScreen = false;
+                function toggleSize() {
 
-                    <p class="title">Mercedes</p>
+                    if (isFullScreen) {
 
-                    <p class="subtitle">London,SW14 7NJ</p>
-                </div>
-                <div class="sidebar-item">
-                    <img src="http://mimedu.es/wp-content/uploads/2015/03/mercedes-logotipo.jpg">
+                        $('.map-container').height('50%');
+                        $('.revenue-container').fadeIn();
+                        $('.wrapper-cover').fadeIn();
+                        $('.resizer').hide();
 
-                    <p class="title">Mercedes</p>
 
-                    <p class="subtitle">London,SW14 7NJ</p>
-                </div>
+                    }
+                    else {
+                        $('.revenue-container').hide();
+                        $('.map-container').height('100%');
 
-            </div>-->
-            <iframe src="http://gpslive.co.uk/"
-                    sandbox="allow-forms allow-same-origin allow-pointer-lock allow-scripts allow-top-navigation"></iframe>
+                        $('.wrapper-cover').fadeOut();
+                        $('.resizer').css('display', 'flex');
+
+
+                    }
+                    isFullScreen = !isFullScreen;
+                }
+
+                function reloadTracker() {
+                    $('#tracker').src = $('#tracker').src;
+                }
+            </script>
         </div>
         <div class="revenue-container">
 
@@ -131,3 +145,4 @@
     </script>
 
 @endsection
+

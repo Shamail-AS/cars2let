@@ -15,10 +15,97 @@
     font-size: medium;
 }
 .map-container{
-    height:40vh;
+    height: 100%;
     width:100%;
-    #position:absolute;
-    overflow: auto;
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    -ms-transition: height 0.2s;
+    -o-transition: height 0.2s;
+    transition: height 0.2s;
+    overflow: hidden;
+    position: relative;
+
+}
+
+.iframe-wrapper {
+
+    position: relative;
+    height: 100%;
+}
+
+.wrapper-cover {
+    background-color: rgba(0, 0, 0, 0.78);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100;
+}
+
+.wrapper-cover p {
+    color: #ffffff;
+    font-size: xx-large;
+    font-weight: 400;
+    padding: 15px;
+    margin-top: 12px;
+    border: thin solid grey;
+
+    cursor: pointer;
+
+    transition: box-shadow 0.2s;
+}
+
+.wrapper-cover p:hover {
+    box-shadow: 0px 1.5px 8px rgba(255, 255, 255, 0.62);
+}
+
+.resizer {
+    display: none;
+    border-bottom: 2px;
+
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background: transparent;
+
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+
+}
+
+.resizer p {
+    color: #ffffff;
+    font-size: medium;
+    font-weight: 300;
+    padding: 12px;
+    background-color: rgba(237, 31, 33, 0.77);
+    border: thin solid #c91a1c;
+    margin: 0;
+    cursor: pointer;
+
+    box-shadow: 0px 3px 8px rgba(255, 255, 255, 0.62);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+    transition: box-shadow 0.2s;
+}
+
+.resizer:hover {
+    box-shadow: 0px 1.5px 8px rgba(255, 255, 255, 0.9);
+}
+
+.resizer i:hover {
+    color: #003eff;
+    cursor: pointer;
 
 }
 .sidebar{
@@ -72,7 +159,6 @@
     justify-content: flex-start;
     align-items: stretch;
     width: 100%;
-    background-color: #f2f2f2;
 }
 .revenue-container > .heading{
 
@@ -182,6 +268,9 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    background-color: #f2f2f2;
+    height: 100%;
+
 }
 .heading{
     text-align: center;
