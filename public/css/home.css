@@ -49,7 +49,7 @@
     z-index: 100;
 }
 
-.wrapper-cover p {
+.wrapper-cover > p {
     color: #ffffff;
     font-size: xx-large;
     font-weight: 400;
@@ -62,8 +62,13 @@
     transition: box-shadow 0.2s;
 }
 
-.wrapper-cover p:hover {
+.wrapper-cover > p:hover {
     box-shadow: 0px 1.5px 8px rgba(255, 255, 255, 0.62);
+}
+
+.wrapper-cover span {
+    color: #ffffff;
+    display: none;
 }
 
 .resizer {

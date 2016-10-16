@@ -10,7 +10,8 @@
         <div class="map-container">
 
             <div class="wrapper-cover">
-                <p onclick="toggleSize()">Track Vehicles Now</p>
+                <p onclick="toggleSize()">Track Vehicles Now <i id="spinner" class="fa fa-spinner fa-spin"></i></p>
+                <span><p>GPS Live still loading. Please make sure that iframes are not blocked.</p></span>
             </div>
             <div class="iframe-wrapper">
                 <iframe id="tracker" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen
@@ -21,10 +22,16 @@
         </div>
         <div class="resizer">
             <p onclick="toggleSize()">Pause Live Tracking</p>
+
             <script>
                 var isFullScreen = false;
+                var isLoaded = false;
                 function toggleSize() {
+                    if (!isLoaded) {
+                        $('.wrapper-cover span').fadeIn().delay(1000).fadeOut();
 
+                        return;
+                    }
                     if (isFullScreen) {
 
                         $('.map-container').height('50%');
@@ -46,9 +53,10 @@
                     isFullScreen = !isFullScreen;
                 }
 
-                function reloadTracker() {
-                    $('#tracker').src = $('#tracker').src;
-                }
+                $('iframe').load(function () {
+                    isLoaded = true;
+                    $('#spinner').fadeOut();
+                });
             </script>
         </div>
         <div class="revenue-container">
