@@ -68,7 +68,7 @@
 
 .wrapper-cover span {
     color: #ffffff;
-    display: none;
+    display: inherit;
 }
 
 .resizer {
