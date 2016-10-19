@@ -20,7 +20,7 @@
     </table>
     <table name="cars" schema="" catalog="cars2let" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="investor_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="investor_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="reg_no" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="make" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="available_since" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
@@ -68,6 +68,9 @@
       <column name="dob" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <column name="passport_num" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="phone" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="acc_period_start" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="acc_period_end" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="tracking_url" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="company" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
@@ -91,7 +94,6 @@
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="contract_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="amount_paid" sqlType="DECIMAL" precision="8" scale="2" nullable="false" jdbcType="3"/>
-      <column name="paid_on" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <column name="currency" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>

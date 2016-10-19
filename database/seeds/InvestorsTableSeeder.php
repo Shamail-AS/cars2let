@@ -1,6 +1,7 @@
 <?php
 
 use App\Investor;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class InvestorsTableSeeder extends Seeder
@@ -19,8 +20,9 @@ class InvestorsTableSeeder extends Seeder
             'name' => $faker->firstName,
             'phone' => $faker->phoneNumber,
             'passport_num' => strtoupper($faker->bothify('????####')),
-            'dob' => $faker->date(),
-            'acc_period_days' => 30,
+            'dob' => $faker->date("d-m-Y"),
+            'acc_period_start' => '01-03-2015',
+            'acc_period_end' => '28-02-2016',
             'tracking_url' => 'http://gpslive.co.uk/login.php?au=2FD967CDDADD7FA7F1C97DB8422CBF2E'
         ]);
         for($i = 0; $i < $limit; $i++)
@@ -30,8 +32,9 @@ class InvestorsTableSeeder extends Seeder
                 'name'=>$faker->firstName,
                 'phone'=>$faker->phoneNumber,
                 'passport_num' => strtoupper($faker->bothify('????####')),
-                'dob' => $faker->date(),
-                'acc_period_days' => 30,
+                'dob' => $faker->date("d-m-Y"),
+                'acc_period_start' => '01-03-2015',
+                'acc_period_end' => '28-02-2016',
                 'tracking_url' => 'http://gpslive.co.uk/login.php?au=2FD967CDDADD7FA7F1C97DB8422CBF2E'
             ]);
         }
