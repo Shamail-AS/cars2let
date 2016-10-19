@@ -153,6 +153,7 @@ Route::group(['prefix'=>'api'],function(){
     Route::get('/contract/all','ContractController@all')->middleware('web','auth');
     Route::get('/car/all','CarController@all')->middleware('web','auth');
     Route::get('/driver/all','DriverController@all')->middleware('web','auth');
+    Route::get('/drivers', 'DriverController@api_all')->middleware('web', 'auth');
 
     Route::get('/contract/{id}','ContractController@api_show');
     Route::get('/contract/filter/{search}','ContractController@filterContractsByCarDriver');

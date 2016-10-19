@@ -108,7 +108,7 @@
             $.get("/api/car/all").success(function(data){
                $scope.vm.cars = data;
             });
-            $.get("/api/driver/all").success(function(data){
+            $.get("/api/drivers").success(function (data) {
                 $scope.vm.drivers = data;
             });
             $scope.vm.statuses.push({"key":"Ongoing","value":1});
