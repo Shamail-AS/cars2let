@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class ContractController extends Controller
 {
@@ -24,7 +25,39 @@ class ContractController extends Controller
 
     public function api_update(Request $request)
     {
-        dd($request);
+        $contract = Contract::find($request->input('id'));
+        $contract->start_date = $request->input('start_date');
+        $contract->status = $request->input('status');
+        $contract->end_date = $request->input('end_date');
+        $contract->rate = $request->input('rate');
+        $contract->car_id = $request->input('car.id');
+        $contract->driver_id = $request->input('driver.id');
+
+        $contract->save();
+        return response("Updated");
+    }
+
+    public function api_new(Request $request)
+    {
+
+        $contract = Contract::create($request->all());
+        $contract->car_id = $request->input('car.id');
+        $contract->driver_id = $request->input('driver.id');
+        $contract->save();
+        // Get an instance of Monolog
+        $monolog = Log::getMonolog();
+        // Choose FirePHP as the log handler
+        $monolog->pushHandler(new \Monolog\Handler\FirePHPHandler());
+        // Start logging
+        $monolog->debug('Created', [$contract]);
+
+        return $contract;
+    }
+
+    public function api_delete($id)
+    {
+        Contract::destroy($id);
+        return response("Deleted");
     }
 
     //-----------------------//

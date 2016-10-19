@@ -1,11 +1,15 @@
-app.factory('driverDataFactory', ['$http', function ($http) {
-    var URL_BASE = '/api/driver';
-    var driverDataFactory = {};
+app.factory('driverDataModelFactory', ['moment', function (moment) {
 
-    driverDataFactory.getDrivers = function () {
-        return $http.get(URL_BASE + '/all');
+    var driverDataModelFactory = {};
+
+    driverDataModelFactory.withExtras = function (drivers) {
+        _.each(drivers, function (driver) {
+            driver.edit_mode = false;
+            driver.picker_open = false;
+            driver.dt_dob = moment(driver.dob).toDate();
+        });
+        return drivers;
     };
 
-
-    return driverDataFactory;
+    return driverDataModelFactory;
 }]);

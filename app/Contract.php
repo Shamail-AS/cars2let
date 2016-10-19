@@ -15,6 +15,15 @@ class Contract extends Model
     //
     protected $dates = ['start_date', 'end_date', 'deleted_at'];
 
+    protected $fillable = [
+        'status',
+        'car_id',
+        'driver_id',
+        'start_date',
+        'end_date',
+        'rate',
+    ];
+
     public function car()
     {
         return $this->belongsTo('App\Car');
@@ -38,9 +47,7 @@ class Contract extends Model
     }
     public function revenues()
     {
-        return $this->hasMany('App\Revenue')
-            ->where('paid_on','>=',$this->start_date)
-            ->where('paid_on', '<=', $this->end_date);
+        return $this->hasMany('App\Revenue');
     }
     public function scopeLatest($query)
     {

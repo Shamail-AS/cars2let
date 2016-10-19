@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,7 +12,7 @@ class Investor extends Model
     //
     protected $fillable =['name','email','phone','passport_num','dob'];
 
-    protected $dates = ['dob', 'deleted_at'];
+    protected $dates = ['dob', 'deleted_at', 'acc_period_start', 'acc_period_end'];
 
     public function user()
     {
@@ -88,6 +89,21 @@ class Investor extends Model
     public function getBalanceForCurrentPeriodAttribute()
     {
         return $this->revenueForCurrentPeriod - $this->paidForCurrentPeriod;
+    }
+
+    public function setDobAttribute($value)
+    {
+        $this->attributes['dob'] = Carbon::createFromFormat('d-m-Y', $value);
+    }
+
+    public function setAccPeriodStartAttribute($value)
+    {
+        $this->attributes['acc_period_start'] = Carbon::createFromFormat('d-m-Y', $value);
+    }
+
+    public function setAccPeriodEndAttribute($value)
+    {
+        $this->attributes['acc_period_end'] = Carbon::createFromFormat('d-m-Y', $value);
     }
 
 }

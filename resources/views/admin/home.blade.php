@@ -6,7 +6,7 @@
 
 @section("content")
 
-    <div class="container">
+    <div class="wrapper">
         <h1>{{Auth::user()->isSuperAdmin ? "Super ":""}}Admin Dashboard</h1>
         <div class="row">
             <div class="col-md-12">

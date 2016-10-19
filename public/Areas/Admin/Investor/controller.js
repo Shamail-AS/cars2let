@@ -2,27 +2,31 @@ app.controller('investorController',
     [
         '$scope',
         'investorDataFactory',
+        'investorDataModelFactory',
         'revenueDataFactory',
+        'driverDataFactory',
+        'carDataFactory',
+        'contractDataFactory',
         'moment',
-        function ($scope, investorDataFactory, revenueDataFactory, moment) {
+        function ($scope,
+                  investorDataFactory,
+                  investorDataModelFactory,
+                  revenueDataFactory,
+                  driverDataFactory,
+                  carDataFactory,
+                  contractDataFactory,
+                  moment) {
 
             //Objects
             $scope.vm = {
                 'investor': {},
-                'edit_mode': false,
                 'create': {
                     'revenue': false,
                     'car': false,
                     'contract': false,
                     'driver': false
                 },
-                'statuses': [],
-                'paying': -1
-            };
-            $scope.selected = {
-                "car": {},
-                "driver": {},
-                "status": {}
+                'statuses': []
             };
             $scope.search = {
                 'revenues': '',
@@ -31,13 +35,13 @@ app.controller('investorController',
                 'drivers': ''
             };
             $scope.active = {
-                'revenues': true,
+                'revenues': false,
                 'cars': false,
-                'contracts': false,
-                'drivers': false
+                'contracts': true,
+                'drivers': false,
+                'loading': true
             };
             $scope.dirty = {
-                'payment': 0,
                 'revenue': {
                     'amount': null,
                     'contract': null
@@ -50,23 +54,70 @@ app.controller('investorController',
 
             //Public methods
 
-            $scope.editInvestor = function () {
-                $scope.vm.edit_mode = true;
+            $scope.edit = function (obj) {
+                obj.edit_mode = true;
             };
-            $scope.cancelEdit = function () {
-                $scope.vm.edit_mode = false;
+            $scope.cancelEdit = function (obj) {
+                obj.edit_mode = false;
 
             };
-            $scope.updateInvestor = function () {
-                $scope.vm.edit_mode = false;
-                var id = $scope.vm.investor.id;
-                var data = $scope.vm.investor;
-                update_investor(id, data);
+            $scope.deleteObj = function (obj, type) {
+                switch (type) {
+                    case 'investor':
+                        delete_investor(obj);
+                        break;
+                    case 'car':
+                        delete_car(obj);
+                        break;
+                    case 'contract':
+                        delete_contract(obj);
+                        break;
+                    case 'driver':
+                        delete_driver(obj);
+                        break;
+                    default :
+                        break;
+
+                }
+
             };
 
-            $scope.deleteInvestor = function () {
-                alert("OMG!!");
+            //INVESTOR
+            $scope.updateInvestor = function (obj) {
+                obj.edit_mode = false;
+                update_investor(obj.id, obj);
             };
+
+            //REVENUE
+
+            $scope.updateRev = function (rev) {
+                rev.edit_mode = false;
+                update_revenue(rev);
+            };
+
+            //CAR
+
+            $scope.updateCar = function (car) {
+                car.edit_mode = false;
+                update_car(car);
+            };
+
+            //CONTRACT
+
+            $scope.updateContract = function (contract) {
+                contract.edit_mode = false;
+                update_contract(contract);
+            };
+
+            //DRIVER
+
+            $scope.updateDriver = function (driver) {
+                driver.edit_mode = false;
+                update_driver(driver);
+            };
+
+
+            ///////////////////////// END CRUD //////////////////////////////
 
             $scope.showRevenues = function () {
                 $scope.active.revenues = true;
@@ -110,16 +161,17 @@ app.controller('investorController',
             $scope.cancelAdd = function () {
                 cancel_add();
             };
-            $scope.showPay = function (contract_id) {
-                $scope.vm.paying = contract_id;
+            $scope.showPay = function (contract) {
+                contract.paying = true;
             };
-            $scope.cancelPay = function () {
-                $scope.vm.paying = -1;
-                $scope.dirty.payment = 0;
+            $scope.cancelPay = function (contract) {
+                contract.paying = false;
+                contract.payment = 0;
             };
-            $scope.pay = function (contract_id) {
-                var payment = parseFloat($scope.dirty.payment);
-                pay_investor_contract(contract_id, payment);
+            $scope.pay = function (contract) {
+                var payment = parseFloat(contract.payment);
+                pay_investor_contract(contract.id, payment);
+                contract.paying = false;
 
             };
 
@@ -127,30 +179,82 @@ app.controller('investorController',
                 pay_investor_contract($scope.dirty.revenue.contract.id, parseFloat($scope.dirty.revenue.amount));
 
             };
+            $scope.newCar = function () {
+                console.log($scope.dirty.car);
+                $scope.dirty.car.investor_id = $scope.vm.investor.id;
+                new_car($scope.dirty.car);
+            };
+            $scope.newContract = function () {
+                console.log($scope.dirty.contract);
+                new_contract($scope.dirty.contract);
+            };
+            $scope.newDriver = function () {
+                console.log($scope.dirty.driver);
+                new_driver($scope.dirty.driver);
+            };
+
+            $scope.openPicker = function (obj) {
+                obj.picker_open = true;
+            };
+            $scope.openStartPicker = function (contract) {
+                contract.start_picker_open = true;
+            };
+            $scope.openEndPicker = function (contract) {
+                contract.end_picker_open = true;
+            };
 
             $scope.getAge = function (date) {
-                return moment().subtract(date).year;
+
+                return moment(date).fromNow(true);
             };
 
             $scope.formatDate = function (date) {
-                var dt = new Date(date);
-                return dt.toLocaleDateString();
+
+                var dt = moment(date);
+                return dt.format("DD, MMM YYYY");
             };
+
 
             //Private methods
             var get_investor = function (id) {
 
                 investorDataFactory.getInvestor(id)
                     .success(function (data) {
-                        $scope.vm.investor = data;
+                        $scope.vm.investor = investorDataModelFactory.withExtras(data);
+                        load_contracts();
                     });
             };
-            var update_investor = function (id, data) {
-                investorDataFactory.updateInvestor(id, data)
+            var update_investor = function (id, investor) {
+                investor.dob = moment(investor.dt_dob).format("DD-MM-YYYY");
+                investorDataFactory.updateInvestor(id, investor)
                     .success(function () {
                         get_investor(id);
                     });
             };
+            var update_car = function (car) {
+                car.available_since = moment(car.dt_available_since).format("DD-MM-YYYY");
+                carDataFactory.updateCar(car.id, car)
+                    .success(function (result) {
+                        alert(result);
+                    });
+            };
+            var update_contract = function (contract) {
+                contract.status = contract.x_status.value;
+                contract.start_date = moment(contract.dt_start_date).format("YYYY-MM-DD");
+                contract.end_date = moment(contract.dt_end_date).format("YYYY-MM-DD");
+                contractDataFactory.updateContract(contract.id, contract)
+                    .success(function (result) {
+                        alert(result);
+                    });
+            };
+
+            var update_revenue = function (rev) {
+                revenueDataFactory.updateRevenue(rev.id, rev)
+                    .success(function (result) {
+                        alert(result)
+                    });
+            };
+
 
             var cancel_add = function () {
                 $scope.vm.create.revenue =
@@ -164,49 +268,88 @@ app.controller('investorController',
                 $scope.vm.statuses.push({"key": "Suspended", "value": 2});
                 $scope.vm.statuses.push({"key": "Terminated", "value": 3});
                 $scope.vm.statuses.push({"key": "Complete", "value": 4});
-                $scope.selected.status = $scope.vm.statuses[0];
+                $scope.dirty.contract.x_status = $scope.vm.statuses[0];
             };
             var load_revenues = function () {
+                $scope.active.loading = true;
+
                 var investor_id = $scope.vm.investor.id;
                 investorDataFactory.getRevenues(investor_id)
                     .success(function (data) {
                         $scope.vm.investor.revenues = data;
+                        $scope.active.loading = false;
                     });
             };
             var load_contracts = function () {
+                $scope.active.loading = true;
                 var investor_id = $scope.vm.investor.id;
                 investorDataFactory.getContracts(investor_id)
                     .success(function (data) {
-                        $scope.vm.investor.contracts = data;
+                        $scope.vm.investor.contracts = investorDataModelFactory.withContractExtras(data);
+                        $scope.active.loading = false;
                     });
             };
             var load_cars = function () {
+                $scope.active.loading = true;
                 var investor_id = $scope.vm.investor.id;
                 investorDataFactory.getCars(investor_id)
                     .success(function (data) {
-                        $scope.vm.investor.cars = data;
+                        $scope.vm.investor.cars = investorDataModelFactory.withCarExtras(data);
+                        $scope.active.loading = false;
                     });
             };
             var load_drivers = function () {
+                $scope.active.loading = true;
                 var investor_id = $scope.vm.investor.id;
                 investorDataFactory.getDrivers(investor_id)
                     .success(function (data) {
-                        $scope.vm.investor.drivers = data;
+                        $scope.vm.investor.drivers = investorDataModelFactory.withDriverExtras(data);
+                        $scope.active.loading = false;
+                    });
+            };
+            var load_all_drivers = function () {
+                driverDataFactory.getDrivers()
+                    .success(function (data) {
+                        $scope.vm.all_drivers = data;
                     });
             };
 
             var pay_investor_contract = function (contract, amount) {
                 var data = {
                     'amount_paid': amount,
-                    'contract_id': contract,
-                    'paid_on': moment().format("YYYY-MM-DD")
+                    'contract_id': contract
                 };
 
                 revenueDataFactory.newRevenue(data)
                     .success(function (data) {
                         alert('revenue submitted!');
-                        $scope.vm.paying = false;
+                        $scope.vm.create.revenue = false;
                         $scope.vm.investor.revenues.push(data);
+                    });
+            };
+
+            var new_car = function (car) {
+                car.available_since = moment(car.dt_available_since).format("DD-MM-YYYY");
+                carDataFactory.newCar(car)
+                    .success(function (result) {
+                        load_cars();
+                    });
+
+            };
+            var new_contract = function (contract) {
+                contract.status = contract.x_status.value;
+                contract.rate = parseFloat(contract.rate);
+                contract.start_date = moment(contract.dt_start_date).format("YYYY-MM-DD");
+                contract.end_date = moment(contract.dt_end_date).format("YYYY-MM-DD");
+                contractDataFactory.newContract(contract)
+                    .success(function (result) {
+                        load_contracts();
+                    });
+            };
+            var new_driver = function (data) {
+                driverDataFactory.newDriver(data)
+                    .success(function (result) {
+                        alert(result);
                     });
             };
 
@@ -219,6 +362,7 @@ app.controller('investorController',
                     get_investor(id);
 
                 load_contract_statuses();
+                load_all_drivers();
             };
 
             init();

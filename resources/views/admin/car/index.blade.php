@@ -7,38 +7,87 @@
 @endsection
 
 @section("content")
-    <div class="container">
-        <div class="add-btn">
-            <a href="{{url('admin/car/create')}}" class="nostyle">
-                <i class="fa fa-plus fa-2x"></i>
-            </a>
-        </div>
-
+    <div class="wrapper" ng-app="cars2let" ng-controller="carController">
         <h1>Manage Cars</h1>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-striped">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Registration</th>
-                        <th>Comments</th>
-                        <th></th>
-                    </tr>
-                    @foreach($carList as $car)
-                        <tr>
-                            <th>{{$car->id}}</th>
-                            <th>{{$car->make}}</th>
-                            <th>{{$car->reg_no}}</th>
-                            <th>{{$car->comments}}</th>
-                            <th>
-                                <button class="btn btn-xs btn-primary">Some action</button>
-                            </th>
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
+        <table class="table table-striped">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Registration</th>
+                <th>Investor</th>
+                <th>Available Since</th>
+                <th>Actions</th>
+            </tr>
+
+            <tr ng-repeat="car in vm.cars | orderBy : '-id'">
+                <td>@{{ car.id }}</td>
+                <td ng-if="!car.edit_mode">@{{ car.make }}</td>
+                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.make"></td>
+                <td ng-if="!car.edit_mode">@{{ car.reg_no }}</td>
+                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.reg_no"></td>
+                <td ng-if="!car.edit_mode">@{{ car.investor.name || 'Not linked'}}</td>
+                <td ng-if="car.edit_mode">
+                    <ui-select ng-model="car.investor">
+                        <ui-select-match allow-clear="true">
+                            <span ng-bind="car.investor.name"></span>
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="investor in (vm.investors | filter: $select.search) track by investor.id">
+                            <span ng-bind="investor.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
+
+                <td ng-if="!car.edit_mode">@{{ car.available_since }}</td>
+                <td ng-if="car.edit_mode">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="car.dt_available_since"
+                               is-open="car.picker_open" datepicker-options="dateOptions" ng-required="true"
+                               close-text="Close"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openPicker(car.id)"><i
+                                        class="fa fa-calendar"></i></button>
+                        </span>
+                    </p>
+                </td>
+                <td>
+                    <div class="btn-group-xs">
+                        <button ng-if="!car.edit_mode" ng-click="editCar(car.id)" class="btn btn-xs btn-primary">Edit
+                        </button>
+                        <button ng-if="car.edit_mode" ng-click="updateCar(car)" class="btn btn-xs btn-warning">Update
+                        </button>
+                        <button ng-if="car.edit_mode" ng-click="cancelEdit(car.id)" class="btn btn-xs btn-default">
+                            Cancel
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="fixed-footer-button-container">
+        <div class="card-container">
+            @include('partials.form.car-create',['admin'=>true])
+        </div>
+        <div class="flex-container">
+            <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
         </div>
     </div>
 
+
+@endsection
+@section('scripts')
+    <script>
+        $().ready(function () {
+            $('.fixed-footer-button').click(function () {
+                $('.fixed-footer-button').toggleClass('clicked');
+                $('.card-container').fadeToggle('fast');
+                $('.extra-button').fadeToggle('fast');
+            });
+        });
+    </script>
+
+    <script src="{{asset('Areas/Admin/Car/module.js')}}"></script>
+    <script src="{{asset('Areas/Admin/Car/factory.js')}}"></script>
+    <script src="{{asset('Areas/Admin/Investor/factory.js')}}"></script>
+    <script src="{{asset('Areas/Admin/Car/controller.js')}}"></script>
 @endsection

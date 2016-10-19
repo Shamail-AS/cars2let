@@ -30,7 +30,7 @@ class RevenueController extends Controller
         $r->currency = 'GBP';
 
         $r->save();
-        return $r;
+        return response("Updated");
     }
 
     public function api_new(Request $request)
@@ -38,11 +38,16 @@ class RevenueController extends Controller
         $r = new Revenue();
         $r->amount_paid = (float)$request->input('amount_paid');
         $r->contract_id = $request->input('contract_id');
-        $r->paid_on = $request->input('paid_on');
         $r->currency = 'GBP';
 
         $r->save();
         return $r;
+    }
+
+    public function api_delete($id)
+    {
+        Revenue::destroy($id);
+        return response("Deleted");
     }
 
     //---------------

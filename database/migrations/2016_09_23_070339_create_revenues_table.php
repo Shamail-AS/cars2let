@@ -16,7 +16,6 @@ class CreateRevenuesTable extends Migration
             $table->increments('id');
             $table->integer('contract_id');
             $table->decimal('amount_paid');
-            $table->date('paid_on');
             $table->string('currency');
             $table->timestamps();
             $table->softDeletes();

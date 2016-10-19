@@ -16,55 +16,50 @@
                     ng-model="filters.car">
 
         </div>
-        <div class="panel panel-default">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>Reg#</td>
+                <td>Available since</td>
+                <td>Active Contract #</td>
+                <td>Total contracts</td>
+                <td>Total revenue (£)</td>
+                <td>Paid to Investor (£)</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{--@foreach($cars as $car)--}}
+            {{--<tr>--}}
+            {{--<td><a href="{{ url('investor/cars/'.$car->id) }}">{{$car->reg_no}}</a></td>--}}
+            {{--<td>{{Carbon\Carbon::parse($car->available_since)->toFormattedDateString()}}</td>--}}
+            {{--<td>{{$car->currentContract->id or 'No active contract'}}</td>--}}
+            {{--<td>{{$car->totalContracts}}</td>--}}
+            {{--<td>{{$car->totalRevenue}}</td>--}}
+            {{--<td>{{$car->totalRent}}</td>--}}
+            {{--</tr>--}}
+            {{--@endforeach--}}
+            <tr ng-repeat="car in vm.cars | filter:{reg_no:filters.car}">
+                <td><a href="{{ url('investor/cars')}}/@{{ car.id }}">@{{ car.reg_no }}</a></td>
+                <td>@{{ car.available }}</td>
+                <td>@{{ car.currentContract.id || "No active contract" }}</td>
+                <td>@{{ car.totalContracts }}</td>
+                <td>@{{ car.totalRevenue }}</td>
+                <td>@{{ car.totalRent }}</td>
+            </tr>
 
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <td>Reg#</td>
-                        <td>Available since</td>
-                        <td>Active Contract #</td>
-                        <td>Total contracts</td>
-                        <td>Total revenue (£)</td>
-                        <td>Paid to Investor (£)</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{--@foreach($cars as $car)--}}
-                        {{--<tr>--}}
-                            {{--<td><a href="{{ url('investor/cars/'.$car->id) }}">{{$car->reg_no}}</a></td>--}}
-                            {{--<td>{{Carbon\Carbon::parse($car->available_since)->toFormattedDateString()}}</td>--}}
-                            {{--<td>{{$car->currentContract->id or 'No active contract'}}</td>--}}
-                            {{--<td>{{$car->totalContracts}}</td>--}}
-                            {{--<td>{{$car->totalRevenue}}</td>--}}
-                            {{--<td>{{$car->totalRent}}</td>--}}
-                        {{--</tr>--}}
-                    {{--@endforeach--}}
-                    <tr ng-repeat="car in vm.cars | filter:{reg_no:filters.car}">
-                        <td><a href="{{ url('investor/cars')}}/@{{ car.id }}">@{{ car.reg_no }}</a></td>
-                        <td>@{{ car.available }}</td>
-                        <td>@{{ car.currentContract.id || "No active contract" }}</td>
-                        <td>@{{ car.totalContracts }}</td>
-                        <td>@{{ car.totalRevenue }}</td>
-                        <td>@{{ car.totalRent }}</td>
-                    </tr>
+            </tbody>
 
-                    </tbody>
-
-                    <thead>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>TOTAL</td>
-                        <td>@{{ vm.sum.totalContracts }}</td>
-                        <td>@{{ vm.sum.totalRevenue }}</td>
-                        <td>@{{ vm.sum.totalRent }}</td>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
+            <thead>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>TOTAL</td>
+                <td>@{{ vm.sum.totalContracts }}</td>
+                <td>@{{ vm.sum.totalRevenue }}</td>
+                <td>@{{ vm.sum.totalRent }}</td>
+            </tr>
+            </thead>
+        </table>
 
         <div class="fixed-footer-button-container">
             <div class="card-container">

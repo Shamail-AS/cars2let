@@ -1,9 +1,7 @@
 <div class="card">
-    {{--<div class="card-header ongoing">--}}
-        {{--<h1>Register a new driver</h1>--}}
-    {{--</div>--}}
     <div class="card-body">
-        <form class="form" method="POST" action="{{url('/investor/assets/driver/store')}}">
+        <form class="form" method="POST"
+              action="{{url($admin == true ? '/admin/driver/store' :'/investor/assets/driver/store')}}">
             {!! csrf_field() !!}
             {{--<div class="form-group {{$error->has('reg_no') ? 'has-error':''}}">--}}
             <div class="form-group">

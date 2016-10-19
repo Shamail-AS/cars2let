@@ -21,16 +21,20 @@
     background-color: #ffffff;
     box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
     margin: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: space-around;*/
+    /*align-items: center;*/
     min-width: 256px;
     min-height: 256px;
     width:auto;
     height: auto;
 
 
+}
+
+.card .card-body {
+    padding: 12px;
 }
 .card-container a{
     text-decoration: none;
@@ -43,9 +47,7 @@
     box-shadow: none;
     font-size: x-large;
 }
-.card *{
-    margin: 5px;
-}
+
 .card .img-badge{
     width: 128px;
     height: auto;
@@ -82,12 +84,13 @@
     align-items: flex-end;
     padding: 20px;
 }
+
 .fixed-footer-button{
     border-radius: 180px;
-    background-color: #1dbd48;
+    background-color: rgba(24, 157, 60, 0.74);
     color: #ffffff;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     margin: 5px;
     padding: 15px;
@@ -102,21 +105,28 @@
     -ms-transition: 0.3s ease-out;
     -o-transition: 0.3s ease-out;
     transition: 0.3s ease-out;
-
-
 }
 .clicked{
-    transform: rotate(-90deg);
-
+    transform: rotate(-135deg);
+    background-color: #ff4b37;
 }
 .fixed-footer-button:hover{
     color: #ffffff;!important;
     cursor: pointer;
-    background-color: #ff4b37;
+
     text-decoration: none;
-    box-shadow: 0px 1px 8px rgba(112, 112, 112, 1);
+    box-shadow: -2px 2px 20px rgba(112, 112, 112, 1);
 
 
+}
+
+.extra-button.save {
+    display: none;
+    background-color: #007fff;
+}
+
+.extra-button.clicked {
+    transform: rotate(0deg);
 }
 thead td{
     font-weight: bolder;

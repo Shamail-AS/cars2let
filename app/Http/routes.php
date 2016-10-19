@@ -184,18 +184,25 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/all', 'CarController@api_all');
             Route::get('/{id}', 'CarController@api_get');
             Route::put('/{id}/update', 'CarController@api_update');
+            Route::put('/post', 'CarController@api_new');
+            Route::get('/{id}/unlink', 'CarController@api_unlink');
+            Route::get('/{id}/delete', 'CarController@api_delete');
         });
 
         Route::group(['prefix' => 'contracts'], function () {
             Route::get('/all', 'ContractController@api_all');
             Route::get('/{id}', 'ContractController@api_get');
             Route::put('/{id}/update', 'ContractController@api_update');
+            Route::put('/post', 'ContractController@api_new');
+            Route::get('/{id}/delete', 'ContractController@api_delete');
         });
 
         Route::group(['prefix' => 'drivers'], function () {
             Route::get('/all', 'DriverController@api_all');
             Route::get('/{id}', 'DriverController@api_get');
             Route::put('/{id}/update', 'DriverController@api_update');
+            Route::put('/post', 'DriverController@api_new');
+            Route::get('/{id}/delete', 'DriverController@api_delete');
         });
 
         Route::group(['prefix' => 'revenues'], function () {
@@ -203,6 +210,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}', 'RevenueController@api_get');
             Route::put('/{id}/update', 'RevenueController@api_update');
             Route::put('/post', 'RevenueController@api_new');
+            Route::get('/{id}/delete', 'RevenueController@api_delete');
         });
     });
 

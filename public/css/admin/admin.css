@@ -1,7 +1,8 @@
 .flex-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+    justify-content: flex-start;
 }
 .flex-admin-areas{
     display:flex;
@@ -24,13 +25,6 @@
     box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
 }
 
-table{
-    padding: 10px;
-    margin:10px;
-    border-radius: 10px;
-    background-color: #ffffff;
-    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
-}
 
 .admin-box:hover{
     box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.97);
@@ -51,32 +45,121 @@ a.nostyle:visited {
     color: inherit;
     cursor: pointer;
 }
-.container > h1{
+
+.padded {
+    padding: 12px;
+}
+
+.wrapper h1 {
     text-align: center;
 }
-.add-btn{
-    z-index: 100;
-    position: fixed;
-    right: 30px;
-    float: right;
-    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
-    border: 2px solid #1dbd48;
-    color: #ffffff;
-    min-width: 50px;
-    min-height: 50px;
-    border-radius: 90px;
-    background-color: #28975e;
 
+.wrapper h1 {
+    font-weight: 300;
+}
+
+.card-container {
+    display: none;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.card-container.column {
+    flex-direction: column;
+}
+
+.card-container .card {
+    padding: 12px;
+    border: thin solid #efac0b;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
+    margin: 12px;
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: space-around;*/
+    /*align-items: center;*/
+    min-width: 256px;
+    min-height: 256px;
+    width: auto;
+    height: auto;
+
+}
+
+.card .card-body {
+    padding: 12px;
+}
+
+.card-container a {
+    text-decoration: none;
+}
+
+.fixed-footer-button-container {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.fixed-footer-button {
+    border-radius: 180px;
+    background-color: rgba(24, 157, 60, 0.74);
+    color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 5px;
+    padding: 15px;
+    height: 60px;
+    width: 60px;
 
+    text-decoration: none;
+    box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.87);
+
+    -webkit-transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    -ms-transition: 0.3s ease-out;
+    -o-transition: 0.3s ease-out;
+    transition: 0.3s ease-out;
+}
+
+.clicked {
+    transform: rotate(-135deg);
+    background-color: #ff4b37;
+}
+
+.fixed-footer-button:hover {
+    color: #ffffff;
+!important;
     cursor: pointer;
+
+    text-decoration: none;
+    box-shadow: -2px 2px 20px rgba(112, 112, 112, 1);
+
+
 }
-.add-btn:hover{
-    box-shadow: 0px 1px 8px rgba(112, 112, 112, 0.97);
+
+.extra-button.save {
+    display: none;
+    background-color: #007fff;
 }
-.add-btn:active{
-    box-shadow: 0px 1px 8px rgba(112, 112, 112, 0.97);
-    border: 2px solid #1dbd48;
+
+.extra-button.clicked {
+    transform: rotate(0deg);
 }
+
+thead td {
+    font-weight: bolder;
+}
+
+
+

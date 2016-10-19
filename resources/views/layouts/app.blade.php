@@ -17,6 +17,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 {{--    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet" />--}}
     <link href="{{asset('css/ng-select.css')}}" rel="stylesheet" />
+    {{--    <link href="{{asset('css/ui-bootstrap-2.2.0-csp.css')}}" rel="stylesheet" />--}}
     @yield('styles')
 
     <!-- JavaScripts -->
@@ -28,9 +29,11 @@
     <script src="{{asset('js/angular/moment-with-locales.min.js')}}"></script>
     {{--<script src="{{asset('js/select2.min.js')}}"></script>--}}
     <script src="{{asset('js/angular/angular.js')}}"></script>
+    <script src="{{asset('js/angular/angular-animate.js')}}"></script>
     <script src="{{asset('js/angular/angular-moment.min.js')}}"></script>
     <script src="{{asset('js/angular/angular-sanitize.js')}}"></script>
     <script src="{{asset('js/angular/ng-select.js')}}"></script>
+    <script src="{{asset('js/angular/ui-bootstrap-tpls-2.2.0.min.js')}}"></script>
 
     @yield('scripts')
 

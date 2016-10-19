@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Log;
+
 
 class InvestorController extends Controller
 {
@@ -65,7 +67,16 @@ class InvestorController extends Controller
 
     public function api_cars($id)
     {
-        return Investor::find($id)->cars;
+        $carList = Investor::find($id)->cars;
+        $carList->each(function ($car) {
+            $car->available = Carbon::parse($car->available_since)->toFormattedDateString();
+            $car->currentContract = $car->currentContract;
+            $car->totalContracts = $car->totalContracts;
+            $car->totalRevenue = $car->totalRevenue;
+            $car->totalRent = $car->totalRent;
+
+        });
+        return $carList;
     }
 
     public function api_contracts($id)
@@ -142,7 +153,16 @@ class InvestorController extends Controller
     }
     public function store(RegisterInvestorRequest $request)
     {
+
+        $mono = Log::getMonolog();
+        $mono->pushHandler(new \Monolog\Handler\FirePHPHandler());
+        $mono->addInfo("Investor store", $request->all());
+
+        dd($request->all());
         $investor = Investor::create($request->all());
+        if (!$request->has('name')) {
+            $investor->name = explode("@", $request->input('email'), 1)[0];
+        }
 
         $user = User::create([
             'email'=>$request->input('email'),
@@ -154,11 +174,10 @@ class InvestorController extends Controller
 
         $activator = AccountActivation::create([
             'email'=>$request->input('email'),
-            'code' => $this->getToken()
+            'code' => random_int(1000, 9999)
         ]);
         $activator->save();
 
-        $email = $this->getWelcomeEmail($investor,$activator);
 
         return view('emails.firstPassword',compact('email'));
 
