@@ -58,7 +58,6 @@ class AssetController extends Controller
         $contract->status = $request->input('status');
         $contract->car_id = $request->input('car');
         $contract->driver_id = $request->input('driver');
-        $contract->investor_id = \Auth::user()->investor->id;
 
         $contract->save();
         return redirect('/investor/contracts');
