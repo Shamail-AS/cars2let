@@ -139,7 +139,7 @@ class InvestorController extends Controller
     }
     public function index()
     {
-        $investorList = Investor::all();
+        $investorList = Investor::orderBy('created_at', 'desc')->get();
         return view('admin.investor.index',compact('investorList'));
     }
 
@@ -158,7 +158,7 @@ class InvestorController extends Controller
         $mono->pushHandler(new \Monolog\Handler\FirePHPHandler());
         $mono->addInfo("Investor store", $request->all());
 
-        dd($request->all());
+
         $investor = Investor::create($request->all());
         if (!$request->has('name')) {
             $investor->name = explode("@", $request->input('email'), 1)[0];
@@ -181,6 +181,33 @@ class InvestorController extends Controller
 
         return view('emails.firstPassword',compact('email'));
 
+    }
+
+    public function admin_store(RegisterInvestorRequest $request)
+    {
+
+        $investor = Investor::create($request->all());
+        if (!$request->has('name')) {
+            $investor->name = explode("@", $request->input('email'), 1)[0];
+        }
+
+        $user = User::create([
+            'email' => $request->input('email'),
+            'password' => bcrypt('sample'),
+            'status' => 'new',
+            'type' => 'investor'
+        ]);
+        $user->save();
+
+        $activator = AccountActivation::create([
+            'delivered_to' => $request->input('email'),
+            'code' => random_int(1000, 9999),
+            'destination' => 'email',
+        ]);
+        $activator->save();
+        $activator->send();
+
+        return redirect(url('/admin/investor/all'));
     }
 
     private function getToken()

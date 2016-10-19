@@ -120,7 +120,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     //create a user with sample password
     //create email with password reset token
     //send email
-    Route::post('/investor/store','InvestorController@store');
+    Route::post('/investor/store', 'InvestorController@admin_store');
 
     //CARS//
     Route::get('/car/all', 'CarController@index');

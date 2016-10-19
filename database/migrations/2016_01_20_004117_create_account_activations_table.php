@@ -14,7 +14,7 @@ class CreateAccountActivationsTable extends Migration
     {
         Schema::create('account_activations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
+            $table->string('delivered_to');
             $table->string('code');
             $table->string('destination');
             $table->boolean('active');

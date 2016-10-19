@@ -10,9 +10,10 @@ class AccountActivation extends Model
 {
     //
     protected  $fillable = [
-        'email',
         'code',
-        'destination'
+        'destination',
+        'delivered_to',
+        'active'
     ];
 
     public function send()
@@ -32,10 +33,11 @@ class AccountActivation extends Model
     public function sendCodeToEmail()
     {
         $code = $this->code;
-        Mail::send('emails.authCode', ['code' => $code], function ($m) use ($code) {
+        $email = $this->delivered_to;
+        Mail::send('emails.authCode', ['code' => $code], function ($m) use ($email) {
             $m->from('registration@cars2let.com', 'Cars2Let Investor Registration');
 
-            $m->to('asdfghjkl_-@live.com', 'Shamail')->subject('Your Authentication Code');
+            $m->to($email, $email)->subject('Your Authentication Code');
         });
     }
 
@@ -49,13 +51,13 @@ class AccountActivation extends Model
     }
     public function scopeValid($query)
     {
-        return $query->where('created_at', '>', Carbon::now()->addMinutes(-10))
+        return $query->where('created_at', '>', Carbon::now()->addMinutes(-30))
             ->where('active', true);
     }
 
     public function scopeFor($query, $email)
     {
-        return $query->where('email', $email);
+        return $query->where('delivered_to', $email);
     }
 
     public function user(){

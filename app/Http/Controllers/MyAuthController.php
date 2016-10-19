@@ -45,7 +45,7 @@ class MyAuthController extends Controller
         else
         {
             $activator = AccountActivation::create([
-                'email' => $email,
+                'delivered_to' => $email,
                 'code' => random_int(1000, 9999),
                 'destination' => $request->input('sendTo') == 'email' ? 'email' : 'phone'
             ]);
