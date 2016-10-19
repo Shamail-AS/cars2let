@@ -51,7 +51,7 @@ class Contract extends Model
     }
     public function scopeLatest($query)
     {
-        return $query->orderBy('paid_on','desc');
+        return $query->orderBy('created_at', 'desc');
     }
     public function getRentAttribute()
     {

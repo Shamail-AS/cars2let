@@ -13,7 +13,7 @@ class Revenue extends Model
 {
     use SoftDeletes;
     //
-    protected $dates = ['paid_on', 'deleted_at'];
+    protected $dates = ['deleted_at'];
 
     public function contract()
     {
@@ -25,14 +25,14 @@ class Revenue extends Model
         $period_start = new Carbon('first friday of this month');
         $period_end = new Carbon('last Friday'); //previous or most recent Friday
         $period_end->addDays(1)->addSecond(-1); //this includes all data on the Friday
-        return $query->where('paid_on','>=',$period_start)
-                     ->where('paid_on','<=',$period_end);
+        return $query->where('created_at', '>=', $period_start)
+            ->where('created_at', '<=', $period_end);
     }
 
     public function getWeekPaidOnAttribute()
     {
         $contract_start = $this->contract->start_date;
-        return $contract_start->diffInWeeks($this->paid_on,false);
+        return $contract_start->diffInWeeks($this->created_at, false);
 
     }
 

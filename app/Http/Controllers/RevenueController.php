@@ -26,7 +26,7 @@ class RevenueController extends Controller
         $r = Revenue::find($request->input('id'));
         $r->amount_paid = (float)$request->input('amount_paid');
         $r->contract_id = $request->input('contract_id');
-        $r->paid_on = $request->input('paid_on');
+
         $r->currency = 'GBP';
 
         $r->save();
