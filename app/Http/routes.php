@@ -64,9 +64,9 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/help', 'HomeController@help');
 
-//    Route::get('/activate/email/{token}','InvestorController@activate');
+//    Route::get('/password/first','InvestorController@activate');
 
-//    Route::post('/password/first','InvestorController@resetFirstTimePassword');
+    Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
 
 });
 Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],function(){

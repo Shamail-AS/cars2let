@@ -47,7 +47,9 @@ class MyAuthController extends Controller
             $activator = AccountActivation::create([
                 'delivered_to' => $email,
                 'code' => random_int(1000, 9999),
-                'destination' => $request->input('sendTo') == 'email' ? 'email' : 'phone'
+                'active' => true,
+                'destination' => $request->input('sendTo') == 'email' ? 'email' : 'phone',
+                'source' => 'self'
             ]);
         }
 
@@ -67,14 +69,22 @@ class MyAuthController extends Controller
     public function verifyCode(VerifyCodeRequest $request)
     {
         $email = $request->session()->get('email');
-        $activator = AccountActivation::valid()->for($email)->latest();
+
+        $activator = AccountActivation::valid()->for($email)->latest()->first();
+
         $expected_code = $activator->code;
         $actual_code = $request->input('code');
 
         if($actual_code == $expected_code)
         {
-            $activator->deactivate();
-            return redirect(url('register'))->withInput(['email' => $email]);
+            $user = User::where('email', $email)->first();
+            if (isset($user)) {
+
+                //$activator->deactivate();
+                return view('auth.passwords.firstTimePassword', compact('email', 'actual_code'));
+            } else {
+                return redirect(url('register'))->withInput(['email' => $email]);
+            }
         }
         else{
             $request->session()->flash('code_mismatch','The provided code doesn\'t match');

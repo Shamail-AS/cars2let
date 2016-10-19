@@ -12,6 +12,7 @@ class AccountActivation extends Model
     protected  $fillable = [
         'code',
         'destination',
+        'source',
         'delivered_to',
         'active'
     ];
@@ -34,7 +35,8 @@ class AccountActivation extends Model
     {
         $code = $this->code;
         $email = $this->delivered_to;
-        Mail::send('emails.authCode', ['code' => $code], function ($m) use ($email) {
+        $admin = $this->source == 'admin';
+        Mail::send('emails.authCode', ['code' => $code, 'admin' => $admin], function ($m) use ($email) {
             $m->from('registration@cars2let.com', 'Cars2Let Investor Registration');
 
             $m->to($email, $email)->subject('Your Authentication Code');

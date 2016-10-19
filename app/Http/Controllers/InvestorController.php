@@ -202,7 +202,9 @@ class InvestorController extends Controller
         $activator = AccountActivation::create([
             'delivered_to' => $request->input('email'),
             'code' => random_int(1000, 9999),
+            'active' => true,
             'destination' => 'email',
+            'source' => 'admin'
         ]);
         $activator->save();
         $activator->send();
@@ -238,16 +240,27 @@ class InvestorController extends Controller
         $this->validate($request,[
             'password'=>'confirmed|min:6|same:password_confirmation'
         ]);
-
         $token = $request->input('token');
-        $user = AccountActivation::where('code','=',$token)->valid()->latest()->user;
+        $email = $request->input('email');
+
+        $activator = AccountActivation::where('code', '=', $token)->valid()->for($email)->latest();
+
+
+        if (!isset($activator))
+            return redirect('/');
+
+        $user = User::where('email', $email)->first();
+
+
         $user->password = bcrypt($request->input('password'));
         $user->status = 'active';
+
         $user->save();
-        AccountActivation::where('code','=',$token)->delete();
+        $activator->deactivate();
 
         if(Auth::attempt(['email'=>$user->email,'password'=>$request->input('password')]))
         {
+
             return redirect(url('/home'));
         }
         else

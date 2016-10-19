@@ -25,8 +25,7 @@ class HomeController extends Controller
     public function redirect()
     {
         $user = Auth::user();
-
-        if ($user->status = 'new') {
+        if ($user->status == 'new') {
             session(['email' => $user->email]);
             return redirect(url('/code/verify'));
         }

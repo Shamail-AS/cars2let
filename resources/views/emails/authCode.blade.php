@@ -75,6 +75,11 @@
             </div>
             <div class="code-sub">
                 <p>Please use this code to complete your registration. It will expire in 30 minutes</p>
+                @if($admin)
+                    <p>Please use 'sample' without the quotes as you first password. You can change it after entering
+                        the code</p>
+
+                @endif
             </div>
         </div>
         <div class="footer">

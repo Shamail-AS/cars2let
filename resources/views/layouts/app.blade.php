@@ -63,7 +63,7 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <!--<li><a href="{{ url('/home') }}">Home</a></li>-->
-					@if (!Auth::guest())
+                    @if (!Auth::guest() && Auth::user()->status == 'active')
                         <li><a href="{{ url('investor') }}">Dashboard</a></li>
                         @if(Auth::user()->isInvestor)
 						<li><a href="{{ url('investor/cars') }}">Asset Reports</a></li>

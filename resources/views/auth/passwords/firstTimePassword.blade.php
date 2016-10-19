@@ -12,7 +12,8 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/first') }}">
                             {!! csrf_field() !!}
 
-                            <input type="hidden" name="token" value="{{ $token }}">
+                            <input type="hidden" name="token" value="{{ $actual_code }}">
+                            <input type="hidden" name="email" value="{{ $email }}">
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Password</label>
