@@ -280,3 +280,7 @@ a i:hover {
 table.reduced td {
     max-width: 100px;
 }
+
+.body .alert {
+    text-align: center;
+}

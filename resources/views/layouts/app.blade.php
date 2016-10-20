@@ -85,9 +85,15 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                                <li><a href="{{ url('/help') }}"><i class="fa fa-question-circle fa-btn"></i>Help</a>
-                                </li>
+                                <li class="list-group-item"><a href="{{ url('/logout') }}"><i
+                                                class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li class="list-group-item"><a href="{{ url('/help') }}"><i
+                                                class="fa fa-question-circle fa-btn"></i>Help</a></li>
+                                @if(Auth::user()->isInvestor)
+                                    <li class="list-group-item"><a
+                                                href="{{ url('/investor/show/'.Auth::user()->investor->id) }}"><i
+                                                    class="fa fa-user fa-btn"></i>Profile</a></li>
+                                @endif
                             </ul>
                         </li>
                     @endif

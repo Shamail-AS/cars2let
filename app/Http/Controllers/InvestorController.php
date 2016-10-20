@@ -147,7 +147,7 @@ class InvestorController extends Controller
 
     public function show($id)
     {
-        return view('admin.investor.show');
+        return view('investor.show');
     }
     public function create()
     {

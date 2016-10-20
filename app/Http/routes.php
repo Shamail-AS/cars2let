@@ -89,6 +89,7 @@ Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],func
     Route::post('/assets/driver/store','AssetController@storeDriver');
 
     Route::get('/partial/create/{item}','AssetController@partialCreate');
+    Route::get('/show/{id}', 'InvestorController@show');
 
 });
 
