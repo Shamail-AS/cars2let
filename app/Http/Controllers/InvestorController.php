@@ -54,6 +54,8 @@ class InvestorController extends Controller
         $investor->name = $request->input('name');
         $investor->passport_num = $request->input('passport_num');
         $investor->dob = $request->input('dob');
+        $investor->acc_period_start = $request->input('acc_period_start');
+        $investor->acc_period_end = $request->input('acc_period_end');
         $investor->phone = $request->input('phone');
         $investor->tracking_url = $request->input('tracking_url');
         $investor->save();
@@ -186,7 +188,9 @@ class InvestorController extends Controller
     public function admin_store(RegisterInvestorRequest $request)
     {
 
+
         $investor = Investor::create($request->all());
+
         if (!$request->has('name')) {
             $investor->name = explode("@", $request->input('email'), 1)[0];
         }
@@ -201,12 +205,11 @@ class InvestorController extends Controller
 
         $activator = AccountActivation::create([
             'delivered_to' => $request->input('email'),
-            'code' => random_int(1000, 9999),
             'active' => true,
             'destination' => 'email',
             'source' => 'admin'
         ]);
-        $activator->save();
+        $activator->renew();
         $activator->send();
 
         return redirect(url('/admin/investor/all'));

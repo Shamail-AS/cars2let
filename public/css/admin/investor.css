@@ -12,7 +12,7 @@
 }
 
 .table-container.detail {
-    max-height: 300px;
+    max-height: 400px;
     overflow: auto;
     padding: 5px;
 }
@@ -46,6 +46,7 @@
 
 .profile-section {
     background-color: rgba(240, 240, 240, 0.35);
+    flex: 0 0 auto;
 }
 
 .profile-section .body .pre-body {
@@ -60,6 +61,7 @@
 
 .profile-section .body .main-body {
     flex: 1 0 auto;
+    position: relative;
 }
 
 .main-body .form-group {
@@ -76,11 +78,13 @@
 }
 
 .pre-body {
+    z-index: 10;
 }
 
 .main-body {
     padding: 5px;
 }
+
 
 .post-body {
     margin-left: 20px;
@@ -199,6 +203,12 @@
     background-color: rgba(191, 191, 191, 0.11);
 }
 
+.placeholder p {
+    max-width: 100%;
+    text-wrap: normal;
+    text-align: center;
+}
+
 .complete {
     color: #68d000;
 }
@@ -253,4 +263,20 @@ a i:hover {
     color: #ff4b37;
     text-decoration: none;
 
+}
+
+.modal-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table.reduced td {
+    max-width: 100px;
 }

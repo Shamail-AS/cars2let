@@ -10,7 +10,7 @@ class Investor extends Model
 {
     use SoftDeletes;
     //
-    protected $fillable =['name','email','phone','passport_num','dob'];
+    protected $fillable = ['name', 'email', 'phone', 'passport_num', 'dob', 'tracking_url', 'acc_period_start', 'acc_period_end'];
 
     protected $dates = ['dob', 'deleted_at', 'acc_period_start', 'acc_period_end'];
 

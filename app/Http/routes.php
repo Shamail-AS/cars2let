@@ -58,7 +58,11 @@ Route::group(['middleware' => 'web'], function () {
         return view('auth.verify');
     });
     //verify the code that user entered to match with database
-    Route::post('/code/verify','MyAuthController@verifyCode');
+    //Route::post('/code/verify','MyAuthController@verifyCode');
+
+    //Verify code sent to email
+    Route::get('/verify/token/{token}', 'MyAuthController@verifyToken');
+
 
     Route::get('/home', 'HomeController@redirect');
 
@@ -67,6 +71,7 @@ Route::group(['middleware' => 'web'], function () {
 //    Route::get('/password/first','InvestorController@activate');
 
     Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
+
 
 });
 Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],function(){

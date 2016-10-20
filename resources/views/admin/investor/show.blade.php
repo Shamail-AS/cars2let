@@ -18,10 +18,35 @@
                 </div>
 
                 <form class="main-body">
+                    <div ng-show="vm.investor.loading" class="modal-cover">
+                        <i class="fa fa-spinner fa-5x fa-spin"></i>
+                    </div>
 
                     <div class="form-group">
                         <label>Email</label>
                         <input class="form-control" type="text" ng-model="vm.investor.email">
+                    </div>
+                    <div class="form-group">
+                        <label>Tracker URL</label>
+                        <input class="form-control" type="text" ng-model="vm.investor.tracking_url">
+                    </div>
+                    <div class="form-group">
+                        <label>Accounting Period Start</label>
+                        <input type="text" class="form-control" uib-datepicker-popup
+                               ng-model="vm.investor.dt_acc_period_start"
+                               is-open="vm.investor.start_picker_open" datepicker-options="dateOptions"
+                               ng-required="true"
+                               close-text="Close"
+                               ng-click="openStartPicker(vm.investor)"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Accounting Period End</label>
+                        <input type="text" class="form-control" uib-datepicker-popup
+                               ng-model="vm.investor.dt_acc_period_end"
+                               is-open="vm.investor.end_picker_open" datepicker-options="dateOptions"
+                               ng-required="true"
+                               close-text="Close"
+                               ng-click="openEndPicker(vm.investor)"/>
                     </div>
                     <div class="form-group">
                         <label>Name</label>
@@ -44,10 +69,7 @@
                         <label>Phone</label>
                         <input class="form-control" type="text" ng-model="vm.investor.phone">
                     </div>
-                    <div class="form-group">
-                        <label>Tracker URL</label>
-                        <input class="form-control" type="text" ng-model="vm.investor.tracking_url">
-                    </div>
+
                     <div class="form-group">
                         <label>Registered Since</label>
 
@@ -61,6 +83,7 @@
                     {{--<button ng-click="deleteObj(vm.investor,'investor')" class="btn btn-xs btn-danger">Delete--}}
                     {{--</button>--}}
                 </form>
+
 
             </div>
         </div>
@@ -114,19 +137,12 @@
 
                                     <td ng-if="!car.edit_mode">@{{ formatDate(car.dt_available_since)}}</td>
                                     <td ng-if="car.edit_mode">
-                                        <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup
-                                                   ng-model="car.dt_available_since"
-                                                   is-open="car.picker_open" datepicker-options="dateOptions"
-                                                   ng-required="true"
-                                                   close-text="Close"/>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default"
-                                                    ng-click="openPicker(car)">
-                                                <i class="fa fa-calendar"></i>
-                                            </button>
-                                        </span>
-                                        </p>
+                                        <input type="text" class="form-control" uib-datepicker-popup
+                                               ng-model="car.dt_available_since"
+                                               is-open="car.picker_open" datepicker-options="dateOptions"
+                                               ng-required="true"
+                                               close-text="Close"
+                                               ng-click="openPicker(car)"/>
                                     </td>
 
                                     <td>@{{ car.currentContract.id || 'None' }}</td>
@@ -153,7 +169,9 @@
                             </table>
                         </div>
                         <div ng-if="vm.investor.cars.length == 0" class="placeholder">
-                            This investor doesn't have any Cars. Add a car by clicking the 'plus' icon
+                            <p>This investor doesn't have any Cars. </p>
+
+                            <p>Add a car by clicking the 'plus' icon</p>
                         </div>
                     </div>
                     <!--Contracts container-->
@@ -214,7 +232,7 @@
 
                                         <td ng-if="!contract.edit_mode">@{{ contract.car.reg_no }}</td>
                                         <td ng-if="contract.edit_mode">
-                                            <ui-select ng-model="contract.car">
+                                            <ui-select style="min-width: 120px;" ng-model="contract.car">
                                                 <ui-select-match allow-clear="true">
                                                     <span ng-bind="contract.car.reg_no"></span>
                                                 </ui-select-match>
@@ -227,7 +245,7 @@
 
                                         <td ng-if="!contract.edit_mode">@{{ contract.driver.name }}</td>
                                         <td ng-if="contract.edit_mode">
-                                            <ui-select ng-model="contract.driver">
+                                            <ui-select style="min-width: 100px;" ng-model="contract.driver">
                                                 <ui-select-match allow-clear="true">
                                                     <span ng-bind="contract.driver.name"></span>
                                                 </ui-select-match>
@@ -240,41 +258,31 @@
 
                                         <td ng-if="!contract.edit_mode">@{{ formatDate(contract.dt_start_date) }}</td>
                                         <td ng-if="contract.edit_mode">
-                                            <p class="input-group">
-                                                <input type="text" class="form-control" uib-datepicker-popup
-                                                       ng-model="contract.dt_start_date"
-                                                       is-open="contract.start_picker_open"
-                                                       datepicker-options="dateOptions"
-                                                       ng-required="true"
-                                                       close-text="Close"/>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default"
-                                                    ng-click="openStartPicker(contract)">
-                                                <i class="fa fa-calendar"></i>
-                                            </button>
-                                        </span>
-                                            </p>
+                                            <input style="max-width: 110px;" type="text" class="form-control"
+                                                   uib-datepicker-popup
+                                                   ng-model="contract.dt_start_date"
+                                                   is-open="contract.start_picker_open"
+                                                   datepicker-options="dateOptions"
+                                                   ng-required="true"
+                                                   close-text="Close"
+                                                   ng-click="openStartPicker(contract)"/>
                                         </td>
                                         <td ng-if="!contract.edit_mode">@{{ formatDate(contract.dt_end_date) }}</td>
                                         <td ng-if="contract.edit_mode">
-                                            <p class="input-group">
-                                                <input type="text" class="form-control" uib-datepicker-popup
-                                                       ng-model="contract.dt_end_date"
-                                                       is-open="contract.end_picker_open"
-                                                       datepicker-options="dateOptions"
-                                                       ng-required="true"
-                                                       close-text="Close"/>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default"
-                                                    ng-click="openEndPicker(contract)">
-                                                <i class="fa fa-calendar"></i>
-                                            </button>
-                                        </span>
-                                            </p>
+                                            <input style="max-width: 110px;" type="text" class="form-control"
+                                                   uib-datepicker-popup
+                                                   ng-model="contract.dt_end_date"
+                                                   is-open="contract.end_picker_open"
+                                                   datepicker-options="dateOptions"
+                                                   ng-required="true"
+                                                   close-text="Close"
+                                                   ng-click="openEndPicker(contract)"/>
                                         </td>
 
-                                        <td ng-if="!contract.edit_mode">@{{ contract.rate }}</td>
-                                        <td ng-if="contract.edit_mode"><input class="form-control"
+                                        <td style="max-width: 10px;"
+                                            ng-if="!contract.edit_mode">@{{ contract.rate }}</td>
+                                        <td ng-if="contract.edit_mode"><input style="max-width: 70px;"
+                                                                              class="form-control" type="text"
                                                                               ng-model="contract.rate">
                                         </td>
 
@@ -292,7 +300,7 @@
                                                     class="btn btn-xs btn-warning"
                                                     uib-popover-template="dynamicPopover.revenueListUrl"
                                                     popover-trigger="dynamicPopover.trigger"
-                                                    popover-placement="right"
+                                                    popover-placement="left-top"
                                                     ng-click="showRevenue(contract.id)">
                                                 Payments
                                             </button>
@@ -323,7 +331,9 @@
                             </div>
                         </div>
                         <div ng-if="vm.investor.contracts.length == 0" class="placeholder">
-                            This investor doesn't have any contracts. Click the plus icon to create one now
+                            <p>This investor doesn't have any contracts.</p>
+
+                            <p> Click the plus icon to create one now</p>
                         </div>
                     </div>
                     <!--Drivers container-->
@@ -335,10 +345,10 @@
                             </div>
                         </div>
                         <div class="table-container" ng-if="vm.investor.drivers.length > 0">
-                            <table class="table table-striped">
+                            <table class="table table-striped reduced">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
+                                    {{--<th>#</th>--}}
                                     <th>Name</th>
                                     <th>License #</th>
                                     <th>PCO License #</th>
@@ -353,7 +363,7 @@
                                 <tr ng-repeat="driver in vm.investor.drivers
                             | driverFilter : search.drivers
                             ">
-                                    <td>@{{ driver.id }}</td>
+                                    {{--                                    <td>@{{ driver.id }}</td>--}}
 
                                     <td ng-if="!driver.edit_mode">@{{ driver.name }}</td>
                                     <td ng-if="driver.edit_mode"><input class="form-control" ng-model="driver.name">
@@ -368,7 +378,7 @@
                                     <td ng-if="driver.edit_mode"><input class="form-control"
                                                                         ng-model="driver.pco_license_no"></td>
 
-                                    <td ng-if="!driver.edit_mode">@{{ driver.email }}</td>
+                                    <td style="max-width: 130px;" ng-if="!driver.edit_mode">@{{ driver.email }}</td>
                                     <td ng-if="driver.edit_mode"><input class="form-control" ng-model="driver.email">
                                     </td>
 
@@ -378,18 +388,12 @@
 
                                     <td ng-if="!driver.edit_mode">@{{ getAge(driver.dob) }}</td>
                                     <td ng-if="driver.edit_mode">
-                                        <p class="input-group">
-                                            <input type="text" class="form-control" uib-datepicker-popup
-                                                   ng-model="driver.dt_dob"
-                                                   is-open="driver.picker_open" datepicker-options="dateOptions"
-                                                   ng-required="true"
-                                                   close-text="Close"/>
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" class="btn btn-default"
-                                                                            ng-click="openPicker(driver)"><i
-                                                                                class="fa fa-calendar"></i></button>
-                                                                </span>
-                                        </p>
+                                        <input type="text" class="form-control" uib-datepicker-popup
+                                               ng-model="driver.dt_dob"
+                                               is-open="driver.picker_open" datepicker-options="dateOptions"
+                                               ng-required="true"
+                                               close-text="Close"
+                                               ng-click="openPicker(driver)"/>
                                     </td>
                                     <td>@{{ formatDate(driver.created_at) }}</td>
                                     <td>
@@ -416,7 +420,9 @@
 
                         </div>
                         <div ng-if="vm.investor.drivers.length == 0" class="placeholder">
-                            This investor doesn't have any related drivers. Create contracts to relate drivers
+                            <p>This investor doesn't have any related drivers.</p>
+
+                            <p> Create contracts to relate drivers</p>
                         </div>
                     </div>
 

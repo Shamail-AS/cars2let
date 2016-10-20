@@ -27,7 +27,7 @@ class AccountActivation extends Model
 
     public function renew()
     {
-        $this->code = random_int(1000, 9999);
+        $this->code = $this->generate();
         $this->save();
     }
 
@@ -36,7 +36,7 @@ class AccountActivation extends Model
         $code = $this->code;
         $email = $this->delivered_to;
         $admin = $this->source == 'admin';
-        Mail::send('emails.authCode', ['code' => $code, 'admin' => $admin], function ($m) use ($email) {
+        Mail::send('emails.authCode', ['code' => $code], function ($m) use ($email) {
             $m->from('registration@cars2let.com', 'Cars2Let Investor Registration');
 
             $m->to($email, $email)->subject('Your Authentication Code');
@@ -70,6 +70,15 @@ class AccountActivation extends Model
     {
         $this->active = false;
         $this->save();
+    }
+
+    public function generate()
+    {
+        if (function_exists('com_create_guid') === true) {
+            return trim(com_create_guid(), '{}');
+        }
+
+        return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
     }
 
 

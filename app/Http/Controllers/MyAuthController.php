@@ -46,11 +46,11 @@ class MyAuthController extends Controller
         {
             $activator = AccountActivation::create([
                 'delivered_to' => $email,
-                'code' => random_int(1000, 9999),
                 'active' => true,
                 'destination' => $request->input('sendTo') == 'email' ? 'email' : 'phone',
                 'source' => 'self'
             ]);
+            $activator->renew();
         }
 
         $activator->send();
@@ -66,6 +66,8 @@ class MyAuthController extends Controller
         $activation->send();
     }
 
+    //MANUAL ENTRY OF CODE
+    //TODO : REMOVE THIS FUNCTION USE URL based AUTH INSTEAD
     public function verifyCode(VerifyCodeRequest $request)
     {
         $email = $request->session()->get('email');
@@ -121,6 +123,33 @@ class MyAuthController extends Controller
 //        }
 //
 //    }
+
+    public function verifyToken($token)
+    {
+        $activator = AccountActivation::where('code', $token)->valid()->first();
+        if (isset($activator)) {
+            $dest = $activator->delivered_to;
+            if ($activator->destination == 'email')
+                $user = User::where('email', $dest)->first();
+            else
+                $user = User::where('phone', $dest)->first();
+
+            if (isset($user)) {
+
+                //$activator->deactivate();
+                return view('auth.passwords.firstTimePassword', compact('dest', 'token'));
+            } else {
+                if ($activator->destination == 'email')
+                    return redirect(url('register'))->withInput(['email' => $dest]);
+                else
+                    return redirect(url('register'))->withInput(['phone' => $dest]);
+
+
+            }
+        } else {
+            return redirect(url('/'));
+        }
+    }
 
     public function register(Request $request)
     {

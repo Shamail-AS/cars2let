@@ -34,11 +34,13 @@
                     </div>
                     <div class="form-group">
                         <label>Accounting Period Start</label>
-                        <input class="form-control dp" type="date" name="acc_start" placeholder="Start" required="true">
+                        <input class="form-control dp" type="date" name="acc_period_start" placeholder="Start"
+                               required="true">
                     </div>
                     <div class="form-group">
                         <label>Accounting Period End</label>
-                        <input class="form-control dp" type="date" name="acc_end" placeholder="End" required="true">
+                        <input class="form-control dp" type="date" name="acc_period_end" placeholder="End"
+                               required="true">
 
                     </div>
                 </div>

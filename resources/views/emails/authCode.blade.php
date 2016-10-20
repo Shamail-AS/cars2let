@@ -7,12 +7,9 @@
             border: 1px solid #d5d5d5;
             border-radius: 35px;
             background-color: #ffffff;
-            box-shadow: 0px 0.5px 8px rgba(112, 112, 112, 0.47);
+
             margin: 42px 12px 40px 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: stretch;
+
             min-width: 256px;
             min-height: 256px;
             width: auto;
@@ -22,45 +19,38 @@
         .code-main {
             border-top-left-radius: 35px;
             border-top-right-radius: 35px;
-            flex: 2 0 auto;
-            background-color: rgb(53, 189, 83);
             padding: 50px;
-            display: flex;
-            justify-content: space-around;
-            align-items: stretch;
+            text-align: center;
 
         }
 
         .code-sub {
             padding: 10px;
-            flex: 1 0 auto;
-            display: flex;
-            justify-content: center;
+            text-align: center;
+            background-color: rgb(53, 189, 83);
             align-items: center;
         }
 
         .code-sub p {
             font-weight: lighter;
-            color: #7e7e7e;
-            font-size: 1.2em;
+            color: #ffffff;
+            font-size: 1em;
             margin: 2px;
         }
 
         .code-main p {
             font-weight: bolder;
-            color: #ffffff;
-            font-size: 6em;
+            color: #7e7e7e;
+            font-size: 1.2em;
             margin: 2px;
         }
 
         .footer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            text-align: center;
         }
 
         .footer p {
-            font-size: x-small;
+            font-size: small;
             color: gray;
         }
     </style>
@@ -71,15 +61,10 @@
     <div class="container">
         <div class="code-container">
             <div class="code-main">
-                <p>{{$code}}</p>
+                <p>Please click <a href="{{url('/verify/token/'.$code)}}">here</a> to complete your registration</p>
             </div>
             <div class="code-sub">
-                <p>Please use this code to complete your registration. It will expire in 30 minutes</p>
-                @if($admin)
-                    <p>Please use 'sample' without the quotes as you first password. You can change it after entering
-                        the code</p>
-
-                @endif
+                Your auth token {{$code}}
             </div>
         </div>
         <div class="footer">

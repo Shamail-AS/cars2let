@@ -33,6 +33,8 @@ app.factory('investorDataModelFactory', ['moment', function (moment) {
 
     investorDataModelFactory.withExtras = function (investor) {
         investor.dt_dob = moment(investor.dob).toDate();
+        investor.dt_acc_period_start = moment(investor.acc_period_start).toDate();
+        investor.dt_acc_period_end = moment(investor.acc_period_end).toDate();
         return investor;
     };
     investorDataModelFactory.withDriverExtras = function (drivers) {
