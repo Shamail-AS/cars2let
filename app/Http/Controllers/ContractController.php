@@ -186,13 +186,13 @@ class ContractController extends Controller
             if (isset($summed_revs[$i])) {
                 $data[$i] = $summed_revs[$i];
                 $data[$i]['revenue'] = $rate;
-                $data[$i]['balance'] = 0;
+                $data[$i]['balance'] = $data[$i]['revenue'] - $data[$i]['paid'];
             } else {
                 $data[$i] = [
                     'week' => $i,
                     'revenue' => $rate,
                     'paid' => 0,
-                    'balance' => 0
+                    'balance' => -$rate
                 ];
             }
 
@@ -202,7 +202,7 @@ class ContractController extends Controller
         return $data;
     }
 
-    public function  ContractRevenueDetail($id)
+    public function ContractRevenueDetail($id)
     {
         $contract = Contract::findOrFail($id);
         $revenues = $contract->revenues->groupBy('weekPaidOn');

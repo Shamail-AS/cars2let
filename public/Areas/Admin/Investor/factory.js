@@ -113,6 +113,9 @@ app.factory('contractDataFactory', ['$http', function ($http) {
     contractDataFactory.deleteContract = function (id) {
         return $http.get(URL_BASE + '/' + id + '/' + 'delete');
     };
+    contractDataFactory.getContractRevenueDetail = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/revenue/detail');
+    };
 
     return contractDataFactory;
 }]);

@@ -18,6 +18,14 @@ app.controller('investorController',
                   moment) {
 
             //Objects
+            $scope.dynamicPopover = {
+                content: 'Hello, World!',
+                templateUrl: 'contract_payment.html',
+                revenueListUrl: 'revenue_list.html',
+                title: 'Title',
+                trigger: 'focus'
+            };
+
             $scope.vm = {
                 'investor': {},
                 'create': {
@@ -26,16 +34,15 @@ app.controller('investorController',
                     'contract': false,
                     'driver': false
                 },
+                'selected_contract': -1,
                 'statuses': []
             };
             $scope.search = {
-                'revenues': '',
                 'cars': '',
                 'contracts': '',
                 'drivers': ''
             };
             $scope.active = {
-                'revenues': false,
                 'cars': false,
                 'contracts': true,
                 'drivers': false,
@@ -127,6 +134,9 @@ app.controller('investorController',
                 cancel_add();
                 load_revenues();
             };
+            $scope.showRevenue = function (id) {
+                $scope.vm.selected_contract = id;
+            };
             $scope.showCars = function () {
                 $scope.active.cars = true;
                 $scope.active.revenues =
@@ -151,28 +161,37 @@ app.controller('investorController',
                 cancel_add();
                 load_drivers();
             };
+            $scope.addNew = function () {
+                $scope.vm.create.car = $scope.active.cars;
+                $scope.vm.create.contract = $scope.active.contracts;
 
-            $scope.add = function (item) {
-                $scope.vm.create.revenue = item == 'revenue';
-                $scope.vm.create.car = item == 'car';
-                $scope.vm.create.contract = item == 'contract';
-                $scope.vm.create.driver = item == 'driver';
+                $('.fixed-footer-button').toggleClass('clicked');
+                $('.card-container').fadeToggle('fast');
+                $('.extra-button').fadeToggle('fast');
+
             };
             $scope.cancelAdd = function () {
                 cancel_add();
             };
-            $scope.showPay = function (contract) {
-                contract.paying = true;
+            $scope.togglePay = function (contract) {
+                contract.paying = !contract.paying;
             };
             $scope.cancelPay = function (contract) {
                 contract.paying = false;
                 contract.payment = 0;
             };
             $scope.pay = function (contract) {
+                if (!$scope.isNumber(contract.payment)) {
+                    alert("invalid amount");
+                    return;
+                }
                 var payment = parseFloat(contract.payment);
                 pay_investor_contract(contract.id, payment);
-                contract.paying = false;
+            };
 
+
+            $scope.isNumber = function (n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
             };
 
             $scope.newRevenue = function () {
@@ -257,6 +276,9 @@ app.controller('investorController',
 
 
             var cancel_add = function () {
+                $('.fixed-footer-button').removeClass('clicked');
+                $('.card-container').fadeOut('fast');
+                $('.extra-button').fadeOut('fast');
                 $scope.vm.create.revenue =
                     $scope.vm.create.car =
                         $scope.vm.create.contract =
@@ -287,6 +309,7 @@ app.controller('investorController',
                     .success(function (data) {
                         $scope.vm.investor.contracts = investorDataModelFactory.withContractExtras(data);
                         $scope.active.loading = false;
+                        $scope.vm.selected_contract = $scope.vm.investor.contracts[0].id;
                     });
             };
             var load_cars = function () {

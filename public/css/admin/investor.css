@@ -1,18 +1,51 @@
-.flex-container {
-    background-color: #ffffff;
-    padding: 12px;
+.admin-flex-container {
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+}
+
+.table-container {
+    overflow: auto;
+    flex: 1 0 auto;
+}
+
+.table-container.detail {
+    max-height: 300px;
+    overflow: auto;
+    padding: 5px;
+}
+
+.investor-flex-container {
+    background-color: transparent;
+    padding: 12px;
+    display: flex;;
     justify-content: flex-start;
     align-items: stretch;
     flex-direction: row;
 }
 
+.body {
+    background-color: transparent;
+}
 .row {
     flex-direction: row;
+!important;
 }
 
 .col {
     flex-direction: column;
+!important;
+}
+
+.grow {
+    flex: 1 0 auto;
+!important;
+}
+
+.profile-section {
+    background-color: rgba(240, 240, 240, 0.35);
 }
 
 .profile-section .body .pre-body {
@@ -22,11 +55,15 @@
     justify-content: space-around;
     align-items: center;
 
+    margin-bottom: -15px;
 }
 
 .profile-section .body .main-body {
     flex: 1 0 auto;
+}
 
+.main-body .form-group {
+    margin-bottom: 8px;
 }
 
 .profile-section .body .post-body {
@@ -39,8 +76,6 @@
 }
 
 .pre-body {
-    margin-right: 20px;
-    padding: 5px;
 }
 
 .main-body {
@@ -53,7 +88,7 @@
 }
 
 .pre-body, .post-body * {
-    margin: 2px;
+
 }
 
 .sub-nav {
@@ -139,7 +174,7 @@
     border-radius: 180px;
     background-color: #1dbd48;
     color: #ffffff;
-    display: flex;
+    display: none;
     justify-content: space-around;
     align-items: center;
     margin: 5px;

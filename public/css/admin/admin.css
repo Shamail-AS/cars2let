@@ -161,5 +161,8 @@ thead td {
     font-weight: bolder;
 }
 
+input.ng-invalid {
+    background-color: rgba(233, 51, 54, 0.35);
+}
 
 

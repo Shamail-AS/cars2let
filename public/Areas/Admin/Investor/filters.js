@@ -19,3 +19,46 @@ function parseDate(input) {
     var parts = input.split('-');
     return new Date(parts[2], parts[1] - 1, parts[0]);
 }
+app.filter("contractFilter", function () {
+    return function (items, text) {
+
+        text = text.toLowerCase();
+
+        var returnCollection = [];
+        for (var i = 0; i < items.length; i++) {
+            var _reg_no = items[i].car.reg_no.toLowerCase();
+            var _driver_name = items[i].driver.name.toLowerCase();
+            var _status = items[i].x_status.key.toLowerCase();
+            if (_driver_name.includes(text)
+                || _reg_no.includes(text)
+                || _status.includes(text)) {
+                returnCollection.push(items[i]);
+            }
+        }
+        return returnCollection;
+    };
+});
+
+app.filter("driverFilter", function () {
+    return function (items, text) {
+
+        text = text.toLowerCase();
+
+        var returnCollection = [];
+        for (var i = 0; i < items.length; i++) {
+            var _name = items[i].name.toLowerCase();
+            var _license = items[i].license_no.toLowerCase();
+            var _pco = items[i].pco_license_no.toLowerCase();
+            var _email = items[i].email.toLowerCase();
+            var _phone = items[i].phone.toLowerCase();
+            if (_name.includes(text)
+                || _license.includes(text)
+                || _email.includes(text)
+                || _phone.includes(text)
+                || _pco.includes(text)) {
+                returnCollection.push(items[i]);
+            }
+        }
+        return returnCollection;
+    };
+});

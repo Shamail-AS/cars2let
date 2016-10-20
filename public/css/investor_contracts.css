@@ -177,7 +177,7 @@
 
 .table-container{
     overflow: auto;
-    flex-grow: 1;
+    flex: 1 0 auto;
 }
 .fixed-footer-button-container{
     position: absolute;
