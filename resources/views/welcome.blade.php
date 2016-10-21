@@ -44,7 +44,7 @@
 
         body {
             background-image: url("/img/background/simple1.jpg");
-            background-size: 100% auto; /* <------ */
+            background-size: 100% 100%; /* <------ */
             background-repeat: no-repeat;
             background-position: center center;
         }
