@@ -1,2 +1,2 @@
-var app = angular.module('cars2let',['angularMoment','ui.select','ngSanitize']);
+var app = angular.module('cars2let', ['angularMoment', 'ui.select', 'ngSanitize', 'ui.bootstrap']);
 

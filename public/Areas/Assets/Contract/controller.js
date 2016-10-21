@@ -9,13 +9,18 @@ app.controller('contractController',
             //Objects
             $scope.vm = {
                 'contract_collection': [],
-                'contract': {},
+                'contract': {}, //selected contract
                 'prev_contract': {},
                 'contract_revenue_summary': [],
                 'contract_revenue_detail': [],
                 'contract_revenue_detail_week': 0,
                 'contract_revenue_week_detail': [],
                 'status_collection': []
+            };
+            $scope.popover = {
+                revenueListUrl: 'revenue_list.html',
+                title: 'Payments made',
+                trigger: 'focus'
             };
             $scope.filters = {
                 'car': '',
@@ -33,13 +38,9 @@ app.controller('contractController',
                 get_contracts();
             };
             $scope.getContract = function (id) {
-
-                //$scope.vm.prev_contract = $scope.vm.contract;
                 get_contract(id,false);
                 get_contract_revenue_summary(id);
                 get_contract_revenue_detail(id);
-
-
             };
 
             $scope.getContractRevenueSummary = function (id) {
@@ -55,7 +56,6 @@ app.controller('contractController',
                 return dt.toLocaleDateString();
             };
             $scope.setDetailWeek = function (weekNo) {
-
                 $scope.vm.contract_revenue_detail_week = weekNo;
                 get_contract_revenue_detail($scope.vm.contract.id);
             };

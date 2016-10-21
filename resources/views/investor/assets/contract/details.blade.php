@@ -125,8 +125,18 @@
                         <td>Paid to investor</td>
                         <td ng-repeat="week in vm.contract_revenue_summary"
                             ng-click="setDetailWeek(week.week)"
-                            class="pointer">
-                            @{{ week.paid }}
+                                >
+                            <button type="button"
+                                    class="btn btn-sm btn-info"
+                                    uib-popover-template="popover.revenueListUrl"
+
+                                    popover-placement="top"
+                                    popover-title="@{{ popover.title }}"
+                                    popover-class="revenue-popover-wrapper"
+                                    ng-click="setDetailWeek(week.week)">
+                                @{{ week.paid }}
+                            </button>
+                            @include('partials.investor.revenue_list')
                         </td>
 
                     </tr>
@@ -140,7 +150,7 @@
                     <h4>*Subject to adjustments for VAT and other expenses</h4>
                 </div>
             </div>
-            <div class="detail-body-extension" ng-if="vm.contract_revenue_week_detail.length > 0">
+            <!--<div class="detail-body-extension" ng-if="vm.contract_revenue_week_detail.length > 0">
 
                 <h3>Week @{{ vm.contract_revenue_detail_week }} detail</h3>
 
@@ -160,7 +170,7 @@
 
                 </table>
 
-            </div>
+            </div>-->
 
             <div class="empty-detail-body" >
                 <h1 ng-if="vm.contract.id == undefined">Please select a contract to view details</h1>
