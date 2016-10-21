@@ -36,7 +36,7 @@ class MyAuthController extends Controller
         $email = $request->session()->get('email');
         if (!$email) return redirect(url('/myregister'));
 
-        $activator = AccountActivation::valid()->for($email)->latest();
+        $activator = AccountActivation::valid()->for($email)->latest()->first();
         if (isset($activator))
         {
             $activator->renew();

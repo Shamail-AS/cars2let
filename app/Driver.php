@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Driver extends Model
 {
@@ -26,10 +27,6 @@ class Driver extends Model
     public function cars()
     {
         return $this->belongsToMany('App\Car','contracts');
-    }
-    public function investors()
-    {
-        return $this->belongsToMany('App\Investor','contracts');
     }
     public function revenues()
     {
@@ -59,7 +56,7 @@ class Driver extends Model
 
     public function getTotalRevenueAttribute()
     {
-        $contracts =  $this->contracts;
+        $contracts = $this->investorContracts;
         $revenue = 0;
         foreach ($contracts as $contract){
             $revenue += $contract->revenue;
@@ -69,7 +66,7 @@ class Driver extends Model
     }
     public function getTotalPaidAttribute()
     {
-        $contracts =  $this->contracts;
+        $contracts = $this->investorContracts;
         $rent = 0;
         foreach ($contracts as $contract){
             $rent += $contract->rent;
@@ -82,7 +79,7 @@ class Driver extends Model
 
     public function getTotalRevenueForCurrentPeriodAttribute()
     {
-        $contracts =  $this->contracts;
+        $contracts = $this->investorContracts;
         $revenue = 0;
         foreach ($contracts as $contract){
             $revenue += $contract->revenueForCurrentPeriod;
@@ -92,7 +89,7 @@ class Driver extends Model
     }
     public function getTotalPaidForCurrentPeriodAttribute()
     {
-        $contracts =  $this->contracts;
+        $contracts = $this->investorContracts;
         $rent = 0;
         foreach ($contracts as $contract){
             $rent += $contract->rentForCurrentPeriod;
@@ -110,5 +107,21 @@ class Driver extends Model
     public function getCurrentCarAttribute()
     {
         return $this->currentContract->car;
+    }
+
+    public function isForInvestor($contract)
+    {
+        return $contract->investor->id == Auth::user()->investor->id;
+    }
+
+    public function getInvestorContractsAttribute()
+    {
+        $id = Auth::user()->investor->id;
+        $data = collect([]);
+        foreach ($this->contracts as $contract) {
+            if ($contract->investor->id == $id)
+                $data->push($contract);
+        }
+        return $data;
     }
 }

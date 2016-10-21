@@ -11,7 +11,7 @@
 
     <div class="contract-details-table row">
         <div class="cell">
-            <h1><a href="{{url("investor/drivers")}}"><i class="fa fa-chevron-left"></i> All Drivers</a></h1>
+            <a href="{{url("investor/drivers")}}"><i class="fa fa-chevron-circle-left fa-4x"></i></a>
         </div>
         <div class="cell">
             <h1>{{$driver->name}}</h1>
@@ -28,7 +28,6 @@
                     <td>Total Contracts</td>
                     <td>Total Revenue (£)</td>
                     <td>Paid to investor (£)</td>
-                    <td> </td>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,10 +40,7 @@
                     <td>{{$driver->totalContracts}}</td>
                     <td>{{$driver->totalRevenue}}</td>
                     <td>{{$driver->totalPaid}}</td>
-                    <td>
-                        {{--<button class="btn btn-xs btn-success" onclick="$('#cardDetails').slideToggle('fast')">Details</button>--}}
-                        <button class="btn btn-xs btn-danger">Edit</button>
-                    </td>
+
                 </tr>
                 </tbody>
             </table>
@@ -73,8 +69,8 @@
                 </tr>
                 <tr>
                     <td>Balance</td>
-                    <td>calculation?</td>
-                    <td>calculation?</td>
+                    <td>{{$driver->totalRevenue - $driver->totalPaid}}</td>
+                    <td>{{$driver->totalRevenueForCurrentPeriod - $driver->totalPaidForCurrentPeriod}}</td>
                 </tr>
             </table>
             <div class="heading">
@@ -113,9 +109,7 @@
                 </thead>
                 <tbody>
 
-                @foreach($driver->contracts as $contract)
-                    @if($contract->investor->id != Auth::user()->investor->id)
-                        @else
+                @foreach($driver->investorContracts as $contract)
                     <tr>
                         @if($contract->status==1)
                             <td><i class="fa fa-circle ongoing"></i></td>
@@ -138,7 +132,7 @@
                         <td><a href="{{url('/investor/contracts/'.$contract->id)}}" class="btn btn-xs btn-info">View</a> </td>
 
                     </tr>
-                    @endif
+
                 @endforeach
                 </tbody>
             </table>

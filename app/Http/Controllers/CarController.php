@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Car;
+use Illuminate\Support\Facades\Auth;
 use Log;
 
 class CarController extends Controller
@@ -100,5 +101,21 @@ class CarController extends Controller
         $car = Car::findOrFail($id);
 
         return view('investor.assets.car.details', compact('car'));
+    }
+
+    public function update(Request $request)
+    {
+
+
+        $car = Car::find($request->input('id'));
+        $car->reg_no = $request->input('reg_no');
+        $car->make = $request->input('make');
+        $dt_avail = new Carbon($request->input('available_since'));
+        $car->available_since = $dt_avail->format("d-m-Y");
+        $car->comments = $request->input('comments');
+        $car->save();
+        return redirect(url('/investor/cars/' . $car->id));
+
+
     }
 }

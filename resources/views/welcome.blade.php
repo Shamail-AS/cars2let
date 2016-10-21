@@ -53,26 +53,24 @@
 @endsection
 
 @section('content')
-    <div class="flex-center">
-        <div class="flex-center stretch">
-            <img src="{{asset(url("/img/background/logo.png"))}}"/>
+    <div class="flex-center stretch">
+        <img src="{{asset(url("/img/background/logo.png"))}}"/>
 
-            <div class="wrapper">
-                <p>Welcome to the Cars2Let Investor Portal.</p>
-                @if(Auth::guest())
-                    <p>Please <a href="{{ url('/login') }}">Login</a> or <a href="{{ url('/myregister') }}">Register</a>
-                        to continue</p>
-                @endif
+        <div class="wrapper">
+            <p>Welcome to the Cars2Let Investor Portal.</p>
+            @if(Auth::guest())
+                <p>Please <a href="{{ url('/login') }}">Login</a> or <a href="{{ url('/myregister') }}">Register</a>
+                    to continue</p>
+            @endif
 
-                @if(!Auth::guest() && Auth::user()->isInvestor)
-                    <p>Check out your <a href="{{ url('investor') }}">Dashboard</a></p>
-                @endif
-                <br>
-                @if(!Auth::guest() && Auth::user()->isAdmin)
-                    <p>Check out your <a href="{{ url('investor') }}">Dashboard</a></p>
-                @endif
-            </div>
-
+            @if(!Auth::guest() && Auth::user()->isInvestor)
+                <p>Check out your <a href="{{ url('investor') }}">Dashboard</a></p>
+            @endif
+            <br>
+            @if(!Auth::guest() && Auth::user()->isAdmin)
+                <p>Check out your <a href="{{ url('investor') }}">Dashboard</a></p>
+            @endif
         </div>
+
     </div>
 @endsection

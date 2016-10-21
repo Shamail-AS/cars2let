@@ -80,6 +80,7 @@ Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],func
     Route::get('/contracts','InvestorController@contracts');
     Route::get('/drivers','InvestorController@drivers');
     Route::get('/cars/{id}','CarController@show');
+    Route::post('/cars/{id}/update', 'CarController@update');
     Route::get('/contracts/{id}','ContractController@show');
     Route::get('/drivers/{id}','DriverController@show');
 

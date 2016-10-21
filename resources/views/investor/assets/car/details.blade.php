@@ -2,6 +2,7 @@
 
 @section('styles')
     <link href="{{asset('css/sub_nav.css')}}" rel="stylesheet">
+    <link href="{{asset('css/modal.css')}}" rel="stylesheet">
     <link href="{{ asset('css/investor_car_details.css') }}" rel="stylesheet">
 @endsection
 
@@ -11,7 +12,7 @@
 
     <div class="contract-details-table row">
         <div class="cell">
-            <h1><a href="{{url("investor/cars")}}"><i class="fa fa-chevron-left"></i> All Cars</a></h1>
+            <a href="{{url("investor/cars")}}"><i class="fa fa-chevron-circle-left fa-4x"></i></a>
         </div>
         <div class="cell">
             <h1>{{$car->reg_no}}</h1>
@@ -39,7 +40,7 @@
                     <td>{{$car->totalRent}}</td>
                     <td>
                         {{--<button class="btn btn-xs btn-success" onclick="$('#cardDetails').slideToggle('fast')">Details</button>--}}
-                        <button class="btn btn-xs btn-danger">Edit</button>
+                        <a id="modaltrigger" href="#loginmodal" class="btn btn-xs btn-danger" onclick="edit()">Edit</a>
                     </td>
                 </tr>
                 </tbody>
@@ -78,143 +79,6 @@
             </div>
         </div>
     </div>
-
-    <!--    <div class="card-container">
-           <div class="card-container-vertical">
-               @for($i = 0; $i < 5; $i++)
-                   <div class="card">
-                       <div class="tag-header {{$i == 0? 'ongoing' : 'complete'}}">
-                           <p>Contract {{$i == 0? 'Ongoing' : 'Completed on '.$i.' June 2016'}}</p>
-                       </div>
-                       <div class="card-body">
-                           <div class="contract">
-                               <h3>Contract Overview</h3>
-                               <table class="table table-bordered">
-
-                                   <tr>
-                                       <td>Start Date</td>
-                                       <td>09/10/2016</td>
-
-                                   </tr>
-                                   <tr>
-                                       <td>End Date</td>
-                                       <td>10/11/2017</td>
-                                   </tr>
-                                   <tr>
-                                       <td>Driver</td>
-                                       <td>Adam Joshua</td>
-                                   </tr>
-                                   <tr>
-                                       <td>Rent/Week</td>
-                                       <td>$280</td>
-                                   </tr>
-                                   <tr>
-                                       <td>Weeks completed</td>
-                                       <td>4</td>
-                                   </tr>
-                                   <tr>
-                                       <td>Gross Rent</td>
-                                       <td>280 x 4</td>
-                                   </tr>
-                                   <tr>
-                                       <td>Paid to Investor</td>
-                                       <td>$2600</td>
-                                   </tr>
-
-                               </table>
-                               <div class="heading">
-                                   <h4>*Subject to adjustments for VAT and other expenses</h4>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               @endfor
-
-            </div>
-
-            <div class="card-container-vertical">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Revenue Overview</h3>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>       </th>
-                                <th>Since Joining</th>
-                                <th>For current accounting period</th>
-                            </tr>
-                            <tr>
-                                <td>Investor Revenue</td>
-                                <td>$400</td>
-                                <td>$100</td>
-                            </tr>
-                            <tr>
-                                <td>Paid to investor</td>
-                                <td>$330</td>
-                                <td>$90</td>
-                            </tr>
-                            <tr>
-                                <td>Balance</td>
-                                <td>$2600</td>
-                                <td>$290</td>
-                            </tr>
-                        </table>
-                        <div class="heading">
-                            <h4>*Subject to adjustments for VAT and other expenses</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="tag-header">
-                        <p>Hello</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="contract">
-                            <h3>Current Contract Overview</h3>
-                            <table class="table table-bordered">
-
-                                <tr>
-                                    <td>Start Date</td>
-                                    <td>09/10/2016</td>
-
-                                </tr>
-                                <tr>
-                                    <td>End Date</td>
-                                    <td>10/11/2017</td>
-                                </tr>
-                                <tr>
-                                    <td>Driver</td>
-                                    <td>Adam Joshua</td>
-                                </tr>
-                                <tr>
-                                    <td>Rent/Week</td>
-                                    <td>$280</td>
-                                </tr>
-                                <tr>
-                                    <td>Weeks completed</td>
-                                    <td>4</td>
-                                </tr>
-                                <tr>
-                                    <td>Gross Rent</td>
-                                    <td>280 x 4</td>
-                                </tr>
-                                <tr>
-                                    <td>Paid to Investor</td>
-                                    <td>$2600</td>
-                                </tr>
-
-                            </table>
-                            <div class="heading">
-                                <h4>*Subject to adjustments for VAT and other expenses</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-        </div>-->
 
     <div class="contract-details-table">
         <div class="cell row">
@@ -274,6 +138,44 @@
         </div>
     </div>
 
+    <div id="loginmodal" style="display:none;">
+        <form class="form" id="loginform" name="loginform" method="post"
+              action="{{url('/investor/cars/'.$car->id.'/update')}}">
+            {!! csrf_field() !!}
+            <input type="hidden" value="{{$car->id}}" name="id">
 
+            <div class="form-group">
+                <label>Registration No</label>
+                <input class="form-control" type="text" name="reg_no" value="{{$car->reg_no}}">
+            </div>
 
+            <div class="form-group">
+                <label>Make</label>
+                <input class="form-control" type="text" name="make" value="{{$car->make}}">
+            </div>
+            <div class="form-group ">
+                <label>Available Since</label>
+                <input class="form-control dp" type="text" name="available_since"
+                       value="{{$car->available_since}}">
+            </div>
+            <div class="form-group">
+                <label>Comments</label>
+                <input class="form-control" type="text" name="comments"
+                       value="{{$car->comments}}">
+            </div>
+            <div class="center">
+                <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Update"
+                       tabindex="3">
+            </div>
+        </form>
+    </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $().ready(function () {
+            $('#modaltrigger').leanModal({top: 110, overlay: 0.45, closeButton: ".hidemodal"});
+        });
+
+    </script>
 @endsection

@@ -131,3 +131,10 @@
 thead td{
     font-weight: bolder;
 }
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}

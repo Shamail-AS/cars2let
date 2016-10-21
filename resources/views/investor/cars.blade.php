@@ -28,16 +28,7 @@
             </tr>
             </thead>
             <tbody>
-            {{--@foreach($cars as $car)--}}
-            {{--<tr>--}}
-            {{--<td><a href="{{ url('investor/cars/'.$car->id) }}">{{$car->reg_no}}</a></td>--}}
-            {{--<td>{{Carbon\Carbon::parse($car->available_since)->toFormattedDateString()}}</td>--}}
-            {{--<td>{{$car->currentContract->id or 'No active contract'}}</td>--}}
-            {{--<td>{{$car->totalContracts}}</td>--}}
-            {{--<td>{{$car->totalRevenue}}</td>--}}
-            {{--<td>{{$car->totalRent}}</td>--}}
-            {{--</tr>--}}
-            {{--@endforeach--}}
+
             <tr ng-repeat="car in vm.cars | filter:{reg_no:filters.car}">
                 <td><a href="{{ url('investor/cars')}}/@{{ car.id }}">@{{ car.reg_no }}</a></td>
                 <td>@{{ car.available }}</td>
@@ -65,7 +56,9 @@
             <div class="card-container">
                 @include('partials.form.car-create',['admin'=>false])
             </div>
-            <a class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></a>
+            <div class="flex-container">
+                <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
+            </div>
         </div>
     </div>
 

@@ -75,13 +75,10 @@
 
                         <p class="">@{{ formatDate(vm.investor.created_at) }}</p>
                     </div>
-                    {{--<button ng-click="cancelEdit(vm.investor)" class="btn btn-xs btn-default">Cancel--}}
-                    {{--</button>--}}
+
                     <button ng-click="updateInvestor(vm.investor)" class="btn btn-xs btn-success">Update
                     </button>
-                    {{--<button ng-click="edit(vm.investor)" class="btn btn-xs btn-primary">Edit</button>--}}
-                    {{--<button ng-click="deleteObj(vm.investor,'investor')" class="btn btn-xs btn-danger">Delete--}}
-                    {{--</button>--}}
+
                 </form>
 
 

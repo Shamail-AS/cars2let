@@ -81,8 +81,10 @@
         <div class="detail-section">
 
             <div class="fixed-footer-button-container">
-                <a href="{{url('/investor/assets/create/contract')}}" class="fixed-footer-button"><i
-                            class="fa fa-plus fa-2x"></i></a>
+                <a href="{{url('/investor/assets/create/contract')}}">
+                    <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
+                </a>
+
             </div>
             <div class="detail-meta" ng-if="vm.contract.id != undefined">
                 <div class="card-container column">

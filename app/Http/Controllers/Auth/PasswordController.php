@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\AccountActivation;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class PasswordController extends Controller
 {
@@ -28,5 +31,27 @@ class PasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email|exists:users,email'
+        ]);
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+        $user->status = 'new';
+        $user->save();
+
+        $activator = AccountActivation::create([
+            'delivered_to' => $email,
+            'active' => true,
+            'destination' => 'email',
+            'source' => 'forgot'
+        ]);
+        $activator->renew();
+        $activator->send();
+
+        return redirect(url('/code/verify'));
     }
 }

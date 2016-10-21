@@ -96,6 +96,7 @@ class Car extends Model
     {
         $this->attributes['available_since'] = Carbon::createFromFormat('d-m-Y',$value);
     }
+
     public function setRegNoAttribute($value)
     {
         $this->attributes['reg_no'] = strtoupper($value);

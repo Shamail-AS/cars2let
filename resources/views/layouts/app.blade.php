@@ -24,6 +24,7 @@
     <script src="{{asset('js/jquery-ui.min.js')}}"></script>
     <script src="{{asset('js/bootstrap/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/bootbox.min.js')}}"></script>
+    <script src="{{asset('js/lean-modal.min.js')}}"></script>
     <script src="{{asset('js/angular/lodash.js')}}"></script>
     <script src="{{asset('js/angular/moment-with-locales.min.js')}}"></script>
 
@@ -112,7 +113,7 @@
 <script>
 
     $('.dp').datepicker({
-        dateFormat: "dd-mm-yy"
+        dateFormat: "yy-mm-dd"
     });
 </script>
 </html>
