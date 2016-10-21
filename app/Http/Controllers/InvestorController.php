@@ -147,7 +147,11 @@ class InvestorController extends Controller
 
     public function show($id)
     {
-        return view('investor.show');
+        if (Auth::user()->isAdmin)
+            return view('admin.investor.show');
+        else {
+            return view('investor.show');
+        }
     }
     public function create()
     {
