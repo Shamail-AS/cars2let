@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="revenue_list.html">
-    <div class="revenue-popover" ng-if="vm.contract_revenue_week_detail.length > 0">
+    <div class="revenue-popover" ng-if="week.payments.length > 0">
 
         <table class="table table-bordered">
             <thead>
@@ -9,9 +9,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="payment in vm.contract_revenue_week_detail">
-                <td>@{{  payment.date }}</td>
-                <td>@{{  payment.amount }}</td>
+            <tr ng-repeat="payment in week.payments">
+                <td>@{{  formatDate(payment.created_on) }}</td>
+                <td>@{{  payment.amount_paid }}</td>
             </tr>
             </tbody>
 

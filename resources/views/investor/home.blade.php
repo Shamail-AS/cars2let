@@ -101,6 +101,9 @@
 
     </div>
     @endif
+
+
+
 @endsection
 
 @section('scripts')
@@ -132,15 +135,15 @@
             isFullScreen = !isFullScreen;
         }
 
-        $('iframe').load(function () {
-            isLoaded = true;
-            $('#spinner').fadeOut();
-            $('.wrapper-cover span').delay(500).fadeOut();
-        });
+
 
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
+            $('iframe').load(function () {
+                isLoaded = true;
+                $('#spinner').fadeOut();
+                $('.wrapper-cover span').delay(500).fadeOut();
+            });
         });
     </script>
 @endsection
-

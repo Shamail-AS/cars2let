@@ -3,6 +3,7 @@
 @section('styles')
     <style>
         .flex-center {
+            padding-top: 51px;
             display: flex;
             width: 100%;
             height: 100%;
@@ -44,7 +45,7 @@
 
         body {
             background-image: url("/img/background/simple1.jpg");
-            background-size: 100% 100%; /* <------ */
+            background-size: cover; /* <------ */
             background-repeat: no-repeat;
             background-position: center center;
         }

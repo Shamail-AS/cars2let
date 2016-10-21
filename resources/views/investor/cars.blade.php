@@ -65,7 +65,7 @@
             <div class="card-container">
                 @include('partials.form.car-create',['admin'=>false])
             </div>
-            <a class="fixed-footer-button"><i class="fa fa-plus fa-3x"></i></a>
+            <a class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></a>
         </div>
     </div>
 

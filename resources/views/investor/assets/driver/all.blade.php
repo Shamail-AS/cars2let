@@ -73,22 +73,6 @@
 
     </div>
 
-    {{--<div class="fixed-footer-button-container">--}}
-    {{--<div class="card-container">--}}
-    {{--@include('partials.form.driver-create',['admin'=>false])--}}
-    {{--</div>--}}
-{{--        <a class="fixed-footer-button" href="{{url('/investor/assets/create/driver')}}"><i class="fa fa-plus fa-3x"></i></a>--}}
-    {{--<a class="fixed-footer-button"><i class="fa fa-plus fa-3x"></i></a>--}}
-    {{--</div>--}}
-
-    {{--<script>--}}
-    {{--$('.fixed-footer-button').click(function(e){--}}
-    {{--$('.fixed-footer-button').toggleClass('clicked');--}}
-    {{--$('.card-container').fadeToggle('fast');--}}
-    {{--});--}}
-
-    {{--</script>--}}
-
 @endsection
 
 

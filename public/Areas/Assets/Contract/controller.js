@@ -10,11 +10,6 @@ app.controller('contractController',
             $scope.vm = {
                 'contract_collection': [],
                 'contract': {}, //selected contract
-                'prev_contract': {},
-                'contract_revenue_summary': [],
-                'contract_revenue_detail': [],
-                'contract_revenue_detail_week': 0,
-                'contract_revenue_week_detail': [],
                 'status_collection': []
             };
             $scope.popover = {
@@ -39,26 +34,17 @@ app.controller('contractController',
             };
             $scope.getContract = function (id) {
                 get_contract(id,false);
-                get_contract_revenue_summary(id);
-                get_contract_revenue_detail(id);
             };
 
             $scope.getContractRevenueSummary = function (id) {
                 get_contract_revenue_summary(id);
             };
 
-            $scope.filterContracts = function () {
-                filter_contracts($scope.filters.search);
+            $scope.formatDate = function (date) {
+                var dt = moment(date);
+                return dt.format("DD, MMM YYYY");
             };
 
-            $scope.formatDate = function (date) {
-                var dt = new Date(date);
-                return dt.toLocaleDateString();
-            };
-            $scope.setDetailWeek = function (weekNo) {
-                $scope.vm.contract_revenue_detail_week = weekNo;
-                get_contract_revenue_detail($scope.vm.contract.id);
-            };
             //Private methods
             var get_contracts = function () {
                 contractDataFactory.getContracts()
@@ -75,72 +61,24 @@ app.controller('contractController',
                     .success(function (data) {
                         $scope.vm.contract = data;
                         select_contract($scope.vm.contract.id);
-                        if(filter)
-                        {
-                            //$scope.filters.driver = $scope.vm.contract.driver.name;
-                            $scope.filters.car = $scope.vm.contract.car.reg_no;
-                        }
+                        get_contract_revenue_summary(id);
                     });
             };
             var select_contract = function (id_new) {
                 _.each($scope.vm.contract_collection,function(contract){
                     contract.selected = contract.id == id_new;
                 });
-
-                //if (id_old >= 0)$scope.vm.contract_collection[id_old].selected = false;
-                //if (id_new >= 0)$scope.vm.contract_collection[id_new].selected = true;
-
             };
             var get_contract_revenue_summary = function (id) {
                 contractDataFactory.getContractRevenueSummary(id)
                     .success(function (data) {
-                        $scope.vm.contract_revenue_summary = contractDataModelFactory.objectCollectionToArray(data);
+                        console.log(data);
+                        $scope.vm.contract.revenue = contractDataModelFactory.objectCollectionToArray(data);
+                        //get_contract_revenue_detail(id);
+
                     });
             };
 
-            var get_contract_revenue_detail = function (id) {
-                contractDataFactory.getContractRevenueDetail(id)
-                    .success(function (data) {
-                        $scope.vm.contract_revenue_detail = (data);
-                        show_week_detail();
-                    });
-            };
-
-            var show_week_detail = function () {
-                $scope.vm.contract_revenue_week_detail
-                    = $scope.vm.contract_revenue_detail[$scope.vm.contract_revenue_detail_week];
-            };
-            var get_contracts_by_car_driver = function (search) {
-                contractDataFactory.filterContractsByCarDriver(search)
-                    .success(function (data) {
-                        $scope.vm.contract_collection = data;
-                    });
-            };
-            var get_contracts_by_car_and_driver = function (search) {
-                contractDataFactory.filterContractsByCarAndDriver(search)
-                    .success(function (data) {
-                        $scope.vm.contract_collection = data;
-                    })
-            };
-
-            var get_contracts_by_car_or_driver = function (search) {
-                contractDataFactory.filterContractsByCarOrDriver(search)
-                    .success(function (data) {
-                        $scope.vm.contract_collection = data;
-                    });
-            };
-
-            var filter_contracts = function (searchTerm) {
-                if (searchTerm.includes('and')) {
-                    get_contracts_by_car_and_driver(searchTerm);
-                }
-                else if (searchTerm.includes('or')) {
-                    get_contracts_by_car_or_driver(searchTerm);
-                }
-                else {
-                    get_contracts_by_car_driver(searchTerm);
-                }
-            };
             var get_contract_statuses = function(){
 
               $scope.vm.status_collection.push({"key":"Ongoing","value":1});
@@ -148,13 +86,14 @@ app.controller('contractController',
               $scope.vm.status_collection.push({"key":"Terminated","value":3});
               $scope.vm.status_collection.push({"key":"Complete","value":4});
             };
+
             var check_url_contract_id = function(){
                 var url = (window.location.pathname);
                 var id = _.takeRight(_.split(url,'/'));
                 if(id > -1){
                     get_contract(id,true);
                     get_contract_revenue_summary(id);
-                    get_contract_revenue_detail(id);
+
                 }
 
             };

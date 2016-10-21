@@ -179,6 +179,7 @@ class ContractController extends Controller
                 'paid' => $item->reduce(function ($carry, $item) {
                     return $carry + (float)$item->amount_paid;
                 }),
+                'payments' => $item,
                 'balance' => -1
             ];
         });
@@ -192,6 +193,7 @@ class ContractController extends Controller
                     'week' => $i,
                     'revenue' => $rate,
                     'paid' => 0,
+                    'payments' => [],
                     'balance' => -$rate
                 ];
             }
@@ -215,7 +217,7 @@ class ContractController extends Controller
                 ];
             });
         });
-        return ($revenues);
-
+        return $revenues;
     }
+
 }

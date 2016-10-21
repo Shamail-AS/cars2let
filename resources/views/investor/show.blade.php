@@ -19,10 +19,7 @@
                                 <label>Email</label>
                                 <input class="form-control" type="text" ng-model="vm.investor.email">
                             </div>
-                            <div class="form-group">
-                                <label>Tracker URL</label>
-                                <input class="form-control" type="text" ng-model="vm.investor.tracking_url">
-                            </div>
+
                             <div class="form-group">
                                 <label>Accounting Period Start</label>
                                 <input type="text" class="form-control" uib-datepicker-popup
@@ -40,6 +37,10 @@
                                        ng-required="true"
                                        close-text="Close"
                                        ng-click="openEndPicker(vm.investor)"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input class="form-control" type="text" ng-model="vm.investor.phone">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -61,9 +62,11 @@
                                        ng-click="openPicker(vm.investor)"/>
                             </div>
                             <div class="form-group">
-                                <label>Phone</label>
-                                <input class="form-control" type="text" ng-model="vm.investor.phone">
+                                <label>Registered Since</label>
+
+                                <p class="form-control">@{{ formatDate(vm.investor.created_at) }}</p>
                             </div>
+
 
                         </div>
                     </div>
@@ -71,13 +74,13 @@
                         <i class="fa fa-spinner fa-5x fa-spin"></i>
                     </div>
 
-                    <div class="form-group">
-                        <label>Registered Since</label>
-                        <p class="">@{{ formatDate(vm.investor.created_at) }}</p>
+
+                    <div>
+                        <button ng-click="updateInvestor(vm.investor)" class="btn btn-lg btn-block btn-success">Update
+                        </button>
+                        <button ng-click="toDashBoard()" class="btn btn-lg btn-block btn-info">Done</button>
                     </div>
-                    <button ng-click="updateInvestor(vm.investor)" class="btn btn-lg btn-block btn-success">Update
-                    </button>
-                    <button ng-click="toDashBoard()" class="btn btn-lg btn-block btn-info">Done</button>
+
 
                 </form>
 

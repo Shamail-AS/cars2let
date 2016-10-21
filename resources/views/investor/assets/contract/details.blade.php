@@ -81,7 +81,8 @@
         <div class="detail-section">
 
             <div class="fixed-footer-button-container">
-                <a href="{{url('/investor/assets/create/contract')}}" class="fixed-footer-button"><i class="fa fa-plus fa-3x"></i></a>
+                <a href="{{url('/investor/assets/create/contract')}}" class="fixed-footer-button"><i
+                            class="fa fa-plus fa-2x"></i></a>
             </div>
             <div class="detail-meta" ng-if="vm.contract.id != undefined">
                 <div class="card-container column">
@@ -108,24 +109,22 @@
                     </div>
                 </div>
             </div>
-            <div class="detail-body" ng-if="vm.contract_revenue_summary.length > 0">
+            <div class="detail-body" ng-if="vm.contract.revenue.length > 0">
                 <h3>Revenue Overview</h3>
                 <table class="table table-bordered">
                     <tr>
                         <th>       </th>
-                        <th ng-repeat="week in vm.contract_revenue_summary">Week @{{ week.week }}</th>
+                        <th ng-repeat="week in vm.contract.revenue">Week @{{ week.week }}</th>
 
                     </tr>
                     <tr>
                         <td>Investor Revenue</td>
-                        <td ng-repeat="week in vm.contract_revenue_summary"> @{{ week.revenue }}</td>
+                        <td ng-repeat="week in vm.contract.revenue"> @{{ week.revenue }}</td>
 
                     </tr>
                     <tr >
                         <td>Paid to investor</td>
-                        <td ng-repeat="week in vm.contract_revenue_summary"
-                            ng-click="setDetailWeek(week.week)"
-                                >
+                        <td ng-repeat="week in vm.contract.revenue">
                             <button type="button"
                                     class="btn btn-sm btn-info"
                                     uib-popover-template="popover.revenueListUrl"
@@ -133,7 +132,7 @@
                                     popover-placement="top"
                                     popover-title="@{{ popover.title }}"
                                     popover-class="revenue-popover-wrapper"
-                                    ng-click="setDetailWeek(week.week)">
+                                    >
                                 @{{ week.paid }}
                             </button>
                             @include('partials.investor.revenue_list')
@@ -142,7 +141,7 @@
                     </tr>
                     <tr>
                         <td>Balance</td>
-                        <td ng-repeat="week in vm.contract_revenue_summary"> @{{ week.balance }}</td>
+                        <td ng-repeat="week in vm.contract.revenue"> @{{ week.balance }}</td>
 
                     </tr>
                 </table>
@@ -150,31 +149,12 @@
                     <h4>*Subject to adjustments for VAT and other expenses</h4>
                 </div>
             </div>
-            <!--<div class="detail-body-extension" ng-if="vm.contract_revenue_week_detail.length > 0">
-
-                <h3>Week @{{ vm.contract_revenue_detail_week }} detail</h3>
-
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Paid on</th>
-                        <th>Amount</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr  ng-repeat="payment in vm.contract_revenue_week_detail">
-                        <td>@{{  payment.date }}</td>
-                        <td>@{{  payment.amount }}</td>
-                    </tr>
-                    </tbody>
-
-                </table>
-
-            </div>-->
 
             <div class="empty-detail-body" >
                 <h1 ng-if="vm.contract.id == undefined">Please select a contract to view details</h1>
-                <h1 ng-if="vm.contract.id > 0 && vm.contract_revenue_summary.length == 0">No payments recorded for this contract</h1>
+
+                <h1 ng-if="vm.contract.id > 0 && vm.contract.revenue.summary.length == 0">No payments recorded for this
+                    contract</h1>
             </div>
         </div>
     </div>
