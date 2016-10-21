@@ -77,7 +77,7 @@
                     </div>
                     <button ng-click="updateInvestor(vm.investor)" class="btn btn-lg btn-block btn-success">Update
                     </button>
-                    <button ng-click="toDashBoard()" class="btn btn-lg btn-block btn-info">Cancel</button>
+                    <button ng-click="toDashBoard()" class="btn btn-lg btn-block btn-info">Done</button>
 
                 </form>
 
@@ -120,7 +120,7 @@
                 investor.dob = moment(investor.dt_dob).format("DD-MM-YYYY");
                 investor.acc_period_start = moment(investor.dt_acc_period_start).format("DD-MM-YYYY");
                 investor.acc_period_end = moment(investor.dt_acc_period_end).format("DD-MM-YYYY");
-                investorDataFactory.updateInvestor(id, investor)
+                $http.put('/api/admin/investors/' + id + '/update', investor)
                         .success(function () {
                             investor.loading = false;
                         });

@@ -19,9 +19,9 @@
                     <input class="form-control" placeholder="Driver name" ng-model="filters.driver" >
                 </div>
                 <div class="form-group">
-                    <label>Date range filter</label>
-                    <input type="text" class="form-control dp" ng-model="filters.date_from" placeholder="From date">
-                    <input type="text" class="form-control dp" ng-model="filters.date_to" placeholder="To date">
+                    <label>Contract Duration filter</label>
+                    <input type="text" class="form-control dp" ng-model="filters.date_from" placeholder="Start date">
+                    <input type="text" class="form-control dp" ng-model="filters.date_to" placeholder="End date">
                 </div>
                 <label>Status filter</label>
 

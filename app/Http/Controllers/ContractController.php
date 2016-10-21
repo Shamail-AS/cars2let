@@ -210,7 +210,7 @@ class ContractController extends Controller
             return $item->transform(function ($item, $key) {
                 return [
                     'week' => $item->weekPaidOn,
-                    'date' => $item->paid_on->toFormattedDateString(),
+                    'date' => $item->created_at->toFormattedDateString(),
                     'amount' => $item->amount_paid
                 ];
             });

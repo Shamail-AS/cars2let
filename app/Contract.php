@@ -64,9 +64,12 @@ class Contract extends Model
 
     }
     public function getRentForCurrentPeriodAttribute(){
-        $revenues = $this->revenues()->currentPeriod()->get();
+        $revenues = $this->revenues;
         $rent = 0;
+        $acc_periods = $this->investor->getAccountingPeriods();
+
         foreach ($revenues as $revenue) {
+            if ($revenue->inPeriod($acc_periods[0], $acc_periods[1]))
             $rent += $revenue->amount_paid;
         }
         return $rent;
@@ -86,13 +89,11 @@ class Contract extends Model
 
     public function getWeeksDoneForCurrentPeriodAttribute()
     {
-        //ASSUMPTION period is month from fridays
-        //TODO: MAKE USE OF ACC_PERIOD_DAYS
-
-        $date_from = new Carbon('first friday of this month');
-        $date_to = new Carbon('last friday');
-        $diff_month = $date_to->diffInWeeks($date_from);
-        return min($diff_month,$this->weeksDone);
+        $acc_periods = $this->investor->getAccountingPeriods();
+        $date_from = $acc_periods[0]->max($this->start_date);
+        $date_to = $acc_periods[1]->min($this->end_date)->min(Carbon::now());
+        if ($date_from->gte(Carbon::now())) return 0;
+        else return $date_to->diffInWeeks($date_from);
     }
     public function getWeeksDoneAttribute()
     {
@@ -102,6 +103,35 @@ class Contract extends Model
     public function getWeeksTotalAttribute()
     {
         return $this->end_date->diffInWeeks($this->start_date,true);
+    }
+
+    public function getRentForNextPeriodAttribute()
+    {
+        $revenues = $this->revenues;
+        $rent = 0;
+        $acc_periods = $this->investor->getAccountingPeriods(1);
+
+        foreach ($revenues as $revenue) {
+            if ($revenue->inPeriod($acc_periods[0], $acc_periods[1]))
+                $rent += $revenue->amount_paid;
+        }
+        return $rent;
+    }
+
+    public function getRevenueForNextPeriodAttribute()
+    {
+        $duration = $this->weeksDoneForNextPeriod;
+        if ($duration < 0) dd($this);
+        return $duration * $this->rate;
+    }
+
+    public function getWeeksDoneForNextPeriodAttribute()
+    {
+        $acc_periods = $this->investor->getAccountingPeriods(1);
+        $date_from = $acc_periods[0]->max($this->start_date);
+        $date_to = $acc_periods[1]->min($this->end_date)->min(Carbon::now());
+        if ($date_from->gte(Carbon::now())) return 0;
+        else return $date_to->diffInWeeks($date_from);
     }
 
 

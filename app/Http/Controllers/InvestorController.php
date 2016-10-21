@@ -119,7 +119,9 @@ class InvestorController extends Controller
     public function home()
     {
         $investor = Auth::user()->investor;
-        return view('investor.home',compact('investor'));
+        $acc_periods = $investor->getAccountingPeriods();
+        $next_acc_periods = $investor->getAccountingPeriods(1);
+        return view('investor.home', compact('investor', 'acc_periods', 'next_acc_periods'));
     }
     public function cars()
     {

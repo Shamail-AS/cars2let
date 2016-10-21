@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Log;
 
 class Investor extends Model
 {
@@ -25,6 +26,32 @@ class Investor extends Model
     public function cars()
     {
         return $this->hasMany('App\Car');
+    }
+
+    public function getAccountingPeriods($back_shift = 0)
+    {
+        $dt_start = $this->acc_period_start;
+        $dt_end = $this->acc_period_end;
+        $duration = $dt_start->diffInMinutes($dt_end) + 1440;//add an extra day
+
+        $period_start = Carbon::createFromDate(Carbon::now()->year
+            , $dt_start->month
+            , $dt_start->day)->addMinutes($back_shift * $duration);
+
+        $in_same_year = $dt_end->month > $dt_start->month;
+
+        $period_end = Carbon::createFromDate(Carbon::now()->addYears($in_same_year ? 0 : 1)->year
+            , $dt_end->month
+            , $dt_end->day)->addMinutes($back_shift * $duration);
+
+//        // Get an instance of Monolog
+//        $monolog = Log::getMonolog();
+//        // Choose FirePHP as the log handler
+//        $monolog->pushHandler(new \Monolog\Handler\FirePHPHandler());
+//        // Start logging
+//        $monolog->debug($back_shift, [$period_start,$period_start->copy()->addMinutes($duration),$period_end,$period_end->copy()->addMinutes($duration)]);
+
+        return [$period_start, $period_end];
     }
     public function getDriversAttribute()
     {
@@ -66,6 +93,16 @@ class Investor extends Model
         return $revenue;
 
     }
+
+    public function getRevenueForNextPeriodAttribute()
+    {
+        $contracts = $this->contracts;
+        $revenue = $contracts->reduce(function ($carry, $contract) {
+            return $carry + $contract->revenueForNextPeriod;
+        });
+        return $revenue;
+
+    }
     public function getPaidAttribute()
     {
         $contracts = $this->contracts;
@@ -82,6 +119,15 @@ class Investor extends Model
         });
         return $rent;
     }
+
+    public function getPaidForNextPeriodAttribute()
+    {
+        $contracts = $this->contracts;
+        $rent = $contracts->reduce(function ($carry, $contract) {
+            return $carry + $contract->rentForNextPeriod;
+        });
+        return $rent;
+    }
     public function getBalanceAttribute()
     {
         return $this->revenue - $this->paid;
@@ -89,6 +135,11 @@ class Investor extends Model
     public function getBalanceForCurrentPeriodAttribute()
     {
         return $this->revenueForCurrentPeriod - $this->paidForCurrentPeriod;
+    }
+
+    public function getBalanceForNextPeriodAttribute()
+    {
+        return $this->revenueForNextPeriod - $this->paidForNextPeriod;
     }
 
     public function setDobAttribute($value)

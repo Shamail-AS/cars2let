@@ -215,6 +215,10 @@
 .summary-section-row > .summary-section{
     flex: 1 0 auto;
 }
+
+.summary-section-row > .summary-section i {
+    margin-left: 12px;
+}
 .summary-section-row > .summary-section:first-child{
     flex:1 0 70%;
 }

@@ -365,7 +365,8 @@ app.controller('investorController',
                 car.available_since = moment(car.dt_available_since).format("DD-MM-YYYY");
                 carDataFactory.newCar(car)
                     .success(function (result) {
-                        load_cars();
+                        $scope.vm.investor.cars.push(car);
+                        cancel_add();
                     });
 
             };
@@ -376,7 +377,8 @@ app.controller('investorController',
                 contract.end_date = moment(contract.dt_end_date).format("YYYY-MM-DD");
                 contractDataFactory.newContract(contract)
                     .success(function (result) {
-                        load_contracts();
+                        $scope.vm.investor.contracts.push(contract);
+                        cancel_add();
                     });
             };
             //var new_driver = function (data) {

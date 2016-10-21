@@ -23,43 +23,6 @@
         </div>
         <div class="resizer">
             <p onclick="toggleSize()">Pause Live Tracking</p>
-
-            <script>
-                var isFullScreen = false;
-                var isLoaded = false;
-                function toggleSize() {
-                    if (!isLoaded) {
-//                        $('.wrapper-cover span').fadeIn().delay(1000).fadeOut();
-
-                        return;
-                    }
-                    if (isFullScreen) {
-
-                        $('.map-container').height('50%');
-                        $('.revenue-container').fadeIn();
-                        $('.wrapper-cover').fadeIn();
-                        $('.resizer').hide();
-
-
-                    }
-                    else {
-                        $('.revenue-container').hide();
-                        $('.map-container').height('100%');
-
-                        $('.wrapper-cover').fadeOut();
-                        $('.resizer').css('display', 'flex');
-
-
-                    }
-                    isFullScreen = !isFullScreen;
-                }
-
-                $('iframe').load(function () {
-                    isLoaded = true;
-                    $('#spinner').fadeOut();
-                    $('.wrapper-cover span').delay(500).fadeOut();
-                });
-            </script>
         </div>
         <div class="revenue-container">
 
@@ -75,22 +38,36 @@
                                 <tr>
                                     <th></th>
                                     <th>Since Joining (£)</th>
-                                    <th>For current accounting period (£)</th>
+                                    <th>
+                                        For current accounting period (£)
+                                        <i class="fa fa-question-circle"
+                                           data-toggle="tooltip"
+                                           title="{{$acc_periods[0]->toFormattedDateString()}} - {{$acc_periods[1]->toFormattedDateString()}}"></i>
+                                    </th>
+                                    {{--<th>--}}
+                                    {{--For next accounting period (£)--}}
+                                    {{--<i class="fa fa-question-circle"--}}
+                                    {{--data-toggle="tooltip"--}}
+                                    {{--title="{{$next_acc_periods[0]->toFormattedDateString()}} - {{$next_acc_periods[1]->toFormattedDateString()}}"></i>--}}
+                                    {{--</th>--}}
                                 </tr>
                                 <tr>
                                     <td>Investor Revenue </td>
                                     <td>{{$investor->revenue}}</td>
                                     <td>{{$investor->revenueForCurrentPeriod}}</td>
+                                    {{--<td>{{$investor->revenueForNextPeriod}}</td>--}}
                                 </tr>
                                 <tr>
                                     <td>Paid to investor </td>
                                     <td>{{$investor->paid}}</td>
                                     <td>{{$investor->paidForCurrentPeriod}}</td>
+                                    {{--                                    <td>{{$investor->paidForNextPeriod}}</td>--}}
                                 </tr>
                                 <tr>
                                     <td>Balance</td>
                                     <td>{{$investor->balance}}</td>
                                     <td>{{$investor->balanceForCurrentPeriod}}</td>
+                                    {{--                                    <td>{{$investor->balanceForNextPeriod}}</td>--}}
                                 </tr>
                             </table>
                             <div class="heading">
@@ -124,35 +101,46 @@
 
     </div>
     @endif
+@endsection
+
+@section('scripts')
     <script>
+        var isFullScreen = false;
+        var isLoaded = false;
+        function toggleSize() {
+            if (!isLoaded) {
+                return;
+            }
+            if (isFullScreen) {
+
+                $('.map-container').height('50%');
+                $('.revenue-container').fadeIn();
+                $('.wrapper-cover').fadeIn();
+                $('.resizer').hide();
+
+
+            }
+            else {
+                $('.revenue-container').hide();
+                $('.map-container').height('100%');
+
+                $('.wrapper-cover').fadeOut();
+                $('.resizer').css('display', 'flex');
+
+
+            }
+            isFullScreen = !isFullScreen;
+        }
+
+        $('iframe').load(function () {
+            isLoaded = true;
+            $('#spinner').fadeOut();
+            $('.wrapper-cover span').delay(500).fadeOut();
+        });
+
         $(document).ready(function () {
-            $('.group-row').click(function () {
-                $(this).find("[class^=data-]").toggleClass('collapsed');
-            });
-            $('.heading').click(function () {
-                $(this).next('.data').toggleClass('collapsed');
-            });
-            $("#btn-code-enter").click(function () {
-                bootbox.prompt('Please enter the code', function (result) {
-                    if (result === null) {
-
-                    }
-                    else {
-                        $.get('/api/code/' + result + '/verify', function (response) {
-                            if (response.indexOf('Sorry') > -1) {
-                                bootbox.alert(response);
-                            }
-                            else {
-                                bootbox.alert('Your account has been activated! ');
-                                $('.floater').addClass('collapsed');
-                            }
-
-                        });
-                    }
-                });
-            })
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-
 @endsection
 

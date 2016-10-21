@@ -57,8 +57,7 @@ app.controller('contractController',
             $scope.setDetailWeek = function (weekNo) {
 
                 $scope.vm.contract_revenue_detail_week = weekNo;
-
-                show_week_detail();
+                get_contract_revenue_detail($scope.vm.contract.id);
             };
             //Private methods
             var get_contracts = function () {

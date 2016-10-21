@@ -24,8 +24,9 @@ class Revenue extends Model
     {
         return $this->contract->car->investor;
     }
-    public function scopeCurrentPeriod($query){
-        //ASSUMPTION period = month starting from Fridays
+
+    public function forCurrentPeriod()
+    {
         $investor = $this->investor;
         $dt_start = $investor->acc_period_start;
         $dt_end = $investor->acc_period_end;
@@ -40,11 +41,11 @@ class Revenue extends Model
             , $dt_end->month
             , $dt_end->day);
 
-        return $query->where('created_at', '>=', $period_start)
-            ->where('created_at', '<=', $period_end);
+        return $this->inPeriod($period_start, $period_end);
+
     }
 
-    public function scopePreviousPeriod($query, $back_shift = 1)
+    public function forPreviousPeriod($back_shift = 1)
     {
         $investor = $this->investor;
         $dt_start = $investor->acc_period_start;
@@ -61,8 +62,12 @@ class Revenue extends Model
             , $dt_end->month
             , $dt_end->day);
 
-        return $query->where('created_at', '>=', $period_start)
-            ->where('created_at', '<=', $period_end);
+        return $this->inPeriod($period_start, $period_end);
+    }
+
+    public function inPeriod($period_start, $period_end)
+    {
+        return ($this->created_at >= $period_start && $this->created_at <= $period_end);
     }
 
     public function getWeekPaidOnAttribute()
