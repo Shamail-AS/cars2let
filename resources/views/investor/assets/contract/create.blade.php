@@ -78,6 +78,9 @@
 
                     <div class="form-group">
                         <div>
+                            <button type="button" class="btn btn-warning" onclick="window.history.back()">
+                                <i class="fa fa-btn fa-times"></i>Cancel
+                            </button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa fa-btn fa-file-text-o"></i>Create
                             </button>
