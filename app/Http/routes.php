@@ -71,6 +71,7 @@ Route::group(['middleware' => 'web'], function () {
 //    Route::get('/password/first','InvestorController@activate');
 
     Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
+    Route::get('/reset/password', 'MyAuthController@reset');
 
 
 });

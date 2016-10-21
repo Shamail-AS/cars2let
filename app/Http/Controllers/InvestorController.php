@@ -244,6 +244,7 @@ class InvestorController extends Controller
 
         }
     }
+
     public function resetFirstTimePassword(Request $request)
     {
         $this->validate($request,[

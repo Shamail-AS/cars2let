@@ -93,6 +93,8 @@
                                                 class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                                 <li class="list-group-item"><a href="{{ url('/help') }}"><i
                                                 class="fa fa-question-circle fa-btn"></i>Help</a></li>
+                                <li class="list-group-item"><a href="{{ url('reset/password') }}"><i
+                                                class="fa fa-cog fa-btn"></i>Reset Password</a></li>
                                 @if(Auth::user()->isInvestor)
                                     <li class="list-group-item"><a
                                                 href="{{ url('/investor/show/'.Auth::user()->investor->id) }}"><i

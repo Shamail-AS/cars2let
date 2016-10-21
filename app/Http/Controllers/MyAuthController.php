@@ -58,6 +58,27 @@ class MyAuthController extends Controller
         return redirect(url('/code/verify'));
     }
 
+
+    public function reset()
+    {
+        $user = Auth::user();
+        $user->status = 'new';
+        $user->save();
+
+        $activator = AccountActivation::create([
+            'delivered_to' => $user->email,
+            'active' => true,
+            'destination' => 'email',
+            'source' => 'forgot'
+        ]);
+        $activator->renew();
+        $activator->send();
+
+        Auth::logout();
+        return redirect(url('/code/verify'));
+    }
+
+
     public function resendCode(Request $request)
     {
         $email = $request->session()->get('email');
