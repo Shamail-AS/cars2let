@@ -41,6 +41,10 @@
         i {
             margin-right: 5px;
         }
+
+        #email button {
+            margin-bottom: 20px;
+        }
     </style>
 @endsection
 
