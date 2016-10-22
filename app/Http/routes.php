@@ -177,6 +177,7 @@ Route::group(['prefix'=>'api'],function(){
 
     Route::get('/email/test','ApiController@sendMail');
     Route::get('/email/code', 'ApiController@testCodeEmail');
+    Route::post('/email/post', 'ApiController@testGuzzlePost');
 
     Route::group(['prefix' => 'admin'], function () {
 

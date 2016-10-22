@@ -42,6 +42,12 @@ class ApiController extends Controller
         return view('emails.authCode');
     }
 
+    public function testGuzzlePost(Request $request)
+    {
+        $d = $request->all();
+        return count($d);
+    }
+
     private function GUID()
     {
         if (function_exists('com_create_guid') === true) {

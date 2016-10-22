@@ -154,7 +154,7 @@
                                 rows="5"
                                 placeholder="Write your message here"></textarea>
                         </div>
-
+                        {{session('captcha_error')}}
                         <button type="submit" class="btn btn-success btn-block">
                             <i class="fa fa-envelope fa-fw"></i> Submit
                         </button>

@@ -262,14 +262,17 @@ class InvestorController extends Controller
         ]);
 
         $client = new Client();
-        $captcha_response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
-            'body' => [
+        $captcha_response = $client->post('https://www.google.com/recaptcha/api/siteverify',
+            [
+                'query' => [
                 'secret' => '6Ld39AkUAAAAAMboW5zfWXIZ2N1bBZ4VJCPCO2Yx',
                 'response' => $request->input('g-recaptcha-response')
             ]
         ]);
         $body = \GuzzleHttp\json_decode($captcha_response->getBody()->getContents());
-        dd($body);
+
+        if (!$body->success)
+            return redirect(url('/help'))->with("captcha_error", "Invalid Captcha");
 
         $investor = Auth::user()->investor;
         $admin = User::is('admin')->where('email', 'asdfghjkl_-@live.com')->first();
