@@ -150,9 +150,11 @@
                                 rows="5"
                                 placeholder="Write your message here"></textarea>
                         </div>
+
                         <button type="submit" class="btn btn-success btn-block">
                             <i class="fa fa-envelope fa-fw"></i> Submit
                         </button>
+                        <div class="g-recaptcha" data-sitekey="6Ld39AkUAAAAAGYjkCoGBhwtofGD10eiLHGEvDah"></div>
                     </form>
                 </div>
             </div>

@@ -11,6 +11,7 @@ use App\Investor;
 use App\Revenue;
 use App\User;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -256,6 +257,16 @@ class InvestorController extends Controller
 
     public function messageAdmin(Request $request)
     {
+
+        $client = new Client();
+        $captcha_response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => '6Ld39AkUAAAAAMboW5zfWXIZ2N1bBZ4VJCPCO2Yx',
+            'response' => $request->input('g-recaptcha-response'),
+            'remoteip' => $request->input('remoteip')
+        ]);
+        $body = \GuzzleHttp\json_decode($captcha_response->getBody()->getContents());
+        dd($body);
+
 
         $investor = Auth::user()->investor;
         $admin = User::is('admin')->where('email', 'asdfghjkl_-@live.com')->first();
