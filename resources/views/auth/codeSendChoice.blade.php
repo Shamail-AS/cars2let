@@ -12,14 +12,17 @@
                         <form  role="form" method="POST" action="{{url('/code/send')}}">
                             {!! csrf_field() !!}
 
-                            <div class="checkbox">
-                                <label><input  type="radio" name="sendTo" value="email">Send code to email</label>
+                            <div class="checkbox form-group">
+                                <label><input checked="checked" type="radio" name="sendTo" value="email">Send code to
+                                    email</label>
                             </div>
 
-                            <div class="checkbox">
-                                <label><input  type="radio" name="sendTo" value="phone">Send code to phone</label>
+                            {{--<div class="checkbox">--}}
+                            {{--<label><input  type="radio" name="sendTo" value="phone">Send code to phone</label>--}}
+                            {{--</div>--}}
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary">Send Code selected places</button>
                             </div>
-                            <button type="submit" class="btn btn-lg btn-primary">Send Code selected places</button>
 
                         </form>
 

@@ -34,7 +34,7 @@
                 <tr>
                     <td>{{$driver->license_no}}</td>
                     <td>{{$driver->email}}</td>
-                    <td>{{substr($driver->phone,0,5)}}</td>
+                    <td>{{($driver->phone)}}</td>
                     <td>{{$driver->age}} years</td>
                     <td>{{ Carbon\Carbon::parse($driver->created_at)->toFormattedDateString() }}</td>
                     <td>{{$driver->totalContracts}}</td>

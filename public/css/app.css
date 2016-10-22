@@ -15,16 +15,20 @@ body{
 .navbar-c2l{
     background-color: #28975e;
     border-radius: 0px !important;
+
 }
 .navbar-c2l a{
     color: floralwhite;
 }
 .nav>li>a:hover{
-    background-color: #1a643e; !important;
+    background-color: rgba(0, 0, 0, 0.35);
+!important;
 }
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
-    background-color: #1a643e; !important;
-    border-color: #1a643e; !important;
+    background-color: rgba(0, 0, 0, 0.35);
+!important;
+    border-color: #646363;
+!important;
 }
 
 #lean_overlay {
@@ -36,4 +40,8 @@ body{
     width: 100%;
     background: #000;
     display: none;
+}
+
+.dropdown-menu.padded li {
+    padding: 5px 0px 5px 0px;
 }

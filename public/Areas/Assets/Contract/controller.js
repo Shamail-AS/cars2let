@@ -21,10 +21,8 @@ app.controller('contractController',
                 'car': '',
                 'driver': '',
                 'selected_status': {},
-                '_date_from': moment().subtract(3,'months'),
-                'date_from': moment().subtract(3,'months').format("DD-MM-YYYY"),
-                '_date_to': moment().add(3,'months'),
-                'date_to': moment().add(3,'months').format("DD-MM-YYYY")
+                'date_from': moment().subtract(5, 'year').format("YYYY-MM-DD"),
+                'date_to': moment().add(5, 'year').format("YYYY-MM-DD")
 
             };
 

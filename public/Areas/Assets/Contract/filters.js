@@ -1,7 +1,7 @@
 app.filter("dateFilter",function(){
     return function(items,from,to){
-        var df = parseDate(from);
-        var dt = parseDate(to);
+        var df = new Date(from);
+        var dt = new Date(to);
         var returnCollection = [];
         for(var i = 0; i < items.length; i++)
         {
@@ -15,11 +15,6 @@ app.filter("dateFilter",function(){
         return returnCollection;
     };
 });
-function parseDate(input) {
-
-    var parts = input.split('-');
-    return new Date(parts[2], parts[1]-1, parts[0]);
-}
 app.filter("contractFilter", function () {
     return function (items, text) {
 

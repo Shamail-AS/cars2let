@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Log;
 
 
@@ -94,14 +95,6 @@ class InvestorController extends Controller
 
     //-----------------//
 
-    public function RevenueSummary()
-    {
-        $investor = Auth::user()->investor;
-        $cars = $investor->cars()->count();
-        $contracts = $investor->contracts()->count();
-        $drivers = count($investor->drivers);
-
-    }
     public function AssetsSummary()
     {
         $investor = Auth::user()->investor;
@@ -193,8 +186,6 @@ class InvestorController extends Controller
 
     public function admin_store(RegisterInvestorRequest $request)
     {
-
-
         $investor = Investor::create($request->all());
 
         if (!$request->has('name')) {
@@ -221,13 +212,6 @@ class InvestorController extends Controller
         return redirect(url('/admin/investor/all'));
     }
 
-    private function getToken()
-    {
-        return $this->GUID();
-    }
-
-
-
     public function activate($token)
     {
         $activator = AccountActivation::valid()->latest();
@@ -252,31 +236,40 @@ class InvestorController extends Controller
         ]);
         $token = $request->input('token');
         $email = $request->input('email');
-
-        $activator = AccountActivation::where('code', '=', $token)->valid()->for($email)->latest();
-
-
+        $activator = AccountActivation::where('code', $token)->valid()->for($email)->latest();
         if (!isset($activator))
             return redirect('/');
-
         $user = User::where('email', $email)->first();
-
-
         $user->password = bcrypt($request->input('password'));
         $user->status = 'active';
 
         $user->save();
         $activator->deactivate();
 
-        if(Auth::attempt(['email'=>$user->email,'password'=>$request->input('password')]))
-        {
-
+        if (Auth::attempt(['email' => $user->email, 'password' => $request->input('password')])) {
             return redirect(url('/home'));
-        }
-        else
-        {
+        } else {
             return redirect(url('/auth/login'));
         }
 
+    }
+
+    public function messageAdmin(Request $request)
+    {
+
+        $investor = Auth::user()->investor;
+        $admin = User::is('admin')->where('email', 'asdfghjkl_-@live.com')->first();
+        $emails = [
+            'admin' => $admin->email,
+            'investor' => $investor->email
+        ];
+
+        Mail::send('emails.helpInvestor', ['question' => $request->input('message'), 'investor' => $investor], function ($m) use ($emails) {
+            $m->from('support@cars2let.com', 'Cars2Let Investor Support');
+            $m->cc($emails['investor']);
+            $m->to($emails['admin'])->subject('An Investor needs help');
+        });
+
+        return redirect('/investor');
     }
 }

@@ -93,6 +93,8 @@ Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],func
     Route::get('/partial/create/{item}','AssetController@partialCreate');
     Route::get('/show/{id}', 'InvestorController@show');
 
+    Route::post('/support/create', 'InvestorController@messageAdmin');
+
 });
 
 Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(){

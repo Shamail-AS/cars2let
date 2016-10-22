@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link href="{{asset('css/fa/css/font-awesome.min.css')}}" rel='stylesheet' type='text/css'>
     <link href="{{asset('css/lato-google.css')}}" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Molengo"/>
 
     <!-- Styles -->
     <link href="{{asset('css/jquery-ui.css')}}" rel="stylesheet">
@@ -55,7 +56,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand navbar-brand-c2l " href="{{ url('/') }}">
-                    Cars2Let Monitor Station
+                    <strong>Cars2Let Members Area</strong>
                 </a>
             </div>
 
@@ -65,7 +66,7 @@
 
                     @if (!Auth::guest() && Auth::user()->status == 'active')
                         @if(Auth::user()->isAdmin)
-                            <li><a href="{{ url('admin') }}">Dashboard</a></li>
+                            <li class="active"><a href="{{ url('admin') }}">Dashboard</a></li>
 
                         @elseif(Auth::user()->isInvestor)
                             <li><a href="{{ url('investor') }}">Dashboard</a></li>
@@ -88,18 +89,20 @@
                                 {{--{{Auth::user()->isAdmin ? Auth::user()->email : Auth::user()->investor->name }} <span class="caret"></span>--}}
                             </a>
 
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="list-group-item"><a href="{{ url('/logout') }}"><i
-                                                class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                                <li class="list-group-item"><a href="{{ url('/help') }}"><i
-                                                class="fa fa-question-circle fa-btn"></i>Help</a></li>
-                                <li class="list-group-item"><a href="{{ url('reset/password') }}"><i
-                                                class="fa fa-cog fa-btn"></i>Reset Password</a></li>
+                            <ul class="dropdown-menu padded" role="menu">
                                 @if(Auth::user()->isInvestor)
-                                    <li class="list-group-item"><a
-                                                href="{{ url('/investor/show/'.Auth::user()->investor->id) }}"><i
-                                                    class="fa fa-user fa-btn"></i>Profile</a></li>
+                                    <li><a href="{{ url('/investor/show/'.Auth::user()->investor->id) }}">
+                                            <i class="fa fa-user fa-btn"></i>Profile
+                                        </a>
+                                    </li>
                                 @endif
+                                <li><a href="{{ url('/help') }}"><i
+                                                class="fa fa-question-circle fa-btn"></i>Help</a></li>
+                                <li><a href="{{ url('reset/password') }}"><i
+                                                class="fa fa-cog fa-btn"></i>Reset Password</a></li>
+
+                                <li><a href="{{ url('/logout') }}"><i
+                                                class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
                     @endif

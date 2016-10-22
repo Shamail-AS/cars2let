@@ -19,15 +19,21 @@
         .flex-center p {
             color: rgba(255, 255, 255, 0.88);
             font-size: 4em;
-            font-weight: 400;
-            text-shadow: 0px 0px 4px rgba(255, 250, 250, 0.56);
+            font-weight: 100;
+            text-shadow: 0px 0px 20px rgba(255, 250, 250, 0.26);
 
         }
 
         .flex-center a {
             text-decoration-color: rgba(214, 74, 72, 0.00);
-            color: rgba(18, 122, 47, 0.68);
-            text-shadow: 0 0px 6px rgba(106, 106, 106, 0.54);
+            color: rgba(15, 104, 40, 0.82);
+            text-shadow: 0 0px 20px rgba(106, 106, 106, 0.14);
+            font-weight: 400;
+        }
+
+        .navbar-c2l .navbar-right a {
+            color: rgba(27, 27, 27, 0.72);
+        !important;
         }
 
         .flex-center img {
@@ -39,12 +45,13 @@
         }
 
         .navbar-c2l {
-            background-color: rgba(46, 168, 66, 0.32);
+            background-color: rgba(250, 250, 250, 0.10);
+            border-bottom: solid 1px rgba(254, 255, 253, 0.1);
         !important;
         }
 
         body {
-            background-image: url("/img/background/simple1.jpg");
+            background-image: url("/img/background/simple5.jpg");
             background-size: cover; /* <------ */
             background-repeat: no-repeat;
             background-position: center center;
@@ -57,7 +64,7 @@
         <img src="{{asset(url("/img/background/logo.png"))}}"/>
 
         <div class="wrapper">
-            <p>Welcome to the Cars2Let Investor Portal.</p>
+            <p>Welcome to the Cars2Let Members Area.</p>
             @if(Auth::guest())
                 <p>Please <a href="{{ url('/login') }}">Login</a> or <a href="{{ url('/myregister') }}">Register</a>
                     to continue</p>
