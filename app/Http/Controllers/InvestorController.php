@@ -257,12 +257,15 @@ class InvestorController extends Controller
 
     public function messageAdmin(Request $request)
     {
+        dd($request->all());
 
         $client = new Client();
         $captcha_response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => '6Ld39AkUAAAAAMboW5zfWXIZ2N1bBZ4VJCPCO2Yx',
-            'response' => $request->input('g-recaptcha-response'),
-            'remoteip' => $request->input('remoteip')
+            'body' => [
+                'secret' => '6Ld39AkUAAAAAMboW5zfWXIZ2N1bBZ4VJCPCO2Yx',
+                'response' => $request->input('g-recaptcha-response'),
+                'remoteip' => $request->input('remoteip')
+            ]
         ]);
         $body = \GuzzleHttp\json_decode($captcha_response->getBody()->getContents());
         dd($body);
