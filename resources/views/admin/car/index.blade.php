@@ -10,9 +10,9 @@
     <div class="wrapper" ng-app="cars2let" ng-controller="carController">
         <h1>Manage Cars</h1>
         <table class="table table-striped">
+            <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
                 <th>Make</th>
                 <th>Registration</th>
                 <th>Investor</th>
@@ -20,11 +20,11 @@
                 <th>Comments</th>
                 <th>Actions</th>
             </tr>
+            </thead>
+            <tbody class="relative">
 
             <tr ng-repeat="car in vm.cars | orderBy : '-id'">
                 <td>@{{ car.id }}</td>
-                <td ng-if="!car.edit_mode">@{{ car.name }}</td>
-                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.name"></td>
                 <td ng-if="!car.edit_mode">@{{ car.make }}</td>
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.make"></td>
                 <td ng-if="!car.edit_mode">@{{ car.reg_no }}</td>
@@ -63,7 +63,11 @@
                     </div>
                 </td>
             </tr>
+            </tbody>
         </table>
+        <div ng-if="vm.loading" class="placeholder">
+            <span><i class="fa fa-spinner fa-3x fa-spin"></i></span>
+        </div>
     </div>
     <div class="fixed-footer-button-container">
         <div class="card-container">

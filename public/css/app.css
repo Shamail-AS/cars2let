@@ -45,3 +45,23 @@ body{
 .dropdown-menu.padded li {
     padding: 5px 0px 5px 0px;
 }
+
+.placeholder {
+    text-align: center;
+    color: gray;
+    font-size: xx-large;
+    font-weight: 300;
+    padding: 70px 0 60px 0;
+    background-color: rgba(191, 191, 191, 0.11);
+    flex: 1 0 auto;
+}
+
+.placeholder p {
+    max-width: 100%;
+    text-wrap: normal;
+    text-align: center;
+}
+
+.relative {
+    position: relative;
+}
