@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="footer">
-            <p>This service is brought to you by Cars2Let Investor Portal.
+            <p>This service is brought to you by Cars2Let from our Members area.
                 If you are not the intended recipient please ignore this email</p>
         </div>
     </div>
