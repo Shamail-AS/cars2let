@@ -187,12 +187,19 @@ class InvestorController extends Controller
 
     public function admin_store(RegisterInvestorRequest $request)
     {
-        $user = User::create([
-            'email' => $request->input('email'),
-            'password' => bcrypt('sample'),
-            'status' => 'new',
-            'type' => 'investor'
-        ]);
+        $user = User::where('email', $request->input('email'))->first();
+
+        if ($user == null) {
+            User::create([
+                'email' => $request->input('email'),
+                'password' => bcrypt('sample'),
+                'status' => 'new',
+                'type' => 'investor'
+            ]);
+        } else {
+            $user->type = 'investor';
+            $user->save();
+        }
 
         $activator = AccountActivation::create([
             'delivered_to' => $request->input('email'),

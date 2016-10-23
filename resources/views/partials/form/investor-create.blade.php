@@ -25,9 +25,10 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Mobile Phone (No country code)</label>
+                        <label>Mobile Phone</label>
+                        <small>No country code</small>
                         <input id="txt_phone" class="form-control" type="tel" pattern='\d{11}' name="phone"
-                               placeholder="11 digits">
+                               placeholder="eg - 07418402842">
                     </div>
                     <div class="form-group">
                         <label>Car Tracking URL</label>

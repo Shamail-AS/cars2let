@@ -7,27 +7,33 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Name</label>
-                        <input class="form-control" type="text" name="name" value="{{old('name')}}">
+                        <input placeholder="John Doe" class="form-control" type="text" name="name"
+                               value="{{old('name')}}">
 
                     </div>
                     <div class="form-group">
                         <label>License Number</label>
-                        <input class="form-control" type="text" name="license_no" value="{{old('license_no')}}">
+                        <input placeholder="AV123CD" class="form-control" type="text" name="license_no"
+                               value="{{old('license_no')}}">
                     </div>
                     <div class="form-group">
                         <label>PCO License Number</label>
-                        <input class="form-control" type="text" name="pco_license_no" value="{{old('pco_license_no')}}">
+                        <input placeholder="AV123CD" class="form-control" type="text" name="pco_license_no"
+                               value="{{old('pco_license_no')}}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Email</label>
-                        <input class="form-control" type="email" name="email" value="{{old('email')}}">
+                        <input placeholder="someone@example.com" class="form-control" type="email" name="email"
+                               value="{{old('email')}}">
 
                     </div>
                     <div class="form-group">
-                        <label>Phone Number</label>
-                        <input class="form-control" type="text" name="phone" value="{{old('phone')}}">
+                        <label>Mobile Phone</label>
+                        <small>No country code</small>
+                        <input placeholder="eg - 07418402842" class="form-control" type="text" name="phone"
+                               value="{{old('phone')}}">
 
                     </div>
                     <div class="form-group ">
