@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AccountActivation;
+use App\Http\Requests\RegisterUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -76,7 +77,8 @@ class AdminController extends Controller
     {
         return  view('admin.create');
     }
-    public function store(Request $request)
+
+    public function store(RegisterUserRequest $request)
     {
         $user = User::where('email', $request->input('email'))->first();
 

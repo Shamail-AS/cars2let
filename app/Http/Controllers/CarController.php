@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterCarRequest;
 use App\Investor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -76,9 +77,10 @@ class CarController extends Controller
     {
         return view('admin.car.create');
     }
-    public function store(Request $request)
+
+    public function store(RegisterCarRequest $request)
     {
-        $car = Car::create($request->all());
+        Car::create($request->all());
         return redirect(url('/admin/car/all'));
     }
     public function all()
