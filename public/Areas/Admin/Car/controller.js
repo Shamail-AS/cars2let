@@ -20,19 +20,19 @@ app.controller('carController',
                 formatYear: 'yyyy',
                 startingDay: 1
             };
-            $scope.openPicker = function (id) {
-                open_picker_for_car(id);
+            $scope.openPicker = function (car) {
+                car.picker_open = true;
             };
 
             //Public methods
             $scope.getCars = function () {
                 get_cars();
             };
-            $scope.editCar = function (id) {
-                edit_car(id);
+            $scope.editCar = function (car) {
+                car.edit_mode = true;
             };
-            $scope.cancelEdit = function (id) {
-                cancel_edit_car(id);
+            $scope.cancelEdit = function (car) {
+                car.edit_mode = false;
             };
             $scope.updateCar = function (car) {
                 update_car(car);
@@ -51,25 +51,9 @@ app.controller('carController',
                     });
             };
 
-            var edit_car = function (id) {
-                var car = _.find($scope.vm.cars, function (e) {
-                    return e.id == id;
-                });
-                car.edit_mode = true;
-                //car.dt_available_since = new Date();
-                console.log(car.dt_available_since);
-            };
-
-            var cancel_edit_car = function (id) {
-                var car = _.find($scope.vm.cars, function (e) {
-                    return e.id == id;
-                });
-                car.edit_mode = false;
-            };
-
             var update_car = function (car) {
                 car.available_since = moment(car.dt_available_since).format("DD-MM-YYYY");
-                carDataFactory.putCar(car.id, car)
+                carDataFactory.updateCar(car.id, car)
                     .success(function (result) {
                         alert(result);
                         car.edit_mode = false;

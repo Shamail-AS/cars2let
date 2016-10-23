@@ -26,7 +26,7 @@ class RegisterCarRequest extends Request
         return [
             //
             'reg_no' => 'required|unique:cars',
-            'make' => 'alpha',
+            'make' => 'numeric',
         ];
     }
 }

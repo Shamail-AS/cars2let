@@ -40,23 +40,18 @@
 
                 <td ng-if="!car.edit_mode">@{{ car.available_since }}</td>
                 <td ng-if="car.edit_mode">
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup ng-model="car.dt_available_since"
-                               is-open="car.picker_open" datepicker-options="dateOptions" ng-required="true"
-                               close-text="Close"/>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="openPicker(car.id)"><i
-                                        class="fa fa-calendar"></i></button>
-                        </span>
-                    </p>
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="car.dt_available_since"
+                           is-open="car.picker_open" datepicker-options="dateOptions" ng-required="true"
+                           close-text="Close"
+                           ng-click="openPicker(car)"/>
                 </td>
                 <td>
                     <div class="btn-group-xs">
-                        <button ng-if="!car.edit_mode" ng-click="editCar(car.id)" class="btn btn-xs btn-primary">Edit
+                        <button ng-if="!car.edit_mode" ng-click="editCar(car)" class="btn btn-xs btn-primary">Edit
                         </button>
                         <button ng-if="car.edit_mode" ng-click="updateCar(car)" class="btn btn-xs btn-warning">Update
                         </button>
-                        <button ng-if="car.edit_mode" ng-click="cancelEdit(car.id)" class="btn btn-xs btn-default">
+                        <button ng-if="car.edit_mode" ng-click="cancelEdit(car)" class="btn btn-xs btn-default">
                             Cancel
                         </button>
                     </div>
