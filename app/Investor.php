@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Log;
+use Mockery\CountValidator\Exception;
 
 class Investor extends Model
 {
@@ -144,17 +145,32 @@ class Investor extends Model
 
     public function setDobAttribute($value)
     {
-        $this->attributes['dob'] = Carbon::createFromFormat('d-m-Y', $value);
+        try {
+            $this->attributes['dob'] = Carbon::createFromFormat('d-m-Y', $value);
+        } catch (\InvalidArgumentException $e) {
+            $this->attributes['dob'] = Carbon::createFromFormat('Y-m-d', $value);
+        }
+
     }
 
     public function setAccPeriodStartAttribute($value)
     {
-        $this->attributes['acc_period_start'] = Carbon::createFromFormat('d-m-Y', $value);
+        try {
+            $this->attributes['acc_period_start'] = Carbon::createFromFormat('d-m-Y', $value);
+        } catch (\InvalidArgumentException $e) {
+            $this->attributes['acc_period_start'] = Carbon::createFromFormat('Y-m-d', $value);
+
+        }
     }
 
     public function setAccPeriodEndAttribute($value)
     {
-        $this->attributes['acc_period_end'] = Carbon::createFromFormat('d-m-Y', $value);
+        try {
+            $this->attributes['acc_period_end'] = Carbon::createFromFormat('d-m-Y', $value);
+        } catch (\InvalidArgumentException $e) {
+            $this->attributes['acc_period_end'] = Carbon::createFromFormat('Y-m-d', $value);
+
+        }
     }
 
 }

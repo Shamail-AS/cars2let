@@ -189,6 +189,12 @@ class InvestorController extends Controller
     {
         $user = User::where('email', $request->input('email'))->first();
 
+        $mono = Log::getMonolog();
+        $mono->pushHandler(new \Monolog\Handler\FirePHPHandler());
+        $mono->addInfo("Investor store", $request->all());
+
+        Investor::create($request->all());
+
         if ($user == null) {
             User::create([
                 'email' => $request->input('email'),

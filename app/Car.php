@@ -94,7 +94,12 @@ class Car extends Model
     }
     public function setAvailableSinceAttribute($value)
     {
-        $this->attributes['available_since'] = Carbon::createFromFormat('d-m-Y',$value);
+        try {
+            $this->attributes['available_since'] = Carbon::createFromFormat('d-m-Y', $value);
+        } catch (\InvalidArgumentException $e) {
+            $this->attributes['available_since'] = Carbon::createFromFormat('Y-m-d', $value);
+
+        }
     }
 
     public function setRegNoAttribute($value)

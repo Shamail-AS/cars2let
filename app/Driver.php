@@ -35,7 +35,12 @@ class Driver extends Model
     }
     public function setDobAttribute($value)
     {
-        $this->attributes['dob'] = Carbon::createFromFormat('d-m-Y',$value);
+        try {
+            $this->attributes['dob'] = Carbon::createFromFormat('d-m-Y', $value);
+        } catch (\InvalidArgumentException $e) {
+            $this->attributes['dob'] = Carbon::createFromFormat('Y-m-d', $value);
+
+        }
     }
 
     public function getAgeAttribute()
