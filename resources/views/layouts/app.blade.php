@@ -117,7 +117,8 @@
 <script>
 
     $('.dp').datepicker({
-        dateFormat: "yy-mm-dd"
+        //TODO THIS WILL CAUSE INCONSISTENT BEHAVIOUR WHEN EDITING INVESTOR DETAILS IN INVESTOR SECTION
+        dateFormat: "dd-mm-yy"
     });
 </script>
 </html>

@@ -6,7 +6,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label>Name</label>
-                        <input class="form-control" type="text" name="name" placeholder="" required="true">
+                        <input class="form-control" type="text" name="name" placeholder="John Doe" required>
                     </div>
                     <div class="form-group">
                         <label>Investor email</label>
@@ -15,22 +15,24 @@
                     </div>
                     <div class="form-group">
                         <label>Passport Number</label>
-                        <input class="form-control" type="text" name="passport_num" placeholder="" required="true">
+                        <input class="form-control" type="text" name="passport_num" placeholder="12345678"
+                               required="true">
                     </div>
                     <div class="form-group">
                         <label>Date of birth</label>
-                        <input class="form-control dp" type="date" name="dob" placeholder="mm-dd-yyyy" required="true">
+                        <input class="form-control dp" type="date" name="dob" placeholder="" required="true">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label>Mobile Phone</label>
-                        <input class="form-control" type="tel" pattern='\d{11}' name="phone"
-                               placeholder="Format: 099999999">
+                        <label>Mobile Phone (No country code)</label>
+                        <input id="txt_phone" class="form-control" type="tel" pattern='\d{11}' name="phone"
+                               placeholder="11 digits">
                     </div>
                     <div class="form-group">
-                        <label>Car Track URL</label>
-                        <input class="form-control" type="url" name="tracking_url" placeholder="" required="true">
+                        <label>Car Tracking URL</label>
+                        <input class="form-control" type="url" name="tracking_url" placeholder="http:\\www.example.com"
+                               required="true">
                     </div>
                     <div class="form-group">
                         <label>Accounting Period Start</label>

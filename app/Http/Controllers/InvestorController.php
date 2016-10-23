@@ -187,11 +187,18 @@ class InvestorController extends Controller
 
     public function admin_store(RegisterInvestorRequest $request)
     {
-        $investor = Investor::create($request->all());
+        // Get an instance of Monolog
+        $monolog = Log::getMonolog();
+        // Choose FirePHP as the log handler
+        $monolog->pushHandler(new \Monolog\Handler\FirePHPHandler());
+        // Start logging
 
-        if (!$request->has('name')) {
-            $investor->name = explode("@", $request->input('email'), 1)[0];
-        }
+        $investor = Investor::create($request->all());
+        $monolog->debug('Created', [$investor, $request->all()]);
+
+//        if (!$request->has('name')) {
+//            $investor->name = explode("@", $request->input('email'), 1)[0];
+//        }
 
         $user = User::create([
             'email' => $request->input('email'),
@@ -199,7 +206,6 @@ class InvestorController extends Controller
             'status' => 'new',
             'type' => 'investor'
         ]);
-        $user->save();
 
         $activator = AccountActivation::create([
             'delivered_to' => $request->input('email'),
