@@ -78,13 +78,16 @@ class AdminController extends Controller
     }
     public function store(Request $request)
     {
-        $user = User::where('email', $request->input('email'))->get();
+        $user = User::where('email', $request->input('email'))->first();
+
         if($user == null)
         {
+
             $user = User::create($request->all());
             $user->status = 'new';
             $user->password = bcrypt('sample');
             $user->save();
+
 
             $activator = AccountActivation::create([
                 'delivered_to' => $user->email,
