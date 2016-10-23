@@ -24,6 +24,9 @@
                                 @if(session('captcha_error'))
                                     <label>{{session('captcha_error')}}</label>
                                 @endif
+                                @if(session('error'))
+                                    <p class="alert alert-info">{{session('error')}}</p>
+                                @endif
                                 <div class="g-recaptcha" data-sitekey="6Ld39AkUAAAAAGYjkCoGBhwtofGD10eiLHGEvDah"></div>
 
                             </div>

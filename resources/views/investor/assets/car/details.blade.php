@@ -24,7 +24,7 @@
                     <td>Make</td>
                     <td>Date Available Since</td>
                     <td>Total Contracts</td>
-                    <td>Total Weeks</td>
+                    <td>Weeks Available Since</td>
                     <td>Total Revenue (£)</td>
                     <td>Paid to investor (£)</td>
                     <td> </td>
@@ -151,11 +151,11 @@
 
             <div class="form-group">
                 <label>Make</label>
-                <input class="form-control" type="text" name="make" value="{{$car->make}}">
+                <input class="form-control" type="number" name="make" value="{{$car->make}}">
             </div>
             <div class="form-group ">
                 <label>Available Since</label>
-                <input class="form-control dp" type="text" name="available_since"
+                <input class="form-control dp" type="date" name="available_since"
                        value="{{$car->available_since}}">
             </div>
             <div class="form-group">

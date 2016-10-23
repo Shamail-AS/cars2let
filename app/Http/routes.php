@@ -73,6 +73,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
     Route::get('/reset/password', 'MyAuthController@reset');
 
+    Route::get('/disabled', function () {
+        return view('errors.disabledUser');
+    });
+
 
 });
 Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],function(){

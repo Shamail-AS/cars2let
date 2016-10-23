@@ -16,6 +16,9 @@ class InvestorMiddleware
     public function handle($request, Closure $next)
     {
         $user = $request->user();
+        if ($user->status == 'disabled') {
+            return redirect('/disabled');
+        }
         if($user->isAdmin)
             return redirect('/admin');
         elseif($user->isDriver)

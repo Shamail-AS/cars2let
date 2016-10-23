@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->status == 'active';
     }
 
+    public function getIsDisabledAttribute()
+    {
+        return $this->status == 'disabled';
+    }
+
 
     public function scopeIs($query, $type)
     {

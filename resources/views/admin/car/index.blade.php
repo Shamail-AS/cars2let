@@ -13,14 +13,18 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Make</th>
                 <th>Registration</th>
                 <th>Investor</th>
                 <th>Available Since</th>
+                <th>Comments</th>
                 <th>Actions</th>
             </tr>
 
             <tr ng-repeat="car in vm.cars | orderBy : '-id'">
                 <td>@{{ car.id }}</td>
+                <td ng-if="!car.edit_mode">@{{ car.name }}</td>
+                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.name"></td>
                 <td ng-if="!car.edit_mode">@{{ car.make }}</td>
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.make"></td>
                 <td ng-if="!car.edit_mode">@{{ car.reg_no }}</td>
@@ -39,6 +43,8 @@
                 </td>
 
                 <td ng-if="!car.edit_mode">@{{ car.available_since }}</td>
+                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.comments"></td>
+                <td ng-if="!car.edit_mode">@{{ car.comments }}</td>
                 <td ng-if="car.edit_mode">
                     <input type="text" class="form-control" uib-datepicker-popup ng-model="car.dt_available_since"
                            is-open="car.picker_open" datepicker-options="dateOptions" ng-required="true"

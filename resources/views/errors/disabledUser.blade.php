@@ -60,7 +60,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">{{$message}}</div>
+        <div class="title">Your account has been disabled</div>
         <div class="subtitle"><a href="{{url('/help')}}">Contact an admin</a> to request an admin to enable your account
         </div>
         <div class="title">

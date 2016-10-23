@@ -63,6 +63,9 @@ class MyAuthController extends Controller
     public function reset()
     {
         $user = Auth::user();
+        if ($user->isDisabled)
+            return redirect('/disabled');
+
         $user->status = 'new';
         $user->save();
 
@@ -193,7 +196,14 @@ class MyAuthController extends Controller
         if (!$body->success)
             return redirect()->back()->with("captcha_error", "Invalid user");
 
-        $request->session()->put('email', $request->input('email'));
-        return redirect(url('/code/destination'));
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+        if ($user == null) {
+            $request->session()->put('email', $request->input('email'));
+            return redirect(url('/code/destination'));
+        } else {
+            return redirect()->back()->with('error', 'An account already exists for this email. Please go to the login form, you may reset your password there if you have forgotten it.');
+        }
+
     }
 }

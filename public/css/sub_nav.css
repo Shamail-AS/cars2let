@@ -28,7 +28,7 @@
 {
     border-bottom: thick solid #e93336;
     background-color: #e93336;
-
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.62);
     padding-bottom: 1px;
 }
 /*.sub-nav-item.active p{*/
