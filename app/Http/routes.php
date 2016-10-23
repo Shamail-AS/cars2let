@@ -98,23 +98,8 @@ Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],func
 });
 
 Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(){
-    //ADMINS//
+
     Route::get('/','AdminController@home');
-
-    //list all admins
-    Route::get('/all', 'AdminController@index');
-
-    Route::get('/edit/{id}','AdminController@edit');
-
-    //update details for investor
-    Route::put('/edit/{id}','AdminController@update');
-
-
-    //show form where registration can be done for admins (BY SUPER ADMIN ONLY)
-    Route::get('/create','AdminController@create');
-
-    //save data to create new user with admin rights or create one
-    Route::post('/store','AdminController@store');
 
     //INVESTORS//
     Route::get('/investor/all', 'InvestorController@index');
@@ -153,6 +138,19 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
 });
 
+Route::group(['prefix' => 'super', 'middleware' => ['web', 'auth', 'super-admin']], function () {
+    Route::group(['prefix' => 'api'], function () {
+        Route::get('/all', 'AdminController@api_all');
+        Route::get('/{id}', 'AdminController@api_get');
+        Route::put('/{id}/update', 'AdminController@api_update');
+        Route::get('/{id}/reset', 'AdminController@api_reset_pass');
+        Route::get('/{id}/delete', 'AdminController@api_delete');
+    });
+    Route::post('/user/store', 'AdminController@store');
+    Route::get('/admin/all', function () {
+        return view('admin.index');
+    });
+});
 
 
 Route::group(['prefix'=>'api'],function(){
@@ -225,6 +223,4 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/delete', 'RevenueController@api_delete');
         });
     });
-
-
 });

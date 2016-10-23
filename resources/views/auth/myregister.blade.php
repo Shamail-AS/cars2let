@@ -21,31 +21,14 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                                @if(session('captcha_error'))
+                                    <label>{{session('captcha_error')}}</label>
+                                @endif
+                                <div class="g-recaptcha" data-sitekey="6Ld39AkUAAAAAGYjkCoGBhwtofGD10eiLHGEvDah"></div>
+
                             </div>
+
                         </div>
-
-                        {{--<div class="form-group{{ $errors->has('pass') ? ' has-error' : '' }}">--}}
-                            {{--<label class="col-md-4 control-label">Password</label>--}}
-
-                            {{--<div class="col-md-6">--}}
-                                {{--<input type="password" class="form-control" name="pass" value="{{ old('pass') }}">--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<hr>--}}
-                        {{--<div class="form-group{{ $errors->has('licence_num') ? ' has-error' : '' }}">--}}
-                            {{--<label class="col-md-4 control-label">Licence Number</label>--}}
-
-                            {{--<div class="col-md-6">--}}
-                                {{--<input type="text" class="form-control" name="licence_num" value="{{ old('licence_num') }}">--}}
-
-                                {{--@if (Session::has('detail_mismatch'))--}}
-                                {{--<span class="help-block">--}}
-                                        {{--<strong>{{ Session::get('detail_mismatch') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -60,4 +43,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AccountActivation;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,58 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    //
+    // API FUNCTIONS
+
+    public function api_all()
+    {
+        return User::all();
+    }
+
+    public function api_get($id)
+    {
+        return User::find($id);
+    }
+
+    public function api_update(Request $request)
+    {
+        $user = User::find($request->input('id'));
+
+        $user->email = $request->input('email');
+        $user->status = $request->input('status');
+        $user->type = $request->input('type');
+
+        $user->save();
+
+        return response("Update success");
+
+    }
+
+    public function api_reset_pass($id)
+    {
+        $user = User::find($id);
+        $user->status = 'new';
+        $user->save();
+
+        $activator = AccountActivation::create([
+            'delivered_to' => $user->email,
+            'active' => true,
+            'destination' => 'email',
+            'source' => 'forgot'
+        ]);
+        $activator->renew();
+        $activator->send();
+
+        return response("Password reset link sent");
+    }
+
+
+    public function api_delete($id)
+    {
+        User::destroy($id);
+        return response("Deleted");
+    }
+
+    //--------------------------------------------//
     public function home()
     {
         return view('admin.home');
@@ -26,15 +78,23 @@ class AdminController extends Controller
     }
     public function store(Request $request)
     {
-        $user = User::where('email','=',$request->input('email'))->get();
+        $user = User::where('email', $request->input('email'))->get();
         if($user == null)
         {
             $user = User::create($request->all());
-        }
-        $user->status = 'active';
-        $user->type = 'admin';
-        $user->save();
+            $user->status = 'new';
+            $user->password = bcrypt('sample');
+            $user->save();
 
-        return redirect(url('/admin'));
+            $activator = AccountActivation::create([
+                'delivered_to' => $user->email,
+                'active' => true,
+                'destination' => 'email',
+                'source' => 'admin'
+            ]);
+            $activator->renew();
+            $activator->send();
+        }
+        return redirect(url('/super/admin/all'));
     }
 }

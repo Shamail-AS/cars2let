@@ -25,9 +25,10 @@
                            <h1>Drivers</h1>
                        </a>
                        @if(Auth::user()->isSuperAdmin)
-                           <a href="{{url('admin/all')}}" class="admin-box nostyle">
+                           <a href="{{url('super/admin/all')}}" class="admin-box nostyle">
                                <i class="fa fa-5x fa-user"></i>
-                               <h1>Admins</h1>
+
+                               <h1>Users</h1>
                            </a>
                        @endif
                    </div>

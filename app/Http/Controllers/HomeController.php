@@ -28,6 +28,9 @@ class HomeController extends Controller
         if ($user->status == 'new') {
             session(['email' => $user->email]);
             return redirect(url('/code/verify'));
+        } elseif ($user->status == 'disabled') {
+            $message = "Your account has been disabled";
+            return view('errors.disabledUser', compact('message'));
         }
 
        if($user->isAdmin)

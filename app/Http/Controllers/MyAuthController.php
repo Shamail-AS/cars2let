@@ -6,6 +6,7 @@ use App\AccountActivation;
 use App\Http\Requests\VerifyCodeRequest;
 use App\Investor;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -87,33 +88,33 @@ class MyAuthController extends Controller
         $activation->send();
     }
 
-    //MANUAL ENTRY OF CODE
-    //TODO : REMOVE THIS FUNCTION USE URL based AUTH INSTEAD
-    public function verifyCode(VerifyCodeRequest $request)
-    {
-        $email = $request->session()->get('email');
-
-        $activator = AccountActivation::valid()->for($email)->latest()->first();
-
-        $expected_code = $activator->code;
-        $actual_code = $request->input('code');
-
-        if($actual_code == $expected_code)
-        {
-            $user = User::where('email', $email)->first();
-            if (isset($user)) {
-
-                //$activator->deactivate();
-                return view('auth.passwords.firstTimePassword', compact('email', 'actual_code'));
-            } else {
-                return redirect(url('register'))->withInput(['email' => $email]);
-            }
-        }
-        else{
-            $request->session()->flash('code_mismatch','The provided code doesn\'t match');
-            return view('auth.verify');
-        }
-    }
+//    //MANUAL ENTRY OF CODE
+//    //TODO : REMOVE THIS FUNCTION USE URL based AUTH INSTEAD
+//    public function verifyCode(VerifyCodeRequest $request)
+//    {
+//        $email = $request->session()->get('email');
+//
+//        $activator = AccountActivation::valid()->for($email)->latest()->first();
+//
+//        $expected_code = $activator->code;
+//        $actual_code = $request->input('code');
+//
+//        if($actual_code == $expected_code)
+//        {
+//            $user = User::where('email', $email)->first();
+//            if (isset($user)) {
+//
+//                //$activator->deactivate();
+//                return view('auth.passwords.firstTimePassword', compact('email', 'actual_code'));
+//            } else {
+//                return redirect(url('register'))->withInput(['email' => $email]);
+//            }
+//        }
+//        else{
+//            $request->session()->flash('code_mismatch','The provided code doesn\'t match');
+//            return view('auth.verify');
+//        }
+//    }
 
 //    public function check(Request $request)
 //    {
@@ -174,6 +175,24 @@ class MyAuthController extends Controller
 
     public function register(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'g-recaptcha-response' => 'required'
+        ]);
+
+        $client = new Client();
+        $captcha_response = $client->post('https://www.google.com/recaptcha/api/siteverify',
+            [
+                'query' => [
+                    'secret' => '6Ld39AkUAAAAAMboW5zfWXIZ2N1bBZ4VJCPCO2Yx',
+                    'response' => $request->input('g-recaptcha-response')
+                ]
+            ]);
+        $body = \GuzzleHttp\json_decode($captcha_response->getBody()->getContents());
+
+        if (!$body->success)
+            return redirect()->back()->with("captcha_error", "Invalid user");
+
         $request->session()->put('email', $request->input('email'));
         return redirect(url('/code/destination'));
     }

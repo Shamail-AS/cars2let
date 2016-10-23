@@ -10,7 +10,6 @@
     <!-- Fonts -->
     <link href="{{asset('css/fa/css/font-awesome.min.css')}}" rel='stylesheet' type='text/css'>
     <link href="{{asset('css/lato-google.css')}}" rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Molengo"/>
 
     <!-- Styles -->
     <link href="{{asset('css/jquery-ui.css')}}" rel="stylesheet">
