@@ -64,7 +64,7 @@
                 <p>Please click <a href="{{url('/verify/token/'.$code)}}">here</a> to complete your registration</p>
             </div>
             <div class="code-sub">
-                Your auth token {{$code}}
+                You will be able to choose your account password when you click the link.
             </div>
         </div>
         <div class="footer">
