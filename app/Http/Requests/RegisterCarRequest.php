@@ -27,7 +27,6 @@ class RegisterCarRequest extends Request
             //
             'reg_no' => 'required|unique:cars',
             'make' => 'alpha',
-            'comments' => 'alpha'
         ];
     }
 }
