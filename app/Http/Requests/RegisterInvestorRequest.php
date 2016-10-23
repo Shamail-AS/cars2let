@@ -13,7 +13,7 @@ class RegisterInvestorRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return \Auth::user()->isAdmin;
     }
 
     /**
@@ -25,8 +25,8 @@ class RegisterInvestorRequest extends Request
     {
         return [
             //
-            'name' => 'required|alpha',
-            'passport_num' => 'required|alpha_num|unique:investors',
+            'name' => 'required|regex:/^[a-zA-Z ]*$/',
+            'passport_num' => 'alpha_num|unique:investors',
             'email' => 'required|email|unique:investors',
             'phone'=> 'numeric',
             'dob' => 'date'

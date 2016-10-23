@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Cars2Let Monitor Station</title>
+    <title>Cars2Let Members Area</title>
 
     <!-- Fonts -->
     <link href="{{asset('css/fa/css/font-awesome.min.css')}}" rel='stylesheet' type='text/css'>

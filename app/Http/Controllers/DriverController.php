@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterDriverRequest;
 use App\Revenue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -74,9 +75,10 @@ class DriverController extends Controller
         $driver = Driver::find($id);
         return view('investor.assets.driver.detail',compact('driver'));
     }
-    public function store(Request $request)
+
+    public function store(RegisterDriverRequest $request)
     {
-        $driver = Driver::create($request->all());
+        Driver::create($request->all());
         return redirect(url('admin/driver/all'));
     }
     public function all()

@@ -17,6 +17,7 @@ class Driver extends Model
         'name',
         'email',
         'license_no',
+        'pco_license_no',
         'phone',
         'dob',
     ];
