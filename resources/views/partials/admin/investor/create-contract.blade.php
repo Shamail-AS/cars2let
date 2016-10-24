@@ -58,7 +58,8 @@
                             <label>Start Date</label>
                             <input type="text" class="form-control" uib-datepicker-popup
                                    ng-model="dirty.contract.dt_start_date"
-                                   is-open="dirty.contract.start_picker_open" datepicker-options="dateOptions"
+                                   is-open="dirty.contract.start_picker_open"
+                                   datepicker-options="dateOptions.start_date"
                                    ng-required="true"
                                    close-text="Close"
                                    ng-click="openStartPicker(dirty.contract)"/>
@@ -67,7 +68,7 @@
                             <label>End Date</label>
                             <input type="text" class="form-control" uib-datepicker-popup
                                    ng-model="dirty.contract.dt_end_date"
-                                   is-open="dirty.contract.end_picker_open" datepicker-options="dateOptions"
+                                   is-open="dirty.contract.end_picker_open" datepicker-options="dateOptions.end_date"
                                    ng-required="true"
                                    close-text="Close"
                                    ng-click="openEndPicker(dirty.contract)"/>

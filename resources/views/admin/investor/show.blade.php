@@ -34,7 +34,7 @@
                         <label>Accounting Period Start</label>
                         <input type="text" class="form-control" uib-datepicker-popup
                                ng-model="vm.investor.dt_acc_period_start"
-                               is-open="vm.investor.start_picker_open" datepicker-options="dateOptions"
+                               is-open="vm.investor.start_picker_open" datepicker-options="dateOptions.acc_period_start"
                                ng-required="true"
                                close-text="Close"
                                ng-click="openStartPicker(vm.investor)"/>
@@ -43,7 +43,7 @@
                         <label>Accounting Period End</label>
                         <input type="text" class="form-control" uib-datepicker-popup
                                ng-model="vm.investor.dt_acc_period_end"
-                               is-open="vm.investor.end_picker_open" datepicker-options="dateOptions"
+                               is-open="vm.investor.end_picker_open" datepicker-options="dateOptions.acc_period_end"
                                ng-required="true"
                                close-text="Close"
                                ng-click="openEndPicker(vm.investor)"/>
@@ -257,7 +257,7 @@
                                                uib-datepicker-popup
                                                ng-model="contract.dt_start_date"
                                                is-open="contract.start_picker_open"
-                                               datepicker-options="dateOptions"
+                                               datepicker-options="dateOptions.start_date"
                                                ng-required="true"
                                                close-text="Close"
                                                ng-click="openStartPicker(contract)"/>
@@ -268,7 +268,7 @@
                                                uib-datepicker-popup
                                                ng-model="contract.dt_end_date"
                                                is-open="contract.end_picker_open"
-                                               datepicker-options="dateOptions"
+                                               datepicker-options="dateOptions.end_date"
                                                ng-required="true"
                                                close-text="Close"
                                                ng-click="openEndPicker(contract)"/>

@@ -43,14 +43,15 @@
                 </td>
 
                 <td ng-if="!car.edit_mode">@{{ car.available_since }}</td>
-                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.comments"></td>
-                <td ng-if="!car.edit_mode">@{{ car.comments }}</td>
                 <td ng-if="car.edit_mode">
                     <input type="text" class="form-control" uib-datepicker-popup ng-model="car.dt_available_since"
                            is-open="car.picker_open" datepicker-options="dateOptions" ng-required="true"
                            close-text="Close"
                            ng-click="openPicker(car)"/>
                 </td>
+                <td ng-if="!car.edit_mode">@{{ car.comments }}</td>
+                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.comments"></td>
+
                 <td>
                     <div class="btn-group-xs">
                         <button ng-if="!car.edit_mode" ng-click="editCar(car)" class="btn btn-xs btn-primary">Edit
