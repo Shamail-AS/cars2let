@@ -8,7 +8,7 @@
                 </div>
                 <div class="form-group">
                     <label>Make</label>
-                    <input ng-model="dirty.car.make" class="form-control" placeholder="DivineRed">
+                    <input ng-model="dirty.car.make" class="form-control" placeholder="Toyota">
                 </div>
                 <div class="form-group">
                     <label>Available Since</label>
