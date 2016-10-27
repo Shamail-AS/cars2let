@@ -38,7 +38,7 @@
                     </div>
                     <div class="form-group ">
                         <label>Date of Birth</label>
-                        <input class="form-control dp" type="date" name="dob"
+                        <input class="form-control dp" type="text" name="dob"
                                value="{{old('dob')}}">
                     </div>
                 </div>

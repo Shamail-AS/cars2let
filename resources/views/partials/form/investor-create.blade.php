@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group">
                         <label>Date of birth</label>
-                        <input class="form-control dp" type="date" name="dob" placeholder="" required="true">
+                        <input class="form-control dp" type="text" name="dob" placeholder="" required="true">
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -37,12 +37,12 @@
                     </div>
                     <div class="form-group">
                         <label>Accounting Period Start</label>
-                        <input class="form-control dp" type="date" name="acc_period_start" placeholder="Start"
+                        <input class="form-control dp" type="text" name="acc_period_start" placeholder="Start"
                                required="true">
                     </div>
                     <div class="form-group">
                         <label>Accounting Period End</label>
-                        <input class="form-control dp" type="date" name="acc_period_end" placeholder="End"
+                        <input class="form-control dp" type="text" name="acc_period_end" placeholder="End"
                                required="true">
 
                     </div>
