@@ -46,6 +46,7 @@ app.factory('investorDataModelFactory', ['moment', function (moment) {
     };
     investorDataModelFactory.withContractExtras = function (contracts) {
         _.each(contracts, function (contract) {
+            console.log(contract.id);
             contract.dt_start_date = moment(contract.start_date).toDate();
             contract.dt_end_date = moment(contract.end_date).toDate();
             if (contract.status == 1) {

@@ -195,8 +195,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="contract in vm.investor.contracts
-                                | contractFilter : search.contracts">
+                                <tr ng-repeat="contract in (vm.investor.contracts
+                                | contractFilter : search.contracts) track by contract.id">
 
                                     <td ng-if="contract.status == 1 && !contract.edit_mode"><i
                                                 class="fa fa-circle ongoing"></i></td>
@@ -275,7 +275,7 @@
                                     </td>
 
                                     <td style="max-width: 10px;"
-                                        ng-if="!contract.edit_mode">@{{ contract.rate }}</td>
+                                        ng-if="!contract.edit_mode">@{{ contract.rate | number : 2}}</td>
                                     <td ng-if="contract.edit_mode"><input style="max-width: 70px;"
                                                                           class="form-control" type="text"
                                                                           ng-model="contract.rate">

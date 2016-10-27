@@ -219,7 +219,7 @@ app.controller('investorController',
             };
             $scope.newContract = function () {
                 console.log($scope.dirty.contract);
-                new_contract($scope.dirty.contract);
+                new_contract(_.cloneDeep($scope.dirty.contract));
             };
             //$scope.newDriver = function () {
             //    console.log($scope.dirty.driver);
@@ -395,6 +395,8 @@ app.controller('investorController',
                 contract.end_date = moment(contract.dt_end_date).format("YYYY-MM-DD");
                 contractDataFactory.newContract(contract)
                     .success(function (result) {
+                        contract.id = result.id;
+                        console.log(contract.id);
                         $scope.vm.investor.contracts.push(contract);
                         cancel_add();
                     });
