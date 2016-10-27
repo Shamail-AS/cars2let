@@ -17,7 +17,7 @@
             <div class="form-group">
                 {{--                    <div class="form-group {{$error->has('make') ? 'has-error':''}}">--}}
                 <label>Make</label>
-                <input class="form-control" type="number" name="make" value="{{old('make')}}">
+                <input class="form-control" type="text" name="make" value="{{old('make')}}">
                 {{--@if($error->has('make'))--}}
                 {{--<span class="help-block">--}}
                 {{--<strong>{{ $errors->first('make') }}</strong>--}}

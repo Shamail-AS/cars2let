@@ -16,11 +16,29 @@
 
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input class="form-control dp" type="date" name="start_date" placeholder="" value="{{old('start_date')}}">
+                        <input class="form-control dp" type="hidden" name="start_date" placeholder=""
+                               value="@{{ formatDate(dirty.start_date) }}">
+                        <input style="max-width: 110px;" type="text" class="form-control"
+                               uib-datepicker-popup
+                               ng-model="dirty.start_date"
+                               is-open="dirty.start_picker_open"
+                               datepicker-options="dateOptions.start_date"
+                               ng-required="true"
+                               close-text="Close"
+                               ng-click="openStartPicker()"/>
                     </div>
                     <div class="form-group">
                         <label>End Date</label>
-                        <input class="form-control dp" type="date" name="end_date" placeholder="" value="{{old('end_date')}}">
+                        <input class="form-control dp" type="hidden" name="end_date" placeholder=""
+                               value="@{{ formatDate(dirty.end_date) }}">
+                        <input style="max-width: 110px;" type="text" class="form-control"
+                               uib-datepicker-popup
+                               ng-model="dirty.end_date"
+                               is-open="dirty.end_picker_open"
+                               datepicker-options="dateOptions.end_date"
+                               ng-required="true"
+                               close-text="Close"
+                               ng-click="openEndPicker()"/>
                     </div>
 
                     <div class="form-group">
@@ -94,8 +112,8 @@
 
 @section('scripts')
 <script>
-    var app = angular.module('contractForm',['ui.select','ngSanitize']);
-    var controller = app.controller('formController',['$scope',function($scope){
+    var app = angular.module('contractForm', ['ui.select', 'ngSanitize', 'ui.bootstrap', 'angularMoment']);
+    var controller = app.controller('formController', ['$scope', 'moment', function ($scope, moment) {
         $scope.vm = {
             "cars":[],
             "drivers":[],
@@ -106,6 +124,32 @@
             "driver":{},
             "status":{}
         };
+        $scope.dirty = {
+            'start_date': {},
+            'end_date': {}
+        };
+        $scope.dateOptions = {
+            'start_date': {
+                'minDate': new Date(),
+                'maxDate': {}
+            },
+            'end_date': {
+                'minDate': {}
+            }
+
+        };
+        $scope.formatDate = function (value) {
+            return moment(value).format("DD-MM-YYYY");
+        }
+        $scope.openEndPicker = function () {
+            $scope.dirty.end_picker_open = true;
+            $scope.dateOptions.end_date.minDate = $scope.dirty.start_date;
+
+        }
+        $scope.openStartPicker = function () {
+            $scope.dirty.start_picker_open = true;
+            $scope.dateOptions.start_date.maxDate = $scope.dirty.end_date;
+        }
 
         var init = function(){
             $.get("/api/car/all").success(function(data){

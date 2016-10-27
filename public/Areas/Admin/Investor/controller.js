@@ -56,7 +56,21 @@ app.controller('investorController',
                 'car': {},
                 'contract': {},
                 'driver': {}
-
+            };
+            $scope.dateOptions = {
+                'start_date': {
+                    'minDate': new Date(),
+                    'maxDate': $scope.dirty.contract.dt_end_date
+                },
+                'end_date': {
+                    'minDate': $scope.dirty.contract.dt_start_date
+                },
+                'acc_period_start': {
+                    'maxDate': $scope.vm.investor.dt_acc_period_end
+                },
+                'acc_period_end': {
+                    'minDate': $scope.vm.investor.dt_acc_period_start
+                }
             };
 
             //Public methods
@@ -217,9 +231,11 @@ app.controller('investorController',
             };
             $scope.openStartPicker = function (obj) {
                 obj.start_picker_open = true;
+                $scope.dateOptions.start_date.maxDate = obj.dt_end_date;
             };
             $scope.openEndPicker = function (obj) {
                 obj.end_picker_open = true;
+                $scope.dateOptions.end_date.minDate = obj.dt_start_date;
             };
 
             $scope.getAge = function (date) {
@@ -247,6 +263,8 @@ app.controller('investorController',
                 investorDataFactory.getInvestor(id)
                     .success(function (data) {
                         $scope.vm.investor = investorDataModelFactory.withExtras(data);
+                        $scope.dateOptions.acc_period_start.maxDate = $scope.vm.investor.dt_acc_period_end;
+                        $scope.dateOptions.acc_period_end.minDate = $scope.vm.investor.dt_acc_period_start;
                         load_contracts();
                         $scope.vm.investor.loading = false;
                     });

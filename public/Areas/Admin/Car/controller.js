@@ -10,7 +10,8 @@ app.controller('carController',
             $scope.vm = {
                 'cars': [],
                 'investors': [],
-                'add_mode': false
+                'add_mode': false,
+                'loading': true
             };
             $scope.filters = {
                 'car': ''
@@ -45,9 +46,11 @@ app.controller('carController',
 
             //Private methods
             var get_cars = function () {
+                $scope.vm.loading = true;
                 carDataFactory.getCars()
                     .success(function (data) {
                         $scope.vm.cars = carDataModelFactory.withEditMode(data);
+                        $scope.vm.loading = false;
                     });
             };
 
@@ -59,14 +62,6 @@ app.controller('carController',
                         car.edit_mode = false;
                     });
             };
-
-            var open_picker_for_car = function (id) {
-                var car = _.find($scope.vm.cars, function (e) {
-                    return e.id == id;
-                });
-                car.picker_open = true;
-            };
-
             var get_investors = function () {
                 investorDataFactory.getInvestors()
                     .success(function (data) {

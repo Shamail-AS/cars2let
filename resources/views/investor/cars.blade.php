@@ -19,7 +19,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <td>Reg#</td>
+                <td>Reg #</td>
+                <td>Make</td>
                 <td>Available since</td>
                 <td>Active Contract #</td>
                 <td>Total contracts</td>
@@ -31,6 +32,7 @@
 
             <tr ng-repeat="car in vm.cars | filter:{reg_no:filters.car}">
                 <td><a href="{{ url('investor/cars')}}/@{{ car.id }}">@{{ car.reg_no }}</a></td>
+                <td>@{{ car.make }}</td>
                 <td>@{{ car.available }}</td>
                 <td>@{{ car.currentContract.id || "No active contract" }}</td>
                 <td>@{{ car.totalContracts }}</td>

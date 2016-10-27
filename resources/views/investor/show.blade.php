@@ -24,7 +24,8 @@
                                 <label>Accounting Period Start</label>
                                 <input type="text" class="form-control" uib-datepicker-popup
                                        ng-model="vm.investor.dt_acc_period_start"
-                                       is-open="vm.investor.start_picker_open" datepicker-options="dateOptions"
+                                       is-open="vm.investor.start_picker_open"
+                                       datepicker-options="dateOptions.acc_period_start"
                                        ng-required="true"
                                        close-text="Close"
                                        ng-click="openStartPicker(vm.investor)"/>
@@ -33,7 +34,8 @@
                                 <label>Accounting Period End</label>
                                 <input type="text" class="form-control" uib-datepicker-popup
                                        ng-model="vm.investor.dt_acc_period_end"
-                                       is-open="vm.investor.end_picker_open" datepicker-options="dateOptions"
+                                       is-open="vm.investor.end_picker_open"
+                                       datepicker-options="dateOptions.acc_period_end"
                                        ng-required="true"
                                        close-text="Close"
                                        ng-click="openEndPicker(vm.investor)"/>
@@ -98,14 +100,26 @@
             $scope.vm = {
                 investor: {}
             };
+            $scope.dateOptions = {
+                'acc_period_start': {
+                    'maxDate': {}
+                },
+                'acc_period_end': {
+                    'minDate': {}
+                }
+
+            };
             $scope.openPicker = function (obj) {
                 obj.picker_open = true;
             };
             $scope.openStartPicker = function (obj) {
                 obj.start_picker_open = true;
+                $scope.dateOptions.acc_period_start.maxDate = $scope.vm.investor.dt_acc_period_end;
             };
             $scope.openEndPicker = function (obj) {
                 obj.end_picker_open = true;
+                $scope.dateOptions.acc_period_end.minDate = $scope.vm.investor.dt_acc_period_start;
+
             };
             $scope.getAge = function (date) {
                 return moment(date).fromNow(true);

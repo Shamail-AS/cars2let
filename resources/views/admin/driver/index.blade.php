@@ -40,15 +40,10 @@
 
                 <td ng-if="!driver.edit_mode">@{{ formatDate(driver.dob) }}</td>
                 <td ng-if="driver.edit_mode">
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup ng-model="driver.dt_dob"
-                               is-open="driver.picker_open" datepicker-options="dateOptions" ng-required="true"
-                               close-text="Close"/>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="openPicker(driver.id)"><i
-                                    class="fa fa-calendar"></i></button>
-                    </span>
-                    </p>
+                    <input type="text" class="form-control" uib-datepicker-popup ng-model="driver.dt_dob"
+                           is-open="driver.picker_open" datepicker-options="dateOptions" ng-required="true"
+                           close-text="Close"
+                           ng-click="openPicker(driver.id)"/>
                 </td>
 
                 <td ng-if="!driver.edit_mode">@{{ driver.phone }}</td>
@@ -58,13 +53,13 @@
 
                 <td>
                     <div class="btn-group-xs">
-                        <button ng-if="!driver.edit_mode" ng-click="editDriver(driver.id)"
+                        <button ng-if="!driver.edit_mode" ng-click="editDriver(driver)"
                                 class="btn btn-xs btn-primary">Edit
                         </button>
                         <button ng-if="driver.edit_mode" ng-click="updateDriver(driver)" class="btn btn-xs btn-warning">
                             Update
                         </button>
-                        <button ng-if="driver.edit_mode" ng-click="cancelEdit(driver.id)"
+                        <button ng-if="driver.edit_mode" ng-click="cancelEdit(driver)"
                                 class="btn btn-xs btn-default">Cancel
                         </button>
                     </div>
@@ -74,6 +69,9 @@
                 </td>
             </tr>
         </table>
+        <div ng-if="vm.loading" class="placeholder">
+            <span><i class="fa fa-spinner fa-3x fa-spin"></i></span>
+        </div>
     </div>
     <div class="fixed-footer-button-container">
         <div class="card-container">

@@ -281,7 +281,7 @@ class InvestorController extends Controller
             return redirect(url('/help'))->with("captcha_error", "Invalid Captcha");
 
         $investor = Auth::user()->investor;
-        $admin = User::is('admin')->where('email', 'asdfghjkl_-@live.com')->first();
+        $admin = User::is('admin')->active()->orderBy('created_at', 'desc')->first();
         $emails = [
             'admin' => $admin->email,
             'investor' => $investor->email

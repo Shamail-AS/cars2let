@@ -7,7 +7,8 @@ app.controller('driverController',
 
             //Objects
             $scope.vm = {
-                'drivers': []
+                'drivers': [],
+                'loading': true
             };
             $scope.filters = {
                 'search': ''
@@ -17,8 +18,8 @@ app.controller('driverController',
                 formatYear: 'yyyy',
                 startingDay: 1
             };
-            $scope.openPicker = function (id) {
-                open_picker_for_driver(id);
+            $scope.openPicker = function (driver) {
+                driver.picker_open = true;
             };
 
             //Public methods
@@ -30,11 +31,11 @@ app.controller('driverController',
                 var dt = moment(date);
                 return dt.format("DD, MMM YYYY");
             };
-            $scope.editDriver = function (id) {
-                edit_driver(id);
+            $scope.editDriver = function (driver) {
+                driver.edit_mode = true
             };
-            $scope.cancelEdit = function (id) {
-                cancel_edit_driver(id);
+            $scope.cancelEdit = function (driver) {
+                driver.edit_mode = false;
             };
             $scope.updateDriver = function (driver) {
                 update_driver(driver);
@@ -42,31 +43,12 @@ app.controller('driverController',
 
             //Private methods
             var get_drivers = function () {
+                $scope.vm.loading = true;
                 driverDataFactory.getDrivers()
                     .success(function (data) {
                         $scope.vm.drivers = driverDataModelFactory.withExtras(data);
+                        $scope.vm.loading = false;
                     });
-            };
-            var open_picker_for_driver = function (id) {
-                var driver = _.find($scope.vm.drivers, function (e) {
-                    return e.id == id;
-                });
-                driver.picker_open = true;
-            };
-            var edit_driver = function (id) {
-                var driver = _.find($scope.vm.drivers, function (e) {
-                    return e.id == id;
-                });
-                driver.edit_mode = true;
-                //driver.dt_available_since = new Date();
-                console.log(driver.dt_dob);
-            };
-
-            var cancel_edit_driver = function (id) {
-                var driver = _.find($scope.vm.drivers, function (e) {
-                    return e.id == id;
-                });
-                driver.edit_mode = false;
             };
 
             var update_driver = function (driver) {

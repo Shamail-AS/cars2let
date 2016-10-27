@@ -22,13 +22,15 @@
             font-weight: 100;
             text-shadow: 0px 0px 20px rgba(255, 250, 250, 0.26);
 
+
         }
 
         .flex-center a {
             text-decoration-color: rgba(214, 74, 72, 0.00);
-            color: rgba(15, 104, 40, 0.82);
+            color: rgba(14, 178, 0, 0.82);
             text-shadow: 0 0px 20px rgba(106, 106, 106, 0.14);
-            font-weight: 400;
+            font-weight: 300;
+
         }
 
         .navbar-c2l .navbar-right a {

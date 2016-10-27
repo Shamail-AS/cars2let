@@ -10,7 +10,11 @@ app.controller('contractController',
             $scope.vm = {
                 'contract_collection': [],
                 'contract': {}, //selected contract
-                'status_collection': []
+                'status_collection': [],
+                'loading': {
+                    'contracts': true,
+                    'revenues': false
+                }
             };
             $scope.popover = {
                 revenueListUrl: 'revenue_list.html',
@@ -45,12 +49,14 @@ app.controller('contractController',
 
             //Private methods
             var get_contracts = function () {
+                $scope.vm.loading.contracts = true;
                 contractDataFactory.getContracts()
                     .success(function (data) {
                         $scope.vm.contract_collection = data;
                         if($scope.vm.contract.id){
                             select_contract($scope.vm.contract.id);
                         }
+                        $scope.vm.loading.contracts = false;
                     })
             };
 
@@ -68,11 +74,12 @@ app.controller('contractController',
                 });
             };
             var get_contract_revenue_summary = function (id) {
+                $scope.vm.loading.revenues = true;
                 contractDataFactory.getContractRevenueSummary(id)
                     .success(function (data) {
                         console.log(data);
                         $scope.vm.contract.revenue = contractDataModelFactory.objectCollectionToArray(data);
-                        //get_contract_revenue_detail(id);
+                        $scope.vm.loading.revenues = false;
 
                     });
             };

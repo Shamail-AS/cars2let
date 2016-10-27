@@ -10,14 +10,18 @@
     <div class="wrapper" ng-app="cars2let" ng-controller="carController">
         <h1>Manage Cars</h1>
         <table class="table table-striped">
+            <thead>
             <tr>
                 <th>#</th>
-                <th>Name</th>
+                <th>Make</th>
                 <th>Registration</th>
                 <th>Investor</th>
                 <th>Available Since</th>
+                <th>Comments</th>
                 <th>Actions</th>
             </tr>
+            </thead>
+            <tbody class="relative">
 
             <tr ng-repeat="car in vm.cars | orderBy : '-id'">
                 <td>@{{ car.id }}</td>
@@ -45,6 +49,9 @@
                            close-text="Close"
                            ng-click="openPicker(car)"/>
                 </td>
+                <td ng-if="!car.edit_mode">@{{ car.comments }}</td>
+                <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.comments"></td>
+
                 <td>
                     <div class="btn-group-xs">
                         <button ng-if="!car.edit_mode" ng-click="editCar(car)" class="btn btn-xs btn-primary">Edit
@@ -57,7 +64,11 @@
                     </div>
                 </td>
             </tr>
+            </tbody>
         </table>
+        <div ng-if="vm.loading" class="placeholder">
+            <span><i class="fa fa-spinner fa-3x fa-spin"></i></span>
+        </div>
     </div>
     <div class="fixed-footer-button-container">
         <div class="card-container">

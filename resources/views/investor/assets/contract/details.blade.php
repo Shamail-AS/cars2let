@@ -76,6 +76,9 @@
 
                     </tbody>
                 </table>
+                <div ng-if="vm.loading.contracts" class="placeholder">
+                    <span><i class="fa fa-spinner fa-3x fa-spin"></i></span>
+                </div>
             </div>
         </div>
         <div class="detail-section">
@@ -152,11 +155,15 @@
                 </div>
             </div>
 
-            <div class="empty-detail-body" >
+            <div class="empty-detail-body relative">
                 <h1 ng-if="vm.contract.id == undefined">Please select a contract to view details</h1>
 
-                <h1 ng-if="vm.contract.id > 0 && vm.contract.revenue.summary.length == 0">No payments recorded for this
+                <h1 ng-if="vm.contract.id > 0 && vm.contract.revenue.length == 0">No payments recorded for this
                     contract</h1>
+
+                <div ng-if="vm.loading.revenues" class="placeholder">
+                    <span><i class="fa fa-spinner fa-3x fa-spin"></i></span>
+                </div>
             </div>
         </div>
     </div>

@@ -32,7 +32,10 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::get('/myregister', function () {
-        return view('auth.myregister');
+        if (Auth::check())
+            return redirect('/');
+        else
+            return view('auth.myregister');
     });
     Route::post('/myregister','MyAuthController@register');
 
@@ -45,7 +48,10 @@ Route::group(['middleware' => 'web'], function () {
 
     //show the page where user can chose where to get the code
     Route::get('/code/destination', function() {
-       return view('auth.codeSendChoice');
+        if (Auth::check() && Auth::user()->status != 'new')
+            return redirect('/');
+        else
+            return view('auth.codeSendChoice');
     });
 
     //send code to where user has specified
@@ -55,7 +61,10 @@ Route::group(['middleware' => 'web'], function () {
 //    Route::get('/activate/{id}','MyAuthController@getActivate');
 
     Route::get('/code/verify', function () {
-        return view('auth.verify');
+        if (Auth::check() && Auth::user()->status != 'new')
+            return redirect('/');
+        else
+            return view('auth.verify');
     });
     //verify the code that user entered to match with database
     //Route::post('/code/verify','MyAuthController@verifyCode');
@@ -72,6 +81,10 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
     Route::get('/reset/password', 'MyAuthController@reset');
+
+    Route::get('/disabled', function () {
+        return view('errors.disabledUser');
+    });
 
 
 });
