@@ -26,7 +26,7 @@
             </div>
             <div class="form-group ">
                 <label>Available Since</label>
-                <input class="form-control dp" type="date" name="available_since"
+                <input class="form-control dp" type="text" name="available_since"
                        value="{{old('available_since')}}">
             </div>
             <div class="form-group">

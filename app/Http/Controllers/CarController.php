@@ -29,14 +29,14 @@ class CarController extends Controller
 
     public function api_update(Request $request)
     {
-        $investor_id = $request->input('investor_id');
+        $investor_id = $request->input('investor')['id'];
         //$investor = Investor::find($investor_id);
 
         $car = Car::find($request->input('id'));
         $car->reg_no = $request->input('reg_no');
         $car->make = $request->input('make');
         $car->available_since = $request->input('available_since');
-        $car->investor_id = $request->input('investor_id');
+        $car->investor_id = $request->input('investor')['id'];
 
         $car->save();
         //$investor->cars()->save($car);
@@ -50,7 +50,7 @@ class CarController extends Controller
     public function api_new(Request $request)
     {
         $car = Car::create($request->all());
-        $car->investor_id = $request->input('investor_id');
+        $car->investor_id = $request->input('investor')->id;
         $car->save();
 
         // Get an instance of Monolog
@@ -82,7 +82,7 @@ class CarController extends Controller
 
     public function store(RegisterCarRequest $request)
     {
-        Car::create($request->all());
+        $c = Car::create($request->all());
         return redirect(url('/admin/car/all'));
     }
     public function all()
