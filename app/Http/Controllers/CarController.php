@@ -36,7 +36,7 @@ class CarController extends Controller
         $car->reg_no = $request->input('reg_no');
         $car->make = $request->input('make');
         $car->available_since = $request->input('available_since');
-        $car->investor_id = $request->input('investor')['id'];
+        $car->investor_id = $investor_id;
 
         $car->save();
         //$investor->cars()->save($car);
@@ -50,7 +50,7 @@ class CarController extends Controller
     public function api_new(Request $request)
     {
         $car = Car::create($request->all());
-        $car->investor_id = $request->input('investor')->id;
+        $car->investor_id = $request->input('investor_id');
         $car->save();
 
         // Get an instance of Monolog
@@ -72,7 +72,7 @@ class CarController extends Controller
     //---------------//
     public function index()
     {
-        $carList = Car::orderBy('created_at', 'desc')->get();
+        $carList = Car::orderBy('available_since')->get();
         return view('admin.car.index',compact('carList'));
     }
     public function create()

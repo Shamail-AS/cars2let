@@ -23,7 +23,7 @@
             </thead>
             <tbody class="relative">
 
-            <tr ng-repeat="car in vm.cars | orderBy : '-id'">
+            <tr ng-repeat="car in vm.cars | orderBy : ['dt_available_since','reg_no']">
                 <td>@{{ car.id }}</td>
                 <td ng-if="!car.edit_mode">@{{ car.make }}</td>
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.make"></td>
