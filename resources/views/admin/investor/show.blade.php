@@ -123,7 +123,7 @@
                             <tbody>
                             <tr ng-repeat="car in vm.investor.cars
                             | filter : {reg_no : search.cars}
-                            | orderBy : ['dt_available_since','reg_no']
+                            | orderBy : '-id'
                             ">
                                 <td ng-if="!car.edit_mode">@{{ car.reg_no }}</td>
                                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.reg_no"></td>
