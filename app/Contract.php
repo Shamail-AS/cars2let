@@ -34,7 +34,9 @@ class Contract extends Model
     }
     public function getInvestorAttribute()
     {
-        return $this->car->investor;
+        $car = $this->car;
+        $investor = $car->investor;
+        return $investor;
     }
 
     public function scopeStatus($query,$status)

@@ -46,6 +46,7 @@
             <tr>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td>TOTAL</td>
                 <td>@{{ vm.sum.totalContracts }}</td>
                 <td>@{{ vm.sum.totalRevenue }}</td>
