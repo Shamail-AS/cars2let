@@ -43,7 +43,7 @@
                     <input type="text" class="form-control" uib-datepicker-popup ng-model="driver.dt_dob"
                            is-open="driver.picker_open" datepicker-options="dateOptions" ng-required="true"
                            close-text="Close"
-                           ng-click="openPicker(driver.id)"/>
+                           ng-click="openPicker(driver)"/>
                 </td>
 
                 <td ng-if="!driver.edit_mode">@{{ driver.phone }}</td>

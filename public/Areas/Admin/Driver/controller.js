@@ -53,7 +53,7 @@ app.controller('driverController',
 
             var update_driver = function (driver) {
                 driver.dob = moment(driver.dt_dob).format("DD-MM-YYYY");
-                driverDataFactory.putDriver(driver.id, driver)
+                driverDataFactory.updateDriver(driver.id, driver)
                     .success(function (result) {
                         alert(result);
                         driver.dob = moment(driver.dt_dob);
