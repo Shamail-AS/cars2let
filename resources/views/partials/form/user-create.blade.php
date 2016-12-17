@@ -24,6 +24,20 @@
                     </ui-select-choices>
                 </ui-select>
             </div>
+
+            <div class="form-group">
+                <label>Access Level</label>
+                <input class="form-control" type="hidden" name="type" value="@{{ dirty.user.access_level }}">
+                <ui-select ng-model="dirty.user.access_level">
+                    <ui-select-match allow-clear="true">
+                        <span ng-bind="dirty.user.access_level"></span>
+                    </ui-select-match>
+                    <ui-select-choices
+                            repeat="access_level in (vm.access_levels | filter: $select.search)">
+                        <span ng-bind="access_level"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
             <div class="form-group">
                 <div>
                     <button type="submit" class="btn btn-primary">
