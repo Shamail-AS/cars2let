@@ -31,6 +31,7 @@ class AdminController extends Controller
         $user->email = $request->input('email');
         $user->status = $request->input('status');
         $user->type = $request->input('type');
+        $user->access_level = $request->input('access_level');
 
         $user->save();
 

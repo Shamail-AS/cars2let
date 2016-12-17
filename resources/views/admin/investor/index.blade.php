@@ -39,6 +39,7 @@
 
         </div>
     </div>
+    @if(Auth::user()->IsFullAccess)
     <div class="fixed-footer-button-container">
         <div class="card-container">
             @include('partials.form.investor-create')
@@ -47,6 +48,7 @@
             <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
         </div>
     </div>
+    @endif
 
 
 @endsection

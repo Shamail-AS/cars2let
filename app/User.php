@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'type', 'status'
+        'name', 'email', 'password', 'type', 'status', 'access_level'
     ];
 
     /**
@@ -62,6 +62,21 @@ class User extends Authenticatable
     public function getIsDisabledAttribute()
     {
         return $this->status == 'disabled';
+    }
+
+    public function getIsReadOnlyAttribute()
+    {
+        return in_array($this->access_level, ['read', 'edit', 'full']);
+    }
+
+    public function getIsEditOnlyAttribute()
+    {
+        return in_array($this->access_level, ['edit', 'full']);
+    }
+
+    public function getIsFullAccessAttribute()
+    {
+        return in_array($this->access_level, ['full']);
     }
 
 

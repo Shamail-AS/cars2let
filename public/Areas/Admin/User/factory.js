@@ -2,6 +2,9 @@ app.factory('userDataFactory', ['$http', function ($http) {
     var URL_BASE = '/super/api';
     var userDataFactory = {};
 
+    userDataFactory.getAuthUser = function () {
+        return $http.get('/auth-user');
+    };
     userDataFactory.getUsers = function () {
         return $http.get(URL_BASE + '/' + 'all');
     };

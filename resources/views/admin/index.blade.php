@@ -15,6 +15,7 @@
                 <th>Email</th>
                 <th>Status</th>
                 <th>Type</th>
+                <th>Access</th>
                 <th>Register Since</th>
                 <th>Actions</th>
             </tr>
@@ -47,9 +48,22 @@
                         </ui-select-choices>
                     </ui-select>
                 </td>
+                <td ng-if="!user.edit_mode">@{{ user.access_level || 'Unidentified'}}</td>
+                <td ng-if="user.edit_mode">
+                    <ui-select ng-model="user.access_level">
+                        <ui-select-match allow-clear="true">
+                            <span ng-bind="user.access_level"></span>
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="access_level in (vm.access_levels | filter: $select.search)">
+                            <span ng-bind="access_level"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </td>
 
                 <td>@{{ formatDate(user.created_at) }}</td>
                 <td>
+                    @if(Auth::user()->IsEditOnly)
                     <div class="btn-group-xs">
                         <button ng-if="!user.edit_mode" ng-click="editUser(user)" class="btn btn-xs btn-primary">Edit
                         </button>
@@ -62,9 +76,11 @@
                             Cancel
                         </button>
                     </div>
+                    @endif
                 </td>
             </tr>
         </table>
+        @if(Auth::user()->isFullAccess)
         <div class="fixed-footer-button-container">
             <div class="card-container">
                 @include('partials.form.user-create')
@@ -73,6 +89,7 @@
                 <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
             </div>
         </div>
+        @endif
     </div>
 
 

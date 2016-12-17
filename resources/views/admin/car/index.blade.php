@@ -53,6 +53,7 @@
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.comments"></td>
 
                 <td>
+                    @if(Auth::user()->isEditOnly)
                     <div class="btn-group-xs">
                         <button ng-if="!car.edit_mode" ng-click="editCar(car)" class="btn btn-xs btn-primary">Edit
                         </button>
@@ -62,6 +63,7 @@
                             Cancel
                         </button>
                     </div>
+                    @endif
                 </td>
             </tr>
             </tbody>
@@ -70,6 +72,7 @@
             <span><i class="fa fa-spinner fa-3x fa-spin"></i></span>
         </div>
     </div>
+    @if(Auth::user()->isFullAccess)
     <div class="fixed-footer-button-container">
         <div class="card-container">
             @include('partials.form.car-create',['admin'=>true])
@@ -78,6 +81,7 @@
             <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
         </div>
     </div>
+    @endif
 
 
 @endsection

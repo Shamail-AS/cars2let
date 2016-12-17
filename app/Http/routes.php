@@ -153,6 +153,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
 Route::group(['prefix' => 'super', 'middleware' => ['web', 'auth', 'super-admin']], function () {
     Route::group(['prefix' => 'api'], function () {
+        Route::get('/auth-user', 'MyAuthController@api_authUser');
         Route::get('/all', 'AdminController@api_all');
         Route::get('/{id}', 'AdminController@api_get');
         Route::put('/{id}/update', 'AdminController@api_update');

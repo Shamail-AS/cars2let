@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+//NOT USED
 @section('content')
     <h1>Edit Admin</h1>
     <div class="container">

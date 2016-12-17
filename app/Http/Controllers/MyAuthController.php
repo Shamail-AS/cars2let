@@ -16,6 +16,11 @@ use Session;
 class MyAuthController extends Controller
 {
     //
+
+    public function api_authUser()
+    {
+        return Auth::user();
+    }
     public function getlogin()
     {
         return view('auth.login');

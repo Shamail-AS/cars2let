@@ -76,8 +76,11 @@
                         <p class="">@{{ formatDate(vm.investor.created_at) }}</p>
                     </div>
 
-                    <button ng-click="updateInvestor(vm.investor)" class="btn btn-xs btn-success">Update
+                    @if(Auth::user()->isEditOnly)
+                        <button ng-click="updateInvestor(vm.investor)" class="btn btn-xs btn-success">
+                            Update
                     </button>
+                    @endif
 
                 </form>
 
@@ -145,6 +148,7 @@
 
 
                                 <td>
+                                    @if(Auth::user()->isEditOnly)
                                     <div class="btn-group-xs">
                                         <button ng-if="!car.edit_mode" ng-click="edit(car)"
                                                 class="btn btn-xs btn-primary">Edit
@@ -159,6 +163,7 @@
                                                 class="btn btn-xs btn-default">Cancel
                                         </button>
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                             </tbody>
@@ -285,12 +290,14 @@
                                     <td>@{{ formatDate(contract.created_at) }}</td>
 
                                     <td ng-if="!contract.edit_mode">
+                                        @if(Auth::user()->isEditOnly)
                                         <button type="button"
                                                 class="btn btn-xs btn-@{{ contract.paying ? 'default' : 'info' }}"
                                                 uib-popover-template="dynamicPopover.templateUrl"
                                                 ng-click="togglePay(contract)">
                                             @{{ contract.paying ? 'Close' : 'Pay' }}
                                         </button>
+                                        @endif
                                         {{--<button ng-click="showRevenue(contract.id)" class="btn btn-xs btn-warning">Payments</button>--}}
                                         <button type="button"
                                                 class="btn btn-xs btn-warning"
@@ -305,6 +312,7 @@
 
                                     </td>
                                     <td>
+                                        @if(Auth::user()->isEditOnly)
                                         <div class="btn-group-xs">
                                             <button ng-if="!contract.edit_mode" ng-click="edit(contract)"
                                                     class="btn btn-xs btn-primary">Edit
@@ -320,6 +328,7 @@
                                                     class="btn btn-xs btn-default">Cancel
                                             </button>
                                         </div>
+                                        @endif
                                     </td>
                                 </tr>
                                 </tbody>
@@ -393,6 +402,7 @@
                                 </td>
                                 <td>@{{ formatDate(driver.created_at) }}</td>
                                 <td>
+                                    @if(Auth::user()->isEditOnly)
                                     <div class="btn-group-xs">
                                         <button ng-if="!driver.edit_mode" ng-click="edit(driver)"
                                                 class="btn btn-xs btn-primary">
@@ -409,6 +419,7 @@
                                                 class="btn btn-xs btn-default">Cancel
                                         </button>
                                     </div>
+                                    @endif
                                 </td>
                             </tr>
                             </tbody>
@@ -428,6 +439,7 @@
 
             </div>
 
+            @if(Auth::user()->isFullAccess)
             <div class="fixed-footer-button-container">
                 <div class="card-container">
                     @include('partials.admin.investor.create-car')
@@ -437,6 +449,7 @@
                     <span class="fixed-footer-button" ng-click="addNew()"><i class="fa fa-plus fa-2x"></i></span>
                 </div>
             </div>
+            @endif
 
         </div>
     </div>

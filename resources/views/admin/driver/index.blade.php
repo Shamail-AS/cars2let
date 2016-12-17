@@ -52,6 +52,7 @@
                 <td>@{{ formatDate(driver.created_at) }}</td>
 
                 <td>
+                    @if(Auth::user()->isEditOnly)
                     <div class="btn-group-xs">
                         <button ng-if="!driver.edit_mode" ng-click="editDriver(driver)"
                                 class="btn btn-xs btn-primary">Edit
@@ -63,6 +64,7 @@
                                 class="btn btn-xs btn-default">Cancel
                         </button>
                     </div>
+                    @endif
                 </td>
                 <td>
                     <div class="padded"></div>
@@ -73,6 +75,7 @@
             <span><i class="fa fa-spinner fa-3x fa-spin"></i></span>
         </div>
     </div>
+    @if(Auth::user()->isFullAccess)
     <div class="fixed-footer-button-container">
         <div class="card-container">
             @include('partials.form.driver-create',['admin'=>true])
@@ -81,6 +84,7 @@
             <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
         </div>
     </div>
+    @endif
 
 
 @endsection

@@ -9,6 +9,7 @@ app.controller('userController',
             $scope.vm = {
                 'users': [],
                 'statuses': [],
+                'access_levels': [],
                 'types': []
             };
             $scope.filters = {
@@ -73,11 +74,18 @@ app.controller('userController',
                 $scope.vm.statuses.push("disabled");
             };
 
+            var add_access_levels = function () {
+                $scope.vm.access_levels.push("read");
+                $scope.vm.access_levels.push("edit");
+                $scope.vm.access_levels.push("full");
+            };
+
 
             var init = function () {
                 get_users();
                 add_types();
                 add_statuses();
+                add_access_levels();
             };
 
             init();
