@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRevenuesTable extends Migration
+class CreateSuppliersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,15 @@ class CreateRevenuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('revenues', function (Blueprint $table) {
+        Schema::create('suppliers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contract_id');
-            $table->decimal('amount_paid');
-            $table->string('currency')->default('GBP');
-            $table->timestamps();
+            $table->integer('user_id')->nullable();
+            $table->string('name');
+            $table->string('contact_name');
+            $table->string('contact_details');
+            $table->string('type');
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +31,6 @@ class CreateRevenuesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('revenues');
+        Schema::drop('suppliers');
     }
 }

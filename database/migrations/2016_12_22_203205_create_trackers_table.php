@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRevenuesTable extends Migration
+class CreateTrackersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,14 @@ class CreateRevenuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('revenues', function (Blueprint $table) {
+        Schema::create('trackers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contract_id');
-            $table->decimal('amount_paid');
-            $table->string('currency')->default('GBP');
+            $table->string('imei');
+            $table->string('model');
+            $table->integer('supplier_id');
+            $table->integer('sim_id');
+            $table->string('status'); // ordered, delivered, fitted, faulty
+            $table->string('comments');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +32,6 @@ class CreateRevenuesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('revenues');
+        Schema::drop('trackers');
     }
 }

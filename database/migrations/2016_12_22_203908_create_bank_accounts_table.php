@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRevenuesTable extends Migration
+class CreateBankAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,14 @@ class CreateRevenuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('revenues', function (Blueprint $table) {
+        Schema::create('bank_accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contract_id');
-            $table->decimal('amount_paid');
-            $table->string('currency')->default('GBP');
+            $table->integer('owner_id');
+            $table->string('owner_type'); //POLYMORPHIC RELATION
+            $table->string('bank');
+            $table->string('acc_num');
+            $table->string('sort_code');
+            $table->string('holder_name');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +32,6 @@ class CreateRevenuesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('revenues');
+        Schema::drop('bank_accounts');
     }
 }

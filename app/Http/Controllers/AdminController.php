@@ -81,6 +81,7 @@ class AdminController extends Controller
 
     public function store(RegisterUserRequest $request)
     {
+        dd($request->all());
         $user = User::where('email', $request->input('email'))->first();
 
         if($user == null)

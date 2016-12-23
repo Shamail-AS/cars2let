@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRevenuesTable extends Migration
+class CreateGaragesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,14 @@ class CreateRevenuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('revenues', function (Blueprint $table) {
+        Schema::create('garages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('contract_id');
-            $table->decimal('amount_paid');
-            $table->string('currency')->default('GBP');
+            $table->integer('supplier_id');
+            $table->string('name');
+            $table->string('post_code');
+            $table->string('address');
+            $table->string('contact');
+            $table->string('contact_details');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +32,6 @@ class CreateRevenuesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('revenues');
+        Schema::drop('garages');
     }
 }

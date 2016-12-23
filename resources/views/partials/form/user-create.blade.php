@@ -27,7 +27,7 @@
 
             <div class="form-group">
                 <label>Access Level</label>
-                <input class="form-control" type="hidden" name="type" value="@{{ dirty.user.access_level }}">
+                <input class="form-control" type="hidden" name="access_level" value="@{{ dirty.user.access_level }}">
                 <ui-select ng-model="dirty.user.access_level">
                     <ui-select-match allow-clear="true">
                         <span ng-bind="dirty.user.access_level"></span>

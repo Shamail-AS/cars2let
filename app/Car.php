@@ -10,7 +10,7 @@ class Car extends Model
 {
     use SoftDeletes;
     //
-    protected $fillable = ['reg_no','make','available_since','comments'];
+    protected $guarded = ['id', 'investor_id', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $dates = ['deleted_at'];
 
