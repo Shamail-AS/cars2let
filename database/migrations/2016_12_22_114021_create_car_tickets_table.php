@@ -14,10 +14,10 @@ class CreateCarTicketsTable extends Migration
     {
         Schema::create('car_tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('site_file_id');
+
             $table->string('type')->default('pcn'); // PCN, FPN, Other
             $table->integer('ticket_num');
-            $table->string('type'); // local council, dart charge, red route, congestion charge, low emission
+            $table->string('cause'); // local council, dart charge, red route, congestion charge, low emission
             $table->integer('car_id');
             $table->integer('driver_id')->nullable();
             $table->dateTime('incident_dt');
@@ -37,6 +37,6 @@ class CreateCarTicketsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('p_c_ns');
+        Schema::drop('car_tickets');
     }
 }

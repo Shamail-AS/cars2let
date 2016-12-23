@@ -8,4 +8,9 @@ class Garage extends Model
 {
     //
     protected $guarded = ['id'];
+
+    public function supplier()
+    {
+        return $this->hasOne('App\Supplier');
+    }
 }

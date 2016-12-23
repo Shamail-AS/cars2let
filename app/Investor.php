@@ -29,6 +29,11 @@ class Investor extends Model
         return $this->hasMany('App\Car');
     }
 
+    public function bank()
+    {
+        return $this->morphMany('App\BankAccount', 'owner');
+    }
+
     public function getAccountingPeriods($back_shift = 0)
     {
         $dt_start = $this->acc_period_start;

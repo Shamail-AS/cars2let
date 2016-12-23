@@ -16,6 +16,10 @@ class CreateCamerasTable extends Migration
             $table->increments('id');
             $table->integer('supplier_id');
             $table->string('model');
+            $table->integer('car_id')->nullable();
+            $table->date('installed_at')->nullable();
+            $table->string('status'); // ordered, delivered, fitted, faulty, removed, deactivated
+            $table->string('comments');
             $table->timestamps();
         });
     }

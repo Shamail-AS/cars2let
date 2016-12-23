@@ -17,8 +17,10 @@ class CreateTrackersTable extends Migration
             $table->string('imei');
             $table->string('model');
             $table->integer('supplier_id');
-            $table->integer('sim_id');
-            $table->string('status'); // ordered, delivered, fitted, faulty
+            //$table->integer('sim_id');
+            $table->integer('car_id')->nullable();
+            $table->date('installed_at')->nullable();
+            $table->string('status'); // ordered, delivered, fitted, faulty, removed, deactivated
             $table->string('comments');
             $table->timestamps();
             $table->softDeletes();

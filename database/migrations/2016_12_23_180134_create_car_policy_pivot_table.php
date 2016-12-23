@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCarOrdersTable extends Migration
+class CreateCarPolicyPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateCarOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('car_orders', function (Blueprint $table) {
+        //
+        Schema::create('car_policies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('supplier_id');
             $table->integer('car_id');
-            $table->integer('auth_user_id'); // in case user exists in our system
-            $table->string('auth_user'); // FREE TEXT
-            $table->string('status');
-            $table->string('comments');
-            $table->decimal('cost');
+            $table->integer('policy_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +29,6 @@ class CreateCarOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('car_orders');
+        //
     }
 }

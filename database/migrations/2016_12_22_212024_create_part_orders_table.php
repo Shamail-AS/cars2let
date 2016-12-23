@@ -17,9 +17,10 @@ class CreatePartOrdersTable extends Migration
             $table->integer('supplier_id');
             $table->integer('item_id');
             $table->string('item_type'); // POLYMORPHIC RELATION
-            //$table->integer('part_delivery_id');
+            $table->integer('item_count');
             $table->string('status');
             $table->decimal('cost');
+            $table->integer('auth_user_id'); // in case user exists in our system
             $table->string('auth_user'); // FREE TEXT
             $table->string('comments');
             $table->softDeletes();

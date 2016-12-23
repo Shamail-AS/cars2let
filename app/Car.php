@@ -34,6 +34,42 @@ class Car extends Model
         return $this->hasManyThrough('App\Revenue','App\Contract');
     }
 
+    public function order()
+    {
+        return $this->belongsTo('App\CarOrder');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany('App\CarTicket');
+    }
+
+    public function deliveries()
+    {
+        return $this->hasMany('App\Delivery');
+    }
+
+    public function policies()
+    {
+        return $this->belongsToMany('App\Policy');
+    }
+
+    public function supplier()
+    {
+        return $this->hasOne('App\Supplier');
+    }
+
+    public function camera()
+    {
+        return $this->hasMany('App\Camera');
+    }
+
+    public function tracker()
+    {
+        return $this->hasMany('App\Tracker');
+    }
+
+    //==========================================================================//
     public function getCurrentContractAttribute()
     {
         return $this->contracts()->ongoing()->first();

@@ -68,6 +68,7 @@ class AddColumnsToDriversTable extends Migration
                 'licence_exp_at',
                 'type',
                 'nino',
+                'right_to_work',
                 'driving_since',
                 'penalty_points',
                 'history',

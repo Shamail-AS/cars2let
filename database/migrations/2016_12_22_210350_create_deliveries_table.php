@@ -20,7 +20,8 @@ class CreateDeliveriesTable extends Migration
             $table->string('received_by')->nullable();
             $table->string('comments');
             $table->string('type');
-            $table->integer('car_order_id')->nullable(); // To accommodate for order deliveries.
+            $table->integer('order_id')->nullable(); // To accommodate for order deliveries.
+            $table->string('order_type')->nullable();
             $table->integer('car_id'); // To accommodate for non-purchase delivery types
             $table->string('condition');// A grade, B, C, D, E, F, Custom Text
             $table->integer('odo_reading');

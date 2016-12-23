@@ -8,4 +8,10 @@ class SiteFile extends Model
 {
     //
     protected $guarded = ['id'];
+
+
+    public function origin()
+    {
+        return $this->morphTo();
+    }
 }

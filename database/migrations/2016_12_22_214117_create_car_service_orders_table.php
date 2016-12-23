@@ -14,14 +14,20 @@ class CreateCarServiceOrdersTable extends Migration
     {
         Schema::create('car_service_orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('car_id');
             $table->integer('supplier_id');
+            $table->integer('car_id');
+            $table->integer('auth_user_id');
+            $table->string('auth_user'); //FREE TEXT
+            $table->string('status');
             $table->string('comments');
+            $table->integer('cost');
             $table->string('type');
             $table->date('handover_date');
-            $table->integer('insur_claim_id')->nullable();
-            $table->string('status');
+            $table->string('handover_person');
+            $table->integer('insurance_claim_id')->nullable();
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

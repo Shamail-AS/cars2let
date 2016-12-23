@@ -19,8 +19,10 @@ class CreatePaymentsTable extends Migration
             $table->string('from'); // in case it's to a non user (council)
             $table->string('to'); //in case it's from a non user (drover)
             $table->integer('auth_user_id');
+            $table->string('auth_user'); //FREE TEXT
             $table->string('comments');
             $table->date('paid_on');
+            $table->decimal('amount');
             $table->timestamps();
             $table->softDeletes();
         });

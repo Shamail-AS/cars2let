@@ -37,11 +37,13 @@ class AddColumnsToContractsTable extends Migration
         //
         Schema::table('contracts', function (Blueprint $table) {
             $table->dropColumn([
-                'act_start_date',
-                'act_end_date',
+                'act_start_dt',
+                'act_end_dt',
+                'handover_at',
                 'req_deposit',
                 'rec_deposit',
-                'odo_reading',
+                'start_odo_reading',
+                'end_odo_reading',
                 'handover_form',
                 'contract_doc'
             ]);

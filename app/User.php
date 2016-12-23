@@ -34,6 +34,36 @@ class User extends Authenticatable
         return $this->belongsTo('App\Investor', 'email', 'email');
     }
 
+    public function payments()
+    {
+        return $this->hasMany('App\Payment', 'auth_user_id');
+    }
+
+    public function partDeliveries()
+    {
+        return $this->hasMany('App\PartDelivery', 'rec_user_id');
+    }
+
+    public function deliveries()
+    {
+        return $this->hasMany('App\Delivery', 'rec_user_id');
+    }
+
+    public function carOrders()
+    {
+        return $this->hasMany('App\CarOrder', 'auth_user_id');
+    }
+
+    public function partOrders()
+    {
+        return $this->hasMany('App\PartOrder', 'auth_user_id');
+    }
+
+    public function serviceOrders()
+    {
+        return $this->hasMany('App\CarServiceOrder', 'auth_user_id');
+    }
+
     public function getIsSuperAdminAttribute()
     {
         return $this->type == 'super-admin';

@@ -16,7 +16,7 @@ class AddColumnsToCarTable extends Migration
         Schema::table('cars', function (Blueprint $table) {
             $table->string('custom_id')->nullable();
             $table->string('supplier_id');
-            $table->integer('garage_id');
+            //$table->integer('garage_id');
             $table->string('model');
             $table->integer('year');
             $table->string('colour');
@@ -26,12 +26,12 @@ class AddColumnsToCarTable extends Migration
             $table->string('engine_size');
             $table->date('first_reg_date');
             $table->string('keeper');
-            $table->integer('policy_id');
-            $table->integer('camera_id');
-            $table->date('cam_installed_at');
+
+            //$table->integer('camera_id');
+            //$table->date('cam_installed_at');
             $table->string('pco_licence');
             $table->date('pco_expires_at');
-            $table->integer('tracker_id');
+            //$table->integer('tracker_id');
             $table->string('status');
             $table->integer('curr_odo');
             $table->date('odo_read_at');
@@ -50,6 +50,7 @@ class AddColumnsToCarTable extends Migration
             $table->dropColumn([
                 'custom_id',
                 'supplier_id',
+                //'garage_id',
                 'model',
                 'year',
                 'colour',
@@ -59,12 +60,12 @@ class AddColumnsToCarTable extends Migration
                 'engine_size',
                 'first_reg_date',
                 'keeper',
-                'policy_id',
-                'camera_id',
-                'cam_installed_at',
+
+                //'camera_id',
+                //'cam_installed_at',
                 'pco_licence',
                 'pco_expires_at',
-                'tracker_id',
+                //'tracker_id',
                 'status',
                 'curr_odo',
                 'odo_read_at'

@@ -13,14 +13,8 @@ class Driver extends Model
     //
     protected $dates = ['dob', 'deleted_at'];
 
-    protected $fillable = [
-        'name',
-        'email',
-        'license_no',
-        'pco_license_no',
-        'phone',
-        'dob',
-    ];
+    protected $guarded = ['id'];
+
     public function contracts()
     {
         return $this->hasMany('App\Contract');
@@ -32,6 +26,21 @@ class Driver extends Model
     public function revenues()
     {
         return $this->hasManyThrough('App\Revenue','App\Contracts');
+    }
+
+    public function bank()
+    {
+        return $this->morphMany('App\BankAccount', 'owner');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany('App\CarTicket');
+    }
+
+    public function convictions()
+    {
+        return $this->hasMany('App\DriverConviction');
     }
     public function setDobAttribute($value)
     {
