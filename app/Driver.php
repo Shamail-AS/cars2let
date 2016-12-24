@@ -42,6 +42,11 @@ class Driver extends Model
     {
         return $this->hasMany('App\DriverConviction');
     }
+
+    public function files()
+    {
+        return $this->morphMany('App\SiteFile', 'origin');
+    }
     public function setDobAttribute($value)
     {
         try {

@@ -21,9 +21,18 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($car_id)
     {
-        //
+        $car = Car::findorFail($car_id);
+        if($car->order) {
+            $car_order = $car->order;
+            $car_order->supplier = $car_order->supplier;
+            $car_order->car = $car;
+            return $car_order;
+        }
+        else
+            return response("No Order of this car", 404);
+
     }
 
     /**
@@ -46,16 +55,20 @@ class OrderController extends Controller
     {
         // Finding if the car id is correct
         $car = Car::findOrFail($car_id);
+
         // Finding if the user id is correct
-        $auth_user = User::findOrFail($request->auth_user_id);
-        // find if supplier id is correct
+        if($request->auth_user_id)
+            $auth_user = User::findOrFail($request->auth_user_id);
+
+            // find if supplier id is correct
         $supplier = Supplier::findOrFail($request->supplier_id);
 
         // Creating a car order
         $car_order = CarOrder::create($request->all());
         $car->order()->save($car_order);
         $supplier->order()->save($car_order);
-        $auth_user->carOrders()->save($car_order);
+        if($request->auth_user_id)
+            $auth_user->carOrders()->save($car_order);
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
@@ -76,7 +89,8 @@ class OrderController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_order = $car->order()->where('id', $order_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This ticket does'nt belong to this car", 404);
+
         // sending the supplier info
         $car_order->supplier = $car_order->supplier;
         // sending car info
@@ -108,7 +122,7 @@ class OrderController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_order = $car->order()->where('id', $order_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This ticket does'nt belong to this car", 404);
         if($request->status)
             $car_order->status  = $request->status;
         if($request->comments)
@@ -136,7 +150,7 @@ class OrderController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_order = $car->order()->where('id', $order_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This ticket does'nt belong to this car", 404);
         $car_order->delete($order_id);
     }
 }

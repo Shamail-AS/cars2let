@@ -19,9 +19,14 @@ class DeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($car_id)
     {
-        //
+        $car = Car::findOrFail($car_id);
+        $deliveries = $car->deliveries;
+        $deliveries->each(function($delivery){
+           $delivery->car = $delivery->car;
+        });
+        return $deliveries;
     }
 
     /**
@@ -45,7 +50,8 @@ class DeliveryController extends Controller
         // Finding if the car id is correct
         $car = Car::findOrFail($car_id);
         // Finding if the user id is correct
-        $rec_user = User::findOrFail($request->rec_user_id);
+        if($request->rec_user_id)
+            $rec_user = User::findOrFail($request->rec_user_id);
         // find if supplier id is correct
         $order = CarOrder::findOrFail($request->order_id);
 
@@ -53,7 +59,8 @@ class DeliveryController extends Controller
         $delivery = Delivery::create($request->all());
         $car->deliveries()->save($delivery);
         $order->deliveries()->save($delivery);
-        $rec_user->deliveries()->save($delivery);
+        if($request->rec_user_id)
+            $rec_user->deliveries()->save($delivery);
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
@@ -74,7 +81,8 @@ class DeliveryController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($delivery = $car->deliveries()->where('id', $delivery_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This delivery does'nt belong to this car", 404);
+
         // sending the delivery info
         $delivery->order = $delivery->order;
         // sending car info
@@ -106,7 +114,8 @@ class DeliveryController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($delivery= $car->tickets()->where('id', $delivery_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This delivery does'nt belong to this car", 404);
+
         if($request->scheduled_at)
             $delivery->scheduled_at = $request->scheduled_at;
         if($request->delivered_at)
@@ -151,7 +160,8 @@ class DeliveryController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($delivery = $car->deliveries()->where('id', $delivery_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This delivery does'nt belong to this car", 404);
+
         $delivery->delete($delivery_id);
     }
 }

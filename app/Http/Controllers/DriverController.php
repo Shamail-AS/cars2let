@@ -6,12 +6,14 @@ use App\Http\Requests\RegisterDriverRequest;
 use App\Revenue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Driver;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Log;
-
+use Storage;
+use App\SiteFile;
 class DriverController extends Controller
 {
     // API METHODS
@@ -44,6 +46,7 @@ class DriverController extends Controller
     public function api_new(Request $request)
     {
         $driver = Driver::create($request->all());
+
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
@@ -96,5 +99,24 @@ class DriverController extends Controller
             $driver->totalContracts = $driver->totalContracts;
         });
         return $driverList;
+    }
+
+    public function attachmentUpload(Request $request,$id){
+        $driver = Driver::findOrFail($id);
+        if($request->file('attachment')){
+            if ($request->file('attachment')->isValid()) {
+                $site_file = new SiteFile;
+                $extension = $request->file('attachment')->getClientOriginalExtension();
+                $fileName = Str::random(8).'.'.$extension;
+                $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('attachment')));
+                $site_file->name = $fileName;
+                $site_file->full_url=Storage::url('driver/'.$driver->id.'/'.$fileName);
+                $site_file->save();
+                $driver->files()->save($site_file);
+                return response("attachment uploaded successfully");
+            }
+            return response("Invalid Attachment", 404);
+        }
+        return response("Attachment not found", 404);
     }
 }

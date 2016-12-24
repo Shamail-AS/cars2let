@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Http\Requests;
 use App\Car;
+use App\SiteFile;
 use App\CarTicket;
 use App\Driver;
 use Log;
+use Storage;
 class TicketController extends Controller
 {
     /**
@@ -16,9 +19,20 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($car_id)
     {
-        //
+        $car = Car::findOrFail($car_id);
+        if ($car->tickets) {
+            $tickets = $car->tickets;
+            $tickets->each(function ($ticket) {
+                $ticket->car = $ticket->car;
+                $ticket->files = $ticket->files;
+            });
+            return $tickets;
+        }
+        else
+            return response("No Order of this car", 404);
+
     }
 
     /**
@@ -51,6 +65,8 @@ class TicketController extends Controller
         if($request->driver)
             $driver->tickets()->save($car_ticket);
 
+
+
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
@@ -71,7 +87,7 @@ class TicketController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This ticket does'nt belong to this car", 404);
         // sending the supplier info
         $car_ticket->driver = $car_ticket->driver;
         // sending car info
@@ -103,7 +119,7 @@ class TicketController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This ticket does'nt belong to this car", 404);
         if($request->type)
             $car_ticket->type = $request->type;
         if($request->ticket_num)
@@ -143,7 +159,31 @@ class TicketController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
             // Show 404.
-            abort(404);
+            return response("This ticket does'nt belong to this car", 404);
         $car_ticket->delete($ticket_id);
+    }
+
+    public function attachmentUpload(Request $request,$car_id,$ticket_id){
+
+        $car = Car::findOrFail($car_id);
+        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
+            // Show 404.
+            return response("This ticket does'nt belong to this car", 404);
+
+        if($request->file('attachment')){
+            if ($request->file('attachment')->isValid()) {
+                $site_file = new SiteFile;
+                $extension = $request->file('attachment')->getClientOriginalExtension();
+                $fileName = Str::random(8).'.'.$extension;
+                $stored_file = Storage::disk('s3')->put('tickets/'.$fileName, file_get_contents($request->file('attachment')));
+                $site_file->name = $fileName;
+                $site_file->full_url=Storage::url('tickets/'.$fileName);
+                $site_file->save();
+                $car_ticket->files()->save($site_file);
+                return response("attachment uploaded successfully");
+            }
+            return response("Invalid Attachment", 404);
+        }
+        return response("Attachment not found", 404);
     }
 }
