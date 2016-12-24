@@ -11,6 +11,6 @@ class InsuranceClaim extends Model
 
     public function serviceOrders()
     {
-        return $this->hasMany('App\ServiceOrder');
+        return $this->hasMany('App\CarServiceOrder');
     }
 }

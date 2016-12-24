@@ -24,7 +24,7 @@ class PartOrder extends Model
         return $this->hasMany('App\Delivery');
     }
 
-    public function authorisedBy()
+    public function authorizedBy()
     {
         return $this->belongsTo('App\User', 'auth_user_id');
     }

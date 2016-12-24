@@ -36,7 +36,7 @@ class Car extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\CarOrder');
+        return $this->hasOne('App\CarOrder');
     }
 
     public function tickets()

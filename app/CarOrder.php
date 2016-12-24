@@ -11,7 +11,7 @@ class CarOrder extends Model
 
     public function supplier()
     {
-        return $this->hasOne('App\Supplier');
+        return $this->belongsTo('App\Supplier');
     }
 
     public function deliveries()
@@ -21,7 +21,7 @@ class CarOrder extends Model
 
     public function car()
     {
-        return $this->hasOne('App\Car');
+        return $this->belongsTo('App\Car');
     }
 
     public function authorizedBy()

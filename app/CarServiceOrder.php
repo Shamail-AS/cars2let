@@ -9,7 +9,7 @@ class CarServiceOrder extends Model
     //
     protected $guarded = ['id'];
 
-    public function authorisedBy()
+    public function authorizedBy()
     {
         return $this->belongsTo('App\User', 'auth_user_id');
     }

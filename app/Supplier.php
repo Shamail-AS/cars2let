@@ -13,4 +13,7 @@ class Supplier extends Model
     {
         return $this->morphMany('App\BankAccount', 'owner');
     }
+    public function order() {
+        return $this->hasOne('App\CarOrder');
+    }
 }

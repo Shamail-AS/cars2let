@@ -207,12 +207,34 @@ Route::group(['prefix'=>'api'],function(){
         Route::group(['prefix' => 'cars'], function () {
             Route::get('/all', 'CarController@api_all');
             Route::get('/{id}', 'CarController@api_get');
+            Route::get('/{id}/orders', 'CarController@api_get');
             Route::put('/{id}/update', 'CarController@api_update');
             Route::put('/post', 'CarController@api_new');
             Route::get('/{id}/unlink', 'CarController@api_unlink');
             Route::get('/{id}/delete', 'CarController@api_delete');
-        });
+            // Route for the orders
+            Route::group(['prefix' => '{car_id}/orders'], function () {
+                Route::post('/', 'OrderController@store');
+                Route::get('/{order_id}', 'OrderController@show');
+                Route::put('/{order_id}', 'OrderController@update');
+                Route::delete('/{order_id}', 'OrderController@delete');
+            });
 
+            // Route for the tickets
+            Route::group(['prefix' => '{car_id}/tickets'], function () {
+                Route::post('/', 'TicketController@store');
+                Route::get('/{ticket_id}', 'TicketController@show');
+                Route::put('/{ticket_id}', 'TicketController@update');
+                Route::delete('/{ticket_id}', 'TicketController@delete');
+            });
+            // Route for the deliveries
+            Route::group(['prefix' => '{car_id}/deliveries'], function () {
+                Route::post('/', 'DeliveryController@store');
+                Route::get('/{delivery_id}', 'DeliveryController@show');
+                Route::put('/{delivery_id}', 'DeliveryController@update');
+                Route::delete('/{delivery_id}', 'DeliveryController@delete');
+            });
+        });
         Route::group(['prefix' => 'contracts'], function () {
             Route::get('/all', 'ContractController@api_all');
             Route::get('/{id}', 'ContractController@api_get');
