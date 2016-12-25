@@ -59,12 +59,12 @@ class Car extends Model
         return $this->hasOne('App\Supplier');
     }
 
-    public function camera()
+    public function cameras()
     {
         return $this->hasMany('App\Camera');
     }
 
-    public function tracker()
+    public function trackers()
     {
         return $this->hasMany('App\Tracker');
     }

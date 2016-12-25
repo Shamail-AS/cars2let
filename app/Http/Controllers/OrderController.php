@@ -151,6 +151,6 @@ class OrderController extends Controller
         if (!($car_order = $car->order()->where('id', $order_id)->first()))
             // Show 404.
             return response("This ticket does'nt belong to this car", 404);
-        $car_order->delete($order_id);
+        $car_order->delete();
     }
 }

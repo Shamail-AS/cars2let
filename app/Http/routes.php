@@ -222,6 +222,7 @@ Route::group(['prefix'=>'api'],function(){
 
             // Route for the tickets
             Route::group(['prefix' => '{car_id}/tickets'], function () {
+                Route::get('/','TicketController@index');
                 Route::post('/', 'TicketController@store');
                 Route::get('/{ticket_id}', 'TicketController@show');
                 Route::put('/{ticket_id}', 'TicketController@update');
@@ -235,6 +236,27 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/{delivery_id}', 'DeliveryController@show');
                 Route::put('/{delivery_id}', 'DeliveryController@update');
                 Route::delete('/{delivery_id}', 'DeliveryController@delete');
+            });
+            Route::group(['prefix' => '{car_id}/suppliers'], function () {
+                Route::get('/', 'SupplierController@index');
+                Route::post('/', 'SupplierController@store');
+                Route::get('/{supplier_id}', 'SupplierController@show');
+                Route::put('/{supplier_id}', 'SupplierController@update');
+                Route::delete('/{supplier_id}', 'SupplierController@delete');
+            });
+            Route::group(['prefix' => '{car_id}/cameras'], function () {
+                Route::get('/', 'CameraController@index');
+                Route::post('/', 'CameraController@store');
+                Route::get('/{camera_id}', 'CameraController@show');
+                Route::put('/{camera_id}', 'CameraController@update');
+                Route::delete('/{camera_id}', 'CameraController@delete');
+            });
+            Route::group(['prefix' => '{car_id}/trackers'], function () {
+                Route::get('/', 'TrackerController@index');
+                Route::post('/', 'TrackerController@store');
+                Route::get('/{tracker_id}', 'TrackerController@show');
+                Route::put('/{tracker_id}', 'TrackerController@update');
+                Route::delete('/{tracker_id}', 'TrackerController@delete');
             });
         });
         Route::group(['prefix' => 'contracts'], function () {
@@ -261,6 +283,14 @@ Route::group(['prefix'=>'api'],function(){
             Route::put('/{id}/update', 'RevenueController@api_update');
             Route::put('/post', 'RevenueController@api_new');
             Route::get('/{id}/delete', 'RevenueController@api_delete');
+        });
+
+        Route::group(['prefix' => 'policies'], function () {
+                Route::post('/', 'PolicyController@store');
+                Route::get('/{policy_id}', 'PolicyController@show');
+                Route::put('/{policy_id}', 'PolicyController@update');
+                Route::delete('/{policy_id}', 'PolicyController@delete');
+                Route::post('/{policy_id}/attachment','PolicyController@attachmentUpload');
         });
     });
 });

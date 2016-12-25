@@ -16,4 +16,12 @@ class Supplier extends Model
     public function order() {
         return $this->hasOne('App\CarOrder');
     }
+
+    public function cameras() {
+    	return $this->hasMany('App\Camera');
+    }
+
+    public function trackers() {
+    	return $this->hasMany('App\Tracker');
+    }
 }

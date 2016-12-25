@@ -160,7 +160,7 @@ class TicketController extends Controller
         if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
             // Show 404.
             return response("This ticket does'nt belong to this car", 404);
-        $car_ticket->delete($ticket_id);
+        $car_ticket->delete();
     }
 
     public function attachmentUpload(Request $request,$car_id,$ticket_id){

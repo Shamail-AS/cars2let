@@ -162,6 +162,6 @@ class DeliveryController extends Controller
             // Show 404.
             return response("This delivery does'nt belong to this car", 404);
 
-        $delivery->delete($delivery_id);
+        $delivery->delete();
     }
 }
