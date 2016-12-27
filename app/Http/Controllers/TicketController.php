@@ -12,7 +12,6 @@ use App\CarTicket;
 use App\Driver;
 use Log;
 use Storage;
-use Imagick;
 class TicketController extends Controller
 {
     /**
@@ -188,19 +187,19 @@ class TicketController extends Controller
         return response("Attachment not found", 404);
     }
 
-    public function downloadTicketPdf($car_id,$ticket_id) {
-        $car = Car::findOrFail($car_id);
-        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
-            // Show 404.
-            return response("This ticket does'nt belong to this car", 404);
-        $full_url = array();
-        foreach ($car_ticket->files as $file) {
-                    $full_url[] = $file->full_url;
-                }
-        $images = $full_url;
+    // public function downloadTicketPdf($car_id,$ticket_id) {
+    //     $car = Car::findOrFail($car_id);
+    //     if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
+    //         // Show 404.
+    //         return response("This ticket does'nt belong to this car", 404);
+    //     $full_url = array();
+    //     foreach ($car_ticket->files as $file) {
+    //                 $full_url[] = $file->full_url;
+    //             }
+    //     $images = $full_url;
 
-        $pdf = new Imagick($images);
-        $pdf->setImageFormat('pdf');
-        $pdf->writeImages('combined.pdf', true);         
-    }
+    //     $pdf = new Imagick($images);
+    //     $pdf->setImageFormat('pdf');
+    //     $pdf->writeImages('combined.pdf', true);         
+    // }
 }
