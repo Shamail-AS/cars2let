@@ -13,6 +13,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Log;
 use Storage;
+use PDF;
 use App\SiteFile;
 class DriverController extends Controller
 {
@@ -113,10 +114,16 @@ class DriverController extends Controller
                 $site_file->full_url=Storage::url('driver/'.$driver->id.'/'.$fileName);
                 $site_file->save();
                 $driver->files()->save($site_file);
-                return response("attachment uploaded successfully");
+                return $site_file->full_url;
             }
             return response("Invalid Attachment", 404);
         }
         return response("Attachment not found", 404);
+    }
+
+    public function downloadFullPDF($id){
+        ini_set('max_execution_time', 300); //3 minutes
+        $driver = Driver::findOrFail($id);
+               
     }
 }

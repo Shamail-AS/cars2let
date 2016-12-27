@@ -136,10 +136,10 @@ class Driver extends Model
 
     public function getInvestorContractsAttribute()
     {
-        $id = Auth::user()->investor->id;
+        //$id = Auth::user()->investor->id;
         $data = collect([]);
         foreach ($this->contracts as $contract) {
-            if ($contract->investor->id == $id)
+            if ($contract->investor->id)
                 $data->push($contract);
         }
         return $data;

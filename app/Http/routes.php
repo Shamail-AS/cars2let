@@ -228,6 +228,7 @@ Route::group(['prefix'=>'api'],function(){
                 Route::put('/{ticket_id}', 'TicketController@update');
                 Route::delete('/{ticket_id}', 'TicketController@delete');
                 Route::post('/{ticket_id}/attachment','TicketController@attachmentUpload');
+                Route::get('/{ticket_id}/pdf','TicketController@downloadTicketPdf');                
             });
             // Route for the deliveries
             Route::group(['prefix' => '{car_id}/deliveries'], function () {
@@ -274,6 +275,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::put('/post', 'DriverController@api_new');
             Route::get('/{id}/delete', 'DriverController@api_delete');
             Route::post('/{id}/attachment','DriverController@attachmentUpload');
+            Route::get('/{id}/pdf','DriverController@downloadFullPDF');
 
         });
 

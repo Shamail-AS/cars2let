@@ -12,6 +12,7 @@ use App\CarTicket;
 use App\Driver;
 use Log;
 use Storage;
+use Imagick;
 class TicketController extends Controller
 {
     /**
@@ -175,15 +176,31 @@ class TicketController extends Controller
                 $site_file = new SiteFile;
                 $extension = $request->file('attachment')->getClientOriginalExtension();
                 $fileName = Str::random(8).'.'.$extension;
-                $stored_file = Storage::disk('s3')->put('tickets/'.$fileName, file_get_contents($request->file('attachment')));
+                $stored_file = Storage::disk('local')->put('tickets/'.$fileName, file_get_contents($request->file('attachment')));
                 $site_file->name = $fileName;
                 $site_file->full_url=Storage::url('tickets/'.$fileName);
                 $site_file->save();
                 $car_ticket->files()->save($site_file);
-                return response("attachment uploaded successfully");
+                return response(Storage::url('tickets/'.$fileName));
             }
             return response("Invalid Attachment", 404);
         }
         return response("Attachment not found", 404);
+    }
+
+    public function downloadTicketPdf($car_id,$ticket_id) {
+        $car = Car::findOrFail($car_id);
+        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
+            // Show 404.
+            return response("This ticket does'nt belong to this car", 404);
+        $full_url = array();
+        foreach ($car_ticket->files as $file) {
+                    $full_url[] = $file->full_url;
+                }
+        $images = $full_url;
+
+        $pdf = new Imagick($images);
+        $pdf->setImageFormat('pdf');
+        $pdf->writeImages('combined.pdf', true);         
     }
 }
