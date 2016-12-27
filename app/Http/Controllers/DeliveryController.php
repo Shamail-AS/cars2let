@@ -112,9 +112,9 @@ class DeliveryController extends Controller
     public function update(Request $request, $car_id,$delivery_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($delivery= $car->tickets()->where('id', $delivery_id)->first()))
+        if (!($delivery = $car->deliveries()->where('id', $delivery_id)->first()))
             // Show 404.
-            return response("This delivery does'nt belong to this car", 404);
+            return response("This delivery doesn't belong to this car", 404);
 
         if($request->scheduled_at)
             $delivery->scheduled_at = $request->scheduled_at;

@@ -61,7 +61,7 @@
                         <p>Iframes allow us to provide you a richer experience by integrating content from multiple
                             sources.
                             Most modern browsers support this technology but have it disabled by default. Following are
-                            instructions for how to allow iframes within our trusted Cars2Let investor portal.
+                            instructions for how to allow iframes within our trusted Cars2Let members area.
                         </p>
                     </div>
                 </div>

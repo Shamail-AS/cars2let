@@ -27,7 +27,9 @@
                 <td>@{{ car.id }}</td>
                 <td ng-if="!car.edit_mode">@{{ car.make }}</td>
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.make"></td>
-                <td ng-if="!car.edit_mode">@{{ car.reg_no }}</td>
+                <td ng-if="!car.edit_mode">
+                    <a href="/admin/car/@{{ car.id }}">@{{ car.reg_no }}</a>
+                </td>
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.reg_no"></td>
                 <td ng-if="!car.edit_mode">@{{ car.investor.name || 'Not linked'}}</td>
                 <td ng-if="car.edit_mode">

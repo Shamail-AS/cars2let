@@ -12,6 +12,14 @@ use Log;
 
 class SupplierController extends Controller
 {
+
+    public function api_all()
+    {
+        $suppliers = Supplier::all();
+        return $suppliers;
+    }
+
+
     public function index($car_id)
     {
         $car = Car::findorFail($car_id);

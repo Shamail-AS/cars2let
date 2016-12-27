@@ -69,6 +69,37 @@ class CarController extends Controller
         return response("Deleted");
     }
 
+    public function api_overview($id)
+    {
+        //TODO GET CAR ALERTS AND CAR HISTORIES
+        $histories = [
+            'car ordered',
+            'car received from order',
+            'car contract started',
+            'car contract terminated',
+            'car contract started',
+            'car had accident',
+            'car sent for repair',
+            'car received from repair',
+            'car contract terminated'
+        ];
+        $alerts = [
+            'expiry' => [
+                'pco' => '10/12/2016',
+                'contract' => '09/11/2016'
+            ],
+            'deliveries' => [
+                //list of expected deliveries
+            ]
+        ];
+
+        return [
+            'histories' => $histories,
+            'alerts' => $alerts
+        ];
+
+    }
+
     //---------------//
     public function index()
     {
@@ -121,5 +152,17 @@ class CarController extends Controller
         return redirect(url('/investor/cars/' . $car->id));
 
 
+    }
+
+    public function view($id, $page)
+    {
+        $car = Car::findOrFail($id);
+        //$data = ['car'=>$car, 'page'=>$page];
+        return view('admin.car.show', compact('car', 'page'));
+    }
+
+    public function admin_show($id)
+    {
+        return $this->view($id, 'overview');
     }
 }

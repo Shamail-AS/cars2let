@@ -168,7 +168,7 @@ class TicketController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
             // Show 404.
-            return response("This ticket does'nt belong to this car", 404);
+            return response("This ticket doesn't belong to this car", 404);
 
         if($request->file('attachment')){
             if ($request->file('attachment')->isValid()) {

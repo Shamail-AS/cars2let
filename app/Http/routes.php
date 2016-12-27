@@ -133,6 +133,9 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     //CARS//
     Route::get('/car/all', 'CarController@index');
 
+    Route::get('/car/{id}', 'CarController@admin_show');
+    Route::get('/car/{id}/view/{page}', 'CarController@view');
+
     //show form to create car
     Route::get('/car/create','CarController@create');
 
@@ -190,6 +193,9 @@ Route::group(['prefix'=>'api'],function(){
     Route::get('/email/test','ApiController@sendMail');
     Route::get('/email/code', 'ApiController@testCodeEmail');
     Route::post('/email/post', 'ApiController@testGuzzlePost');
+    Route::get('/phpinfo', function () {
+        return phpinfo();
+    });
 
     Route::group(['prefix' => 'admin'], function () {
 
@@ -209,8 +215,9 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}', 'CarController@api_get');
             Route::put('/{id}/update', 'CarController@api_update');
             Route::put('/post', 'CarController@api_new');
-            Route::get('/{id}/unlink', 'CarController@api_unlink');
             Route::get('/{id}/delete', 'CarController@api_delete');
+            Route::get('/{id}/overview', 'CarController@api_overview');
+
             // Route for the orders
             Route::group(['prefix' => '{car_id}/orders'], function () {
                 Route::get('/','OrderController@index');
@@ -260,6 +267,7 @@ Route::group(['prefix'=>'api'],function(){
                 Route::delete('/{tracker_id}', 'TrackerController@delete');
             });
         });
+
         Route::group(['prefix' => 'contracts'], function () {
             Route::get('/all', 'ContractController@api_all');
             Route::get('/{id}', 'ContractController@api_get');
@@ -293,6 +301,10 @@ Route::group(['prefix'=>'api'],function(){
                 Route::put('/{policy_id}', 'PolicyController@update');
                 Route::delete('/{policy_id}', 'PolicyController@delete');
                 Route::post('/{policy_id}/attachment','PolicyController@attachmentUpload');
+        });
+
+        Route::group(['prefix' => 'suppliers'], function () {
+            Route::get('/all', 'SupplierController@api_all');
         });
     });
 });

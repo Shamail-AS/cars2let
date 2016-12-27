@@ -1,0 +1,13 @@
+#right-side-bar {
+    margin: 0;
+    padding: 5px;
+}
+
+#left-side-bar {
+    max-height: 90vh;
+    overflow: auto;
+}
+
+.row {
+    margin: 0px;
+}
