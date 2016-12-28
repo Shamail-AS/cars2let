@@ -74,8 +74,7 @@ class AddColumnsToDriversTable extends Migration
                 'history',
                 'can_dbs_check',
                 'dbs_checked',
-                'sort_code',
-                'acc_num',
+                'bank_account_id',
                 'pay_method',
                 'week_pay_day'
             ]);

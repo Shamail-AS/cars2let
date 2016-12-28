@@ -12,7 +12,7 @@ class Car extends Model
     //
     protected $guarded = ['id', 'investor_id', 'created_at', 'updated_at', 'deleted_at'];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'first_reg_date', 'pco_expires_at', 'warranty_exp_at', 'road_side_exp_at', 'road_tax_exp_at'];
 
     public function contracts()
     {

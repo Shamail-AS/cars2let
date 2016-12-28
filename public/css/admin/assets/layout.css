@@ -8,6 +8,11 @@
     overflow: auto;
 }
 
+#mid-section > div div {
+    margin-bottom: 12px;
+
+}
+
 .row {
     margin: 0px;
 }

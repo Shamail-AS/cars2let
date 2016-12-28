@@ -214,6 +214,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/all', 'CarController@api_all');
             Route::get('/{id}', 'CarController@api_get');
             Route::put('/{id}/update', 'CarController@api_update');
+            Route::put('/{id}/update/selective', 'CarController@api_selective_update');
             Route::put('/post', 'CarController@api_new');
             Route::get('/{id}/delete', 'CarController@api_delete');
             Route::get('/{id}/overview', 'CarController@api_overview');

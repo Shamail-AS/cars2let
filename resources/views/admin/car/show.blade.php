@@ -31,14 +31,44 @@
                         <div class="form-group">
                             <label>PCO Expires At</label>
                             <input type="text" class="form-control" uib-datepicker-popup
-                                   ng-model="vm.car.dt_pco_expires"
+                                   ng-model="vm.car.x_pco_expires_at"
                                    is-open="vm.car.pco_expire_picker_open" datepicker-options="dateOptions.pco_expire"
                                    ng-required="true"
                                    close-text="Close"
-                                   ng-click="openPcoPicker(vm.car)"/>
+                                   ng-click="vm.car.pco_expire_picker_open = true"/>
                         </div>
                         <div class="form-group">
-                            <label>Current Odometer</label>
+                            <label>Warranty Expires on</label>
+                            <input type="text" class="form-control" uib-datepicker-popup
+                                   ng-model="vm.car.x_warranty_exp_at"
+                                   is-open="vm.car.warranty_exp_picker_open"
+                                   datepicker-options="dateOptions.warranty_exp"
+                                   ng-required="true"
+                                   close-text="Close"
+                                   ng-click="vm.car.warranty_exp_picker_open = true"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Roadside Assistance Expires on</label>
+                            <input type="text" class="form-control" uib-datepicker-popup
+                                   ng-model="vm.car.x_roadside_exp_at"
+                                   is-open="vm.car.x_roadside_exp_picker_open"
+                                   datepicker-options="dateOptions.roadside_exp"
+                                   ng-required="true"
+                                   close-text="Close"
+                                   ng-click="vm.car.x_roadside_exp_picker_open = true"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Road Tax repay on</label>
+                            <input type="text" class="form-control" uib-datepicker-popup
+                                   ng-model="vm.car.x_road_tax_exp_at"
+                                   is-open="vm.car.x_road_tax_exp_picker_open"
+                                   datepicker-options="dateOptions.road_tax_exp"
+                                   ng-required="true"
+                                   close-text="Close"
+                                   ng-click="vm.car.x_road_tax_exp_picker_open = true"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Current Odometer (Miles)</label>
                             <input class="form-control" type="text" ng-model="vm.car.curr_odo">
                         </div>
                         <div class="form-group">
@@ -54,14 +84,14 @@
                             <input class="form-control" type="text" ng-model="vm.car.year">
                         </div>
                         <div class="form-group">
-                            <label>Color</label>
-                            <input class="form-control" type="text" ng-model="vm.car.color">
+                            <label>Colour</label>
+                            <input class="form-control" type="text" ng-model="vm.car.colour">
                         </div>
                         <div class="form-group">
                             <label>Transmission</label>
-                            <ui-select ng-model="car.transmission">
+                            <ui-select ng-model="vm.car.transmission">
                                 <ui-select-match allow-clear="true">
-                                    <span ng-bind="car.transmission"></span>
+                                    <span ng-bind="vm.car.transmission"></span>
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="transmission in (vm.transmissions | filter: $select.search) track by $index">
@@ -71,18 +101,18 @@
                         </div>
                         <div class="form-group">
                             <label>Fuel Type</label>
-                            <ui-select ng-model="car.fuel_type">
+                            <ui-select ng-model="vm.car.fuel_type">
                                 <ui-select-match allow-clear="true">
-                                    <span ng-bind="car.fuel_type"></span>
+                                    <span ng-bind="vm.car.fuel_type"></span>
                                 </ui-select-match>
                                 <ui-select-choices
-                                        repeat="fuel in (vm.fuels | filter: $select.search) track by $index">
+                                        repeat="fuel in (vm.fuels | filter: $select.search) ">
                                     <span ng-bind="fuel"></span>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
                         <div class="form-group">
-                            <label>Engine Size</label>
+                            <label>Engine Details</label>
                             <input class="form-control" type="text" ng-model="vm.car.engine_size">
                         </div>
                         <div class="form-group">
@@ -99,9 +129,9 @@
                         </div>
                         <div class="form-group">
                             <label>Current Status</label>
-                            <ui-select ng-model="car.status">
+                            <ui-select ng-model="vm.car.status">
                                 <ui-select-match allow-clear="true">
-                                    <span ng-bind="car.status"></span>
+                                    <span ng-bind="vm.car.status"></span>
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="status in (vm.statuses | filter: $select.search) track by $index">
@@ -113,26 +143,26 @@
                         <div class="form-group">
                             <label>Available Since</label>
                             <input type="text" class="form-control" uib-datepicker-popup
-                                   ng-model="vm.car.dt_available_since"
+                                   ng-model="vm.car.x_available_since"
                                    is-open="vm.car.avail_since_picker_open" datepicker-options="dateOptions.avail_since"
                                    ng-required="true"
                                    close-text="Close"
-                                   ng-click="openAvailSincePicker(vm.car)"/>
+                                   ng-click="vm.car.avail_since_picker_open = true"/>
                         </div>
                         <div class="form-group">
                             <label>First Reg Date</label>
                             <input type="text" class="form-control" uib-datepicker-popup
-                                   ng-model="vm.car.dt_first_reg"
+                                   ng-model="vm.car.x_first_reg_date"
                                    is-open="vm.car.first_reg_picker_open" datepicker-options="dateOptions.first_reg"
                                    ng-required="true"
                                    close-text="Close"
-                                   ng-click="openFirstRegPicker(vm.car)"/>
+                                   ng-click="vm.car.first_reg_picker_open = true"/>
                         </div>
                         <div class="form-group">
                             <label>Supplier</label>
-                            <ui-select ng-model="car.supplier">
+                            <ui-select ng-model="vm.car.supplier">
                                 <ui-select-match allow-clear="true">
-                                    <span ng-bind="car.supplier.name"></span>
+                                    <span ng-bind="vm.car.supplier.name"></span>
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="supplier in (vm.suppliers | filter: $select.search) track by supplier.id">
@@ -142,9 +172,9 @@
                         </div>
                         <div class="form-group">
                             <label>Investor</label>
-                            <ui-select ng-model="car.investor">
+                            <ui-select ng-model="vm.car.investor">
                                 <ui-select-match allow-clear="true">
-                                    <span ng-bind="car.investor.name"></span>
+                                    <span ng-bind="vm.car.investor.name"></span>
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="investor in (vm.investors | filter: $select.search) track by investor.id">
@@ -155,13 +185,13 @@
 
 
                         <div class="form-group">
-                            <label>Registered Since</label>
+                            <label>On System Since</label>
 
-                            <p class="">@{{ formatDate(vm.investor.created_at) }}</p>
+                            <p class="">@{{ formatDate(vm.car.created_at) }}</p>
                         </div>
 
                         @if(Auth::user()->isEditOnly)
-                            <button ng-click="updateInvestor(vm.investor)" class="btn btn-xs btn-success">
+                            <button ng-click="updateCar(vm.car)" class="btn btn-block btn-success">
                                 Update
                             </button>
                         @endif

@@ -16,7 +16,9 @@ class AddColumnsToCarTable extends Migration
         Schema::table('cars', function (Blueprint $table) {
             $table->string('custom_id')->nullable();
             $table->string('supplier_id');
-            //$table->integer('garage_id');
+            $table->date('warranty_exp_at');
+            $table->date('road_side_exp_at');
+            $table->date('road_tax_exp_at');
             $table->string('model');
             $table->integer('year');
             $table->string('colour');

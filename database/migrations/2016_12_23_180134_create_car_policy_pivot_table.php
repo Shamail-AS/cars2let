@@ -30,5 +30,6 @@ class CreateCarPolicyPivotTable extends Migration
     public function down()
     {
         //
+        Schema::drop('car_policies');
     }
 }
