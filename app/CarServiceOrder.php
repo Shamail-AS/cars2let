@@ -23,4 +23,8 @@ class CarServiceOrder extends Model
     {
         return $this->morphMany('App\Delivery', 'order');
     }
+    public function histories()
+    {
+        return $this->morphMany('App\CarHistory', 'historable');
+    }
 }

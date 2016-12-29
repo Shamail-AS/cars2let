@@ -10,6 +10,7 @@ use App\CarOrder;
 use App\Car;
 use App\User;
 use App\Supplier;
+use App\CarHistory;
 use Illuminate\Support\Facades\Auth;
 use Log;
 
@@ -21,18 +22,22 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($car_id)
+    public function index($car_id = null)
     {
-        $car = Car::findorFail($car_id);
-        if($car->order) {
-            $car_order = $car->order;
-            $car_order->supplier = $car_order->supplier;
-            $car_order->car = $car;
-            return $car_order;
+        if($car_id){
+            $car = Car::findorFail($car_id);
+            if($car->order) {
+                $car_order = $car->order;
+                $car_order->supplier = $car_order->supplier;
+                $car_order->car = $car;
+                return $car_order;
+            }
+            else
+                return response("No Order of this car", 404);
         }
-        else
-            return response("No Order of this car", 404);
-
+        else {
+            return CarOrder::with('car','supplier')->get();
+        }
     }
 
     /**
@@ -51,11 +56,13 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$car_id)
+    public function store(Request $request,$car_id = null)
     {
         // Finding if the car id is correct
-        $car = Car::findOrFail($car_id);
-
+        if($car_id)
+            $car = Car::findOrFail($car_id);
+        else 
+            $car = Car::findOrFail($request->car_id);
         // Finding if the user id is correct
         if($request->auth_user_id)
             $auth_user = User::findOrFail($request->auth_user_id);
@@ -66,7 +73,12 @@ class OrderController extends Controller
         // Creating a car order
         $car_order = CarOrder::create($request->all());
         $car->order()->save($car_order);
+
         $supplier->order()->save($car_order);
+        $history = new CarHistory;
+        $history->car_id = $car->id;
+        $history->comments = "car ordered";
+        $car_order->histories()->save($history);
         if($request->auth_user_id)
             $auth_user->carOrders()->save($car_order);
         // Get an instance of Monolog

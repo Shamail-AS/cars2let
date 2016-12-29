@@ -42,7 +42,10 @@ class Driver extends Model
     {
         return $this->hasMany('App\DriverConviction');
     }
-
+    public function accidents()
+    {
+        return $this->hasMany('App\CarAccident');
+    }
     public function files()
     {
         return $this->morphMany('App\SiteFile', 'origin');

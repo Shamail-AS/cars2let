@@ -22,14 +22,19 @@ class SupplierController extends Controller
 
     public function index($car_id)
     {
-        $car = Car::findorFail($car_id);
-        if($car->supplier) {
-            $car_supplier = $car->supplier;
-            $car_supplier->car = $car;
-            return $car;
+        if($car_id){
+            $car = Car::findorFail($car_id);
+            if($car->supplier) {
+                $car_supplier = $car->supplier;
+                $car_supplier->car = $car;
+                return $car;
+            }
+            else
+                return response("No Supplier of this car", 404);
         }
-        else
-            return response("No Supplier of this car", 404);
+        else {
+            return Supplier::with('car')->get();
+        }
 	}
 
 

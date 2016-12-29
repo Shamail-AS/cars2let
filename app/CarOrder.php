@@ -29,4 +29,9 @@ class CarOrder extends Model
         return $this->belongsTo('App\User', 'auth_user_id');
     }
 
+    public function histories()
+    {
+        return $this->morphMany('App\CarHistory', 'historable');
+    }
+
 }

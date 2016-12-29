@@ -20,6 +20,9 @@ class Supplier extends Model
     public function cameras() {
     	return $this->hasMany('App\Camera');
     }
+    public function serviceOrder() {
+        return $this->hasMany('App\CarServiceOrder');
+    }
 
     public function trackers() {
     	return $this->hasMany('App\Tracker');

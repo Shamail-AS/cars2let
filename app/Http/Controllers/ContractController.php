@@ -28,6 +28,24 @@ class ContractController extends Controller
         $contract = Contract::find($request->input('id'));
         $contract->start_date = $request->input('start_date');
         $contract->status = $request->input('status');
+        if($request->input('status') == '2'){
+            $history = new CarHistory;
+            $history->car_id = $contract->car_id;
+            $history->comments = 'car contract suspended';
+            $contract->histories()->save($history);
+        }
+        if($request->input('status') == '3'){
+            $history = new CarHistory;
+            $history->car_id = $contract->car_id;
+            $history->comments = 'car contract terminated';
+            $contract->histories()->save($history);
+        }
+        if($request->input('status') == '4'){
+            $history = new CarHistory;
+            $history->car_id = $contract->car_id;
+            $history->comments = 'car contract completed';
+            $contract->histories()->save($history);
+        }
         $contract->end_date = $request->input('end_date');
         $contract->rate = $request->input('rate');
         $contract->car_id = $request->input('car.id');
@@ -44,6 +62,12 @@ class ContractController extends Controller
         $contract->car_id = $request->input('car.id');
         $contract->driver_id = $request->input('driver.id');
         $contract->save();
+        if($request->input('status') == 'ongoing'){
+            $history = new CarHistory;
+            $history->car_id = $contract->car_id;
+            $history->comments = 'car contract started';
+            $contract->histories()->save($history);
+        }
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler

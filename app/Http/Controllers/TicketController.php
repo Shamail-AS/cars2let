@@ -19,19 +19,24 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($car_id)
+    public function index($car_id = null)
     {
-        $car = Car::findOrFail($car_id);
-        if ($car->tickets) {
-            $tickets = $car->tickets;
-            $tickets->each(function ($ticket) {
-                $ticket->car = $ticket->car;
-                $ticket->files = $ticket->files;
-            });
-            return $tickets;
+        if($car_id){
+            $car = Car::findOrFail($car_id);
+            if ($car->tickets) {
+                $tickets = $car->tickets;
+                $tickets->each(function ($ticket) {
+                    $ticket->car = $ticket->car;
+                    $ticket->files = $ticket->files;
+                });
+                return $tickets;
+            }
+            else
+                return response("No Order of this car", 404);
         }
-        else
-            return response("No Order of this car", 404);
+        else{
+            return CarTicket::with('car','files')->get();
+        }
 
     }
 
@@ -51,10 +56,13 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$car_id)
+    public function store(Request $request,$car_id=null)
     {
         // Finding if the car id is correct
-        $car = Car::findOrFail($car_id);
+        if($car_id)
+            $car = Car::findOrFail($car_id);
+        else
+            $car = Car::findOrFail($request->car_id);
         // Finding if driver id is incorrect
         if($request->driver_id)
             $driver = Driver::findOrFail($request->driver_id);

@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Camera;
-use App\Supplier;
 use App\Car;
+use App\Driver;
+use App\CarAccident;
+use App\CarHistory;
 use Log;
-class CameraController extends Controller
+class AccidentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,15 +21,16 @@ class CameraController extends Controller
     {
         if($car_id){
             $car = Car::findOrFail($car_id);
-            $cameras = $car->cameras;
-            $cameras->each(function($camera){
-               $camera->car = $camera->car;
+            $accidents = $car->accidents;
+            $accidents->each(function($accident){
+               $accident->car = $accident->car;
+               $accident->driver = $accident->driver;
             });
-            return $cameras;
+            return $accidents;
         }
         else {
-            return Camera::with('car')->get();
-        }    
+            return CarAccident::with('car','driver')->get();
+        } 
     }
 
     /**
@@ -47,26 +49,29 @@ class CameraController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$car_id = null)
+    public function store(Request $request, $car_id = null)
     {
-        // Finding if the car id is correct
         if($car_id)
             $car = Car::findOrFail($car_id);
         else 
-            $car = $car = Car::findOrFail($request->car_id); 
-        $supplier = Supplier::findOrFail($request->supplier_id);
-        // Creating a camera
-        $camera = Camera::create($request->all());
-        $car->cameras()->save($camera);
-        $supplier->cameras()->save($camera);
+            $car = Car::findOrFail($request->car_id);
+        $driver = Driver::findOrFail($request->driver_id);
+        $car_accident = CarAccident::create($request->all());
+        $car->accidents()->save($car_accident);
+        $driver->accidents()->save($car_accident);
+        $history = new CarHistory;
+        $history->car_id = $car->id;
+        $history->comments = "car had accident";
+        $car_accident->histories()->save($history);
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
         $monolog->pushHandler(new \Monolog\Handler\FirePHPHandler());
         // Start logging
-        $monolog->debug('Created', [$camera]);
-        return $camera;
+        $monolog->debug('Created', [$car_accident]);
+        return $car_accident;
     }
+
 
     /**
      * Display the specified resource.
@@ -87,7 +92,7 @@ class CameraController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -97,26 +102,23 @@ class CameraController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $car_id, $camera_id)
+    public function update(Request $request, $car_id, $accident_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($camera= $car->tickets()->where('id', $camera_id)->first()))
+        if (!($accident= $car->accidents()->where('id', $accident_id)->first()))
             // Show 404.
-            return response("This camera does'nt belong to this car", 404);
+            return response("This accident does'nt belong to this car", 404);
 
-        if($request->model)
-            $camera->model = $request->model;
-        if($request->installed_at)
-            $camera->installed_at = $request->installed_at;
-        if($request->status)
-            $camera->status = $request->status;
-        if($request->comments)
-            $camera->comments = $request->comments;
-        if($request->supplier_id) {
-            $supplier = Supplier::findOrFail($request->supplier_id);
-            $supplier->cameras()->save($camera);
+        if($request->driver_id){
+            $driver = Driver::findOrFail($driver_id);
+            $accident->driver_id = $request->driver_id;
         }
-        if($camera->save())
+        if($request->time_of_accident)
+            $accident->time_of_accident = $request->time_of_accident;
+        if($request->type_of_accident)
+            $accident->type_of_accident = $request->type_of_accident;
+        
+        if($accident->save())
             return response("Update successful");
         else
             return response("Update failed", 500);
@@ -128,13 +130,13 @@ class CameraController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($car_id, $camera_id)
+    public function destroy($car_id,$accident_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($camera = $car->cameras()->where('id', $camera_id)->first()))
+        if (!($accident = $car->accidents()->where('id', $accident_id)->first()))
             // Show 404.
-            return response("This camera does'nt belong to this car", 404);
+            return response("This accident does'nt belong to this car", 404);
 
-        $camera->delete();
+        $accident->delete();
     }
 }

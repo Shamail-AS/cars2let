@@ -39,6 +39,11 @@ class Car extends Model
         return $this->hasOne('App\CarOrder');
     }
 
+    public function serviceOrder()
+    {
+        return $this->hasMany('App\CarServiceOrder');
+    }
+
     public function tickets()
     {
         return $this->hasMany('App\CarTicket');
@@ -67,6 +72,12 @@ class Car extends Model
     public function trackers()
     {
         return $this->hasMany('App\Tracker');
+    }
+    public function histories (){
+        return $this->hasMany('App\CarHistory');
+    }
+    public function accidents (){
+        return $this->hasMany('App\CarAccident');
     }
 
     //==========================================================================//

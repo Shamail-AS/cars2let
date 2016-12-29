@@ -32,6 +32,10 @@ class Contract extends Model
     {
         return $this->belongsTo('App\Driver');
     }
+    public function histories()
+    {
+        return $this->morphMany('App\CarHistory', 'historable');
+    }
     public function getInvestorAttribute()
     {
         $car = $this->car;

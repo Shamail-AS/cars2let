@@ -127,21 +127,23 @@ class CarController extends Controller
             'car received from repair',
             'car contract terminated'
         ];
+        $car = Car::findOrFail($id);
+        $histories = $car->histories()->with('historable')->get();
+        $deliveries = $car->deliveries()->where('car_id',$car->id)->where('delivered_at',null)->get();
+        $car_current_contract = $car->contracts()->where('status',1)->first();
+        $orders  = $car->order()->where('car_id',$car->id)->where('status','open')->first();
+
         $alerts = [
             'regular' => [
-                'pco_exp' => '10/12/2016',
-                'contract_finish' => '09/11/2016',
+                'pco_exp' => $car->pco_expires_at,
+                'contract_finish' => $car_current_contract->end_date,
                 'mot_due' => '09/11/2016',
                 'warranty_exp' => '10/12/2016',
                 'roadside_exp' => '10/12/2016',
                 'road_tax_due' => '10/12/2016',
             ],
-            'deliveries' => [
-                //list of scheduled deliveries that haven't been received yet
-            ],
-            'orders' => [
-                //list of related service orders that are status == open
-            ]
+            'deliveries' => $deliveries,
+            'orders' => $orders
         ];
 
         return [

@@ -209,6 +209,37 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/drivers', 'InvestorController@api_drivers');
 
         });
+        // Route for the orders
+        Route::group(['prefix' => 'orders'], function () {
+            Route::get('/','OrderController@index');
+            Route::post('/', 'OrderController@store');
+        });
+        Route::group(['prefix' => 'service_orders'], function () {
+            Route::get('/','ServiceOrderController@index');
+            Route::post('/', 'ServiceOrderController@store');
+        });
+        // Route for the tickets
+        Route::group(['prefix' => 'tickets'], function () {
+            Route::get('/','TicketController@index');
+            Route::post('/', 'TicketController@store');              
+        });
+        Route::group(['prefix' => 'deliveries'], function () {
+                Route::get('/', 'DeliveryController@index');
+                Route::post('/', 'DeliveryController@store');
+        });
+        Route::group(['prefix' => 'suppliers'], function () {
+                Route::get('/', 'SupplierController@index');
+                Route::post('/', 'SupplierController@store');
+        });
+
+        Route::group(['prefix' => 'cameras'], function () {
+                Route::get('/', 'CameraController@index');
+                Route::post('/', 'CameraController@store');
+        });
+        Route::group(['prefix' => 'accidents'], function () {
+                Route::get('/', 'AccidentController@index');
+                Route::post('/', 'AccidentController@store');
+        });
 
         Route::group(['prefix' => 'cars'], function () {
             Route::get('/all', 'CarController@api_all');
@@ -226,6 +257,13 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/{order_id}', 'OrderController@show');
                 Route::put('/{order_id}', 'OrderController@update');
                 Route::delete('/{order_id}', 'OrderController@delete');
+            });
+            Route::group(['prefix' => '{car_id}/service_orders'], function () {
+                Route::get('/','ServiceOrderController@index');
+                Route::post('/', 'ServiceOrderController@store');
+                Route::get('/{service_order_id}', 'ServiceOrderController@show');
+                Route::put('/{service_order_id}', 'ServiceOrderController@update');
+                Route::delete('/{service_order_id}', 'ServiceOrderController@delete');
             });
 
             // Route for the tickets
@@ -266,6 +304,13 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/{tracker_id}', 'TrackerController@show');
                 Route::put('/{tracker_id}', 'TrackerController@update');
                 Route::delete('/{tracker_id}', 'TrackerController@delete');
+            });
+            Route::group(['prefix' => '{car_id}/accidents'], function () {
+                Route::get('/', 'AccidentController@index');
+                Route::post('/', 'AccidentController@store');
+                Route::get('/{accident_id}', 'AccidentController@show');
+                Route::put('/{accident_id}', 'AccidentController@update');
+                Route::delete('/{accident_id}', 'AccidentController@delete');
             });
         });
 

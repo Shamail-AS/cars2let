@@ -17,14 +17,19 @@ class TrackerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($car_id)
+    public function index($car_id = null)
     {
-        $car = Car::findOrFail($car_id);
-        $trackers = $car->trackers;
-        $trackers->each(function($tracker){
-           $tracker->car = $tracker->car;
-        });
-        return $trackers;    
+        
+        if($car_id){
+            $car = Car::findOrFail($car_id);
+            $trackers = $car->trackers;
+            $trackers->each(function($tracker){
+               $tracker->car = $tracker->car;
+            });
+            return $trackers;
+        }
+        else 
+            return Tracker::with('car');    
     }
 
     /**
@@ -43,10 +48,13 @@ class TrackerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$car_id)
+    public function store(Request $request,$car_id = null)
     {
         // Finding if the car id is correct
-        $car = Car::findOrFail($car_id);
+        if($car_id)
+            $car = Car::findOrFail($car_id);
+        else 
+            $car = Car::findOrFail($request->car_id);
         $supplier = Supplier::findOrFail($request->supplier_id);
         // Creating a tracker
         $tracker = Tracker::create($request->all());

@@ -19,14 +19,14 @@ class DeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($car_id)
+    public function index($car_id = null)
     {
-        $car = Car::findOrFail($car_id);
-        $deliveries = $car->deliveries;
-        $deliveries->each(function($delivery){
-           $delivery->car = $delivery->car;
-        });
-        return $deliveries;
+        if($car_id){
+            $deliveries = Delivery::with('car')->where('car_id', $car_id)->get();
+            return $deliveries;
+        }
+        else 
+            return Delivery::with('car')->get();
     }
 
     /**
@@ -45,10 +45,13 @@ class DeliveryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$car_id)
+    public function store(Request $request,$car_id = null)
     {
         // Finding if the car id is correct
-        $car = Car::findOrFail($car_id);
+        if($car_id)
+            $car = Car::findOrFail($car_id);
+        else
+            $car = Car::findOrFail($request->car_id);
         // Finding if the user id is correct
         if($request->rec_user_id)
             $rec_user = User::findOrFail($request->rec_user_id);
