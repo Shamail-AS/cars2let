@@ -12,6 +12,8 @@ use App\CarTicket;
 use App\Driver;
 use Log;
 use Storage;
+use Image;
+
 class TicketController extends Controller
 {
     /**
@@ -195,19 +197,19 @@ class TicketController extends Controller
         return response("Attachment not found", 404);
     }
 
-    // public function downloadTicketPdf($car_id,$ticket_id) {
-    //     $car = Car::findOrFail($car_id);
-    //     if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
-    //         // Show 404.
-    //         return response("This ticket does'nt belong to this car", 404);
-    //     $full_url = array();
-    //     foreach ($car_ticket->files as $file) {
-    //                 $full_url[] = $file->full_url;
-    //             }
-    //     $images = $full_url;
+    public function downloadTicketPdf($car_id,$ticket_id) {
+                        
+        
+        $img = Image::make(asset("/img/background/logo.png"));
 
-    //     $pdf = new Imagick($images);
-    //     $pdf->setImageFormat('pdf');
-    //     $pdf->writeImages('combined.pdf', true);         
-    // }
+        // now you are able to resize the instance
+        $img->resize(320, 240);
+
+        // and insert a watermark for example
+        $img->insert(asset("/img/background/logo.png"));
+
+        // finally we save the image as a new file
+        $img->save('public/bar.jpg'); 
+          return response("Invalid Attachment", 404); 
+    }
 }
