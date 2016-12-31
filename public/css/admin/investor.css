@@ -274,3 +274,11 @@ table.reduced td {
 .body .alert {
     text-align: center;
 }
+
+.modal-dialog {
+    min-width: 70vw;
+}
+
+.modal-dialog #revenues .disabled {
+    opacity: 0.4;
+}

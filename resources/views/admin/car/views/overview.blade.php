@@ -1,43 +1,36 @@
 <link href="{{asset('css/admin/assets/car/overview.css')}}" rel="stylesheet">
 
-<div ng-controller="overviewController">
-    <h1>Overview</h1>
+<div id="wrapper" ng-controller="overviewController">
+    <h1><a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left"></i> All Cars
+        </a> / Overview</h1>
+    <hr>
 
-    <div id="comments">
-        <div class="form-group">
-            <label>Comments</label>
-            <textarea name="message" rows="2" cols="50" class="form-control" placeholder="Comments"
-                      ng-model="vm.car.comments"></textarea>
+    <div id="notifications">
+        <h2>Notifications</h2>
+        <hr>
+        <div class="alert-box" ng-repeat="notification in vm.notifications | orderBy: 'days_left'"
+             ng-class="notification.class">
+            <div class="alert-icon">
+                <i ng-if="notification.class == 'info'" class="fa fa-5x fa-info-circle"></i>
+                <i ng-if="notification.class == 'warning'" class="fa fa-5x fa-exclamation-triangle"></i>
+                <i ng-if="notification.class == 'danger'" class="fa fa-5x fa-times-circle"></i>
+            </div>
+            <div class="alert-main">
+                <p class="alert-title">@{{ notification.title }}</p>
+
+                <p class="alert-body">@{{ notification.message }}</p>
+            </div>
+            <div class="alert-extra"></div>
         </div>
-        <button class="btn btn-primary pull-right" ng-click="saveSelective(vm.car,'comments')">Save Comments</button>
     </div>
 
-    <div id="alerts">
+    <div id="contract">
+        <h2>Current Contract</h2>
+        <hr>
 
-        <h2>Alerts</h2>
 
-        <div class="alert-box info">
-            <div class="alert-icon">
-                <i class="fa fa-5x fa-exclamation-triangle"></i>
-            </div>
-            <div class="alert-main">
-                <p class="alert-title">Warranty Expires in 1 month</p>
-
-                <p class="alert-body">No action required. This will go away after the warranty expires.</p>
-            </div>
-            <div class="alert-extra"></div>
-        </div>
-        <div class="alert-box error">
-            <div class="alert-icon">
-                <i class="fa fa-5x fa-times-circle"></i>
-            </div>
-            <div class="alert-main">
-                <p class="alert-title">PCO Expires in 15 days</p>
-
-                <p class="alert-body">Please call DVLA to renew the licence. You will need your car details.</p>
-            </div>
-            <div class="alert-extra"></div>
-        </div>
+    </div>
+    <div id="history">
 
     </div>
 

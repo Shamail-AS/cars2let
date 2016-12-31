@@ -107,6 +107,9 @@ app.factory('contractDataFactory', ['$http', function ($http) {
     contractDataFactory.getContract = function (id) {
         return $http.get(URL_BASE + '/' + id);
     };
+    contractDataFactory.getContractDetails = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/detail');
+    };
     contractDataFactory.updateContract = function (id, data) {
         return $http.put(URL_BASE + '/' + id + '/' + 'update', data);
     };
@@ -118,6 +121,9 @@ app.factory('contractDataFactory', ['$http', function ($http) {
     };
     contractDataFactory.getContractRevenueDetail = function (id) {
         return $http.get(URL_BASE + '/' + id + '/revenue/detail');
+    };
+    contractDataFactory.getRevenues = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/revenues');
     };
 
     return contractDataFactory;
@@ -162,6 +168,10 @@ app.factory('revenueDataFactory', ['$http', function ($http) {
     };
     revenueDataFactory.deleteRvenue = function (id) {
         return $http.get(URL_BASE + '/' + id + '/' + 'delete');
+    };
+
+    revenueDataFactory.updateAllocations = function (allocations) {
+        return $http.put(URL_BASE + '/update/allocations', allocations);
     };
 
     return revenueDataFactory;

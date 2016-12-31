@@ -27,4 +27,34 @@ class CarServiceOrder extends Model
     {
         return $this->morphMany('App\CarHistory', 'historable');
     }
+
+    public function car()
+    {
+        return $this->belongsTo('App\Car');
+    }
+
+    public function scopeMot($query)
+    {
+        return $query->where('type', 'mot');
+    }
+
+    public function scopePco($query)
+    {
+        return $query->where('type', 'pco');
+    }
+
+    public function scopeRegular($query)
+    {
+        return $query->where('type', 'regular');
+    }
+
+    public function scopeRepair($query)
+    {
+        return $query->where('type', 'repair');
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
 }

@@ -52,7 +52,9 @@ class AddColumnsToCarTable extends Migration
             $table->dropColumn([
                 'custom_id',
                 'supplier_id',
-                //'garage_id',
+                'warranty_exp_at',
+                'road_side_exp_at',
+                'road_tax_exp_at',
                 'model',
                 'year',
                 'colour',

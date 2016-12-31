@@ -12,6 +12,11 @@ class CarAccident extends Model
         return $this->morphMany('App\CarHistory', 'historable');
     }
 
+    public function files()
+    {
+        return $this->morphMany('App\SiteFile', 'origin');
+    }
+
     public function car(){
     	return $this->belongsTo('App\Car');
     }

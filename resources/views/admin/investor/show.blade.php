@@ -307,8 +307,13 @@
                                                 ng-click="showRevenue(contract.id)">
                                             Payments
                                         </button>
+
+                                            <button ng-click="openRevenues(contract)" class="btn btn-xs btn-primary">
+                                                Test
+                                            </button>
                                         @include('partials.admin.investor.create-rev')
                                         @include('partials.admin.investor.revenue-list')
+                                            @include('partials.admin.investor.contract-payments')
 
                                     </td>
                                     <td>

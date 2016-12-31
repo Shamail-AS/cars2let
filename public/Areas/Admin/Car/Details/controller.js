@@ -19,6 +19,10 @@ app.controller('detailsController', ['$scope', 'detailsDataFactory', 'detailsDat
     $scope.updateCar = function (car) {
         save_car(car);
     };
+    $scope.saveSelective = function (car, prop) {
+        if (prop == 'comments')
+            update_comments(car);
+    };
 
 
     var load_extras = function () {
@@ -50,6 +54,17 @@ app.controller('detailsController', ['$scope', 'detailsDataFactory', 'detailsDat
                 $scope.vm.loading = false;
             });
     };
+    var update_comments = function (car) {
+        var data = {
+            id: car.id,
+            prop: 'comments',
+            value: car.comments
+        };
+        detailsDataFactory.updateSelective(car.id, data)
+            .success(function (response) {
+                console.log(response);
+            });
+    };
 
     var init = function () {
         $scope.vm.car.loading = false;
@@ -61,67 +76,51 @@ app.controller('detailsController', ['$scope', 'detailsDataFactory', 'detailsDat
     };
     var get_id_from_url = function () {
         var url = (window.location.pathname);
-        console.log(url);
         var id = _.split(url, '/')[3]; // that's where the car id is stored
-        console.log(id);
         return id;
     };
 
     init();
 }]);
 
-app.controller('overviewController', ['$scope', 'overviewDataFactory', 'detailsDataModelFactory', function ($scope, overviewDataFactory, detailsDataModelFactory) {
+app.controller('overviewController', ['$scope', 'overviewDataFactory', 'overviewDataModelFactory', 'detailsDataModelFactory', function ($scope, overviewDataFactory, overviewDataModelFactory, detailsDataModelFactory) {
 
     $scope.vm = {
         loading: true,
         car: {},
-        alerts: [],
+        notifications: [],
         histories: []
     };
 
-    $scope.saveSelective = function (car, prop) {
-        if (prop == 'comments')
-            update_comments(car);
-    };
-
-    var get_car_alerts = function (id) {
-
-    };
-
-    var update_comments = function (car) {
-
-        var data = {
-            id: car.id,
-            prop: 'comments',
-            value: car.comments
-        };
-        overviewDataFactory.updateSelective(car.id, data)
+    var get_overview = function (id) {
+        overviewDataFactory.getOverview(id)
             .success(function (response) {
-                console.log(response);
+                //$scope.vm.notifications = overviewDataModelFactory.getNotifications(response.alerts);
+                $scope.vm.histories = overviewDataModelFactory.getHistories(response.histories);
             });
     };
+
 
     var get_car = function (id) {
         $scope.vm.loading = true;
         overviewDataFactory.getCar(id)
             .success(function (data) {
                 $scope.vm.car = detailsDataModelFactory.withExtras(data);
+                $scope.vm.notifications = overviewDataModelFactory.getNotifications(data.notis);
                 $scope.vm.loading = false;
             });
     };
 
     var init = function () {
-        $scope.vm.car.loading = false;
         var id = get_id_from_url();
         if (id) {
             get_car(id);
+            //get_overview(id);
         }
     };
     var get_id_from_url = function () {
         var url = (window.location.pathname);
-        console.log(url);
         var id = _.split(url, '/')[3]; // that's where the car id is stored
-        console.log(id);
         return id;
     };
 

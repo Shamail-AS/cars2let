@@ -28,4 +28,9 @@ class Delivery extends Model
     {
         return $this->morphMany('App\SiteFile', 'origin');
     }
+
+    public function scopeUndelivered($query)
+    {
+        return $query->where('delivered_at', null);
+    }
 }

@@ -33,10 +33,26 @@ class RevenueController extends Controller
         return response("Updated");
     }
 
+    public function api_update_allocations(Request $request)
+    {
+
+        $revenues = $request->all();
+        foreach ($revenues as $new_rev) {
+
+            $rev = Revenue::find($new_rev['id']);
+            $rev->amount_paid = $new_rev['amount_received'];
+            $rev->save();
+        }
+
+        return $revenues;
+
+    }
+
     public function api_new(Request $request)
     {
         $r = new Revenue();
         $r->amount_paid = (float)$request->input('amount_paid');
+        $r->value_dt = $request->input('value_dt');
         $r->contract_id = $request->input('contract_id');
         $r->currency = 'GBP';
 

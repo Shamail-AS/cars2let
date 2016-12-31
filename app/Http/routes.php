@@ -320,6 +320,8 @@ Route::group(['prefix'=>'api'],function(){
             Route::put('/{id}/update', 'ContractController@api_update');
             Route::put('/post', 'ContractController@api_new');
             Route::get('/{id}/delete', 'ContractController@api_delete');
+            Route::get('/{id}/detail', 'ContractController@api_show');
+            Route::get('/{id}/revenues', 'ContractController@api_revenues');
         });
 
         Route::group(['prefix' => 'drivers'], function () {
@@ -337,6 +339,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/all', 'RevenueController@api_all');
             Route::get('/{id}', 'RevenueController@api_get');
             Route::put('/{id}/update', 'RevenueController@api_update');
+            Route::put('/update/allocations', 'RevenueController@api_update_allocations');
             Route::put('/post', 'RevenueController@api_new');
             Route::get('/{id}/delete', 'RevenueController@api_delete');
         });
