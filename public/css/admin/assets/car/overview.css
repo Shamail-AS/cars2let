@@ -1,3 +1,11 @@
+#wrapper {
+    max-height: 95vh;
+    overflow: auto;
+}
+
+#wrapper > div {
+    margin-bottom: 50px;
+}
 .alert-box {
     display: flex;
     flex-direction: row;
@@ -17,13 +25,24 @@
 }
 
 .alert-box.warning {
-    border: 2px solid #d3bb4b;
+    border: 2px solid #ec7f17;
 }
 
-.alert-box.error {
+.alert-box.danger {
     border: 2px solid #d33e37;
 }
 
+.info * {
+    color: #49a1d3;
+}
+
+.warning * {
+    color: #ec7f17;
+}
+
+.danger * {
+    color: #d33e37;
+}
 .alert-box .alert-icon {
     padding: 5px;
     flex: 0 1 auto;

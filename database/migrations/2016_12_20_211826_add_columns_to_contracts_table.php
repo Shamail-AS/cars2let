@@ -14,11 +14,11 @@ class AddColumnsToContractsTable extends Migration
     {
         //
         Schema::table('contracts', function (Blueprint $table) {
-            $table->date('act_start_dt');
-            $table->date('act_end_dt');
-            $table->date('handover_at');
+            $table->date('act_start_dt')->nullable();
+            $table->date('act_end_dt')->nullable();
+            $table->date('handover_at')->nullable();
             $table->decimal('req_deposit')->default(500);
-            $table->decimal('rec_deposit');
+            $table->decimal('rec_deposit')->default(0);
             $table->decimal('start_odo_reading');
             $table->decimal('end_odo_reading')->nullable();
             $table->string('handover_form')->nullable();

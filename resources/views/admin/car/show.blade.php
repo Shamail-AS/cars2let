@@ -11,8 +11,8 @@
             <div id="left-side-bar" ng-controller="detailsController">
                 <div class="overflow flex-container col">
                     <div class="pre-body">
-                        <a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left fa-4x"></i>
-                        </a>
+                        <h2>Car Details</h2>
+                        <hr>
                     </div>
 
                     <form class="main-body">
@@ -205,7 +205,7 @@
             </div>
         </div>
         <div class="col-md-2">
-            <div id="right-side-bar">
+            <div id="right-side-bar" ng-controller="detailsController">
                 <ul class="list-group">
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id)}}">Overview</a></li>
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/contracts')}}">Contracts</a>
@@ -220,6 +220,17 @@
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/revenues')}}">Revenues</a>
                     </li>
                 </ul>
+                <div id="comments">
+                    <div class="form-group">
+                        <label>Comments</label>
+                        <textarea name="message" rows="2" cols="50" class="form-control" placeholder="Comments"
+                                  ng-model="vm.car.comments">
+                        </textarea>
+                    </div>
+                    <button class="btn btn-primary pull-right" ng-click="saveSelective(vm.car,'comments')">Save
+                        Comments
+                    </button>
+                </div>
             </div>
         </div>
     </div>

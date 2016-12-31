@@ -49,7 +49,7 @@ app.controller('carController',
                 $scope.vm.loading = true;
                 carDataFactory.getCars()
                     .success(function (data) {
-                        $scope.vm.cars = carDataModelFactory.withEditMode(data);
+                        $scope.vm.cars = carDataModelFactory.withExtras(data);
                         $scope.vm.loading = false;
                     });
             };

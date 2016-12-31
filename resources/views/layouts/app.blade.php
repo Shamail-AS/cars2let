@@ -33,6 +33,8 @@
     <script src="{{asset('js/angular/angular-moment.min.js')}}"></script>
     <script src="{{asset('js/angular/angular-sanitize.js')}}"></script>
     <script src="{{asset('js/angular/angular-route.js')}}"></script>
+    {{--<script src="{{asset('js/angular/angular-bootbox.js')}}"></script>--}}
+    <script src="{{asset('js/angular/angular-modal-service.min.js')}}"></script>
     <script src="{{asset('js/angular/ng-select.js')}}"></script>
     <script src="{{asset('js/angular/ui-bootstrap-tpls-2.2.0.min.js')}}"></script>
 

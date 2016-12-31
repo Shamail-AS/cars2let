@@ -13,7 +13,7 @@ class Contract extends Model
 {
     use SoftDeletes;
     //
-    protected $dates = ['start_date', 'end_date', 'deleted_at'];
+    protected $dates = ['start_date', 'act_start_dt', 'act_end_dt', '', 'end_date', 'deleted_at'];
 
     protected $fillable = [
         'status',
@@ -109,6 +109,11 @@ class Contract extends Model
     public function getWeeksTotalAttribute()
     {
         return $this->end_date->diffInWeeks($this->start_date,true);
+    }
+
+    public function getRentAllocationsCountAttribute()
+    {
+        return ceil($this->start_date->diffInDays($this->end_date) / 7);
     }
 
     public function getRentForNextPeriodAttribute()

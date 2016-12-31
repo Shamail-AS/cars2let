@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMoreColoumnsInCarHistories extends Migration
+class AddColumnsToRevenuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,9 @@ class AddMoreColoumnsInCarHistories extends Migration
      */
     public function up()
     {
-        Schema::table('car_histories', function ($table) {
-            $table->text('comments');
+        //
+        Schema::table('revenues', function (Blueprint $table) {
+            $table->integer('week');
         });
     }
 
@@ -25,5 +26,8 @@ class AddMoreColoumnsInCarHistories extends Migration
     public function down()
     {
         //
+        Schema::table('revenues', function (Blueprint $table) {
+            $table->dropColumn('week');
+        });
     }
 }

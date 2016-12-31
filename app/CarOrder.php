@@ -34,4 +34,9 @@ class CarOrder extends Model
         return $this->morphMany('App\CarHistory', 'historable');
     }
 
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+
 }

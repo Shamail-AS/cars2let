@@ -21,14 +21,19 @@
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody class="relative">
-
+            <tbody>
             <tr ng-repeat="car in vm.cars | orderBy : '-id'">
                 <td>@{{ car.id }}</td>
                 <td ng-if="!car.edit_mode">@{{ car.make }}</td>
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.make"></td>
                 <td ng-if="!car.edit_mode">
                     <a href="/admin/car/@{{ car.id }}">@{{ car.reg_no }}</a>
+                    <i ng-if="car.notis.danger.length > 0"
+                       class="fa fa-times-circle fa-fw">@{{ car.notis.danger.length }}</i>
+                    <i ng-if="car.notis.warning.length > 0"
+                       class="fa fa-exclamation-triangle fa-fw">@{{ car.notis.warning.length }}</i>
+                    <i ng-if="car.notis.info.length > 0"
+                       class="fa fa-info-circle fa-fw">@{{ car.notis.info.length }}</i>
                 </td>
                 <td ng-if="car.edit_mode"><input class="form-control" ng-model="car.reg_no"></td>
                 <td ng-if="!car.edit_mode">@{{ car.investor.name || 'Not linked'}}</td>

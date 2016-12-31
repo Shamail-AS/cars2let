@@ -13,7 +13,9 @@ class Revenue extends Model
 {
     use SoftDeletes;
     //
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'value_dt'];
+
+    protected $guarded = ['id'];
 
     public function contract()
     {
@@ -73,7 +75,7 @@ class Revenue extends Model
     public function getWeekPaidOnAttribute()
     {
         $contract_start = $this->contract->start_date;
-        return $contract_start->diffInWeeks($this->created_at, false);
+        return $contract_start->diffInWeeks($this->value_dt, false);
 
     }
 

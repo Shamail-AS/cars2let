@@ -25,7 +25,7 @@ app.factory('carDataFactory', ['$http', function ($http) {
 app.factory('carDataModelFactory', ['moment', function (moment) {
 
     var carDataModelFactory = {};
-    carDataModelFactory.withEditMode = function (cars) {
+    carDataModelFactory.withExtras = function (cars) {
         _.each(cars, function (car) {
             car.edit_mode = false;
             car.isLinked = car.investor != undefined;

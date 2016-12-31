@@ -157,10 +157,26 @@ a.nostyle:visited {
     transform: rotate(0deg);
 }
 
-thead td {
+head td {
     font-weight: bolder;
 }
 
 input.ng-invalid {
     background-color: rgba(233, 51, 54, 0.35);
+}
+
+.wrapper tbody td i {
+    margin-left: 10px;
+}
+
+.info * {
+    color: #49a1d3;
+}
+
+.warning * {
+    color: #ec7f17;
+}
+
+.danger * {
+    color: #d33e37;
 }

@@ -1,21 +1,94 @@
+app.controller('revenueModalController', function ($scope, data, moment, contractDataFactory, revenueDataFactory, close) {
+
+    $scope.vm = {
+        loading: true,
+        contract: data,
+        revenues: []
+    };
+    $scope.close = function (result) {
+        close(result, 500); // close, but give 500ms for bootstrap to animate
+    };
+    $scope.formatDate = function (date) {
+        if (!date) return "-";
+        return format_date(date);
+    };
+    $scope.save = function () {
+        update_revenues();
+    };
+
+    var format_date = function (date) {
+        var dt = moment(date);
+        return dt.format("MMM DD, YYYY");
+    };
+
+    var load_revenues = function (id) {
+        $scope.vm.loading = true;
+        contractDataFactory.getRevenues(id)
+            .then(function (result) {
+                $scope.vm.revenues = withExtras(result.data);
+                $scope.vm.loading = false;
+            });
+    };
+    var withExtras = function (revenues) {
+        _.each(revenues, function (rev) {
+            var start = moment(rev.dates.start.date);
+            var end = moment(rev.dates.end.date);
+            var act_end = moment(rev.dates.act_end.date);
+
+            if (start.diff(act_end) >= 0) {
+                rev.class = 'disabled';
+            }
+            else {
+                rev.class = 'enabled';
+            }
+
+            if (act_end.isBefore(end, 'day')) {
+                rev.date_string = format_date(start) + " - " + format_date(end) + " [" + format_date(act_end) + "] ";
+            }
+            else {
+                rev.date_string = format_date(start) + " - " + format_date(end);
+            }
+
+        });
+        return revenues;
+    };
+
+    var update_revenues = function () {
+        var allocations = $scope.vm.revenues;
+        revenueDataFactory.updateAllocations(allocations)
+            .then(function (result) {
+                alert(result.data);
+                console.log(result);
+            })
+    };
+    var init = function () {
+        load_revenues($scope.vm.contract.id);
+    };
+
+    init();
+});
+
 app.controller('investorController',
     [
         '$scope',
+        'moment',
+        'ModalService',
         'investorDataFactory',
         'investorDataModelFactory',
         'revenueDataFactory',
         'driverDataFactory',
         'carDataFactory',
         'contractDataFactory',
-        'moment',
+
         function ($scope,
+                  moment,
+                  ModalService,
                   investorDataFactory,
                   investorDataModelFactory,
                   revenueDataFactory,
                   driverDataFactory,
                   carDataFactory,
-                  contractDataFactory,
-                  moment) {
+                  contractDataFactory) {
 
             //Objects
             $scope.dynamicPopover = {
@@ -25,6 +98,22 @@ app.controller('investorController',
                 title: 'Title',
                 trigger: 'focus'
             };
+
+            $scope.openRevenues = function (contract) {
+                ModalService.showModal({
+                    templateUrl: "contract-payments.html",
+                    controller: "revenueModalController",
+                    inputs: {
+                        data: contract
+                    }
+                }).then(function (modal) {
+                    modal.element.modal();
+                    modal.close.then(function (result) {
+                        console.log(result);
+                    });
+                });
+            };
+
 
             $scope.vm = {
                 'investor': {},

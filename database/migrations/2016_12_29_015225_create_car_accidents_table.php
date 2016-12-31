@@ -16,8 +16,21 @@ class CreateCarAccidentsTable extends Migration
             $table->increments('id');
             $table->integer('car_id');
             $table->integer('driver_id');
-            $table->timestamp('time_of_accident');
-            $table->string('type_of_accident');
+            $table->timestamp('incident_at');
+            $table->string('location');
+            $table->string('type');
+            $table->string('weather_cond');
+            $table->string('road_cond');
+            $table->text('police_details');
+            $table->text('comments');
+            $table->string('status'); // open, more-info, police-case, insured, settled, closed
+            $table->string('x_car_reg'); // x_whatever -> details of third party
+            $table->string('x_car_details');
+            $table->string('x_driver_name');
+            $table->string('x_driver_licence');
+            $table->string('x_insured_name');
+            $table->string('x_insured_comp');
+            $table->string('x_insured_policy');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,5 +44,6 @@ class CreateCarAccidentsTable extends Migration
     public function down()
     {
         //
+        Schema::drop('car_accidents');
     }
 }

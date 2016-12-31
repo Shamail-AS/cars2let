@@ -20,10 +20,11 @@ class CreateCarServiceOrdersTable extends Migration
             $table->string('auth_user'); //FREE TEXT
             $table->string('status');
             $table->string('comments');
-            $table->integer('cost');
+            $table->integer('cost')->nullable();
             $table->string('type');
-            $table->date('handover_date');
-            $table->string('handover_person');
+            $table->date('booked_dt');
+            $table->date('handover_dt')->nullable();
+            $table->string('handover_person')->nullable();
             $table->integer('insurance_claim_id')->nullable();
 
             $table->timestamps();

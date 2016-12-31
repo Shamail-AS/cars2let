@@ -20,7 +20,12 @@ class CarController extends Controller
 
     public function api_all()
     {
-        return Car::with('investor')->get();
+        $cars = Car::with('investor')->get();
+        $cars->each(function ($car) {
+            //$car->overview = $car->overview();
+            $car->notis = $car->notifications;
+        });
+        return $cars;
     }
 
     public function api_get($id)
@@ -28,6 +33,7 @@ class CarController extends Controller
         $car = Car::find($id);
         $car->supplier = Supplier::where('id', $car->supplier_id)->first();
         $car->investor = $car->investor;
+        $car->notis = $car->notifications;
         return $car;
     }
 
@@ -116,35 +122,26 @@ class CarController extends Controller
         //TODO GET CAR ALERTS AND CAR HISTORIES
 
         //These will actually be a list of Car history objects
-        $histories = [
-            'car ordered',
-            'car received from order',
-            'car contract started',
-            'car contract terminated',
-            'car contract started',
-            'car had accident',
-            'car sent for repair',
-            'car received from repair',
-            'car contract terminated'
-        ];
+//        $histories = [
+//            'car ordered',
+//            'car received from order',
+//            'car contract started',
+//            'car contract terminated',
+//            'car contract started',
+//            'car had accident',
+//            'car sent for repair',
+//            'car received from repair',
+//            'car contract terminated'
+//        ];
         $car = Car::findOrFail($id);
-        $histories = $car->histories()->with('historable')->get();
-        $deliveries = $car->deliveries()->where('car_id',$car->id)->where('delivered_at',null)->get();
-        $car_current_contract = $car->contracts()->where('status',1)->first();
-        $orders  = $car->order()->where('car_id',$car->id)->where('status','open')->first();
+//        $histories = $car->histories()->with('historable')->get();
+//        $deliveries = $car->deliveries()->undelivered()->get();
+//        $current_contract = $car->currentContract;
+//        $orders  = $car->order()->status('open')->first();
+//        $mot = $car->serviceOrders()->mot()->status('open')->first();
 
-        $alerts = [
-            'regular' => [
-                'pco_exp' => $car->pco_expires_at,
-                'contract_finish' => $car_current_contract->end_date,
-                'mot_due' => '09/11/2016',
-                'warranty_exp' => '10/12/2016',
-                'roadside_exp' => '10/12/2016',
-                'road_tax_due' => '10/12/2016',
-            ],
-            'deliveries' => $deliveries,
-            'orders' => $orders
-        ];
+        $alerts = $car->overview();
+        $histories = $car->histories;
 
         return [
             'histories' => $histories,
