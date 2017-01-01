@@ -139,4 +139,19 @@ class AccidentController extends Controller
 
         $accident->delete();
     }
+
+    public function downloadFullPdf($car_id=null,$accident_id) {
+        if($car_id){
+            $car = Car::findOrFail($car_id);
+            if (!($accident = $car->accidents()->where('id', $accident_id)->first()))
+                // Show 404.
+                return response("This accident does'nt belong to this car", 404);
+        }
+        else {
+            $accident = CarAccident::findOrFail($accident_id);
+        }
+        $pdf = PDF::loadView('accident',['accident'=>$accident]);
+        //return view('contract',['contract'=>$contract,'files'=>$files_full_url]);
+        return $pdf->download('accidentpdf');
+    }
 }

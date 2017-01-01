@@ -4,13 +4,76 @@
 	.item-type{
 		background-color: #ececec;
 	}
+	.sign {font-weight:bold;}
+	.sign span {width:3cm;border-bottom:0.1em solid #000;display:inline-block;}
 </style>
 <div class="row">
 	<div class="col-md-12">
-		<center><h1>{{$driver->name}}</h1></center>
+		<center><h1>Contract</h1></center>
 		<div class="list-group">
 			<a class="list-group-item list-group-item-action active">
-				<center><h4>Personal Information</h4></center>
+				<center><h4>Contract Information</h4></center>
+			</a>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered responsive">
+							<tbody>
+								<tr>
+									<td>ID</td>
+									<td>{{$contract->id}}</td>
+								</tr>
+								<tr>
+									<td>Start Date</td>
+									<td>{{$contract->start_date}}</td>
+								</tr>
+								<tr>
+									<td>End Date</td>
+									<td>{{$contract->end_date}}</td>
+								</tr>
+								<tr>
+									<td>Rate</td>
+									<td>{{$contract->rate}}</td>
+								</tr>
+								<tr>
+									<td>Currency</td>
+									<td>{{$contract->currrency}}</td>
+								</tr>
+								<tr>
+									<td>Account Start Date</td>
+									<td>{{$contract->act_start_dt}}</td>
+								</tr>
+								<tr>
+									<td>Account End Date</td>
+									<td>{{$contract->act_end_dt}}</td>
+								</tr>
+								<tr>
+									<td>Handover Date</td>
+									<td>{{$contract->handover_at}}</td>
+								</tr>
+								<tr>
+									<td>Request Deposit</td>
+									<td>{{$contract->req_deposit}}</td>
+								</tr>
+								<tr>
+									<td>Recieved Deposit</td>
+									<td>{{$contract->rec_deposit}}</td>
+								</tr>
+								<tr>
+									<td>Recieved Deposit</td>
+									<td>{{$contract->rec_deposit}}</td>
+								</tr>											
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="list-group">
+			<a class="list-group-item list-group-item-action active">
+				<center><h4>Driver Details</h4></center>
 			</a>
 		</div>
 		<div class="row">
@@ -21,39 +84,39 @@
 							<tbody>
 								<tr>
 									<td>ID</td>
-									<td>{{$driver->id}}</td>
+									<td>{{$contract->driver->id}}</td>
 								</tr>
 								<tr>
 									<td>Name</td>
-									<td>{{$driver->name}}</td>
+									<td>{{$contract->driver->name}}</td>
 								</tr>
 								<tr>
 									<td>License No</td>
-									<td>{{$driver->license_no}}</td>
+									<td>{{$contract->driver->license_no}}</td>
 								</tr>
 								<tr>
 									<td>License No</td>
-									<td>{{$driver->license_no}}</td>
+									<td>{{$contract->driver->license_no}}</td>
 								</tr>
 								<tr>
 									<td>PCO License No</td>
-									<td>{{$driver->pco_license_no}}</td>
+									<td>{{$contract->driver->pco_license_no}}</td>
 								</tr>
 								<tr>
 									<td>License No</td>
-									<td>{{$driver->license_no}}</td>
+									<td>{{$contract->driver->license_no}}</td>
 								</tr>
 								<tr>
 									<td>Email</td>
-									<td>{{$driver->email}}</td>
+									<td>{{$contract->driver->email}}</td>
 								</tr>
 								<tr>
 									<td>Phone</td>
-									<td>{{$driver->phone}}</td>
+									<td>{{$contract->driver->phone}}</td>
 								</tr>
 								<tr>
 									<td>Date Of Birthday</td>
-									<td>{{$driver->dob}}</td>
+									<td>{{$contract->driver->dob}}</td>
 								</tr>
 																				
 							</tbody>
@@ -68,35 +131,35 @@
 							<tbody>
 								<tr>
 									<td>Address</td>
-									<td>{{$driver->address}}</td>
+									<td>{{$contract->driver->address}}</td>
 								</tr>
 								<tr>
 									<td>Passpport</td>
-									<td>{{$driver->passport}}</td>
+									<td>{{$contract->driver->passport}}</td>
 								</tr>
 								<tr>
 									<td>Passport Expiry At</td>
-									<td>{{$driver->pass_exp_at}}</td>
+									<td>{{$contract->driver->pass_exp_at}}</td>
 								</tr>
 								<tr>
 									<td>Nationality</td>
-									<td>{{$driver->nationality}}</td>
+									<td>{{$contract->driver->nationality}}</td>
 								</tr>
 								<tr>
 									<td>Emergency Person</td>
-									<td>{{$driver->emerg_person}}</td>
+									<td>{{$contract->driver->emerg_person}}</td>
 								</tr>
 								<tr>
 									<td>Emergency Number</td>
-									<td>{{$driver->emerg_num}}</td>
+									<td>{{$contract->driver->emerg_num}}</td>
 								</tr>
 								<tr>
 									<td>Years in Uk</td>
-									<td>{{$driver->years_in_uk}}</td>
+									<td>{{$contract->driver->years_in_uk}}</td>
 								</tr>
 								<tr>
 									<td>PCO Expires in </td>
-									<td>{{$driver->pco_expires_at}}</td>
+									<td>{{$contract->driver->pco_expires_at}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -110,35 +173,35 @@
 							<tbody>
 								<tr>
 									<td>License Expiry At</td>
-									<td>{{$driver->licence_exp_at}}</td>
+									<td>{{$contract->driver->licence_exp_at}}</td>
 								</tr>
 								<tr>
 									<td>Type</td>
-									<td>{{$driver->type}}</td>
+									<td>{{$contract->driver->type}}</td>
 								</tr>
 								<tr>
 									<td>Nino</td>
-									<td>{{$driver->nino}}</td>
+									<td>{{$contract->driver->nino}}</td>
 								</tr>
 								<tr>
 									<td>Right to Work</td>
-									<td>{{$driver->right_to_work}}</td>
+									<td>{{$contract->driver->right_to_work}}</td>
 								</tr>
 								<tr>
 									<td>Driving Since</td>
-									<td>{{$driver->driving_since}}</td>
+									<td>{{$contract->driver->driving_since}}</td>
 								</tr>
 								<tr>
 									<td>Penelty Points</td>
-									<td>{{$driver->penalty_points}}</td>
+									<td>{{$contract->driver->penalty_points}}</td>
 								</tr>
 								<tr>
 									<td>Pay Method</td>
-									<td>{{$driver->pay_method}}</td>
+									<td>{{$contract->driver->pay_method}}</td>
 								</tr>
 								<tr>
 									<td>Week Pay Day</td>
-									<td>{{$driver->week_pay_day}}</td>
+									<td>{{$contract->driver->week_pay_day}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -148,313 +211,131 @@
 		</div>
 		<div class="list-group">
 			<a class="list-group-item list-group-item-action active">
-				<center><h4>Driver Files</h4></center>
-			</a>
-		</div>
-			@forelse($driver->files as $file)
-            	<div class="row">
-	            	<div class="col-lg-12">
-	            		<img class="img-responsive" src="{{url($file->full_url)}}">
-	            	</div>
-            	</div> 
-            @empty
-            	<div class="row">
-            		<div class="col-lg-12">
-            			<center><p><strong>NO Image</strong></p></center>
-            		</div>
-            	</div>
-            @endforelse
-		<div class="list-group">
-			<a class="list-group-item list-group-item-action active">
 				<center><h4>Car Details</h4></center>
 			</a>
 		</div>
-		@forelse($driver->cars as $car)
-			<div class="list-group">
-				<a class="list-group-item list-group-item-action list-group-item-success">
-					<center><p>{{$car->reg_no}}</p></center>
-				</a>
-			</div>
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table table-bordered responsive">
-								<tbody>
-									<tr>
-										<td>ID</td>
-										<td>{{$car->id}}</td>
-									</tr>
-									<tr>
-										<td>Registration Number</td>
-										<td>{{$car->reg_no}}</td>
-									</tr>
-									<tr>
-										<td>Make</td>
-										<td>{{$car->make}}</td>
-									</tr>
-									<tr>
-										<td>Available Since</td>
-										<td>{{$car->available_since}}</td>
-									</tr>
-									<tr>
-										<td>Comments</td>
-										<td>{{$car->comments}}</td>
-									</tr>
-									<tr>
-										<td>Custom Id</td>
-										<td>{{$car->custom_id}}</td>
-									</tr>
-									<tr>
-										<td>Model</td>
-										<td>{{$car->model}}</td>
-									</tr>
-									<tr>
-										<td>Year</td>
-										<td>{{$car->year}}</td>
-									</tr>
-									<tr>
-										<td>color</td>
-										<td>{{$car->color}}</td>
-									</tr>
-																					
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table table-bordered responsive">
-								<tbody>
-									<tr>
-										<td>Transmission</td>
-										<td>{{$car->transmission}}</td>
-									</tr>
-									<tr>
-										<td>Fuel Type</td>
-										<td>{{$car->fuel_type}}</td>
-									</tr>
-									<tr>
-										<td>Chasis Number</td>
-										<td>{{$car->chasis_num}}</td>
-									</tr>
-									<tr>
-										<td>Engine Size</td>
-										<td>{{$car->engine_size}}</td>
-									</tr>
-									<tr>
-										<td>First Registration Date</td>
-										<td>{{$car->first_reg_date}}</td>
-									</tr>
-									<tr>
-										<td>Keeper</td>
-										<td>{{$car->keeper}}</td>
-									</tr>
-									<tr>
-										<td>pco_license</td>
-										<td>{{$car->pco_licence}}</td>
-									</tr>
-									<tr>
-										<td>PCO Expires at</td>
-										<td>{{$car->pco_expires_at}}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="row">
-						<div class="col-md-12">
-							<table class="table table-bordered responsive">
-								<tbody>
-									<tr>
-										<td>Current Odo</td>
-										<td>{{$car->curr_odo}}</td>
-									</tr>
-									<tr>
-										<td>Odo Read At</td>
-										<td>{{$car->odo_read_at}}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered responsive">
+							<tbody>
+								<tr>
+									<td>ID</td>
+									<td>{{$contract->car->id}}</td>
+								</tr>
+								<tr>
+									<td>Registration Number</td>
+									<td>{{$contract->car->reg_no}}</td>
+								</tr>
+								<tr>
+									<td>Make</td>
+									<td>{{$contract->car->make}}</td>
+								</tr>
+								<tr>
+									<td>Available Since</td>
+									<td>{{$contract->car->available_since}}</td>
+								</tr>
+								<tr>
+									<td>Comments</td>
+									<td>{{$contract->car->comments}}</td>
+								</tr>
+								<tr>
+									<td>Custom Id</td>
+									<td>{{$contract->car->custom_id}}</td>
+								</tr>
+								<tr>
+									<td>Model</td>
+									<td>{{$contract->car->model}}</td>
+								</tr>
+								<tr>
+									<td>Year</td>
+									<td>{{$contract->car->year}}</td>
+								</tr>
+								<tr>
+									<td>color</td>
+									<td>{{$contract->car->color}}</td>
+								</tr>
+																				
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
-		@empty
-		@endforelse
-		<div class="list-group">
-			<a class="list-group-item list-group-item-action active">
-				<center><h4>Revenue</h4></center>
-			</a>
+			<div class="col-lg-4">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered responsive">
+							<tbody>
+								<tr>
+									<td>Transmission</td>
+									<td>{{$contract->car->transmission}}</td>
+								</tr>
+								<tr>
+									<td>Fuel Type</td>
+									<td>{{$contract->car->fuel_type}}</td>
+								</tr>
+								<tr>
+									<td>Chasis Number</td>
+									<td>{{$contract->car->chasis_num}}</td>
+								</tr>
+								<tr>
+									<td>Engine Size</td>
+									<td>{{$contract->car->engine_size}}</td>
+								</tr>
+								<tr>
+									<td>First Registration Date</td>
+									<td>{{$contract->car->first_reg_date}}</td>
+								</tr>
+								<tr>
+									<td>Keeper</td>
+									<td>{{$contract->car->keeper}}</td>
+								</tr>
+								<tr>
+									<td>pco_license</td>
+									<td>{{$contract->car->pco_licence}}</td>
+								</tr>
+								<tr>
+									<td>PCO Expires at</td>
+									<td>{{$contract->car->pco_expires_at}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-bordered responsive">
+							<tbody>
+								<tr>
+									<td>Current Odo</td>
+									<td>{{$contract->car->curr_odo}}</td>
+								</tr>
+								<tr>
+									<td>Odo Read At</td>
+									<td>{{$contract->car->odo_read_at}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
-        <table class="table table-bordered">
-            <tr>
-                <th>       </th>
-                <th>Since Joining</th>
-                <th>For current accounting period </th>
-                {{--ASSUMPTION  current month &&  only completed weeks--}}
-            </tr>
-            <tr>
-                <td>Investor Revenue (£)</td>
-                <td>{{$driver->totalRevenue}}</td>
-                <td>{{$driver->totalRevenueForCurrentPeriod}}</td>
-            </tr>
-            <tr>
-                <td>Paid to investor (£)</td>
-                <td>{{$driver->totalPaid}}</td>
-                <td>{{$driver->totalPaidForCurrentPeriod}}</td>
-            </tr>
-            <tr>
-                <td>Balance</td>
-                <td>{{$driver->totalRevenue - $driver->totalPaid}}</td>
-                <td>{{$driver->totalRevenueForCurrentPeriod - $driver->totalPaidForCurrentPeriod}}</td>
-            </tr>
-        </table>
-        <div class="list-group">
-			<a class="list-group-item list-group-item-action active">
-				<center><h4>Contracts</h4></center>
-			</a>
-		</div>
-        <table class="table table-striped table-bordered">
-            <thead>
-            <tr>
-                <td>Status</td>
-                <td>Start Date</td>
-                <td>End Date</td>
-                <td>Driver</td>
-                <td>Rent/week (£)</td>
-                <td>Weeks done/total</td>
-                <td>Revenue (£)</td>
-                <td>Paid to Investor (£)</td>
-                <td> </td>
-            </tr>
-            </thead>
-            <tbody>
-			@foreach($driver->investorContracts as $contract)
-                <tr>
-                    @if($contract->status==1)
-                        <td><i class="fa fa-circle ongoing"></i></td>
-                    @elseif($contract->status==2)
-                        <td><i class="fa fa-circle suspended"></i></td>
-                    @elseif($contract->status == 3)
-                        <td><i class="fa fa-circle terminated"></i></td>
-                    @else
-                        <td><i class="fa fa-circle complete"></i></td>
-
-                    @endif
-                    <td>{{$contract->start_date->toFormattedDateString()}}</td>
-                    <td>{{$contract->end_date->toFormattedDateString()}}</td>
-                    <td>{{$contract->driver->name}} ({{$contract->driver->license_no}})</td>
-					<td>{{$contract->rate}}</td>
-                    <td>{{$contract->weeksDone}}/{{$contract->weeksTotal}}</td>
-                    <td>{{$contract->revenue}}</td>
-                    <td>{{$contract->rent}}</td>
-                    <td><a href="{{url('/investor/contracts/'.$contract->id)}}" class="btn btn-xs btn-info">View</a> </td>
-
-                </tr>
-
-            @endforeach
-            </tbody>
-        </table>
-        <div class="list-group">
-			<a class="list-group-item list-group-item-action active">
-				<center><h4>Tickets</h4></center>
-			</a>
-		</div>
-		@forelse($driver->tickets as $ticket)
-			<table class="table table-striped table-bordered">
-	            <thead>
-	            <tr>
-	                <td>Ticket Number</td>
-	                <td>Cause</td>
-	                <td>Incident Date</td>
-	                <td>Issue Date</td>
-	                <td>Amount</td>
-	                <td>Paid</td>
-	                <td>Comments</td>
-	                <td>Status</td>
-	            </tr>
-	            </thead>
-	            <tbody>
-	            <tr>
-	                <td>{{$ticket->ticket_num}}</td>
-	                <td>{{$ticket->cause}}</td>
-	                <td>{{$ticket->incident_dt}}</td>
-	                <td>{{$ticket->issue_dt}}</td>
-	                <td>{{$ticket->amount}}</td>
-	                <td>{{$ticket->paid}}</td>
-	                <td>{{$ticket->comments}}</td>
-	                <td>{{$ticket->status}}</td>
-	            </tr>
-	            </tbody>
-            </table>
-            @forelse($ticket->files as $file)
-            	<div class="row">
-	            	<div class="col-lg-12">
-	            		<img class="img-responsive" src="{{url($file->full_url)}}">
-	            	</div>
-            	</div> 
-            @empty
-            	<div class="row">
-            		<div class="col-lg-12">
-            			<center><p><strong>NO Image</strong></p></center>
-            		</div>
-            	</div>
-            @endforelse
-       		@empty
-        	<table class="table table-striped table-bordered">
-	            <thead>
-	            <tr>
-	                <td>Ticket Number</td>
-	                <td>Cause</td>
-	                <td>Incident Date</td>
-	                <td>Issue Date</td>
-	                <td>Amount</td>
-	                <td>Paid</td>
-	                <td>Comments</td>
-	                <td>Status</td>
-	            </tr>
-	            </thead>
-	            <tbody>
-	            </tbody>
-            </table>
-        @endforelse 
-        <div class="list-group">
-			<a class="list-group-item list-group-item-action active">
-				<center><h4>Convictions</h4></center>
-			</a>
-		</div>
-		<table class="table table-striped table-bordered">
-            <thead>
-            <tr>
-                <td>Ticket Id</td>
-                <td>Details</td>
-                <td>Penelty Points</td>
-                <td>Convicted At</td>
-                <td>Place</td>
-                
-            </tr>
-            </thead>
-            <tbody>
-            @forelse($driver->convictions as $conviction)
-	            <tr>
-	                <td>{{$convition->car_ticket_id}}</td>
-	                <td>{{$conviction->details}}</td>
-	                <td>{{$conviction->penelty_points}}</td>
-	                <td>{{$conviction->convicted_at}}</td>
-	                <td>{{$conviction->place}}</td>
-	            </tr>
-        	@empty
-            	<tr>
-            		<td>No Convictions</td>
-            	</tr>
-            @endforelse
-            </tbody>
-        </table>
-            
 	</div>
 </div>
+<br>
+<div class="sign" style="height: 30px">
+    Signature:<span></span><br>
+</div>
+	@forelse($files as $file)
+		<div class="row">
+        	<div class="col-lg-12">
+        		<img class="img-responsive" src="{{url($file)}}">
+        	</div>
+    	</div>
+	@empty
+	@endforelse
+	
+

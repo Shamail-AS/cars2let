@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\CarHistory;
 use App\Contract;
 use App\Revenue;
+use App\SiteFile;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Log;
-
+use PDF;
 class ContractController extends Controller
 {
     // API METHODS
@@ -314,5 +315,24 @@ class ContractController extends Controller
         });
         return $revenues;
     }
+
+    public function downloadFullPdf(Request $request,$id) {
+        $contract = Contract::findOrFail($id);
+        $files_full_url = array();
+        if($request->files_id){
+            $files = $request->files_id;
+            foreach ($files as $file) {
+                $file_object = SiteFile::findOrFail($file);
+                $files_full_url[] = $file_object->full_url;
+            }
+        }
+        else {
+            $files_full_url[] = null;
+        }
+        
+        $pdf = PDF::loadView('contract',['contract'=>$contract,'files'=>$files_full_url]);
+        //return view('contract',['contract'=>$contract,'files'=>$files_full_url]);
+        return $pdf->download('contractpdf');
+    } 
 
 }

@@ -30,7 +30,45 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
         return view('welcome');
     });
+    Route::get('images/app/tickets/{filename}', function ($filename) {
+        $path = storage_path() . '\app\tickets\\' . $filename;
+       
+        if(!File::exists($path)) abort(404);
 
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    });
+    Route::get('images/app/driver/{driver_id}/{filename}', function ($driver_id,$filename) {
+        $path = storage_path() . '\app\driver\\'.$driver_id.'\\' . $filename;
+        
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    });
+    Route::get('images/app/car/{car_id}/{filename}', function ($car_id,$filename) {
+        $path = storage_path() . '\app\car\\'.$car_id.'\\' . $filename;
+        
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    });
     Route::get('/myregister', function () {
         if (Auth::check())
             return redirect('/');
@@ -322,6 +360,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/delete', 'ContractController@api_delete');
             Route::get('/{id}/detail', 'ContractController@api_show');
             Route::get('/{id}/revenues', 'ContractController@api_revenues');
+            Route::post('/{id}/pdf','ContractController@downloadFullPDF');
         });
 
         Route::group(['prefix' => 'drivers'], function () {

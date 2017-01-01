@@ -13,6 +13,7 @@ use App\Driver;
 use Log;
 use Storage;
 use Image;
+use PDF;
 
 class TicketController extends Controller
 {
@@ -187,7 +188,7 @@ class TicketController extends Controller
                 $fileName = Str::random(8).'.'.$extension;
                 $stored_file = Storage::disk('local')->put('tickets/'.$fileName, file_get_contents($request->file('attachment')));
                 $site_file->name = $fileName;
-                $site_file->full_url=Storage::url('tickets/'.$fileName);
+                $site_file->full_url= "images/app/tickets/".$filename;
                 $site_file->save();
                 $car_ticket->files()->save($site_file);
                 return response(Storage::url('tickets/'.$fileName));
@@ -197,19 +198,10 @@ class TicketController extends Controller
         return response("Attachment not found", 404);
     }
 
-    public function downloadTicketPdf($car_id,$ticket_id) {
-                        
-        
-        $img = Image::make(asset("/img/background/logo.png"));
-
-        // now you are able to resize the instance
-        $img->resize(320, 240);
-
-        // and insert a watermark for example
-        $img->insert(asset("/img/background/logo.png"));
-
-        // finally we save the image as a new file
-        $img->save('public/bar.jpg'); 
-          return response("Invalid Attachment", 404); 
-    }
+    // public function downloadTicketPdf($car_id,$ticket_id) {
+    //     $driver = Driver::findOrFail(1);
+    //     $pdf = PDF::loadView('pdf',['driver'=>$driver]);
+    //     return view('pdf',['driver'=>$driver]);
+    //     //return $pdf->download('pdf');
+    // }
 }

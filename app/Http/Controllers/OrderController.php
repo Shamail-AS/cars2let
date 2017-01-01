@@ -101,7 +101,7 @@ class OrderController extends Controller
         $car = Car::findOrFail($car_id);
         if (!($car_order = $car->order()->where('id', $order_id)->first()))
             // Show 404.
-            return response("This ticket does'nt belong to this car", 404);
+            return response("This order does'nt belong to this car", 404);
 
         // sending the supplier info
         $car_order->supplier = $car_order->supplier;

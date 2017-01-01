@@ -215,4 +215,22 @@ class CarController extends Controller
     {
         return $this->view($id, 'overview');
     }
+    public function attachmentUpload(Request $request,$id){
+        $car = Car::findOrFail($id);
+        if($request->file('attachment')){
+            if ($request->file('attachment')->isValid()) {
+                $site_file = new SiteFile;
+                $extension = $request->file('attachment')->getClientOriginalExtension();
+                $fileName = Str::random(8).'.'.$extension;
+                $stored_file = Storage::disk('local')->put('car/'.$car->id.'/'.$fileName, file_get_contents($request->file('attachment')));
+                $site_file->name = $fileName;
+                $site_file->full_url="images/app/car/".$car->id."/".$fileName;
+                $site_file->save();
+                $driver->files()->save($site_file);
+                return $site_file->full_url;
+            }
+            return response("Invalid Attachment", 404);
+        }
+        return response("Attachment not found", 404);
+    }
 }
