@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 use App\Http\Requests;
 use App\Car;
@@ -30,17 +31,25 @@ class TicketController extends Controller
                 $tickets = $car->tickets;
                 $tickets->each(function ($ticket) {
                     $ticket->car = $ticket->car;
+                    $ticket->driver = $ticket->driver;
                     $ticket->files = $ticket->files;
                 });
                 return $tickets;
             }
             else
-                return response("No Order of this car", 404);
+                return response("No Ticket of this car", 404);
         }
         else{
-            return CarTicket::with('car','files')->get();
+            return CarTicket::with('car', 'driver', 'files')->get()->all();
         }
 
+    }
+
+    public function show($id)
+    {
+
+        $ticket = CarTicket::with('car', 'driver')->where('id', $id)->first();
+        return view('admin.tickets.show', compact('ticket'));
     }
 
     /**
@@ -61,23 +70,34 @@ class TicketController extends Controller
      */
     public function store(Request $request,$car_id=null)
     {
+
         // Finding if the car id is correct
         if($car_id)
             $car = Car::findOrFail($car_id);
         else
             $car = Car::findOrFail($request->car_id);
         // Finding if driver id is incorrect
-        if($request->driver_id)
-            $driver = Driver::findOrFail($request->driver_id);
+        if ($request->driver)
+            $driver = Driver::findOrFail($request->driver['id']);
 
         // Creating a car ticket
-        $car_ticket = CarTicket::create($request->all());
+        $car_ticket = new CarTicket();
+        $car_ticket->ticket_num = $request->ticket_num;
+        $car_ticket->cause = $request->cause;
+        $car_ticket->incident_dt = $request->incident_dt;
+        $car_ticket->issue_dt = $request->issue_dt;
+        $car_ticket->amount = $request->amount;
+        $car_ticket->comments = $request->comments;
+        $car_ticket->status = $request->status;
+        $car_ticket->save();
+
         $car->tickets()->save($car_ticket);
         if($request->driver)
             $driver->tickets()->save($car_ticket);
 
 
-
+        $car_ticket->car = $car_ticket->car;
+        $car_ticket->driver = $car->driver;
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
@@ -93,17 +113,18 @@ class TicketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($car_id,$ticket_id)
+    public function api_get($car_id, $ticket_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
+        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->with('car', 'driver', 'files')->first()))
             // Show 404.
-            return response("This ticket does'nt belong to this car", 404);
-        // sending the supplier info
-        $car_ticket->driver = $car_ticket->driver;
+            return response("This ticket doesn't belong to this car", 404);
+        // sending the driver info
+        //$car_ticket->driver = $car_ticket->driver;
         // sending car info
-        $car_ticket->car = $car;
-        // return the car object
+        //$car_ticket->car = $car;
+
+        //return CarTicket::with('car','driver')->where('id',$ticket_id)->first();
         return $car_ticket;
     }
 
@@ -138,8 +159,7 @@ class TicketController extends Controller
         if($request->cause)
             $car_ticket->cause = $request->cause;
         if($request->driver_id){
-            $driver = Driver::findOrFail($request->driver_id);
-            $driver->tickets()->save($car_ticket);
+            $car_ticket->driver_id = $request->driver_id;
         }
         if($request->incident_dt)
             $car_ticket->incident_dt = $request->incident_dt;
@@ -172,6 +192,16 @@ class TicketController extends Controller
             // Show 404.
             return response("This ticket does'nt belong to this car", 404);
         $car_ticket->delete();
+        return $car_ticket->trashed();
+    }
+
+    public function attach(Request $request)
+    {
+
+        if ($request->file('file')) {
+            return 'got file';
+        }
+        return 'no file';
     }
 
     public function attachmentUpload(Request $request,$car_id,$ticket_id){
@@ -188,7 +218,7 @@ class TicketController extends Controller
                 $fileName = Str::random(8).'.'.$extension;
                 $stored_file = Storage::disk('local')->put('tickets/'.$fileName, file_get_contents($request->file('attachment')));
                 $site_file->name = $fileName;
-                $site_file->full_url= "images/app/tickets/".$filename;
+                $site_file->full_url = "images/app/tickets/" . $fileName;
                 $site_file->save();
                 $car_ticket->files()->save($site_file);
                 return response(Storage::url('tickets/'.$fileName));
@@ -196,6 +226,25 @@ class TicketController extends Controller
             return response("Invalid Attachment", 404);
         }
         return response("Attachment not found", 404);
+    }
+
+    public function inferDriver($car_id, $unix_time)
+    {
+
+
+        $incident_dt = Carbon::createFromTimeStamp($unix_time);
+        $contracts = Car::find($car_id)->contracts()->ongoing()->get();
+
+        $foundContract = null;
+
+        foreach ($contracts as $contract) {
+            if ($contract->isDateDuringContract($incident_dt)) {
+                $foundContract = $contract;
+                break;
+            }
+        }
+
+        return $foundContract->driver;
     }
 
     // public function downloadTicketPdf($car_id,$ticket_id) {

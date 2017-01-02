@@ -212,8 +212,9 @@
                     </li>
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/tickets')}}">Tickets</a>
                     </li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/alerts')}}">Alerts</a></li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/services')}}">Service/Repairs</a>
+                    {{--<li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/repairs')}}">Repairs</a></li>--}}
+                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/services')}}">Service +
+                            Repairs</a>
                     </li>
                     <li class="list-group-item"><a
                                 href="{{url('admin/car/'.$car->id.'/view/deliveries')}}">Deliveries</a></li>

@@ -33,6 +33,7 @@ class CarController extends Controller
         $car = Car::find($id);
         $car->supplier = Supplier::where('id', $car->supplier_id)->first();
         $car->investor = $car->investor;
+        $car->currentContract = $car->currentContract;
         $car->notis = $car->notifications;
         return $car;
     }

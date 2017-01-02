@@ -16,14 +16,13 @@ class CreateCarTicketsTable extends Migration
             $table->increments('id');
 
             $table->string('type')->default('pcn'); // PCN, FPN, Other
-            $table->integer('ticket_num');
+            $table->string('ticket_num');
             $table->string('cause'); // local council, dart charge, red route, congestion charge, low emission
             $table->integer('car_id');
             $table->integer('driver_id')->nullable();
             $table->dateTime('incident_dt');
             $table->date('issue_dt');
             $table->decimal('amount');
-            $table->boolean('paid');
             $table->string('comments');
             $table->string('status'); //new , appealing, closed
             $table->timestamps();

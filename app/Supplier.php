@@ -27,4 +27,9 @@ class Supplier extends Model
     public function trackers() {
     	return $this->hasMany('App\Tracker');
     }
+
+    public function scopeType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
 }

@@ -119,4 +119,10 @@ class User extends Authenticatable
     {
         return $query->where('status', 'active');
     }
+
+    public function scopeMatches($query, $search)
+    {
+        // match against driver names + investor names to get the user it belongs to
+        return $query->where('email', $search);
+    }
 }

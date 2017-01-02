@@ -27,12 +27,21 @@
     <div id="contract">
         <h2>Current Contract</h2>
         <hr>
+        <div ng-if="vm.contract" class="alert alert-info">
+            <strong>Driver</strong>
+
+            <p>@{{ vm.contract.driver.name }}</p>
+
+            <p>@{{ vm.contract.driver.email }}</p>
+            <strong>Actual Start Date</strong>
+
+            <p>@{{ formatDate(vm.contract.act_start_dt) }}</p>
+            <strong>Status</strong>
+
+            <p>@{{ vm.contract.x_status.key }}</p>
+
+        </div>
 
 
     </div>
-    <div id="history">
-
-    </div>
-
-
 </div>

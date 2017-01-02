@@ -19,6 +19,11 @@ class SupplierController extends Controller
         return $suppliers;
     }
 
+    public function api_list($type)
+    {
+        return Supplier::type($type)->get();
+    }
+
 
     public function index($car_id)
     {

@@ -79,6 +79,7 @@ app.controller('investorController',
         'driverDataFactory',
         'carDataFactory',
         'contractDataFactory',
+        'contractDataModelFactory',
 
         function ($scope,
                   moment,
@@ -88,7 +89,8 @@ app.controller('investorController',
                   revenueDataFactory,
                   driverDataFactory,
                   carDataFactory,
-                  contractDataFactory) {
+                  contractDataFactory,
+                  contractDataModelFactory) {
 
             //Objects
             $scope.dynamicPopover = {
@@ -217,6 +219,15 @@ app.controller('investorController',
             $scope.updateContract = function (contract) {
                 contract.edit_mode = false;
                 update_contract(contract);
+            };
+
+            $scope.contractAction = function (contract, action) {
+                if (action == 'start') {
+                    start_contract(contract);
+                }
+                else if (action == 'end') {
+                    end_contract(contract);
+                }
             };
 
             //DRIVER
@@ -385,6 +396,23 @@ app.controller('investorController',
                     });
             };
 
+            var start_contract = function (contract) {
+                contractDataFactory.startContract(contract.id)
+                    .then(function (result) {
+                        contract = contractDataModelFactory.withExtras(result.data);
+                        console.log(contract);
+                    });
+
+            };
+            var end_contract = function (contract) {
+                contractDataFactory.endContract(contract.id)
+                    .then(function (result) {
+                        var con = contractDataModelFactory.withExtras(result.data);
+                        contract.status = con.status;
+                    });
+
+            };
+
             var update_revenue = function (rev) {
                 revenueDataFactory.updateRevenue(rev.id, rev)
                     .success(function (result) {
@@ -405,9 +433,11 @@ app.controller('investorController',
 
             var load_contract_statuses = function () {
                 $scope.vm.statuses.push({"key": "Ongoing", "value": 1});
-                $scope.vm.statuses.push({"key": "Suspended", "value": 2});
-                $scope.vm.statuses.push({"key": "Terminated", "value": 3});
-                $scope.vm.statuses.push({"key": "Complete", "value": 4});
+                $scope.vm.statuses.push({"key": "New", "value": 2});
+
+                /* DEPRECATED - Contract can only be in suspended or ongoing status*/
+                //$scope.vm.statuses.push({"key": "Terminated", "value": 3});
+                //$scope.vm.statuses.push({"key": "Complete", "value": 4});
                 $scope.dirty.contract.x_status = $scope.vm.statuses[0];
             };
             var load_revenues = function () {

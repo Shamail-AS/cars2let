@@ -204,31 +204,19 @@
                                 <tr ng-repeat="contract in (vm.investor.contracts
                                 | contractFilter : search.contracts) track by contract.id">
 
-                                    <td ng-if="contract.status == 1 && !contract.edit_mode"><i
-                                                class="fa fa-circle ongoing"></i></td>
-                                    <td ng-if="contract.status == 2 && !contract.edit_mode"><i
-                                                class="fa fa-circle suspended"></i></td>
-                                    <td ng-if="contract.status == 3 && !contract.edit_mode"><i
-                                                class="fa fa-circle terminated"></i></td>
-                                    <td ng-if="contract.status == 4 && !contract.edit_mode"><i
-                                                class="fa fa-circle complete"></i></td>
-                                    <td ng-if="contract.edit_mode">
-                                        <ui-select ng-model="contract.x_status">
-                                            <ui-select-match>
-                                                <div class="select-group">
-                                                    <i class="fa fa-circle @{{ contract.x_status.key | lowercase }}"></i>
-                                                    <span ng-bind="contract.x_status.key"></span>
-                                                </div>
-
-                                            </ui-select-match>
-                                            <ui-select-choices
-                                                    repeat="status in (vm.statuses | filter: $select.search) track by status.value">
-                                                <div class="select-group">
-                                                    <i class="fa fa-circle @{{ status.key | lowercase }}"></i>
-                                                    <span ng-bind="status.key"></span>
-                                                </div>
-                                            </ui-select-choices>
-                                        </ui-select>
+                                    <td>
+                                        <span style="margin-right: 10px">
+                                            <i ng-if="contract.status == 1" class="fa fa-circle ongoing"></i>
+                                            <i ng-if="contract.status == 2" class="fa fa-circle new"></i>
+                                            <i ng-if="contract.status == 3" class="fa fa-circle terminated"></i>
+                                            <i ng-if="contract.status == 4" class="fa fa-circle complete"></i>
+                                        </span>
+                                        <button ng-if="contract.status == 2" class="btn btn-xs btn-warning"
+                                                ng-click="contractAction(contract,'start')">Start Contract
+                                        </button>
+                                        <button ng-if="contract.status <= 2" class="btn btn-xs btn-danger"
+                                                ng-click="contractAction(contract,'end')">End Contract
+                                        </button>
                                     </td>
 
                                     <td ng-if="!contract.edit_mode">@{{ contract.car.reg_no }}</td>
@@ -319,13 +307,14 @@
                                     <td>
                                         @if(Auth::user()->isEditOnly)
                                         <div class="btn-group-xs">
-                                            <button ng-if="!contract.edit_mode" ng-click="edit(contract)"
+                                            <button ng-if="!contract.edit_mode && contract.status == 2"
+                                                    ng-click="edit(contract)"
                                                     class="btn btn-xs btn-primary">Edit
                                             </button>
-                                            <button ng-if="!contract.edit_mode"
-                                                    ng-click="deleteObj(contract,'contract')"
-                                                    class="btn btn-xs btn-danger">Delete
-                                            </button>
+                                            {{--<button ng-if="!contract.edit_mode"--}}
+                                            {{--ng-click="deleteObj(contract,'contract')"--}}
+                                            {{--class="btn btn-xs btn-danger">Delete--}}
+                                            {{--</button>--}}
                                             <button ng-if="contract.edit_mode" ng-click="updateContract(contract)"
                                                     class="btn btn-xs btn-warning">Update
                                             </button>

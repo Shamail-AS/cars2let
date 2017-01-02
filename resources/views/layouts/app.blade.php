@@ -16,6 +16,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{asset('css/ng-select.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/dropzone.css')}}" rel="stylesheet"/>
 
     @yield('styles')
 
@@ -27,16 +28,19 @@
     <script src="{{asset('js/lean-modal.min.js')}}"></script>
     <script src="{{asset('js/angular/lodash.js')}}"></script>
     <script src="{{asset('js/angular/moment-with-locales.min.js')}}"></script>
+    <script src="{{asset('js/dropzone.js')}}"></script>
 
     <script src="{{asset('js/angular/angular.js')}}"></script>
     <script src="{{asset('js/angular/angular-animate.js')}}"></script>
     <script src="{{asset('js/angular/angular-moment.min.js')}}"></script>
     <script src="{{asset('js/angular/angular-sanitize.js')}}"></script>
     <script src="{{asset('js/angular/angular-route.js')}}"></script>
-    {{--<script src="{{asset('js/angular/angular-bootbox.js')}}"></script>--}}
     <script src="{{asset('js/angular/angular-modal-service.min.js')}}"></script>
     <script src="{{asset('js/angular/ng-select.js')}}"></script>
     <script src="{{asset('js/angular/ui-bootstrap-tpls-2.2.0.min.js')}}"></script>
+    <script src="{{asset('js/angular/ng-dropzone.js')}}"></script>
+    <script src="{{asset('js/angular/angular-file-upload.js')}}"></script>
+
 
     @yield('scripts')
 

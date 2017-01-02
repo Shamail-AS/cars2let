@@ -26,6 +26,12 @@
                         </tr>
                         </tbody>
                     </table>
+                    <div ng-if="!vm.contract.hasStarted" class="alert alert-warning">
+                        <strong>This contract hasn't started yet!</strong>
+                    </div>
+                    <div ng-if="vm.contract.hasTerminatedEarly" class="alert alert-danger">
+                        <strong>This contract was terminated early!</strong>
+                    </div>
 
                     <table class="table table-striped" id="revenues">
                         <thead>
@@ -61,4 +67,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </script>

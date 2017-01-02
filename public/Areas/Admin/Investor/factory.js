@@ -27,7 +27,7 @@ app.factory('investorDataFactory', ['$http', function ($http) {
 
     return investorDataFactory;
 }]);
-app.factory('investorDataModelFactory', ['moment', function (moment) {
+app.factory('investorDataModelFactory', ['moment', 'contractDataModelFactory', 'carDataModelFactory', 'driverDataModelFactory', function (moment, contractDataModelFactory, carDataModelFactory, driverDataModelFactory) {
 
     var investorDataModelFactory = {};
 
@@ -39,35 +39,19 @@ app.factory('investorDataModelFactory', ['moment', function (moment) {
     };
     investorDataModelFactory.withDriverExtras = function (drivers) {
         _.each(drivers, function (driver) {
-            driver.dt_dob = moment(driver.dob).toDate();
-
+            driverDataModelFactory.withExtras(driver);
         });
         return drivers;
     };
     investorDataModelFactory.withContractExtras = function (contracts) {
         _.each(contracts, function (contract) {
-            console.log(contract.id);
-            contract.dt_start_date = moment(contract.start_date).toDate();
-            contract.dt_end_date = moment(contract.end_date).toDate();
-            if (contract.status == 1) {
-                contract.x_status = {"key": "Ongoing", "value": 1}
-            }
-            else if (contract.status == 2) {
-                contract.x_status = {"key": "Suspended", "value": 2}
-            }
-            else if (contract.status == 3) {
-                contract.x_status = {"key": "Terminated", "value": 3}
-            }
-            else if (contract.status == 4) {
-                contract.x_status = {"key": "Complete", "value": 4}
-            }
-
+            contractDataModelFactory.withExtras(contract);
         });
         return contracts;
     };
     investorDataModelFactory.withCarExtras = function (cars) {
         _.each(cars, function (car) {
-            car.dt_available_since = moment(car.available_since).toDate();
+            carDataModelFactory.withExtras(car);
         });
         return cars;
     };
@@ -97,6 +81,14 @@ app.factory('carDataFactory', ['$http', function ($http) {
 
     return carDataFactory;
 }]);
+app.factory('carDataModelFactory', ['moment', function (moment) {
+    var carDataModelFactory = {};
+    carDataModelFactory.withExtras = function (car) {
+        car.dt_available_since = moment(car.available_since).toDate();
+        return car;
+    };
+    return carDataModelFactory;
+}]);
 app.factory('contractDataFactory', ['$http', function ($http) {
     var URL_BASE = '/api/admin/contracts';
     var contractDataFactory = {};
@@ -110,9 +102,17 @@ app.factory('contractDataFactory', ['$http', function ($http) {
     contractDataFactory.getContractDetails = function (id) {
         return $http.get(URL_BASE + '/' + id + '/detail');
     };
+    /* DEPRECATED - No updates allowed. Contracts are immutable*/
     contractDataFactory.updateContract = function (id, data) {
         return $http.put(URL_BASE + '/' + id + '/' + 'update', data);
     };
+    contractDataFactory.startContract = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/action/start');
+    };
+    contractDataFactory.endContract = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/action/end');
+    };
+
     contractDataFactory.newContract = function (data) {
         return $http.put(URL_BASE + '/' + 'post', data);
     };
@@ -128,6 +128,38 @@ app.factory('contractDataFactory', ['$http', function ($http) {
 
     return contractDataFactory;
 }]);
+app.factory('contractDataModelFactory', ['moment', function (moment) {
+
+    var contractDataModelFactory = {};
+    contractDataModelFactory.withExtras = function (contract) {
+        contract.dt_start_date = moment(contract.start_date).toDate();
+        contract.dt_end_date = moment(contract.end_date).toDate();
+
+        if (contract.status == 1) {
+            contract.x_status = {"key": "Ongoing", "value": 1}
+        }
+        else if (contract.status == 2) {
+            contract.x_status = {"key": "Suspended", "value": 2}
+        }
+        else if (contract.status == 3) {
+            contract.x_status = {"key": "Terminated", "value": 3}
+        }
+        else if (contract.status == 4) {
+            contract.x_status = {"key": "Complete", "value": 4}
+        }
+        contract.hasStarted = contract.act_start_dt != null;
+        contract.hasTerminatedEarly = false;
+        if (contract.act_end_dt != null) {
+            var act_end = moment(contract.act_end_dt);
+            contract.hasTerminatedEarly = act_end.isBefore(contract.end_date);
+        }
+
+        return contract;
+    };
+    return contractDataModelFactory;
+
+}]);
+
 app.factory('driverDataFactory', ['$http', function ($http) {
     var URL_BASE = '/api/admin/drivers';
     var driverDataFactory = {};
@@ -149,6 +181,13 @@ app.factory('driverDataFactory', ['$http', function ($http) {
     };
 
     return driverDataFactory;
+}]);
+app.factory('driverDataModelFactory', ['moment', function (moment) {
+    var driverDataModelFactory = {};
+    driverDataModelFactory.withExtras = function (driver) {
+        driver.dt_dob = moment(driver.dob).toDate();
+    };
+    return driverDataModelFactory;
 }]);
 app.factory('revenueDataFactory', ['$http', function ($http) {
     var URL_BASE = '/api/admin/revenues';

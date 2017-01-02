@@ -23,56 +23,72 @@ class ContractController extends Controller
 
     public function api_get($id)
     {
-        return Contract::find($id);
+        return Contract::with('driver', 'car')->where('id', $id)->first();
     }
 
     public function api_update(Request $request)
     {
-        $contract = Contract::find($request->input('id'));
-        $contract->start_date = $request->input('start_date');
 
-        if ($contract->status != $request->input('status')) {
-            if ($request->input('status') == '1') {
-                $history = new CarHistory;
-                $history->car_id = $contract->car_id;
-                $history->comments = 'car contract started';
-                $contract->histories()->save($history);
+        //CAN'T UPDATE A CONTRACT. If need to update, Terminate the existing contract and create a new one in it's place.
 
-                for ($i = 0; $i < $contract->rentAllocationsCount; $i++) {
-                    $rev = Revenue::create([
-                        'week' => $i + 1,
-                        'amount_paid' => 0
-                    ]);
-                    $contract->revenues()->save($rev);
-                }
-            }
-            if ($request->input('status') == '2') {
-                $history = new CarHistory;
-                $history->car_id = $contract->car_id;
-                $history->comments = 'car contract suspended';
-                $contract->histories()->save($history);
-            }
-            if ($request->input('status') == '3') {
-                $history = new CarHistory;
-                $history->car_id = $contract->car_id;
-                $history->comments = 'car contract terminated';
-                $contract->histories()->save($history);
-            }
-            if ($request->input('status') == '4') {
-                $history = new CarHistory;
-                $history->car_id = $contract->car_id;
-                $history->comments = 'car contract completed';
-                $contract->histories()->save($history);
-            }
+//        $contract = Contract::find($request->input('id'));
+//        $contract->start_date = $request->input('start_date');
+//
+////        if ($contract->status != $request->input('status')) {
+////            if ($request->input('status') == '1') {
+////                $history = new CarHistory;
+////                $history->car_id = $contract->car_id;
+////                $history->comments = 'car contract started';
+////                $contract->histories()->save($history);
+////
+////                for ($i = 0; $i < $contract->rentAllocationsCount; $i++) {
+////                    $rev = Revenue::create([
+////                        'week' => $i + 1,
+////                        'amount_paid' => 0
+////                    ]);
+////                    $contract->revenues()->save($rev);
+////                }
+////            }
+////            if ($request->input('status') == '2') {
+////                $history = new CarHistory;
+////                $history->car_id = $contract->car_id;
+////                $history->comments = 'car contract suspended';
+////                $contract->histories()->save($history);
+////            }
+////            if ($request->input('status') == '3') {
+////                $history = new CarHistory;
+////                $history->car_id = $contract->car_id;
+////                $history->comments = 'car contract terminated';
+////                $contract->histories()->save($history);
+////            }
+////            if ($request->input('status') == '4') {
+////                $history = new CarHistory;
+////                $history->car_id = $contract->car_id;
+////                $history->comments = 'car contract completed';
+////                $contract->histories()->save($history);
+////            }
+////        }
+//
+//        //$contract->status = $request->input('status');
+//        $contract->end_date = $request->input('end_date');
+//        $contract->rate = $request->input('rate');
+//        $contract->car_id = $request->input('car.id');
+//        $contract->driver_id = $request->input('driver.id');
+//
+//        $contract->save();
+        return $request->all();
+    }
+
+    public function api_action($id, $action)
+    {
+        $contract = Contract::findOrFail($id);
+        if ($action == 'start') {
+            $contract->start();
+        } elseif ($action == 'end') {
+            $contract->end();
+        } else {
+            return $action;
         }
-
-        $contract->status = $request->input('status');
-        $contract->end_date = $request->input('end_date');
-        $contract->rate = $request->input('rate');
-        $contract->car_id = $request->input('car.id');
-        $contract->driver_id = $request->input('driver.id');
-
-        $contract->save();
         return $contract;
     }
 
@@ -82,7 +98,7 @@ class ContractController extends Controller
         $contract = Contract::create($request->all());
         $contract->car_id = $request->input('car.id');
         $contract->driver_id = $request->input('driver.id');
-        $contract->save();
+        $contract->status = 2; //suspended
 
         $history = new CarHistory;
         $history->car_id = $contract->car_id;
@@ -90,20 +106,10 @@ class ContractController extends Controller
         $contract->histories()->save($history);
 
         if ($request->input('status') == '1') {
-
-            $history = new CarHistory;
-            $history->car_id = $contract->car_id;
-            $history->comments = 'car contract started';
-            $contract->histories()->save($history);
-
-            for ($i = 0; $i < $contract->rentAllocationsCount; $i++) {
-                $rev = Revenue::create([
-                    'week' => $i + 1,
-                    'amount_paid' => 0
-                ]);
-                $contract->revenues()->save($rev);
-            }
+            $contract->start();
         }
+        $contract->save();
+
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
@@ -167,6 +173,7 @@ class ContractController extends Controller
 
     public function api_revenues($id)
     {
+
         $contract = Contract::findOrFail($id);
         $revenues = collect($contract->revenues);
         $data = collect([]);

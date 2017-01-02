@@ -189,6 +189,13 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     //save data received
     Route::post('/driver/store','DriverController@store');
 
+    //TICKETS
+    Route::get('tickets/{ticket_id}', 'TicketController@show');
+    Route::post('tickets/{ticket_id}/attach', 'TicketController@attach');
+
+    //SUPPLIERS
+    Route::get('suppliers/all', 'SupplierController@api_all');
+    Route::get('suppliers/for/{type}', 'SupplierController@api_list');
 
 });
 
@@ -259,7 +266,8 @@ Route::group(['prefix'=>'api'],function(){
         // Route for the tickets
         Route::group(['prefix' => 'tickets'], function () {
             Route::get('/','TicketController@index');
-            Route::post('/', 'TicketController@store');              
+            Route::post('/', 'TicketController@store');
+            Route::get('/infer_driver/{car}/{date}', 'TicketController@inferDriver');
         });
         Route::group(['prefix' => 'deliveries'], function () {
                 Route::get('/', 'DeliveryController@index');
@@ -308,7 +316,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::group(['prefix' => '{car_id}/tickets'], function () {
                 Route::get('/','TicketController@index');
                 Route::post('/', 'TicketController@store');
-                Route::get('/{ticket_id}', 'TicketController@show');
+                Route::get('/{ticket_id}', 'TicketController@api_get');
                 Route::put('/{ticket_id}', 'TicketController@update');
                 Route::delete('/{ticket_id}', 'TicketController@delete');
                 Route::post('/{ticket_id}/attachment','TicketController@attachmentUpload');
@@ -360,6 +368,8 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/delete', 'ContractController@api_delete');
             Route::get('/{id}/detail', 'ContractController@api_show');
             Route::get('/{id}/revenues', 'ContractController@api_revenues');
+            Route::get('/{id}/action/{action}', 'ContractController@api_action');
+
             Route::post('/{id}/pdf','ContractController@downloadFullPDF');
         });
 

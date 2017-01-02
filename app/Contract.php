@@ -145,5 +145,51 @@ class Contract extends Model
         else return $date_to->diffInWeeks($date_from);
     }
 
+    public function isDateDuringContract($date)
+    {
+        return $date->between($this->start_date, $this->end_date);
+    }
+
+    public function start()
+    {
+        if ($this->status != 2) return; //only start from suspended
+        $this->act_start_dt = Carbon::now();
+        $this->status = 1; //ongoing
+
+        $history = new CarHistory;
+        $history->car_id = $this->car_id;
+        $history->comments = 'car contract started';
+        $this->histories()->save($history);
+
+        for ($i = 0; $i < $this->rentAllocationsCount; $i++) {
+            $rev = Revenue::create([
+                'week' => $i + 1,
+                'amount_paid' => 0
+            ]);
+            $this->revenues()->save($rev);
+        }
+
+        $this->save();
+    }
+
+    public function end()
+    {
+
+        if ($this->status >= 3) return; //only end from ongoing or suspended
+        $this->act_end_dt = Carbon::now();
+        if ($this->act_end_dt->eq($this->end_date)) {
+            $this->status = 4; //completed
+        } else {
+            $this->status = 3; //terminated
+        }
+
+        $history = new CarHistory;
+        $history->car_id = $this->car_id;
+        $history->comments = $this->status == 4 ? 'car contract completed' : 'car contract terminated';
+        $this->histories()->save($history);
+        $this->save();
+
+    }
+
 
 }

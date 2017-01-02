@@ -22,8 +22,11 @@ class ServiceOrderController extends Controller
     {
         if($car_id){
             $car = Car::findorFail($car_id);
-            $car->serviceOrders;
-            return $car;
+            $orders = $car->serviceOrders;
+            $orders->each(function ($order) {
+                $order->supplier = $order->supplier;
+            });
+            return $orders;
         }
         else {
             return CarServiceOrder::with('car','supplier')->get();
@@ -48,14 +51,17 @@ class ServiceOrderController extends Controller
      */
     public function store(Request $request, $car_id=null)
     {
+        //TODO: Record a car delivery, the information is present in the request
+        //TODO: fix the Grammar::parameterize error its the model::create method
+
         // Finding if the car id is correct
         if($car_id)
             $car = Car::findOrFail($car_id);
         else
             $car = Car::findOrFail($request->car_id);
         // Findin the supplier
-        $supplier = Supplier::findorFail($request->supplier_id);
-        $insurance = InsuranceClaim::findOrFail($request->insurance_claim_id);
+        $supplier = Supplier::findorFail($request->supplier['id']);
+        //$insurance = InsuranceClaim::findOrFail($request->insurance_claim_id);
         // Finding if the user id is correct
         if($request->auth_user_id)
             $auth_user = User::findOrFail($request->auth_user_id);
@@ -63,7 +69,7 @@ class ServiceOrderController extends Controller
         $car_service_order = CarServiceOrder::create($request->all());
         $car->serviceOrder()->save($car_service_order);
         $supplier->serviceOrder()->save($car_service_order);
-        $insurance->serviceOrder()->save($car_service_order);
+        //$insurance->serviceOrder()->save($car_service_order);
         $history = new CarHistory;
         $history->car_id = $car->id;
         $history->comments = "car ordered";

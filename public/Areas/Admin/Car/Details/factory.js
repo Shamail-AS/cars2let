@@ -68,7 +68,6 @@ app.factory('overviewDataFactory', ['$http', function ($http) {
     return overviewDataFactory;
 
 }]);
-
 app.factory('overviewDataModelFactory', ['moment', function (moment) {
     var overviewDataModelFactory = {};
 
@@ -162,12 +161,214 @@ app.factory('overviewDataModelFactory', ['moment', function (moment) {
     return overviewDataModelFactory;
 }]);
 
-app.factory('alertsDataFactory', ['$http', function ($http) {
+app.factory('contractDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/contracts';
+    var contractDataFactory = {};
+
+    contractDataFactory.getContracts = function () {
+        return $http.get(URL_BASE + '/' + 'all');
+    };
+    contractDataFactory.getContract = function (id) {
+        return $http.get(URL_BASE + '/' + id);
+    };
+    contractDataFactory.getContractDetails = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/detail');
+    };
+    /* DEPRECATED - No updates allowed. Contracts are immutable*/
+    contractDataFactory.updateContract = function (id, data) {
+        return $http.put(URL_BASE + '/' + id + '/' + 'update', data);
+    };
+    contractDataFactory.startContract = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/action/start');
+    };
+    contractDataFactory.endContract = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/action/end');
+    };
+
+    contractDataFactory.newContract = function (data) {
+        return $http.put(URL_BASE + '/' + 'post', data);
+    };
+    contractDataFactory.deleteContract = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/' + 'delete');
+    };
+    contractDataFactory.getContractRevenueDetail = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/revenue/detail');
+    };
+    contractDataFactory.getRevenues = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/revenues');
+    };
+
+    return contractDataFactory;
+}]);
+app.factory('contractDataModelFactory', ['moment', function (moment) {
+
+    var contractDataModelFactory = {};
+    contractDataModelFactory.withExtras = function (contract) {
+        contract.dt_start_date = moment(contract.start_date).toDate();
+        contract.dt_end_date = moment(contract.end_date).toDate();
+
+        if (contract.status == 1) {
+            contract.x_status = {"key": "Ongoing", "value": 1}
+        }
+        else if (contract.status == 2) {
+            contract.x_status = {"key": "Suspended", "value": 2}
+        }
+        else if (contract.status == 3) {
+            contract.x_status = {"key": "Terminated", "value": 3}
+        }
+        else if (contract.status == 4) {
+            contract.x_status = {"key": "Complete", "value": 4}
+        }
+        contract.hasStarted = contract.act_start_dt != null;
+        contract.hasTerminatedEarly = false;
+        if (contract.act_end_dt != null) {
+            var act_end = moment(contract.act_end_dt);
+            contract.hasTerminatedEarly = act_end.isBefore(contract.end_date);
+        }
+
+        return contract;
+    };
+    return contractDataModelFactory;
+
+}]);
+
+app.factory('ticketDataFactory', ['$http', function ($http) {
 
     var URL_BASE = '/api/admin/cars';
-    var alertsDataFactory = {};
+    var ticketDataFactory = {};
 
-    alertsDataFactory.getAlerts = function (id) {
-        return $http.get(URL_BASE + '/' + id + '/overview');
+    ticketDataFactory.getTickets = function (car_id) {
+        return $http.get(URL_BASE + '/' + car_id + '/tickets');
     };
+
+    ticketDataFactory.getTicket = function (car_id, ticket_id) {
+        return $http.get(URL_BASE + '/' + car_id + '/tickets' + ticket_id);
+    };
+
+    ticketDataFactory.newTicket = function (car_id, data) {
+        return $http.post(URL_BASE + '/' + car_id + '/tickets', data);
+    };
+    ticketDataFactory.updateTicket = function (car_id, data) {
+        return $http.put(URL_BASE + '/' + car_id + '/tickets/' + data.id, data);
+    };
+
+    ticketDataFactory.inferDriver = function (car_id, unix_date) {
+        return $http.get('/api/admin/tickets/infer_driver/' + car_id + '/' + unix_date);
+    };
+
+    return ticketDataFactory;
+
+}]);
+app.factory('ticketDataModelFactory', ['moment', function (moment) {
+
+    var ticketDataModelFactory = {};
+    ticketDataModelFactory.withExtras = function (tickets) {
+        return tickets;
+    };
+
+    return ticketDataModelFactory;
+}]);
+
+app.factory('driverDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/drivers';
+    var driverDataFactory = {};
+
+    driverDataFactory.getDrivers = function () {
+        return $http.get(URL_BASE + '/' + 'all');
+    };
+    driverDataFactory.getDriver = function (id) {
+        return $http.get(URL_BASE + '/' + id);
+    };
+    driverDataFactory.updateDriver = function (id, data) {
+        return $http.put(URL_BASE + '/' + id + '/' + 'update', data);
+    };
+    driverDataFactory.newDriver = function (data) {
+        return $http.put(URL_BASE + '/' + 'post', data);
+    };
+    driverDataFactory.deleteDriver = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/' + 'delete');
+    };
+
+    return driverDataFactory;
+}]);
+app.factory('driverDataModelFactory', ['moment', function (moment) {
+    var driverDataModelFactory = {};
+    driverDataModelFactory.withExtras = function (driver) {
+        driver.dt_dob = moment(driver.dob).toDate();
+    };
+    return driverDataModelFactory;
+}]);
+
+app.factory('servicesDataFactory', ['$http', function ($http) {
+
+    var URL_BASE = '/api/admin/cars';
+    var servicesDataFactory = {};
+
+    servicesDataFactory.getOrders = function (car_id) {
+        return $http.get(URL_BASE + '/' + car_id + '/service_orders');
+    };
+    servicesDataFactory.newOrder = function (car_id, data) {
+        return $http.post(URL_BASE + '/' + car_id + '/service_orders', data);
+    };
+    servicesDataFactory.updateOrder = function (data) {
+        return $http.put(URL_BASE + '/' + data.car.id + '/service_orders/' + data.id, data);
+    };
+
+    return servicesDataFactory;
+
+}]);
+app.factory('servicesDataModelFactory', ['moment', function (moment) {
+
+    var servicesDataModelFactory = {};
+    servicesDataModelFactory.withExtras = function (orders) {
+        return orders;
+    };
+    servicesDataModelFactory.withoutObjects = function (order) {
+        order.car_id = order.car.id;
+        order.supplier_id = order.supplier.id;
+    };
+
+    return servicesDataModelFactory;
+}]);
+
+app.factory('supplierDataFactory', ['$http', function ($http) {
+
+    var URL_BASE = '/api/admin/suppliers';
+    var supplierDataFactory = {};
+
+    supplierDataFactory.getSuppliers = function () {
+        return $http.get(URL_BASE + '/all');
+    };
+
+    supplierDataFactory.getSuppliersFor = function (type) {
+        return $http.get(URL_BASE + '/for/' + type);
+    };
+
+    return supplierDataFactory;
+}]);
+
+app.factory('supplierDataModelFactory', ['moment', function (moment) {
+
+    var supplierDataModelFactory = {};
+    supplierDataModelFactory.onlyForType = function (orders, type) {
+        var result = [];
+        result = _.takeWhile(orders, function (order) {
+            return order.type == type;
+        });
+        return result;
+    };
+
+    supplierDataModelFactory.onlyForTypes = function (orders, types) {
+        var result = [];
+        result = _.takeWhile(orders, function (order) {
+            return _.includes(types, order.type);
+        });
+        return result;
+    };
+    return supplierDataModelFactory;
+}]);
+
+
+app.factory('deliveriesDataFactory', ['$http', function ($http) {
+
 }]);
