@@ -10,7 +10,8 @@ use App\CarServiceOrder;
 use App\Supplier;
 use App\InsuranceClaim;
 use App\CarHistory;
-
+use App\User;
+use Log;
 class ServiceOrderController extends Controller
 {
     /**
@@ -60,15 +61,25 @@ class ServiceOrderController extends Controller
         else
             $car = Car::findOrFail($request->car_id);
         // Findin the supplier
-        $supplier = Supplier::findorFail($request->supplier['id']);
+        $supplier = Supplier::findorFail($request->supplier_id);
         //$insurance = InsuranceClaim::findOrFail($request->insurance_claim_id);
         // Finding if the user id is correct
         if($request->auth_user_id)
             $auth_user = User::findOrFail($request->auth_user_id);
         // Creating a car ticket
-        $car_service_order = CarServiceOrder::create($request->all());
-        $car->serviceOrder()->save($car_service_order);
-        $supplier->serviceOrder()->save($car_service_order);
+        //$car_service_order = CarServiceOrder::create($request->all());
+        $car_service_order = new CarServiceOrder;
+        $car_service_order->auth_user_id = $request->auth_user_id;
+        $car_service_order->auth_user = $request->auth_user;
+        $car_service_order->status = $request->status;
+        $car_service_order->comments = $request->comments;
+        $car_service_order->cost = $request->cost;
+        $car_service_order->type = $request->type;
+        $car_service_order->handover_date = $request->handover_date;
+        $car_service_order->handover_person = $request->handover_person;
+        $car_service_order->save(); 
+        $car->serviceOrders()->save($car_service_order);
+        $supplier->serviceOrders()->save($car_service_order);
         //$insurance->serviceOrder()->save($car_service_order);
         $history = new CarHistory;
         $history->car_id = $car->id;
