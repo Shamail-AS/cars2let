@@ -50,6 +50,12 @@ class Driver extends Model
     {
         return $this->morphMany('App\SiteFile', 'origin');
     }
+
+    public function handovers()
+    {
+        return $this->hasMany('App\ContractHandover');
+    }
+    
     public function setDobAttribute($value)
     {
         try {

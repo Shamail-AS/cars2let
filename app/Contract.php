@@ -36,6 +36,10 @@ class Contract extends Model
     {
         return $this->morphMany('App\CarHistory', 'historable');
     }
+    public function handovers()
+    {
+        return $this->hasMany('App\ContractHandover');
+    }
     public function getInvestorAttribute()
     {
         $car = $this->car;

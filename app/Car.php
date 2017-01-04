@@ -79,6 +79,10 @@ class Car extends Model
     public function accidents (){
         return $this->hasMany('App\CarAccident');
     }
+    public function handovers()
+    {
+        return $this->hasMany('App\ContractHandover');
+    }
 
     //==========================================================================//
     public function getCurrentContractAttribute()
