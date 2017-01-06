@@ -52,18 +52,23 @@ class DeliveryController extends Controller
             $car = Car::findOrFail($car_id);
         else
             $car = Car::findOrFail($request->car_id);
+        $delivery = Delivery::create($request->all());
         // Finding if the user id is correct
-        if($request->rec_user_id)
+        if ($request->rec_user_id) {
             $rec_user = User::findOrFail($request->rec_user_id);
+            $rec_user->deliveries()->save($delivery);
+        }
         // find if supplier id is correct
-        $order = CarOrder::findOrFail($request->order_id);
+        if ($request->order_id) {
+            $order = CarOrder::findOrFail($request->order_id);
+            $order->deliveries()->save($delivery);
+        }
 
         // Creating a delivery
-        $delivery = Delivery::create($request->all());
+        //dd($request->all());
+
         $car->deliveries()->save($delivery);
-        $order->deliveries()->save($delivery);
-        if($request->rec_user_id)
-            $rec_user->deliveries()->save($delivery);
+
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler

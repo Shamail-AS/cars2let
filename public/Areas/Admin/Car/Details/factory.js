@@ -371,4 +371,33 @@ app.factory('supplierDataModelFactory', ['moment', function (moment) {
 
 app.factory('deliveriesDataFactory', ['$http', function ($http) {
 
+    var deliveriesDataFactory = {};
+    var URL_BASE = '/api/admin/cars';
+
+    deliveriesDataFactory.getDeliveries = function (car_id) {
+        return $http.get(URL_BASE + '/' + car_id + '/deliveries');
+    };
+
+    deliveriesDataFactory.newDelivery = function (car_id, data) {
+        return $http.post(URL_BASE + '/' + car_id + '/deliveries', data);
+    };
+
+    deliveriesDataFactory.updateDelivery = function (car_id, delivery_id, data) {
+        return $http.put(URL_BASE + '/' + car_id + '/deliveries/' + delivery_id, data);
+    };
+
+    return deliveriesDataFactory;
+}]);
+app.factory('deliveriesDataModelFactory', ['moment', function (moment) {
+
+    var deliveriesDataModelFactory = {};
+    deliveriesDataModelFactory.withExtras = function (deliveries) {
+        return deliveries;
+    };
+    deliveriesDataModelFactory.withoutExtras = function (delivery) {
+        delete(delivery.car);
+        return delivery;
+    };
+    return deliveriesDataModelFactory;
+
 }]);

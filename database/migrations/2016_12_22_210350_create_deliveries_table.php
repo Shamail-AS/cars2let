@@ -26,6 +26,7 @@ class CreateDeliveriesTable extends Migration
             $table->string('condition');// A grade, B, C, D, E, F, Custom Text
             $table->integer('odo_reading');
             $table->string('location');
+            $table->string('status');
             $table->timestamps();
         });
     }

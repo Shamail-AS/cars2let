@@ -19,8 +19,7 @@
                     <th>Handed to</th>
                     <th>Status</th>
                     <th>Comments</th>
-                    <th>Insurance</th>
-                    <th>Actions</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,9 +33,10 @@
                     <td>@{{ (order.handover_person) }}</td>
                     <td>@{{ order.status }}</td>
                     <td>@{{ order.comments }}</td>
-                    <td>@{{ order.insurance.id }}</td>
                     <td>
-                        <button class="btn btn-xs btn-primary" ng-click="editorder(order)">Edit</button>
+                        <button class="btn btn-xs btn-primary" ng-click="editOrder(order)">Edit</button>
+                        <a href="{{url('admin/service_orders/')}}@{{ order.id }}"
+                           class="btn btn-xs btn-info">Details</a>
                     </td>
                 </tr>
                 </tbody>

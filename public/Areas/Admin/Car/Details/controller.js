@@ -435,8 +435,8 @@ app.controller('servicesController', ['$scope', 'moment', 'ModalService', 'servi
         init();
 }]);
 app.controller('serviceModalController',
-    ['$scope', 'moment', 'overviewDataFactory', 'servicesDataFactory', 'supplierDataFactory', 'data', 'close',
-        function ($scope, moment, overviewDataFactory, servicesDataFactory, supplierDataFactory, data, close) {
+    ['$scope', 'moment', 'overviewDataFactory', 'servicesDataFactory', 'servicesDataModelFactory', 'supplierDataFactory', 'data', 'close',
+        function ($scope, moment, overviewDataFactory, servicesDataFactory, servicesDataModelFactory, supplierDataFactory, data, close) {
 
             $scope.vm = {
                 types: [],
@@ -476,7 +476,7 @@ app.controller('serviceModalController',
 
             var save_order = function (data) {
                 data._token = $scope.vm.token;
-                servicesDataFactory.newOrder(data.car.id, serviceModalController.withoutObjects(data))
+                servicesDataFactory.newOrder(data.car.id, servicesDataModelFactory.withoutObjects(data))
                     .then(function (result) {
                         $scope.close(result.data);
                     });
@@ -531,9 +531,161 @@ app.controller('serviceModalController',
 
         }]);
 
-app.controller('deliveriesController', ['$scope', function ($scope) {
+app.controller('deliveriesController',
+    ['$scope', 'moment', 'ModalService', 'deliveriesDataFactory', 'deliveriesDataModelFactory',
+        function ($scope, moment, ModalService, deliveriesDataFactory, deliveriesDataModelFactory) {
 
+            $scope.vm = {
+                deliveries: []
+            };
+            $scope.dirty = {
+                token: ''
+            };
+
+            var format_date = function (date) {
+                var dt = moment(date);
+                return dt.format("MMM DD, YYYY");
+            };
+
+            $scope.newDelivery = function () {
+                ModalService.showModal({
+                    scope: $scope,
+                    templateUrl: "new-delivery.html",
+                    controller: "deliveriesModalController",
+                    inputs: {
+                        data: {
+                            token: $scope.dirty.token,
+                            car_id: $scope.vm.car_id
+                        }
+                    }
+                }).then(function (modal) {
+                    modal.element.modal();
+                    modal.close.then(function (result) {
+                        $scope.vm.deliveries.push(result);
+                    });
+                });
+            };
+
+            $scope.editDelivery = function (delivery) {
+                ModalService.showModal({
+                    scope: $scope,
+                    templateUrl: "new-delivery.html",
+                    controller: "deliveriesModalController",
+                    inputs: {
+                        data: {
+                            token: $scope.dirty.token,
+                            car_id: $scope.vm.car_id,
+                            delivery: delivery
+                        }
+                    }
+                }).then(function (modal) {
+                    modal.element.modal();
+                    modal.close.then(function (result) {
+                        console.log(result);
+                    });
+                });
+            };
+
+            var load_deliveries = function (id) {
+                deliveriesDataFactory.getDeliveries(id)
+                    .then(function (result) {
+                        $scope.vm.deliveries = deliveriesDataModelFactory.withExtras(result.data);
+                    });
+            };
+
+
+            var get_id_from_url = function () {
+                var url = (window.location.pathname);
+                var id = _.split(url, '/')[3]; // that's where the car id is stored
+                return id;
+            };
+
+            var init = function () {
+                var id = get_id_from_url();
+                if (id) {
+                    $scope.vm.car_id = id;
+                    $scope.dirty.token = $('input#csrf_token').val();
+                    load_deliveries(id);
+                }
+
+            };
+
+            init();
 }]);
+app.controller('deliveriesModalController',
+    ['$scope', 'moment', 'deliveriesDataFactory', 'overviewDataFactory', 'deliveriesDataModelFactory', 'data', 'close',
+        function ($scope, moment, deliveriesDataFactory, overviewDataFactory, deliveriesDataModelFactory, data, close) {
+
+            $scope.vm = {
+                types: [],
+                statuses: []
+            };
+            $scope.delivery = {};
+            $scope.dirty = {
+                isNew: true
+            };
+            $scope.close = function (result) {
+                close(result, 500); // close, but give 500ms for bootstrap to animate
+            };
+
+            $scope.save = function () {
+                if (!$scope.dirty.isNew) {
+                    console.log('update');
+                    update_delivery($scope.delivery);
+                }
+                else {
+                    console.log('save');
+                    save_delivery($scope.delivery);
+                }
+            };
+
+            var save_delivery = function (data) {
+                data._token = $scope.vm.token;
+                deliveriesDataFactory.newDelivery(data.car.id, deliveriesDataModelFactory.withoutExtras(data))
+                    .then(function (result) {
+                        $scope.close(result.data);
+                    });
+            };
+            var update_delivery = function (data) {
+                data._token = $scope.vm.token;
+                deliveriesDataFactory.updateDelivery(data)
+                    .then(function (result) {
+
+                    });
+            };
+
+            var load_statuses = function () {
+                $scope.vm.statuses.push('expected');
+                $scope.vm.statuses.push('delayed');
+                $scope.vm.statuses.push('cancelled');
+                $scope.vm.statuses.push('received');
+            };
+            var load_types = function () {
+                $scope.vm.types.push('contract-return');
+                $scope.vm.types.push('car-order');
+                $scope.vm.types.push('service-order');
+                $scope.vm.types.push('other');
+            };
+
+            var init = function () {
+                load_types();
+                load_statuses();
+                if (data.delivery) {
+                    $scope.delivery = data.delivery;
+                    $scope.dirty.isNew = false;
+                    $scope.delivery.scheduled_at = moment(data.delivery.scheduled_at).toDate();
+                    $scope.delivery.delivered_at = moment(data.delivery.delivered_at).toDate();
+                    return;
+                }
+                overviewDataFactory.getCar(data.car_id)
+                    .then(function (result) {
+                        $scope.delivery.car = result.data;
+                    });
+            };
+
+            init();
+
+        }]);
 
 app.controller('revenueController', ['$scope', function ($scope) {
 

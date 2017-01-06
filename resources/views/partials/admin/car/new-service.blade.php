@@ -97,12 +97,12 @@
                             </div>
                         </div>
                     </div>
-                    <div id="insurance">
+                    <div ng-if="order.type == 'REPAIR'" id="insurance">
                         <h4>Insurance Claim</h4>
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
-                                <div ng-if="order.type == 'REPAIR'" class="alert alert-info">You can include insurance
+                                <div class="alert alert-info">You can include insurance
                                     claim details later
                                 </div>
                             </div>
