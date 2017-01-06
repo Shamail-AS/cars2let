@@ -369,8 +369,15 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/detail', 'ContractController@api_show');
             Route::get('/{id}/revenues', 'ContractController@api_revenues');
             Route::get('/{id}/action/{action}', 'ContractController@api_action');
-
             Route::post('/{id}/pdf','ContractController@downloadFullPDF');
+            Route::group(['prefix' => '{contract_id}/handovers'], function () {
+                Route::get('/', 'ContractHandoverController@index');
+                Route::get('/create','ContractHandoverController@create');
+                Route::post('/', 'ContractHandoverController@store');
+                Route::get('/{contract_id}', 'ContractHandoverController@show');
+                Route::put('/{contract_id}', 'ContractHandoverController@update');
+                Route::delete('/{contract_id}', 'ContractHandoverController@delete');
+            });
         });
 
         Route::group(['prefix' => 'drivers'], function () {
