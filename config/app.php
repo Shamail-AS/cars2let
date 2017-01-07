@@ -160,6 +160,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        Chumper\Zipper\ZipperServiceProvider::class
     ],
 
     /*
@@ -210,6 +211,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Zipper' => Chumper\Zipper\Zipper::class
     ],
 
 ];

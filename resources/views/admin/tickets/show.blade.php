@@ -12,7 +12,9 @@
                 <table class="table table-bordered table-striped">
                     <thead class="thead-default">
                         <tr>
-                            <th colspan="2"><center><h3> Ticket {{$ticket->id}}</h3></center></th>
+                            <th colspan="2"><center><h3> Ticket {{$ticket->id}}</h3></center>
+
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,11 +32,45 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-default">
+                        <tr>
+                            <th><h3 style="display: inline-block;">Uploaded Files</h3>
+                            <a href="{{url('api/admin/cars/'.$ticket->car->id.'/tickets/'.$ticket->id.'/pdf')}}" class="btn btn-success pull-right"> Download the Files</a>  
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($ticket->files as $file)
+                            <tr>
+                                @if($file->type == 'image')
+                                <td>
+                                    <img class="img-responsive" src="{{url($file->full_url)}}" width="100">
+                                </td>
+                                @else
+                                    <td>
+                                        <p>{{$file->name}}</p>
+                                    </td>
+                                @endif
+                            </tr> 
+                        @empty
+                            <tr>
+                                <td>
+                                    no files
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <h3>Upload Files</h3>
                 <form enctype="multipart/form-data" method="POST" action="{{url('api/admin/cars/'.$ticket->car->id.'/tickets/'.$ticket->id.'/attachment')}}"> 
                     {!! csrf_field() !!}
                     <label class="custom-file">
-                          <input type="file" id="file" name="file" multiple>
+                          <input type="file" id="file" name="file[]" multiple>
                     </label>
                     <input type="submit" name="submit" class="btn btn-primary" value="upload">
                 </form>

@@ -393,11 +393,19 @@
 	            </tbody>
             </table>
             @forelse($ticket->files as $file)
-            	<div class="row">
-	            	<div class="col-lg-12">
-	            		<img class="img-responsive" src="{{url($file->full_url)}}">
+            	@if($file->type =='file')
+					<div class="row">
+		            	<div class="col-lg-12">
+		            		<li>{{$file->name}}</li>
+		            	</div>
+            		</div>
+            	@else	            			
+	            	<div class="row">
+		            	<div class="col-lg-12">
+		            		<img class="img-responsive" src="{{url($file->full_url)}}">
+		            	</div>
 	            	</div>
-            	</div> 
+	            @endif 
             @empty
             	<div class="row">
             		<div class="col-lg-12">

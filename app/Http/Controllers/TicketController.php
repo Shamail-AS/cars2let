@@ -15,6 +15,8 @@ use Log;
 use Storage;
 use Image;
 use PDF;
+use Zipper;
+use File;
 
 class TicketController extends Controller
 {
@@ -201,25 +203,33 @@ class TicketController extends Controller
     }
 
     public function attachmentUpload(Request $request,$car_id,$ticket_id){
-
+        $ext = ['jpg','jpeg','png','JPG','gif'];
         $car = Car::findOrFail($car_id);
         if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
             // Show 404.
             return response("This ticket doesn't belong to this car", 404);
-
         if($request->file('file')){
-            if ($request->file('file')->isValid()) {
-                $site_file = new SiteFile;
-                $extension = $request->file('file')->getClientOriginalExtension();
-                $fileName = Str::random(8).'.'.$extension;
-                $stored_file = Storage::disk('local')->put('tickets/'.$fileName, file_get_contents($request->file('file')));
-                $site_file->name = $fileName;
-                $site_file->full_url = "images/app/tickets/" . $fileName;
-                $site_file->save();
-                $car_ticket->files()->save($site_file);
-                return response(Storage::url('tickets/'.$fileName));
+            foreach($request->file('file') as $file){
+                if ($file->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    $stored_file = Storage::disk('local')->put('tickets/'.$fileName, file_get_contents($file));
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "images/app/tickets/" . $fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
+
+                    $site_file->save();
+                    $car_ticket->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
             }
-            return response("Invalid file", 404);
+            return redirect('admin/tickets/'.$ticket_id);
         }
         return response("Attachment not found", 404);
     }
@@ -243,10 +253,37 @@ class TicketController extends Controller
         return $foundContract->driver;
     }
 
-    // public function downloadTicketPdf($car_id,$ticket_id) {
-    //     $driver = Driver::findOrFail(1);
-    //     $pdf = PDF::loadView('pdf',['driver'=>$driver]);
-    //     return view('pdf',['driver'=>$driver]);
-    //     //return $pdf->download('pdf');
-    // }
+    public function downloadTicketPdf($car_id,$ticket_id) {
+        $car = Car::findOrFail($car_id);
+        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
+            // Show 404.
+            return response("This ticket doesn't belong to this car", 404);
+        $driver = Driver::findOrFail($car_ticket->driver->id);
+        $driver_fileName = array();
+        $pdf = PDF::loadView('sample',['driver'=>$driver]);
+        File::delete('pdf/ticket/'.$ticket_id.'/ticket.pdf');
+        $pdf->save('pdf/ticket/'.$ticket_id.'/ticket.pdf');
+        $zip_file_path = 'pdf/ticket/'.$ticket_id.'/'.Str::random(8).'_ticket.zip';
+        $zip_file = Zipper::make($zip_file_path)->add('pdf/ticket/'.$ticket_id.'/ticket.pdf');
+        foreach ($driver->files as $file ) {
+            $full_url = url($file->full_url);
+            $driver_fileName[] = $full_url;
+            $zip_file->addString($file->name,file_get_contents($full_url));
+        }
+        $ticket_fileName = array();
+        foreach ($car_ticket->files as $file) {
+            $full_url = url($file->full_url);
+            $ticket_fileName[] = $full_url; 
+            $zip_file->addString($file->name,file_get_contents($full_url));
+        }
+        
+        //return view('sample',['driver'=>$driver]);
+        //$files = 
+        $headers = array(
+                    'Content-Type' => 'application/octet-stream',
+                );
+
+        return redirect(url($zip_file_path));
+        //return $pdf->download('pdf');
+    }
 }
