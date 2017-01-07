@@ -374,9 +374,9 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/', 'ContractHandoverController@index');
                 Route::get('/create','ContractHandoverController@create');
                 Route::post('/', 'ContractHandoverController@store');
-                Route::get('/{contract_id}', 'ContractHandoverController@show');
-                Route::put('/{contract_id}', 'ContractHandoverController@update');
-                Route::delete('/{contract_id}', 'ContractHandoverController@delete');
+                Route::get('/{handover_id}', 'ContractHandoverController@show');
+                Route::put('/{handover_id}', 'ContractHandoverController@update');
+                Route::delete('/{handover_id}', 'ContractHandoverController@delete');
             });
         });
 

@@ -198,10 +198,6 @@ class TicketController extends Controller
     public function attach(Request $request)
     {
 
-        if ($request->file('file')) {
-            return 'got file';
-        }
-        return 'no file';
     }
 
     public function attachmentUpload(Request $request,$car_id,$ticket_id){
@@ -211,19 +207,19 @@ class TicketController extends Controller
             // Show 404.
             return response("This ticket doesn't belong to this car", 404);
 
-        if($request->file('attachment')){
-            if ($request->file('attachment')->isValid()) {
+        if($request->file('file')){
+            if ($request->file('file')->isValid()) {
                 $site_file = new SiteFile;
-                $extension = $request->file('attachment')->getClientOriginalExtension();
+                $extension = $request->file('file')->getClientOriginalExtension();
                 $fileName = Str::random(8).'.'.$extension;
-                $stored_file = Storage::disk('local')->put('tickets/'.$fileName, file_get_contents($request->file('attachment')));
+                $stored_file = Storage::disk('local')->put('tickets/'.$fileName, file_get_contents($request->file('file')));
                 $site_file->name = $fileName;
                 $site_file->full_url = "images/app/tickets/" . $fileName;
                 $site_file->save();
                 $car_ticket->files()->save($site_file);
                 return response(Storage::url('tickets/'.$fileName));
             }
-            return response("Invalid Attachment", 404);
+            return response("Invalid file", 404);
         }
         return response("Attachment not found", 404);
     }
