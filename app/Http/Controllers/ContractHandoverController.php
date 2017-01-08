@@ -91,7 +91,7 @@ class ContractHandoverController extends Controller
 
     public function attachmentUpload(Request $request,$contract_id,$handover_id){
         $ext = ['jpg','jpeg','png','JPG','gif'];
-        $car = Car::findOrFail($contract_id);
+        $car = Contract::findOrFail($contract_id);
         $handover = ContractHandover::findOrFail($handover_id);
         if($request->file('file')){
             foreach($request->file('file') as $file){

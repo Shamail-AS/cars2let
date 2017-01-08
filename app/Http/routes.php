@@ -82,6 +82,19 @@ Route::group(['middleware' => 'web'], function () {
 
         return $response;
     });
+    Route::get('images/app/accidents/{filename}', function ($filename) {
+        $path = storage_path() . '\app\accident\\' . $filename;
+        
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    });
     Route::get('/myregister', function () {
         if (Auth::check())
             return redirect('/');
@@ -370,6 +383,9 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/{accident_id}', 'AccidentController@show');
                 Route::put('/{accident_id}', 'AccidentController@update');
                 Route::delete('/{accident_id}', 'AccidentController@delete');
+                Route::post('/{accident_id}/attachment','AccidentController@attachmentUpload');
+                Route::get('/{accident_id}/pdf','AccidentController@downloadAccidentPdf');                
+                
             });
         });
 

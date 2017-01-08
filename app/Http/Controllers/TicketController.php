@@ -260,7 +260,7 @@ class TicketController extends Controller
             return response("This ticket doesn't belong to this car", 404);
         $driver = Driver::findOrFail($car_ticket->driver->id);
         $driver_fileName = array();
-        $pdf = PDF::loadView('sample',['driver'=>$driver]);
+        $pdf = PDF::loadView('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);
         File::delete('pdf/ticket/'.$ticket_id.'/ticket.pdf');
         $pdf->save('pdf/ticket/'.$ticket_id.'/ticket.pdf');
         $zip_file_path = 'pdf/ticket/'.$ticket_id.'/'.Str::random(8).'_ticket.zip';
