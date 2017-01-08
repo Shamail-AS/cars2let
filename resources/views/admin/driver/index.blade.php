@@ -100,7 +100,7 @@
     </script>
 
     <script src="{{asset('Areas/Admin/Driver/module.js')}}"></script>
-    <script src="{{asset('Areas/Admin/Driver/factory.js')}}"></script>
+    {{--    <script src="{{asset('Areas/Admin/Driver/factory.js')}}"></script>--}}
     <script src="{{asset('Areas/Admin/Investor/factory.js')}}"></script>
     <script src="{{asset('Areas/Admin/Driver/controller.js')}}"></script>
 @endsection

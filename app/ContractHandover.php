@@ -21,4 +21,9 @@ class ContractHandover extends Model
     {
         return $this->morphMany('App\SiteFile', 'origin');
     }
+
+    public function scopeType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
 }

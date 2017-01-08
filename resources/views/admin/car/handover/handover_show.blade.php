@@ -26,6 +26,26 @@
                             <td>Driver</td>
                             <td>{{$handover->driver->name}}</td>
                         </tr>
+                        <tr>
+                            <td>Ododmeter</td>
+                            <td>{{$handover->odo_meter_reading}}</td>
+                        </tr>
+                        <tr>
+                            <td>Handover Date</td>
+                            <td>{{$handover->handover_date}}</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>{{strtoupper($handover->status)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>{{strtoupper($handover->type)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Comments</td>
+                            <td>{{($handover->comments)}}</td>
+                        </tr>
                     </tbody>
                 </table>    
             </div>

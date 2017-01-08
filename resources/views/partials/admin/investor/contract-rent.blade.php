@@ -1,4 +1,4 @@
-<script type="text/ng-template" id="contract-payments.html">
+<script type="text/ng-template" id="contract-rent.html">
     <div class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">

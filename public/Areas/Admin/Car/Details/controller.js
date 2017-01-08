@@ -687,6 +687,34 @@ app.controller('deliveriesModalController',
 
         }]);
 
-app.controller('revenueController', ['$scope', function ($scope) {
+app.controller('partsController', ['$scope', 'cameraDataFactory', 'trackerDataFactory', 'simDataFactory',
+    function ($scope, cameraDataFactory, trackerDataFactory, simDataFactory) {
 
+        $scope.vm = {
+            camera: {},
+            sim: {},
+            tracker: {}
+        };
+
+
+        var get_parts = function (car_id) {
+
+        };
+
+        var get_id_from_url = function () {
+            var url = (window.location.pathname);
+            var id = _.split(url, '/')[3]; // that's where the car id is stored
+            return id;
+        };
+
+        var init = function () {
+            var id = get_id_from_url();
+            if (id) {
+                $scope.vm.car_id = id;
+                $scope.dirty.token = $('input#csrf_token').val();
+                load_deliveries(id);
+            }
+        };
+
+        init();
 }]);

@@ -18,65 +18,29 @@ class ContractController extends Controller
     // API METHODS
     public function api_all()
     {
-        return Contract::all();
+        return Contract::with('driver', 'car', 'handovers')->get()->all();
     }
 
     public function api_get($id)
     {
-        return Contract::with('driver', 'car')->where('id', $id)->first();
+        return Contract::with('driver', 'car', 'handovers')->where('id', $id)->first();
     }
 
+    // ONLY USED IF CONTRACT STATUS is NEW //
     public function api_update(Request $request)
     {
 
-        //CAN'T UPDATE A CONTRACT. If need to update, Terminate the existing contract and create a new one in it's place.
+        $contract = Contract::find($request->input('id'));
+        $contract->start_date = $request->input('start_date');
+        $contract->end_date = $request->input('end_date');
+        $contract->rate = $request->input('rate');
+        $contract->req_deposit = $request->req_deposit;
+        $contract->rec_deposit = $request->rec_deposit;
+        $contract->car_id = $request->input('car.id');
+        $contract->driver_id = $request->input('driver.id');
 
-//        $contract = Contract::find($request->input('id'));
-//        $contract->start_date = $request->input('start_date');
-//
-////        if ($contract->status != $request->input('status')) {
-////            if ($request->input('status') == '1') {
-////                $history = new CarHistory;
-////                $history->car_id = $contract->car_id;
-////                $history->comments = 'car contract started';
-////                $contract->histories()->save($history);
-////
-////                for ($i = 0; $i < $contract->rentAllocationsCount; $i++) {
-////                    $rev = Revenue::create([
-////                        'week' => $i + 1,
-////                        'amount_paid' => 0
-////                    ]);
-////                    $contract->revenues()->save($rev);
-////                }
-////            }
-////            if ($request->input('status') == '2') {
-////                $history = new CarHistory;
-////                $history->car_id = $contract->car_id;
-////                $history->comments = 'car contract suspended';
-////                $contract->histories()->save($history);
-////            }
-////            if ($request->input('status') == '3') {
-////                $history = new CarHistory;
-////                $history->car_id = $contract->car_id;
-////                $history->comments = 'car contract terminated';
-////                $contract->histories()->save($history);
-////            }
-////            if ($request->input('status') == '4') {
-////                $history = new CarHistory;
-////                $history->car_id = $contract->car_id;
-////                $history->comments = 'car contract completed';
-////                $contract->histories()->save($history);
-////            }
-////        }
-//
-//        //$contract->status = $request->input('status');
-//        $contract->end_date = $request->input('end_date');
-//        $contract->rate = $request->input('rate');
-//        $contract->car_id = $request->input('car.id');
-//        $contract->driver_id = $request->input('driver.id');
-//
-//        $contract->save();
-        return $request->all();
+        $contract->save();
+        return $contract;
     }
 
     public function api_action($id, $action)
@@ -99,6 +63,7 @@ class ContractController extends Controller
         $contract->car_id = $request->input('car.id');
         $contract->driver_id = $request->input('driver.id');
         $contract->status = 2; //suspended
+        $contract->req_deposit = 500;
 
         $history = new CarHistory;
         $history->car_id = $contract->car_id;
@@ -131,7 +96,7 @@ class ContractController extends Controller
     {
 
         $collection = Auth::user()->investor->contracts()
-            ->with('car', 'driver')
+            ->with('car', 'driver', 'handovers')
             ->orderBy('created_at', 'desc')->get();
         foreach ($collection as $contract) {
             //$contract->revenues = $contract->revenues;
@@ -167,6 +132,7 @@ class ContractController extends Controller
         $driver = $contract->driver;
         $car = $contract->car;
         $investor = $contract->investor;
+        $handovers = $contract->handovers;
 
         return $contract;
     }

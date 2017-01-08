@@ -1,10 +1,10 @@
 <link href="{{asset('css/admin/assets/car/overview.css')}}" rel="stylesheet">
 
 <div id="wrapper" ng-controller="partsController">
-    <h1><a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left"></i> All Cars
-        </a> / Tracker + Camera</h1>
+    <h1>Tracker + Camera</h1>
     <hr>
-
+    @include('partials.admin.car.new-delivery')
+    <input type="hidden" id="csrf_token" ng-model="dirty.token" value="{{ csrf_token() }}">
     <div id="tracker">
         <h2>Tracker</h2>
         <hr>

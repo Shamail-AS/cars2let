@@ -1,8 +1,7 @@
 <link href="{{asset('css/admin/assets/car/overview.css')}}" rel="stylesheet">
 
 <div id="wrapper" ng-controller="overviewController">
-    <h1><a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left"></i> All Cars
-        </a> / Overview</h1>
+    <h1> Overview</h1>
     <hr>
 
     <div id="notifications">

@@ -43,7 +43,7 @@ class ContractHandoverController extends Controller
     {
         if($contract_id)
             $contract = Contract::findOrFail($contract_id);
-        return view('admin.car.handover.handover_create',['contract_id'=>$contract_id]);
+        return view('admin.car.handover.handover_create', ['contract' => $contract, 'contract_id' => $contract_id]);
     }
 
     /**
@@ -57,20 +57,23 @@ class ContractHandoverController extends Controller
         
         if($contract_id)
             $contract = Contract::findOrFail($contract_id);
-        $car = Car::findOrFail($contract->car->id);
-        $driver = Driver::findOrFail($contract->driver->id);
-        $handover = new ContractHandover;
-        $handover->handover_date = $request->handover_date;
-        $handover->type = $request->type;
-        $handover->status = $request->status;
-        $handover->comments = $request->comments;
-        $handover->odo_meter_reading = $request->odo_meter_reading;
-        $handover->save();
-        $car->handovers()->save($handover);
-        $contract->handovers()->save($handover);
-        $driver->handovers()->save($handover);
-        
-        return redirect(url('/api/admin/contracts' . $contract->id.'/handovers/create'));
+
+        if (!$contract->hasAllHandovers) {
+            $car = Car::findOrFail($contract->car->id);
+            $driver = Driver::findOrFail($contract->driver->id);
+            $handover = new ContractHandover;
+            $handover->handover_date = $request->handover_date;
+            $handover->type = $contract->hasOutHandover ? 'incoming' : 'outgoing';
+            $handover->status = $request->status;
+            $handover->comments = $request->comments;
+            $handover->odo_meter_reading = $request->odo_meter_reading;
+            $handover->save();
+            $car->handovers()->save($handover);
+            $contract->handovers()->save($handover);
+            $driver->handovers()->save($handover);
+        }
+        $investor_id = $contract->investor->id;
+        return redirect(url('admin/investor/show/' . $investor_id));
     }
 
     /**
@@ -126,7 +129,8 @@ class ContractHandoverController extends Controller
         $pdf = PDF::loadView('contract',['contract'=>$contract,'handover'=>$handover]);
         File::delete('pdf/handover/'.$contract_id.'/handover_contract.pdf');
         $pdf->save('pdf/handover/'.$contract_id.'/handover_contract.pdf');
-        $zip_file_path = 'pdf/handover/'.$contract_id.'/'.Str::random(8).'_handover.zip';
+        $filename = 'contract' . $contract->id . '_handover-' . $handover->type . '.zip';
+        $zip_file_path = 'pdf/handover/' . $contract_id . '/' . $filename;
         $zip_file = Zipper::make($zip_file_path)->add('pdf/handover/'.$contract_id.'/handover_contract.pdf');
         foreach ($handover->files as $file) {
             $full_url = url($file->full_url); 

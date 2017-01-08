@@ -383,7 +383,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/revenues', 'ContractController@api_revenues');
             Route::get('/{id}/action/{action}', 'ContractController@api_action');
             Route::post('/{id}/pdf','ContractController@downloadFullPDF');
-            Route::group(['prefix' => '{contract_id}/handovers'], function () {
+            Route::group(['prefix' => '{contract_id}/handovers', 'middleware' => ['web', 'auth']], function () {
                 Route::get('/', 'ContractHandoverController@index');
                 Route::get('/create','ContractHandoverController@create');
                 Route::post('/', 'ContractHandoverController@store');
@@ -414,6 +414,11 @@ Route::group(['prefix'=>'api'],function(){
             Route::put('/update/allocations', 'RevenueController@api_update_allocations');
             Route::put('/post', 'RevenueController@api_new');
             Route::get('/{id}/delete', 'RevenueController@api_delete');
+        });
+
+        Route::group(['prefix' => 'payments'], function () {
+            Route::get('/contract/{contract_id}', 'PaymentController@getContractPayments');
+            Route::post('/contract', 'PaymentController@payContract')->middleware('web', 'auth');
         });
 
         Route::group(['prefix' => 'policies'], function () {

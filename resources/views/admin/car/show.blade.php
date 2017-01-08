@@ -11,7 +11,8 @@
             <div id="left-side-bar" ng-controller="detailsController">
                 <div class="overflow flex-container col">
                     <div class="pre-body">
-                        <h2>Car Details</h2>
+                        <h2><a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left"></i> All
+                            </a>/Car Details</h2>
                         <hr>
                     </div>
 
@@ -208,7 +209,7 @@
             <div id="right-side-bar" ng-controller="detailsController">
                 <ul class="list-group">
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id)}}">Overview</a></li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/contracts')}}">Contracts</a>
+                    {{--                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/contracts')}}">Contracts</a>--}}
                     </li>
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/tickets')}}">Tickets</a>
                     </li>

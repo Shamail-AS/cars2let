@@ -153,6 +153,33 @@ app.factory('contractDataModelFactory', ['moment', function (moment) {
             var act_end = moment(contract.act_end_dt);
             contract.hasTerminatedEarly = act_end.isBefore(contract.end_date);
         }
+        contract.loading = false;
+        contract.canStart = moment().diff(contract.start_date) >= 0;
+        contract.low_deposit = contract.rec_deposit < contract.req_deposit;
+        contract.outHandover = _.find(contract.handovers || [], function (handover) {
+            return handover.type.includes('outgoing');
+        });
+        contract.inHandover = _.find(contract.handovers || [], function (handover) {
+            return handover.type.includes('incoming');
+        });
+        contract.handoverCreateUrl = '/api/admin/contracts/' + contract.id + '/handovers/create';
+        if (contract.outHandover) contract.outUrl = '/api/admin/contracts/' + contract.id + '/handovers/' + contract.outHandover.id;
+        if (contract.inHandover) contract.inUrl = '/api/admin/contracts/' + contract.id + '/handovers/' + contract.inHandover.id;
+
+        return contract;
+    };
+
+    contractDataModelFactory.withoutExtras = function (contract) {
+        contract.status = contract.x_status.value;
+        contract.start_date = moment(contract.dt_start_date).format("YYYY-MM-DD");
+        contract.end_date = moment(contract.dt_end_date).format("YYYY-MM-DD");
+        //delete(contract.x_status);
+        //delete(contract.dt_start_date);
+        //delete(contract.dt_end_date);
+        //delete(contract.hasStarted);
+        //delete(contract.canStart);
+        //delete(contract.hasTerminatedEarly);
+        //delete(contract.loading);
 
         return contract;
     };
@@ -187,6 +214,20 @@ app.factory('driverDataModelFactory', ['moment', function (moment) {
     driverDataModelFactory.withExtras = function (driver) {
         driver.dt_dob = moment(driver.dob).toDate();
     };
+    driverDataModelFactory.withoutExtras = function (driver) {
+        delete(driver.dt_dob);
+        delete(driver.edit_mode);
+        delete(driver.picker_open);
+        return driver;
+    };
+    driverDataModelFactory.withExtras = function (drivers) {
+        _.each(drivers, function (driver) {
+            driver.edit_mode = false;
+            driver.picker_open = false;
+            driver.dt_dob = moment(driver.dob).toDate();
+        });
+        return drivers;
+    };
     return driverDataModelFactory;
 }]);
 app.factory('revenueDataFactory', ['$http', function ($http) {
@@ -215,3 +256,19 @@ app.factory('revenueDataFactory', ['$http', function ($http) {
 
     return revenueDataFactory;
 }]);
+
+app.factory('paymentDataFactory', [
+    '$http',
+    function ($http) {
+        var URL_BASE = '/api/admin/payments';
+        var paymentDataFactory = {};
+
+        paymentDataFactory.getPayments = function (contract_id) {
+            return $http.get(URL_BASE + '/contract/' + contract_id);
+        };
+        paymentDataFactory.newPayment = function (data) {
+            return $http.post(URL_BASE + '/contract', data);
+        };
+        return paymentDataFactory;
+    }
+]);

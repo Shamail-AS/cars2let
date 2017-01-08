@@ -47,6 +47,17 @@ class Contract extends Model
         return $investor;
     }
 
+    public function revenues()
+    {
+        return $this->hasMany('App\Revenue');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
+
     public function scopeStatus($query,$status)
     {
         return $query->where('status',$status);
@@ -54,10 +65,6 @@ class Contract extends Model
     public function scopeOngoing($query)
     {
         return $query->where('status',1);
-    }
-    public function revenues()
-    {
-        return $this->hasMany('App\Revenue');
     }
     public function scopeLatest($query)
     {
@@ -152,6 +159,21 @@ class Contract extends Model
     public function isDateDuringContract($date)
     {
         return $date->between($this->start_date, $this->end_date);
+    }
+
+    public function getHasOutHandoverAttribute()
+    {
+        return $this->handovers()->type('outgoing')->count() > 0;
+    }
+
+    public function getHasInHandoverAttribute()
+    {
+        return $this->handovers()->type('incoming')->count() > 0;
+    }
+
+    public function getHasAllHandoversAttribute()
+    {
+        return $this->handovers()->count() >= 2;
     }
 
     public function start()

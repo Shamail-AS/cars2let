@@ -1,7 +1,6 @@
 <div>
     <div id="wrapper" ng-controller="deliveriesController">
-        <h1><a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left"></i> All Cars
-            </a> / Deliveries</h1>
+        <h1>Deliveries</h1>
         <hr>
         <div id="tickets">
             @include('partials.admin.car.new-delivery')

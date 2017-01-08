@@ -1,73 +1,3 @@
-app.controller('revenueModalController', function ($scope, data, moment, contractDataFactory, revenueDataFactory, close) {
-
-    $scope.vm = {
-        loading: true,
-        contract: data,
-        revenues: []
-    };
-    $scope.close = function (result) {
-        close(result, 500); // close, but give 500ms for bootstrap to animate
-    };
-    $scope.formatDate = function (date) {
-        if (!date) return "-";
-        return format_date(date);
-    };
-    $scope.save = function () {
-        update_revenues();
-    };
-
-    var format_date = function (date) {
-        var dt = moment(date);
-        return dt.format("MMM DD, YYYY");
-    };
-
-    var load_revenues = function (id) {
-        $scope.vm.loading = true;
-        contractDataFactory.getRevenues(id)
-            .then(function (result) {
-                $scope.vm.revenues = withExtras(result.data);
-                $scope.vm.loading = false;
-            });
-    };
-    var withExtras = function (revenues) {
-        _.each(revenues, function (rev) {
-            var start = moment(rev.dates.start.date);
-            var end = moment(rev.dates.end.date);
-            var act_end = moment(rev.dates.act_end.date);
-
-            if (start.diff(act_end) >= 0) {
-                rev.class = 'disabled';
-            }
-            else {
-                rev.class = 'enabled';
-            }
-
-            if (act_end.isBefore(end, 'day')) {
-                rev.date_string = format_date(start) + " - " + format_date(end) + " [" + format_date(act_end) + "] ";
-            }
-            else {
-                rev.date_string = format_date(start) + " - " + format_date(end);
-            }
-
-        });
-        return revenues;
-    };
-
-    var update_revenues = function () {
-        var allocations = $scope.vm.revenues;
-        revenueDataFactory.updateAllocations(allocations)
-            .then(function (result) {
-                alert(result.data);
-                console.log(result);
-            })
-    };
-    var init = function () {
-        load_revenues($scope.vm.contract.id);
-    };
-
-    init();
-});
-
 app.controller('investorController',
     [
         '$scope',
@@ -101,13 +31,40 @@ app.controller('investorController',
                 trigger: 'focus'
             };
 
-            $scope.openRevenues = function (contract) {
+            $scope.openRentAllocs = function (contract) {
                 ModalService.showModal({
-                    templateUrl: "contract-payments.html",
+                    templateUrl: "contract-rent.html",
                     controller: "revenueModalController",
                     inputs: {
                         data: contract
                     }
+                }).then(function (modal) {
+                    modal.element.modal();
+                    modal.close.then(function (result) {
+                        console.log(result);
+                    });
+                });
+            };
+            $scope.openPayments = function (contract) {
+                ModalService.showModal({
+                    templateUrl: "contract-payments.html",
+                    controller: "contractPaymentsModalController",
+                    inputs: {
+                        data: contract
+                    }
+                }).then(function (modal) {
+                    modal.element.modal();
+                    modal.close.then(function (result) {
+                        console.log(result);
+                    });
+                });
+            };
+
+            $scope.openFilters = function () {
+                ModalService.showModal({
+                    scope: $scope,
+                    templateUrl: "contract-filters.html",
+                    controller: "contractFilterModalController"
                 }).then(function (modal) {
                     modal.element.modal();
                     modal.close.then(function (result) {
@@ -132,6 +89,11 @@ app.controller('investorController',
                 'cars': '',
                 'contracts': '',
                 'drivers': ''
+            };
+            $scope.filters = {
+                car: {},
+                contract: {},
+                driver: {}
             };
             $scope.active = {
                 'cars': false,
@@ -307,11 +269,6 @@ app.controller('investorController',
             $scope.isNumber = function (n) {
                 return !isNaN(parseFloat(n)) && isFinite(n);
             };
-
-            //$scope.newRevenue = function () {
-            //    pay_investor_contract($scope.dirty.revenue.contract.id, parseFloat($scope.dirty.revenue.amount));
-            //
-            //};
             $scope.newCar = function () {
                 console.log($scope.dirty.car);
                 $scope.dirty.car.investor_id = $scope.vm.investor.id;
@@ -321,10 +278,6 @@ app.controller('investorController',
                 console.log($scope.dirty.contract);
                 new_contract(_.cloneDeep($scope.dirty.contract));
             };
-            //$scope.newDriver = function () {
-            //    console.log($scope.dirty.driver);
-            //    new_driver($scope.dirty.driver);
-            //};
 
             $scope.openPicker = function (obj) {
                 obj.picker_open = true;
@@ -345,6 +298,7 @@ app.controller('investorController',
 
             $scope.formatDate = function (date) {
 
+                if (!date)return "-";
                 var dt = moment(date);
                 return dt.format("DD, MMM YYYY");
             };
@@ -387,28 +341,37 @@ app.controller('investorController',
                     });
             };
             var update_contract = function (contract) {
-                contract.status = contract.x_status.value;
-                contract.start_date = moment(contract.dt_start_date).format("YYYY-MM-DD");
-                contract.end_date = moment(contract.dt_end_date).format("YYYY-MM-DD");
-                contractDataFactory.updateContract(contract.id, contract)
-                    .success(function (result) {
-                        alert(result);
+                contract.loading = true;
+                contractDataFactory.updateContract(contract.id, contractDataModelFactory.withoutExtras(contract))
+                    .then(function (result) {
+                        var con = contractDataModelFactory.withExtras(result.data);
+                        contract.canStart = con.canStart;
+                        contract = con;
+                        contract.loading = false;
                     });
             };
 
             var start_contract = function (contract) {
+                contract.loading = true;
                 contractDataFactory.startContract(contract.id)
                     .then(function (result) {
-                        contract = contractDataModelFactory.withExtras(result.data);
-                        console.log(contract);
+                        var con = contractDataModelFactory.withExtras(result.data);
+                        contract.status = con.status;
+                        contract.act_start_dt = con.act_start_dt;
+                        contract.hasStarted = con.hasStarted;
+                        contract.loading = false;
                     });
 
             };
             var end_contract = function (contract) {
+                contract.loading = true;
                 contractDataFactory.endContract(contract.id)
                     .then(function (result) {
                         var con = contractDataModelFactory.withExtras(result.data);
                         contract.status = con.status;
+                        contract.act_end_dt = con.act_end_dt;
+                        contract.hasTerminatedEarly = con.hasTerminatedEarly;
+                        contract.loading = false;
                     });
 
             };
@@ -432,8 +395,8 @@ app.controller('investorController',
             };
 
             var load_contract_statuses = function () {
-                $scope.vm.statuses.push({"key": "Ongoing", "value": 1});
                 $scope.vm.statuses.push({"key": "New", "value": 2});
+                $scope.vm.statuses.push({"key": "Ongoing", "value": 1});
 
                 /* DEPRECATED - Contract can only be in suspended or ongoing status*/
                 //$scope.vm.statuses.push({"key": "Terminated", "value": 3});
@@ -454,8 +417,8 @@ app.controller('investorController',
                 $scope.active.loading = true;
                 var investor_id = $scope.vm.investor.id;
                 investorDataFactory.getContracts(investor_id)
-                    .success(function (data) {
-                        $scope.vm.investor.contracts = investorDataModelFactory.withContractExtras(data);
+                    .then(function (result) {
+                        $scope.vm.investor.contracts = investorDataModelFactory.withContractExtras(result.data);
                         $scope.active.loading = false;
                     });
             };
@@ -515,18 +478,11 @@ app.controller('investorController',
                 contractDataFactory.newContract(contract)
                     .success(function (result) {
                         contract.id = result.id;
-                        console.log(contract.id);
+                        contract.req_deposit = result.req_deposit;
                         $scope.vm.investor.contracts.push(contract);
                         cancel_add();
                     });
             };
-            //var new_driver = function (data) {
-            //    driverDataFactory.newDriver(data)
-            //        .success(function (result) {
-            //            alert(result);
-            //        });
-            //};
-
             var init = function () {
                 var url = (window.location.pathname);
                 console.log(url);

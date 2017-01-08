@@ -401,3 +401,13 @@ app.factory('deliveriesDataModelFactory', ['moment', function (moment) {
     return deliveriesDataModelFactory;
 
 }]);
+
+app.factory('cameraDataFactory', ['$http', function ($http) {
+    var URL_BASE = ''
+}]);
+app.factory('trackerDataFactory', ['$http', function ($http) {
+
+}]);
+app.factory('simDataFactory', ['$http', function ($http) {
+
+}]);

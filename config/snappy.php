@@ -5,14 +5,16 @@ return array(
 
     'pdf' => array(
         'enabled' => true,
-        'binary' => "C:\wkhtmltopdf\bin\wkhtmltopdf.exe",
+        'binary' => base_path('vendor/wemersonjanuario/wkhtmltopdf-windows/bin/64bit/wkhtmltopdf.exe'),
+        //'binary' => "C:\wkhtmltopdf\bin\wkhtmltopdf.exe",
         'timeout' => false,
         'options' => array(),
         'env'     => array(),
     ),
     'image' => array(
         'enabled' => true,
-        'binary'  => 'C:\wkhtmltopdf\bin\wkhtmltoimage.exe',
+        'binary' => base_path('vendor/wemersonjanuario/wkhtmltopdf-windows/bin/64bit/wkhtmltoimage.exe'),
+        //'binary'  => 'C:\wkhtmltopdf\bin\wkhtmltoimage.exe',
         'timeout' => false,
         'options' => array(),
         'env'     => array(),

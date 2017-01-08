@@ -17,6 +17,7 @@ class CreateSiteFilesTable extends Migration
             $table->integer('origin_id');
             $table->string('origin_type'); // POLYMORPHIC RELATION
             $table->string('name');
+            $table->string('type')->default('image');
             $table->string('full_url');
             $table->timestamps();
             $table->softDeletes();

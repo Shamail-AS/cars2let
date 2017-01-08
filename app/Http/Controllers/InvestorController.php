@@ -85,7 +85,7 @@ class InvestorController extends Controller
 
     public function api_contracts($id)
     {
-        return Investor::find($id)->contracts()->with('car', 'driver')->get();
+        return Investor::find($id)->contracts()->with('car', 'driver', 'handovers')->get();
     }
 
     public function api_drivers($id)

@@ -12,6 +12,7 @@
     <div class="investor-flex-container" ng-app="cars2let" ng-controller="investorController">
         <div class="profile-section">
             <div class="body investor-flex-container col">
+
                 <div class="pre-body">
                     <a href="{{url('/admin/investor/all')}}"><i class="fa fa-chevron-circle-left fa-4x"></i>
                     </a>
@@ -177,24 +178,42 @@
                 </div>
                 <!--Contracts container-->
                 <div ng-if="active.contracts && !active.loading" class="body-container">
+                    <button ng-click="openFilters()" class="btn btn-primary">
+                        Filters
+                    </button>
 
                     <div class="header">
                         <div class="field">
-                            <input class="form-control" type="text" placeholder="Search"
-                                   ng-model="search.contracts">
+
                         </div>
+
                     </div>
+
                     <div class="admin-flex-container row grow">
                         <div class="table-container" ng-if="vm.investor.contracts.length > 0">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>Status</th>
-                                    <th>Car</th>
-                                    <th>Driver</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Car<i ng-if="filters.contract.car_reg.length > 0"
+                                              class="fa fa-filter terminated"></i></th>
+                                    <th>Driver<i ng-if="filters.contract.driver_name.length > 0"
+                                                 class="fa fa-filter terminated"></i></th>
+                                    <th>Start Date
+                                        <i ng-if="filters.contract.start_date1 || filters.contract.start_date2"
+                                           class="fa fa-filter terminated"></i>
+                                        [Actual]
+                                        <i ng-if="filters.contract.act_start_date1 || filters.contract.act_start_date2"
+                                           class="fa fa-filter terminated"></i>
+                                    </th>
+                                    <th>End Date
+                                        <i ng-if="filters.contract.end_date1 || filters.contract.end_date2"
+                                           class="fa fa-filter terminated"></i>
+                                        [Actual]
+                                        <i ng-if="filters.contract.act_end_date1 || filters.contract.act_end_date2"
+                                           class="fa fa-filter terminated"></i></th>
                                     <th>Rent/Week (£)</th>
+                                    <th>Deposit (£)</th>
                                     <th>Created On</th>
                                     <th></th>
                                     <th></th>
@@ -202,20 +221,27 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="contract in (vm.investor.contracts
-                                | contractFilter : search.contracts) track by contract.id">
+                                | newContractFilter : filters.contract | orderBy : '-id') track by contract.id">
 
                                     <td>
+                                        <i ng-if="contract.loading" class="fa fa-spinner fa-spin"></i>
                                         <span style="margin-right: 10px">
                                             <i ng-if="contract.status == 1" class="fa fa-circle ongoing"></i>
                                             <i ng-if="contract.status == 2" class="fa fa-circle new"></i>
                                             <i ng-if="contract.status == 3" class="fa fa-circle terminated"></i>
                                             <i ng-if="contract.status == 4" class="fa fa-circle complete"></i>
                                         </span>
-                                        <button ng-if="contract.status == 2" class="btn btn-xs btn-warning"
-                                                ng-click="contractAction(contract,'start')">Start Contract
+
+                                        <button ng-if="contract.status == 2"
+                                                ng-disabled="!contract.canStart"
+                                                class="btn btn-xs btn-warning"
+                                                ng-click="contractAction(contract,'start')">Start
                                         </button>
+                                        <i ng-if="!contract.canStart && contract.status == 2"
+                                           class="fa fa-info-circle complete"
+                                           uib-tooltip="@{{ contract.canStart ? '' : 'Can\'t start before planned start' }}"></i>
                                         <button ng-if="contract.status <= 2" class="btn btn-xs btn-danger"
-                                                ng-click="contractAction(contract,'end')">End Contract
+                                                ng-click="contractAction(contract,'end')">End
                                         </button>
                                     </td>
 
@@ -245,7 +271,9 @@
                                         </ui-select>
                                     </td>
 
-                                    <td ng-if="!contract.edit_mode">@{{ formatDate(contract.dt_start_date) }}</td>
+                                    <td ng-if="!contract.edit_mode">@{{ formatDate(contract.dt_start_date) }}
+                                        [@{{ formatDate(contract.act_start_dt) }}]
+                                    </td>
                                     <td ng-if="contract.edit_mode">
                                         <input style="max-width: 110px;" type="text" class="form-control"
                                                uib-datepicker-popup
@@ -256,7 +284,9 @@
                                                close-text="Close"
                                                ng-click="openStartPicker(contract)"/>
                                     </td>
-                                    <td ng-if="!contract.edit_mode">@{{ formatDate(contract.dt_end_date) }}</td>
+                                    <td ng-if="!contract.edit_mode">@{{ formatDate(contract.dt_end_date) }}
+                                        [@{{ formatDate(contract.act_end_dt) }}]
+                                    </td>
                                     <td ng-if="contract.edit_mode">
                                         <input style="max-width: 110px;" type="text" class="form-control"
                                                uib-datepicker-popup
@@ -273,35 +303,34 @@
                                     <td ng-if="contract.edit_mode"><input style="max-width: 70px;"
                                                                           class="form-control" type="text"
                                                                           ng-model="contract.rate">
+
+                                    <td style="max-width: 10px;"
+                                        ng-if="!contract.edit_mode">@{{ contract.rec_deposit | number : 0}}
+                                        /@{{ contract.req_deposit | number : 0 }}</td>
+                                    <td ng-if="contract.edit_mode"><input style="max-width: 70px;"
+                                                                          class="form-control" type="text"
+                                                                          ng-model="contract.rec_deposit">/<input
+                                                style="max-width: 70px;"
+                                                class="form-control" type="text"
+                                                ng-model="contract.req_deposit">
                                     </td>
 
                                     <td>@{{ formatDate(contract.created_at) }}</td>
 
                                     <td ng-if="!contract.edit_mode">
-                                        @if(Auth::user()->isEditOnly)
-                                        <button type="button"
-                                                class="btn btn-xs btn-@{{ contract.paying ? 'default' : 'info' }}"
-                                                uib-popover-template="dynamicPopover.templateUrl"
-                                                ng-click="togglePay(contract)">
-                                            @{{ contract.paying ? 'Close' : 'Pay' }}
-                                        </button>
-                                        @endif
-                                        {{--<button ng-click="showRevenue(contract.id)" class="btn btn-xs btn-warning">Payments</button>--}}
                                         <button type="button"
                                                 class="btn btn-xs btn-warning"
-                                                uib-popover-template="dynamicPopover.revenueListUrl"
-                                                popover-trigger="dynamicPopover.trigger"
-                                                popover-placement="left-top"
-                                                ng-click="showRevenue(contract.id)">
+                                                ng-click="openPayments(contract)">
                                             Payments
                                         </button>
 
-                                            <button ng-click="openRevenues(contract)" class="btn btn-xs btn-primary">
-                                                Test
+                                        <button ng-click="openRentAllocs(contract)" class="btn btn-xs btn-primary">
+                                            Rent alloc
                                             </button>
-                                        @include('partials.admin.investor.create-rev')
-                                        @include('partials.admin.investor.revenue-list')
-                                            @include('partials.admin.investor.contract-payments')
+
+                                        @include('partials.admin.investor.contract-rent')
+                                        @include('partials.admin.investor.contract-filters')
+                                        @include('partials.admin.investor.contract-payment')
 
                                     </td>
                                     <td>
@@ -311,10 +340,14 @@
                                                     ng-click="edit(contract)"
                                                     class="btn btn-xs btn-primary">Edit
                                             </button>
-                                            {{--<button ng-if="!contract.edit_mode"--}}
-                                            {{--ng-click="deleteObj(contract,'contract')"--}}
-                                            {{--class="btn btn-xs btn-danger">Delete--}}
-                                            {{--</button>--}}
+                                            <a ng-href="@{{ contract.outUrl }}" ng-if="contract.outHandover"
+                                               class="btn btn-xs btn-success">Out</a>
+                                            <a ng-href="@{{ contract.inUrl }}" ng-if="contract.inHandover"
+                                               class="btn btn-xs btn-success">In</a>
+                                            <a ng-href="@{{ contract.handoverCreateUrl }}"
+                                               ng-if="!contract.outHandover || !contract.inHandover"
+                                               class="btn btn-xs btn-info">Create</a>
+
                                             <button ng-if="contract.edit_mode" ng-click="updateContract(contract)"
                                                     class="btn btn-xs btn-warning">Update
                                             </button>
@@ -454,6 +487,7 @@
 
     <script src="{{asset('Areas/Admin/Investor/module.js')}}"></script>
     <script src="{{asset('Areas/Admin/Investor/factory.js')}}"></script>
+    <script src="{{asset('Areas/Admin/Investor/modal-controllers.js')}}"></script>
     <script src="{{asset('Areas/Admin/Investor/controller.js')}}"></script>
     <script src="{{asset('Areas/Admin/Investor/filters.js')}}"></script>
 @endsection

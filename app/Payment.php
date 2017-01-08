@@ -14,6 +14,11 @@ class Payment extends Model
         return $this->belongsTo('App\BankAccount');
     }
 
+    public function contract()
+    {
+        return $this->belongsTo('App\Contract');
+    }
+
     public function authorizedBy()
     {
         return $this->belongsTo('App\User', 'auth_user_id');
