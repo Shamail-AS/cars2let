@@ -326,16 +326,45 @@
 	</div>
 </div>
 <br>
-<div class="sign" style="height: 30px">
-    Signature:<span></span><br>
-</div>
-	@forelse($files as $file)
+<div class="row">
+	<div class="col-md-12">
+		<div class="list-group">
+			<a class="list-group-item list-group-item-action active">
+				<center><h4>Handover Details</h4></center>
+			</a>
+		</div>
+		<table class="table table-bordered responsive">
+			<tbody>
+				<tr>
+					<td>HandOver Date</td>
+					<td>{{$handover->handover_date}}</td>
+				</tr>
+				<tr>
+					<td>Type</td>
+					<td>{{$handover->type}}</td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td>{{$handover->status}}</td>
+				</tr>
+				<tr>
+					<td>Comments</td>
+					<td>{{$handover->comments}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div> 	
+	@forelse($handover->files as $file)
 		<div class="row">
         	<div class="col-lg-12">
-        		<img class="img-responsive" src="{{url($file)}}">
+        		<img class="img-responsive" src="{{url($file->full_url)}}">
         	</div>
     	</div>
 	@empty
 	@endforelse
-	
+<hr> 	
+<div class="sign" style="height: 30px">
+    Signature:<span></span><br>
+</div>
 

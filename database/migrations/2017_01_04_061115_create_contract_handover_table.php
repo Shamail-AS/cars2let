@@ -12,11 +12,11 @@ class CreateContractHandoverTable extends Migration
      */
     public function up()
     {
-        Schema::create('contract_handover', function (Blueprint $table) {
+        Schema::create('contract_handovers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('car_id');
             $table->integer('driver_id');
-            $table->timestamp('contract_id');
+            $table->integer('contract_id');
             $table->string('handover_date');
             $table->string('type');
             $table->string('status');

@@ -43,6 +43,19 @@ Route::group(['middleware' => 'web'], function () {
 
         return $response;
     });
+    Route::get('images/app/handovers/{filename}', function ($filename) {
+        $path = storage_path() . '\app\handovers\\' . $filename;
+       
+        if(!File::exists($path)) abort(404);
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    });
     Route::get('images/app/driver/{driver_id}/{filename}', function ($driver_id,$filename) {
         $path = storage_path() . '\app\driver\\'.$driver_id.'\\' . $filename;
         
@@ -377,6 +390,9 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/{handover_id}', 'ContractHandoverController@show');
                 Route::put('/{handover_id}', 'ContractHandoverController@update');
                 Route::delete('/{handover_id}', 'ContractHandoverController@delete');
+                Route::post('/{handover_id}/attachment','ContractHandoverController@attachmentUpload');
+                Route::get('/{handover_id}/pdf','ContractHandoverController@downloadTicketPdf');                
+                
             });
         });
 

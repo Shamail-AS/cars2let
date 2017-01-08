@@ -17,4 +17,8 @@ class ContractHandover extends Model
    	public function driver() {
     	return $this->belongsTo('App\Driver');
     }
+    public function files()
+    {
+        return $this->morphMany('App\SiteFile', 'origin');
+    }
 }
