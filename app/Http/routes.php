@@ -224,6 +224,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::get('suppliers/for/{type}', 'SupplierController@api_list');
 
 });
+    Route::group(['middleware' => ['web']], function () {
+    // FOR Driver Registration As an indivisual
+    Route::get('drivers/create','DriverController@viewDriverRegistrationForm');
+    Route::post('drivers/store','DriverController@storeDriver');
+    });
+    
 
 Route::group(['prefix' => 'super', 'middleware' => ['web', 'auth', 'super-admin']], function () {
     Route::group(['prefix' => 'api'], function () {
