@@ -33,7 +33,9 @@ app.factory('detailsDataModelFactory', ['moment', function (moment) {
         car.x_road_tax_exp_at = moment(car.road_tax_exp_at).toDate();
         return car;
     };
-    detailsDataModelFactory.removeExtras = function (car) {
+    detailsDataModelFactory.removeExtras = function (car_data) {
+
+        var car = _.cloneDeep(car_data);
         car.available_since = moment(car.x_available_since).format('YYYY-MM-DD');
         car.first_reg_date = moment(car.x_first_reg_date).format('YYYY-MM-DD');
         car.pco_expires_at = moment(car.x_pco_expires_at).format('YYYY-MM-DD');
@@ -346,7 +348,6 @@ app.factory('supplierDataFactory', ['$http', function ($http) {
 
     return supplierDataFactory;
 }]);
-
 app.factory('supplierDataModelFactory', ['moment', function (moment) {
 
     var supplierDataModelFactory = {};
@@ -367,7 +368,6 @@ app.factory('supplierDataModelFactory', ['moment', function (moment) {
     };
     return supplierDataModelFactory;
 }]);
-
 
 app.factory('deliveriesDataFactory', ['$http', function ($http) {
 
@@ -402,12 +402,240 @@ app.factory('deliveriesDataModelFactory', ['moment', function (moment) {
 
 }]);
 
+app.factory('accidentDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/cars';
+    var accidentDataFactory = {};
+
+    accidentDataFactory.getCar = function (id) {
+        return $http.get(URL_BASE + '/' + id);
+    };
+    accidentDataFactory.getAccidents = function (car_id) {
+        return $http.get(URL_BASE + '/' + car_id + '/accidents');
+    };
+    accidentDataFactory.newCarAccident = function (car_id, data) {
+        return $http.post(URL_BASE + '/' + car_id + '/accidents', data);
+    };
+    accidentDataFactory.updateAccident = function (car_id, data) {
+        return $http.put(URL_BASE + '/' + car_id + '/accidents/' + data.id, data);
+    };
+
+    return accidentDataFactory;
+
+}]);
+app.factory('accidentDataModelFactory', ['moment', function (moment) {
+    var accidentDataModelFactory = {};
+    accidentDataModelFactory.collectionWithExtras = function (accidents) {
+
+        return _.each(accidents, function (accident) {
+            accidentDataModelFactory.withExtras(accident);
+        });
+    };
+    accidentDataModelFactory.withExtras = function (accident) {
+        var m_date = moment(accident.incident_at);
+        var year = m_date.year();
+        var month = m_date.month();
+        var date = m_date.date();
+        var hour = m_date.hour();
+        var minute = m_date.minute();
+        accident.incident_at = moment([year, month, date, hour, minute]).toDate();
+        accident.incident_time = moment([year, month, date, hour, minute]).toDate();
+        accident.detailUrl = '/api/admin/cars/' + accident.car.id + '/accidents/' + accident.id;
+        return accident;
+    };
+    accidentDataModelFactory.withoutExtras = function (accident) {
+        accident.driver_id = accident.driver.id;
+
+        var m_incident = moment(accident.incident_at);
+        var m_time = moment(accident.incident_time);
+        var year = m_incident.year();
+        var month = m_incident.month();
+        var date = m_incident.date();
+        var hour = m_time.hour();
+        var minute = m_time.minute();
+
+        var final_date = moment([year, month, date, hour, minute]);
+        console.log(final_date);
+
+        accident.incident_at = final_date.toDate();
+        delete(accident.driver);
+        delete(accident.incident_open);
+        delete(accident.isEdit);
+        return accident;
+    };
+    return accidentDataModelFactory;
+}]);
 app.factory('cameraDataFactory', ['$http', function ($http) {
-    var URL_BASE = ''
+    var URL_BASE = '/api/admin/cars';
+    var cameraDataFactory = {};
+
+    cameraDataFactory.getCamera = function (car_id) {
+        return $http.get(URL_BASE + '/' + car_id + '/cameras');
+    };
+    cameraDataFactory.newCamera = function (car_id, data) {
+        return $http.post(URL_BASE + '/' + car_id + '/cameras', data);
+    };
+    cameraDataFactory.updateCamera = function (car_id, camera_id, data) {
+        return $http.put(URL_BASE + '/' + car_id + '/cameras/' + camera_id, data);
+    };
+    return cameraDataFactory;
 }]);
+app.factory('cameraDataModelFactory', function (moment, partOrderDataModelFactory, partDeliveryDataModelFactory) {
+    var factory = {};
+    factory.withoutExtras = function (camera) {
+        camera.supplier_id = camera.supplier.id;
+        var data = _.cloneDeep(camera);
+        delete(data.supplier);
+        return data;
+    };
+
+    factory.withExtras = function (camera) {
+        camera.installed_at = moment(camera.installed_at).toDate();
+        if (camera.order) {
+            camera.order = partOrderDataModelFactory.withExtras(camera.order);
+            camera.order.delivery = _.head(camera.order.deliveries);
+            if (camera.order.delivery) {
+                camera.order.delivery = partDeliveryDataModelFactory.withExtras(camera.order.delivery);
+            }
+        }
+        return camera;
+    };
+    return factory;
+});
 app.factory('trackerDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/cars';
+    var trackerDataFactory = {};
 
+    trackerDataFactory.getTracker = function (car_id) {
+        return $http.get(URL_BASE + '/' + car_id + '/trackers');
+    };
+    trackerDataFactory.newTracker = function (car_id, data) {
+        return $http.post(URL_BASE + '/' + car_id + '/trackers', data);
+    };
+    trackerDataFactory.updateTracker = function (car_id, tracker_id, data) {
+        return $http.put(URL_BASE + '/' + car_id + '/trackers/' + tracker_id, data);
+    };
+    return trackerDataFactory;
 }]);
+app.factory('trackerDataModelFactory', function (moment, partOrderDataModelFactory, partDeliveryDataModelFactory) {
+    var factory = {};
+
+    factory.withoutExtras = function (tracker) {
+        tracker.supplier_id = tracker.supplier.id;
+        var data = _.cloneDeep(tracker);
+        delete(data.supplier);
+        return data;
+    };
+    factory.withExtras = function (tracker) {
+        tracker.installed_at = moment(tracker.installed_at).toDate();
+        if (tracker.order) {
+            tracker.order = partOrderDataModelFactory.withExtras(tracker.order);
+            tracker.order.delivery = _.head(tracker.order.deliveries);
+            if (tracker.order.delivery) {
+                tracker.order.delivery = partDeliveryDataModelFactory.withExtras(tracker.order.delivery);
+            }
+        }
+        if (tracker.sims) {
+            tracker.sim = _.head(tracker.sims);
+        }
+        return tracker;
+    };
+    return factory;
+});
 app.factory('simDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/sims';
+    var simDataFactory = {};
 
+    simDataFactory.getSims = function () {
+        return $http.get(URL_BASE);
+    };
+    simDataFactory.getSim = function (id) {
+        return $http.get(URL_BASE + '/' + id);
+    };
+    simDataFactory.newSim = function (data) {
+        return $http.post(URL_BASE, data);
+    };
+    simDataFactory.updateSim = function (sim_id, data) {
+        return $http.put(URL_BASE + '/' + sim_id, data);
+    };
+    return simDataFactory;
 }]);
+app.factory('simDataModelFactory', function (moment, partOrderDataModelFactory, partDeliveryDataModelFactory) {
+    var factory = {};
+
+    factory.withoutExtras = function (sim) {
+        sim.supplier_id = sim.supplier.id;
+        var data = _.cloneDeep(sim);
+        delete(data.supplier);
+        return data;
+    };
+    factory.withExtras = function (sim) {
+        if (sim.order) {
+            sim.order = partOrderDataModelFactory.withExtras(sim.order);
+            sim.order.delivery = _.head(sim.order.deliveries);
+            if (sim.order.delivery) {
+                sim.order.delivery = partDeliveryDataModelFactory.withExtras(sim.order.delivery);
+            }
+        }
+        return sim;
+    };
+    return factory;
+});
+app.factory('partOrderDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/part_orders';
+    var partOrderDataFactory = {};
+
+    partOrderDataFactory.getDeliveries = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/deliveries');
+    };
+    partOrderDataFactory.getSuppliers = function () {
+        return $http.get('/api/admin/suppliers/all');
+    };
+    partOrderDataFactory.orderCamera = function (id, data) {
+        return $http.post(URL_BASE + '/camera/' + id, data);
+    };
+    partOrderDataFactory.orderTracker = function (id, data) {
+        return $http.post(URL_BASE + '/tracker/' + id, data);
+    };
+    partOrderDataFactory.orderSim = function (id, data) {
+        return $http.post(URL_BASE + '/sim/' + id, data);
+    };
+
+    partOrderDataFactory.updateOrder = function (id, data) {
+        return $http.put(URL_BASE + '/' + id, data);
+    };
+
+
+    return partOrderDataFactory;
+}]);
+app.factory('partOrderDataModelFactory', function (moment) {
+    var factory = {};
+    factory.withExtras = function (order) {
+        order.cost = _.toNumber(order.cost);
+        return order;
+    };
+    return factory;
+});
+
+app.factory('partDeliveryDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/part_deliveries';
+    var partDeliveryDataFactory = {};
+
+    partDeliveryDataFactory.newDelivery = function (order_id, data) {
+        return $http.post(URL_BASE + '/' + order_id, data);
+    };
+    partDeliveryDataFactory.updateDelivery = function (id, data) {
+        return $http.put(URL_BASE + '/' + id, data);
+    };
+
+    return partDeliveryDataFactory;
+}]);
+app.factory('partDeliveryDataModelFactory', function (moment) {
+
+    var factory = {};
+    factory.withExtras = function (delivery) {
+        delivery.scheduled_at = moment(delivery.scheduled_at).toDate();
+        delivery.delivered_at = moment(delivery.delivered_at).toDate();
+        return delivery;
+    };
+    return factory;
+});

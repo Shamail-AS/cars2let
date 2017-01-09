@@ -25,11 +25,14 @@ class TrackerController extends Controller
             $trackers = $car->trackers;
             $trackers->each(function($tracker){
                $tracker->car = $tracker->car;
+                $tracker->sims = $tracker->sims;
+                $tracker->supplier = $tracker->supplier;
+                $tracker->order = $tracker->orders()->with('supplier', 'deliveries')->first();
             });
-            return $trackers;
+            return collect($trackers)->first();
         }
-        else 
-            return Tracker::with('car');    
+        else
+            return Tracker::with('car', 'sims', 'supplier', 'orders.supplier', 'orders.deliveries')->first();
     }
 
     /**
@@ -66,7 +69,7 @@ class TrackerController extends Controller
         $monolog->pushHandler(new \Monolog\Handler\FirePHPHandler());
         // Start logging
         $monolog->debug('Created', [$tracker]);
-        return $tracker;
+        return Tracker::with('supplier')->where('id', $tracker->id)->first();
     }
 
     /**
@@ -101,9 +104,9 @@ class TrackerController extends Controller
     public function update(Request $request, $car_id, $tracker_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($tracker= $car->tickets()->where('id', $tracker_id)->first()))
+        if (!($tracker = $car->trackers()->where('id', $tracker_id)->first()))
             // Show 404.
-            return response("This tracker does'nt belong to this car", 404);
+            return response("This tracker doesn't belong to this car", 404);
 
         if($request->imei)
             $tracker->imei = $request->imei;

@@ -52,7 +52,7 @@
                         </tr>
                         <tr>
                             <td>Police Details</td>
-                            <td>{{$accident->road_cond}}</td>
+                            <td>{{$accident->police_details}}</td>
                         </tr>
                         <tr>
                             <td>Comments</td>

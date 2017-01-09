@@ -130,8 +130,8 @@ class DeliveryController extends Controller
             $delivery->delivered_at = $request->delivered_at;
         if($request->recieved_by)
             $delivery->recieved_by = $request->recieved_by;
-        if($request->recieved_by)
-            $delivery->recieved_by = $request->recieved_by;
+        if ($request->received_by)
+            $delivery->received_by = $request->received_by;
         if($request->rec_user_id) {
             $rec_user = User::findOrFail($request->rec_user_id);
             $rec_user->deliveries()->save($delivery);
@@ -150,6 +150,8 @@ class DeliveryController extends Controller
             $delivery->odo_reading = $request->odo_reading;
         if($request->location)
             $delivery->location = $request->location;
+        if ($request->status)
+            $delivery->status = $request->status;
         if($delivery->save())
             return response("Update successful");
         else

@@ -221,6 +221,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
     //SUPPLIERS
     Route::get('suppliers/all', 'SupplierController@api_all');
+
+    //TODO: replace uses of this route with the one under api group - deprecate this
     Route::get('suppliers/for/{type}', 'SupplierController@api_list');
 
 });
@@ -377,6 +379,7 @@ Route::group(['prefix'=>'api'],function(){
                 Route::put('/{tracker_id}', 'TrackerController@update');
                 Route::delete('/{tracker_id}', 'TrackerController@delete');
             });
+
             Route::group(['prefix' => '{car_id}/accidents'], function () {
                 Route::get('/', 'AccidentController@index');
                 Route::post('/', 'AccidentController@store');
@@ -387,6 +390,27 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/{accident_id}/pdf','AccidentController@downloadAccidentPdf');                
                 
             });
+        });
+
+        Route::group(['prefix' => 'sims'], function () {
+            Route::get('/', 'SimController@index');
+            Route::post('/', 'SimController@store');
+            Route::get('/{sim_id}', 'SimController@show');
+            Route::put('/{sim_id}', 'SimController@update');
+            Route::delete('/{sim_id}', 'SimController@delete');
+        });
+        Route::group(['prefix' => 'part_orders'], function () {
+            Route::get('/all', 'PartOrderController@api_all');
+            Route::get('/{id}/deliveries', 'PartOrderController@api_deliveries');
+            Route::get('/{id}', 'PartOrderController@api_get');
+            Route::put('/{id}', 'PartOrderController@api_update');
+            Route::post('/{item_type}/{id}', 'PartOrderController@api_new');
+        });
+        Route::group(['prefix' => 'part_deliveries'], function () {
+            Route::get('/all', 'PartDeliveryController@api_all');
+            Route::get('/{id}', 'PartDeliveryController@api_get');
+            Route::put('/{id}', 'PartDeliveryController@api_update');
+            Route::post('/{order_id}', 'PartDeliveryController@api_new');
         });
 
         Route::group(['prefix' => 'contracts'], function () {
@@ -447,6 +471,8 @@ Route::group(['prefix'=>'api'],function(){
 
         Route::group(['prefix' => 'suppliers'], function () {
             Route::get('/all', 'SupplierController@api_all');
+            //Route::get('suppliers/all', 'SupplierController@api_all');
+            Route::get('/for/{type}', 'SupplierController@api_list');
         });
     });
 });

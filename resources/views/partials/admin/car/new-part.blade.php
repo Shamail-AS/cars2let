@@ -114,4 +114,5 @@
         </div>
     </div>
 </script>
-
+<script type="text/ng-template" id="new-sim"></script>
+<script type="text/ng-template" id="new-camera"></script>
