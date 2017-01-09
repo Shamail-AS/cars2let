@@ -77,7 +77,7 @@ class AccidentController extends Controller
         $monolog->pushHandler(new \Monolog\Handler\FirePHPHandler());
         // Start logging
         $monolog->debug('Created', [$car_accident]);
-        return $car_accident;
+        return CarAccident::with('car', 'driver')->where('id', $car_accident->id)->get()->first();
     }
 
 
@@ -119,14 +119,38 @@ class AccidentController extends Controller
             // Show 404.
             return response("This accident does'nt belong to this car", 404);
 
-        if($request->driver_id){
-            $driver = Driver::findOrFail($driver_id);
+        if ($request->driver_id)
             $accident->driver_id = $request->driver_id;
-        }
-        if($request->time_of_accident)
-            $accident->time_of_accident = $request->time_of_accident;
-        if($request->type_of_accident)
-            $accident->type_of_accident = $request->type_of_accident;
+        if ($request->incident_at)
+            $accident->incident_at = $request->incident_at;
+        if ($request->type)
+            $accident->type = $request->type;
+        if ($request->status)
+            $accident->status = $request->status;
+        if ($request->location)
+            $accident->location = $request->location;
+        if ($request->weather_cond)
+            $accident->weather_cond = $request->weather_cond;
+        if ($request->road_cond)
+            $accident->road_cond = $request->road_cond;
+        if ($request->police_details)
+            $accident->police_details = $request->police_details;
+        if ($request->comments)
+            $accident->comments = $request->comments;
+        if ($request->x_car_reg)
+            $accident->x_car_reg = $request->x_car_reg;
+        if ($request->x_car_details)
+            $accident->x_car_details = $request->x_car_details;
+        if ($request->x_driver_name)
+            $accident->x_driver_name = $request->x_driver_name;
+        if ($request->x_driver_licence)
+            $accident->x_driver_licence = $request->x_driver_licence;
+        if ($request->x_insured_name)
+            $accident->x_insured_name = $request->x_insured_name;
+        if ($request->x_insured_comp)
+            $accident->x_insured_comp = $request->x_insured_comp;
+        if ($request->x_insured_policy)
+            $accident->x_insured_policy = $request->x_insured_policy;
         
         if($accident->save())
             return response("Update successful");

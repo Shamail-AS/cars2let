@@ -164,15 +164,15 @@ app.controller('overviewController',
 app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticketDataFactory', 'ticketDataModelFactory'
     , function ($scope, moment, ModalService, ticketDataFactory, ticketDataModelFactory) {
 
-    $scope.vm = {
-        'car_id': -1,
-        'tickets': [],
-        'drivers': []
-    };
+        $scope.vm = {
+            'car_id': -1,
+            'tickets': [],
+            'drivers': []
+        };
 
         $scope.dirty = {
             token: ''
-    };
+        };
 
         $scope.formatDate = function (date) {
             if (!date) return "-";
@@ -197,9 +197,9 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
                     if (result.id) {
                         $scope.vm.tickets.push(result);
                     }
+                });
             });
-            });
-    };
+        };
 
         $scope.editTicket = function (ticket) {
             ModalService.showModal({
@@ -227,13 +227,13 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
                 .then(function (result) {
                     $scope.vm.tickets = ticketDataModelFactory.withExtras(result.data);
                 });
-    };
+        };
 
-    var get_id_from_url = function () {
-        var url = (window.location.pathname);
-        var id = _.split(url, '/')[3]; // that's where the car id is stored
-        return id;
-    };
+        var get_id_from_url = function () {
+            var url = (window.location.pathname);
+            var id = _.split(url, '/')[3]; // that's where the car id is stored
+            return id;
+        };
 
         var init = function () {
             var id = get_id_from_url();
@@ -245,8 +245,8 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
 
         };
 
-    init();
-}]);
+        init();
+    }]);
 
 app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close', function ($scope, moment, data, overviewDataFactory, ticketDataFactory, close) {
 
@@ -344,9 +344,177 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
 
 }]);
 
-app.controller('alertsController', ['$scope', function ($scope) {
+app.controller('accidentController', ['$scope', 'ModalService', 'accidentDataFactory', 'accidentDataModelFactory',
+    function ($scope, ModalService, accidentDataFactory, accidentDataModelFactory) {
 
-}]);
+        $scope.vm = {
+            car_id: -1,
+            accidents: []
+        };
+        $scope.dirty = {};
+        $scope.formatDate = function (date) {
+            if (!date) return "-";
+            return format_date(date);
+        };
+        $scope.newAccident = function () {
+            ModalService.showModal({
+                scope: $scope,
+                templateUrl: "new-accident.html",
+                controller: "accidentModalController",
+                inputs: {
+                    data: {
+                        token: $scope.dirty.token,
+                        car_id: $scope.vm.car_id
+                    }
+                }
+            }).then(function (modal) {
+                modal.element.modal();
+                modal.close.then(function (result) {
+                    if (result.id) {
+                        $scope.vm.accidents.push(result);
+                    }
+                });
+            });
+        };
+
+        $scope.editAccident = function (accident) {
+            ModalService.showModal({
+                scope: $scope,
+                templateUrl: "new-accident.html",
+                controller: "accidentModalController",
+                inputs: {
+                    data: {
+                        token: $scope.dirty.token,
+                        car_id: $scope.vm.car_id,
+                        accident: accident
+                    }
+                }
+            }).then(function (modal) {
+                modal.element.modal();
+                modal.close.then(function (result) {
+                    if (result.id) {
+                        accident = result;
+                    }
+                });
+            });
+        };
+
+        var format_date = function (date) {
+            var dt = moment(date);
+            return dt.format("YYYY-MM-DD, HH:mm");
+        };
+
+
+        var load_accidents = function (car_id) {
+            accidentDataFactory.getAccidents(car_id)
+                .then(function (result) {
+                    $scope.vm.accidents = accidentDataModelFactory.collectionWithExtras(result.data);
+                });
+
+        };
+
+        var get_id_from_url = function () {
+            var url = (window.location.pathname);
+            var id = _.split(url, '/')[3]; // that's where the car id is stored
+            return id;
+        };
+
+        var init = function () {
+            var id = get_id_from_url();
+            if (id) {
+                $scope.vm.car_id = id;
+                $scope.dirty.token = $('input#csrf_token').val();
+                load_accidents(id);
+            }
+
+        };
+
+        init();
+    }]);
+app.controller('accidentModalController',
+    ['$scope', 'moment', 'accidentDataFactory', 'ticketDataFactory', 'accidentDataModelFactory', 'data', 'close',
+        function ($scope, moment, accidentDataFactory, ticketDataFactory, accidentDataModelFactory, data, close) {
+
+            $scope.vm = {
+                car_id: data.car_id,
+                token: data.token,
+                types: [],
+                statuses: []
+            };
+            $scope.dirty = {};
+
+            $scope.close = function (result) {
+                close(result, 500); // close, but give 500ms for bootstrap to animate
+            };
+            $scope.formatDate = function (date) {
+                if (!date) return "-";
+                return format_date(date);
+            };
+
+            $scope.save = function () {
+                var data = ($scope.dirty);
+                data._token = $scope.vm.token;
+                var car_id = $scope.vm.car.id;
+                var driver = _.cloneDeep(data.driver);
+                if ($scope.dirty.isEdit) {
+                    update_accident(car_id, data);
+                }
+                else {
+                    record_accident(car_id, data);
+                }
+                $scope.dirty.driver = driver;
+            };
+
+            $scope.inferDriver = function () {
+                var car_id = data.car_id;
+                var incident_dt = moment($scope.dirty.incident_at).unix();
+
+                ticketDataFactory.inferDriver(car_id, incident_dt)
+                    .then(function (result) {
+                        $scope.dirty.driver = result.data;
+                    });
+            };
+
+            var format_date = function (date) {
+                var dt = moment(date);
+                return dt.format("MMM DD, YYYY");
+            };
+
+            var record_accident = function (id, data) {
+                accidentDataFactory.newCarAccident(id, accidentDataModelFactory.withoutExtras(data))
+                    .then(function (result) {
+                        console.log(result.data);
+                        close(result.data);
+                    });
+            };
+            var update_accident = function (id, data) {
+                accidentDataFactory.updateAccident(id, accidentDataModelFactory.withoutExtras(data))
+                    .then(function (result) {
+                        console.log(result);
+                        close('updated');
+                    });
+            };
+            var load_car = function (id) {
+                accidentDataFactory.getCar(id)
+                    .then(function (result) {
+                        $scope.vm.car = result.data;
+                    });
+            };
+
+            var init = function () {
+                load_car(data.car_id);
+                $scope.vm.statuses = _.concat($scope.vm.statuses, ['open', 'more-info', 'police-case', 'insured', 'settled', 'closed']);
+                $scope.vm.types = _.concat($scope.vm.types, ['minor', 'major']);
+                if (data.accident) {
+                    $scope.dirty = data.accident;
+                    $scope.dirty.isEdit = true;
+                }
+            };
+
+            init();
+
+
+        }]);
 
 app.controller('servicesController', ['$scope', 'moment', 'ModalService', 'servicesDataFactory', 'servicesDataModelFactory'
     , function ($scope, moment, ModalService, servicesDataFactory, servicesDataModelFactory) {
@@ -433,7 +601,7 @@ app.controller('servicesController', ['$scope', 'moment', 'ModalService', 'servi
         };
 
         init();
-}]);
+    }]);
 app.controller('serviceModalController',
     ['$scope', 'moment', 'overviewDataFactory', 'servicesDataFactory', 'servicesDataModelFactory', 'supplierDataFactory', 'data', 'close',
         function ($scope, moment, overviewDataFactory, servicesDataFactory, servicesDataModelFactory, supplierDataFactory, data, close) {
@@ -541,10 +709,9 @@ app.controller('deliveriesController',
             $scope.dirty = {
                 token: ''
             };
-
-            var format_date = function (date) {
-                var dt = moment(date);
-                return dt.format("MMM DD, YYYY");
+            $scope.formatDate = function (date) {
+                if (!date) return "-";
+                return format_date(date);
             };
 
             $scope.newDelivery = function () {
@@ -586,6 +753,12 @@ app.controller('deliveriesController',
                 });
             };
 
+            var format_date = function (date) {
+                var dt = moment(date);
+                if (!dt.isValid()) return "-";
+                return dt.format("MMM DD, YYYY");
+            };
+
             var load_deliveries = function (id) {
                 deliveriesDataFactory.getDeliveries(id)
                     .then(function (result) {
@@ -611,7 +784,7 @@ app.controller('deliveriesController',
             };
 
             init();
-}]);
+        }]);
 app.controller('deliveriesModalController',
     ['$scope', 'moment', 'deliveriesDataFactory', 'overviewDataFactory', 'deliveriesDataModelFactory', 'data', 'close',
         function ($scope, moment, deliveriesDataFactory, overviewDataFactory, deliveriesDataModelFactory, data, close) {
@@ -648,9 +821,9 @@ app.controller('deliveriesModalController',
             };
             var update_delivery = function (data) {
                 data._token = $scope.vm.token;
-                deliveriesDataFactory.updateDelivery(data)
+                deliveriesDataFactory.updateDelivery(data.car.id, data.id, data)
                     .then(function (result) {
-
+                        $scope.close("Updated");
                     });
             };
 
@@ -687,19 +860,239 @@ app.controller('deliveriesModalController',
 
         }]);
 
-app.controller('partsController', ['$scope', 'cameraDataFactory', 'trackerDataFactory', 'simDataFactory',
-    function ($scope, cameraDataFactory, trackerDataFactory, simDataFactory) {
+app.controller('partsController',
+    ['$scope',
+        'cameraDataFactory',
+        'cameraDataModelFactory',
+        'trackerDataFactory',
+        'trackerDataModelFactory',
+        'simDataFactory',
+        'simDataModelFactory',
+        'partOrderDataFactory',
+        'partOrderDataModelFactory',
+        'partDeliveryDataFactory',
+        'partDeliveryDataModelFactory',
+        function ($scope,
+                  cameraDataFactory,
+                  cameraDataModelFactory,
+                  trackerDataFactory,
+                  trackerDataModelFactory,
+                  simDataFactory,
+                  simDataModelFactory,
+                  partOrderDataFactory,
+                  partOrderDataModelFactory,
+                  partDeliveryDataFactory,
+                  partDeliveryDataModelFactory) {
 
         $scope.vm = {
+            car_id: -1,
             camera: {},
             sim: {},
-            tracker: {}
+            tracker: {},
+            suppliers: [],
+            statuses: {
+                tracker: ['ordered', 'delivered', 'fitted', 'faulty', 'removed', 'deactivated'],
+                camera: ['ordered', 'delivered', 'fitted', 'faulty', 'removed', 'deactivated'],
+                order: ['ready', 'scheduled', 'delivered', 'cancelled']
+            }
         };
 
+            $scope.dirty = {};
 
-        var get_parts = function (car_id) {
+            $scope.create = function (type) {
+                if (type == 'tracker')
+                    new_tracker($scope.vm.tracker);
+                else if (type == 'camera')
+                    new_camera($scope.vm.camera);
+                else if (type == 'sim')
+                    new_sim($scope.vm.sim);
+            };
+            $scope.update = function (type) {
+                if (type == 'tracker')
+                    update_tracker($scope.vm.tracker);
+                else if (type == 'camera')
+                    update_camera($scope.vm.camera);
+                else if (type == 'sim')
+                    update_sim($scope.vm.sim);
+            };
 
+            $scope.order = function (type) {
+                if (type == 'tracker')
+                    order_tracker($scope.vm.tracker);
+                else if (type == 'camera')
+                    order_camera($scope.vm.camera);
+                else if (type == 'sim')
+                    order_sim($scope.vm.sim);
+            };
+
+            $scope.deliver = function (order) {
+                var data = order.delivery;
+                data._token = $scope.dirty.token;
+                book_delivery(order, data);
+            };
+
+
+            $scope.updateOrder = function (order) {
+                if (!order) return;
+                update_order(order.id, order);
+            };
+            $scope.updateDelivery = function (delivery) {
+                if (!delivery) return;
+                update_delivery(delivery.id, delivery);
+            };
+
+            var new_tracker = function (tracker) {
+                var data = tracker;
+                var car_id = $scope.vm.car_id;
+                if (car_id < 0) return;
+
+                tracker.loading = true;
+                trackerDataFactory.newTracker(car_id, trackerDataModelFactory.withoutExtras(data))
+                    .then(function (result) {
+                        $scope.vm.tracker = trackerDataModelFactory.withExtras(result.data);
+                        tracker.loading = false;
+                    });
+            };
+            var new_camera = function (camera) {
+                var data = camera;
+                var car_id = $scope.vm.car_id;
+                if (car_id < 0) return;
+
+                camera.loading = true;
+                cameraDataFactory.newCamera(car_id, cameraDataModelFactory.withoutExtras(data))
+                    .then(function (result) {
+                        $scope.vm.camera = cameraDataModelFactory.withExtras(result.data);
+                        camera.loading = false;
+                    });
+            };
+            var new_sim = function (sim) {
+                var data = sim;
+                data.tracker_id = $scope.vm.tracker.id;
+
+                sim.loading = true;
+                simDataFactory.newSim(simDataModelFactory.withoutExtras(data))
+                    .then(function (result) {
+                        $scope.vm.sim = simDataModelFactory.withExtras(result.data);
+                        sim.loading = false;
+                    });
+            };
+
+            var update_tracker = function (tracker) {
+                var data = tracker;
+                var car_id = $scope.vm.car_id;
+                if (car_id < 0) return;
+
+                tracker.loading = true;
+                trackerDataFactory.updateTracker(car_id, tracker.id, data)
+                    .then(function (result) {
+                        tracker.loading = false;
+                    });
+            };
+            var update_camera = function (camera) {
+                var data = camera;
+                var car_id = $scope.vm.car_id;
+                if (car_id < 0) return;
+
+                camera.loading = true;
+                cameraDataFactory.updateCamera(car_id, camera.id, data)
+                    .then(function (result) {
+                        camera.loading = false;
+                    });
+            };
+            var update_sim = function (sim) {
+                var data = sim;
+                sim.loading = true;
+                simDataFactory.updateSim(sim.id, data)
+                    .then(function (result) {
+                        sim.loading = false;
+                    });
+            };
+
+            var order_tracker = function (tracker) {
+                var data = $scope.vm.tracker.order;
+                delete(data.supplier);
+                $scope.vm.tracker.order.loading = true;
+                partOrderDataFactory.orderTracker(tracker.id, data)
+                    .then(function (result) {
+                        tracker.order = partOrderDataModelFactory.withExtras(result.data);
+                        $scope.vm.tracker.order.loading = false;
+                    });
+            };
+            var order_camera = function (camera) {
+                var data = $scope.vm.camera.order;
+                $scope.vm.camera.order.loading = true;
+                partOrderDataFactory.orderCamera(camera.id, data)
+                    .then(function (result) {
+                        console.log(result.data);
+                        camera.order = partOrderDataModelFactory.withExtras(result.data);
+                        $scope.vm.camera.order.loading = false;
+                    });
+            };
+            var order_sim = function (sim) {
+                var data = $scope.vm.sim.order;
+                $scope.vm.sim.order.loading = true;
+                partOrderDataFactory.orderSim(sim.id, data)
+                    .then(function (result) {
+                        console.log(result.data);
+                        sim.order = partOrderDataModelFactory.withExtras(result.data);
+                        $scope.vm.sim.order.loading = false;
+                    });
+            };
+
+            var book_delivery = function (order, delivery_data) {
+                delivery_data.loading = true;
+                partDeliveryDataFactory.newDelivery(order.id, delivery_data)
+                    .then(function (result) {
+                        console.log(result.data);
+                        order.delivery = partDeliveryDataModelFactory.withExtras(result.data);
+                        delivery_data.loading = false;
+                    });
+            };
+
+            var update_order = function (order_id, order) {
+                order.loading = true;
+                partOrderDataFactory.updateOrder(order_id, order)
+                    .then(function (result) {
+                        order.loading = false;
+                    })
+            };
+
+            var update_delivery = function (delivery_id, delivery) {
+                delivery.loading = true;
+                partDeliveryDataFactory.updateDelivery(delivery_id, delivery)
+                    .then(function (result) {
+                        console.log(result.data);
+                        delivery.loading = false;
+                    })
         };
+
+            var get_parts = function (car_id) {
+                cameraDataFactory.getCamera(car_id)
+                    .then(function (result) {
+                        $scope.vm.camera = cameraDataModelFactory.withExtras(result.data);
+                        return result.data.order;
+                    });
+                trackerDataFactory.getTracker(car_id)
+                    .then(function (result) {
+                        $scope.vm.tracker = trackerDataModelFactory.withExtras(result.data);
+                        return $scope.vm.tracker.sim;
+                    })
+                    .then(function (sim) {
+                        simDataFactory.getSim(sim.id)
+                            .then(function (result) {
+                                console.log(result);
+                                $scope.vm.sim = simDataModelFactory.withExtras(result.data);
+                            });
+                    });
+
+            };
+
+            var load_suppliers = function () {
+                partOrderDataFactory.getSuppliers()
+                    .then(function (result) {
+                        $scope.vm.suppliers = result.data;
+                    })
+            };
 
         var get_id_from_url = function () {
             var url = (window.location.pathname);
@@ -712,9 +1105,10 @@ app.controller('partsController', ['$scope', 'cameraDataFactory', 'trackerDataFa
             if (id) {
                 $scope.vm.car_id = id;
                 $scope.dirty.token = $('input#csrf_token').val();
-                load_deliveries(id);
+                get_parts(id);
+                load_suppliers();
             }
         };
 
         init();
-}]);
+        }]);

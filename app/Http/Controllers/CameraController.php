@@ -23,11 +23,13 @@ class CameraController extends Controller
             $cameras = $car->cameras;
             $cameras->each(function($camera){
                $camera->car = $camera->car;
+                $camera->supplier = $camera->supplier;
+                $camera->order = $camera->orders()->with('supplier', 'deliveries')->first();
             });
-            return $cameras;
+            return collect($cameras)->first();
         }
         else {
-            return Camera::with('car')->get();
+            return Camera::with('car', 'supplier', 'orders.supplier', 'orders.deliveries')->first();
         }    
     }
 
@@ -65,7 +67,7 @@ class CameraController extends Controller
         $monolog->pushHandler(new \Monolog\Handler\FirePHPHandler());
         // Start logging
         $monolog->debug('Created', [$camera]);
-        return $camera;
+        return Camera::with('supplier')->where('id', $camera->id)->first();
     }
 
     /**
@@ -100,9 +102,9 @@ class CameraController extends Controller
     public function update(Request $request, $car_id, $camera_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($camera= $car->tickets()->where('id', $camera_id)->first()))
+        if (!($camera = $car->cameras()->where('id', $camera_id)->first()))
             // Show 404.
-            return response("This camera does'nt belong to this car", 404);
+            return response("This camera doesn't belong to this car", 404);
 
         if($request->model)
             $camera->model = $request->model;

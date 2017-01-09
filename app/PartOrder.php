@@ -16,12 +16,12 @@ class PartOrder extends Model
 
     public function supplier()
     {
-        return $this->hasOne('App\Supplier');
+        return $this->belongsTo('App\Supplier');
     }
 
     public function deliveries()
     {
-        return $this->hasMany('App\Delivery');
+        return $this->hasMany('App\PartDelivery');
     }
 
     public function authorizedBy()

@@ -7,16 +7,16 @@
 @section('content')
 
     <div class="row" ng-app="cars2let">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div id="left-side-bar" ng-controller="detailsController">
                 <div class="overflow flex-container col">
                     <div class="pre-body">
-                        <h2><a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left"></i> All
-                            </a>/Car Details</h2>
+                        <h3><a href="{{url('/admin/car/all')}}"><i class="fa fa-chevron-circle-left"></i> All
+                            </a>/Car Details</h3>
                         <hr>
                     </div>
 
-                    <form class="main-body">
+                    <div class="main-body">
                         <div ng-show="vm.loading" class="modal-cover">
                             <i class="fa fa-spinner fa-5x fa-spin"></i>
                         </div>
@@ -196,11 +196,11 @@
                                 Update
                             </button>
                         @endif
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div id="mid-section">
                 @include('admin.car.views.'.$page)
             </div>
@@ -208,10 +208,12 @@
         <div class="col-md-2">
             <div id="right-side-bar" ng-controller="detailsController">
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id)}}">Overview</a></li>
+                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id)}}">Notifications</a></li>
                     {{--                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/contracts')}}">Contracts</a>--}}
                     </li>
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/tickets')}}">Tickets</a>
+                    </li>
+                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/accidents')}}">Accidents</a>
                     </li>
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/services')}}">Service +
                             Repairs</a>

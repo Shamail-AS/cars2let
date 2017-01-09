@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label>Scheduled For</label>
                                     {{--<input ng-model="delivery.issue_dt" type="text" class="form-control">--}}
-                                    <input type="text" class="form-control" uib-datepicker-popup
+                                    <input required="required" type="text" class="form-control" uib-datepicker-popup
                                            ng-model="delivery.scheduled_at"
                                            is-open="dirty.schedule_open"
                                            ng-required="true"
@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     <label>Delivered At</label>
                                     <input type="text" class="form-control" uib-datepicker-popup
-                                           ng-model="delivery.received_at"
+                                           ng-model="delivery.delivered_at"
                                            is-open="dirty.receive_open"
                                            ng-required="true"
                                            close-text="Close"
