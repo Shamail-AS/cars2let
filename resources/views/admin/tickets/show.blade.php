@@ -24,7 +24,9 @@
                         </tr>
                         <tr>
                             <td>Driver</td>
-                            <td>{{$ticket->driver->name}}</td>
+                            @if($ticket->driver->name)
+                                <td>{{$ticket->driver->name}}</td>
+                            @endif
                         </tr>
                     </tbody>
                 </table>    
