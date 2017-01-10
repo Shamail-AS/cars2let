@@ -245,7 +245,9 @@
                                         </button>
                                     </td>
 
-                                    <td ng-if="!contract.edit_mode">@{{ contract.car.reg_no }}</td>
+                                    <td ng-if="!contract.edit_mode"><a
+                                                ng-href="@{{ '/admin/car/' + contract.car.id }}">@{{ contract.car.reg_no }}</a>
+                                    </td>
                                     <td ng-if="contract.edit_mode">
                                         <ui-select style="min-width: 120px;" ng-model="contract.car">
                                             <ui-select-match allow-clear="true">
