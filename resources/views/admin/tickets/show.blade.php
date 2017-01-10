@@ -20,13 +20,11 @@
                     <tbody>
                         <tr>
                             <td>Car</td>
-                            <td>{{$ticket->car->reg_no}}</td>
+                            <td>{{$ticket->car->reg_no or null}}</td>
                         </tr>
                         <tr>
                             <td>Driver</td>
-                            @if($ticket->driver->name)
-                                <td>{{$ticket->driver->name}}</td>
-                            @endif
+                            <td>{{$ticket->driver->name or null}}</td>
                         </tr>
                     </tbody>
                 </table>    
