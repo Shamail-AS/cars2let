@@ -162,7 +162,6 @@ return [
         Barryvdh\Snappy\ServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
-        League\Flysystem\AwsS3v2\AwsS3Adapter::class,
     ],
 
     /*
