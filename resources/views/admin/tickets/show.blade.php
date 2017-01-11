@@ -45,11 +45,11 @@
                             <tr>
                                 @if($file->type == 'image')
                                 <td>
-                                    <img style="display: inline-block;"  class="img-responsive" src="{{$file->full_url}}" width="100"><a href="{{$file->full_url}}" class="btn btn-primary" download="true">Download</a>
+                                    <img style="display: inline-block;"  class="img-responsive" src="{{$file->full_url}}" width="100"><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
                                 </td>
                                 @else
                                     <td>
-                                        <p style="display: inline-block;">{{$file->name}}</p><a href="{{$file->full_url}}" class="btn btn-primary" download="true">Download</a>
+                                        <p style="display: inline-block;">{{$file->name}}</p><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
                                     </td>
                                 @endif
                             </tr> 
