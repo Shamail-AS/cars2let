@@ -258,30 +258,31 @@ class TicketController extends Controller
             return response("This ticket doesn't belong to this car", 404);
         $driver = Driver::findOrFail($car_ticket->driver->id);
         $driver_fileName = array();
-        $pdf = PDF::loadView('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);
-        File::delete('pdf/ticket/'.$ticket_id.'/ticket.pdf');
-        $pdf->save('pdf/ticket/'.$ticket_id.'/ticket.pdf');
-        $zip_file_path = 'pdf/ticket/'.$ticket_id.'/'.Str::random(8).'_ticket.zip';
-        $zip_file = Zipper::make($zip_file_path)->add('pdf/ticket/'.$ticket_id.'/ticket.pdf');
-        foreach ($driver->files as $file ) {
-            $full_url = url($file->full_url);
-            $driver_fileName[] = $full_url;
-            $zip_file->addString($file->name,file_get_contents($full_url));
-        }
-        $ticket_fileName = array();
-        foreach ($car_ticket->files as $file) {
-            $full_url = url($file->full_url);
-            $ticket_fileName[] = $full_url; 
-            $zip_file->addString($file->name,file_get_contents($full_url));
-        }
+        return \App\SiteFile::viewToPDF('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);
+        // $pdf = PDF::loadView('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);
+        // File::delete('pdf/ticket/'.$ticket_id.'/ticket.pdf');
+        // $pdf->save('pdf/ticket/'.$ticket_id.'/ticket.pdf');
+        // $zip_file_path = 'pdf/ticket/'.$ticket_id.'/'.Str::random(8).'_ticket.zip';
+        // $zip_file = Zipper::make($zip_file_path)->add('pdf/ticket/'.$ticket_id.'/ticket.pdf');
+        // foreach ($driver->files as $file ) {
+        //     $full_url = url($file->full_url);
+        //     $driver_fileName[] = $full_url;
+        //     $zip_file->addString($file->name,file_get_contents($full_url));
+        // }
+        // $ticket_fileName = array();
+        // foreach ($car_ticket->files as $file) {
+        //     $full_url = url($file->full_url);
+        //     $ticket_fileName[] = $full_url; 
+        //     $zip_file->addString($file->name,file_get_contents($full_url));
+        // }
         
-        //return view('sample',['driver'=>$driver]);
-        //$files = 
-        $headers = array(
-                    'Content-Type' => 'application/octet-stream',
-                );
+        // //return view('sample',['driver'=>$driver]);
+        // //$files = 
+        // $headers = array(
+        //             'Content-Type' => 'application/octet-stream',
+        //         );
 
-        return redirect(url($zip_file_path));
+        // return redirect(url($zip_file_path));
         //return $pdf->download('pdf');
     }
 }
