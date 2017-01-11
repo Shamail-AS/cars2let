@@ -184,9 +184,9 @@ class AccidentController extends Controller
                     $site_file = new SiteFile;
                     $extension = $file->getClientOriginalExtension();
                     $fileName = Str::random(8).'.'.$extension;
-                    $stored_file = Storage::disk('local')->put('accident/'.$fileName, file_get_contents($file));
+                    $stored_file = Storage::disk('s3')->put('accident/'.$fileName, file_get_contents($file));
                     $site_file->name = $fileName;
-                    $site_file->full_url = "images/app/accidents/" . $fileName;
+                    $site_file->full_url = 'https://laravel-tgyv.objects.frb.io/accident/'.$fileName;
                     if(in_array($extension,$ext)){
                         $site_file->type = "image";
                     }

@@ -99,9 +99,9 @@ class ContractHandoverController extends Controller
                     $site_file = new SiteFile;
                     $extension = $file->getClientOriginalExtension();
                     $fileName = Str::random(8).'.'.$extension;
-                    $stored_file = Storage::disk('local')->put('handovers/'.$fileName, file_get_contents($file));
+                    $stored_file = Storage::disk('s3')->put('handovers/'.$fileName, file_get_contents($file));
                     $site_file->name = $fileName;
-                    $site_file->full_url = "images/app/handovers/" . $fileName;
+                    $site_file->full_url = 'https://laravel-tgyv.objects.frb.io/handovers/'.$fileName;
                     if(in_array($extension,$ext)){
                         $site_file->type = "image";
                     }
