@@ -216,7 +216,7 @@ class TicketController extends Controller
                     $fileName = Str::random(8).'.'.$extension;
                     $stored_file = Storage::disk('s3')->put('tickets/'.$fileName, file_get_contents($file));
                     $site_file->name = $fileName;
-                    $site_file->full_url = Storage::disk('s3')->url("images/app/tickets/" . $fileName);
+                    $site_file->full_url = Storage::disk('s3')->url("tickets/" . $fileName);
                     if(in_array($extension,$ext)){
                         $site_file->type = "image";
                     }
