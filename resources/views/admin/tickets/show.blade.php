@@ -20,11 +20,11 @@
                     <tbody>
                         <tr>
                             <td>Car</td>
-                            <td>{{$ticket->car->reg_no}}</td>
+                            <td>{{$ticket->car->reg_no or null}}</td>
                         </tr>
                         <tr>
                             <td>Driver</td>
-                            <td>{{$ticket->driver->name}}</td>
+                            <td>{{$ticket->driver->name or null}}</td>
                         </tr>
                     </tbody>
                 </table>    

@@ -22,7 +22,9 @@
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
       "barryvdh/laravel-snappy": "^0.3.1",
       "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
-      "chumper/zipper": "0.6.x"
+      "chumper/zipper": "0.6.x",
+        "aws/aws-sdk-php-laravel": " ~2.0",
+        "league/flysystem-aws-s3-v2": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
