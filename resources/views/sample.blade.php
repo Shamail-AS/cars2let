@@ -353,9 +353,7 @@
                     <td>{{$contract->weeksDone}}/{{$contract->weeksTotal}}</td>
                     <td>{{$contract->revenue}}</td>
                     <td>{{$contract->rent}}</td>
-                    <td><a href="{{url('/investor/contracts/'.$contract->id)}}" class="btn btn-xs btn-info">View</a> </td>
-
-                </tr>
+				</tr>
 
             @endforeach
             </tbody>

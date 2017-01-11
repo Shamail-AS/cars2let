@@ -124,10 +124,9 @@ class DriverController extends Controller
     }
 
      public function downloadFullPDF($id){
-        $driver = Driver::findOrFail(1);
-        $pdf = PDF::loadView('sample',['driver'=>$driver]);
-        //return view('sample',['driver'=>$driver]);
-        return $pdf->download('pdf');
+        $driver = Driver::findOrFail($id);
+        return \App\SiteFile::viewToPDF('sample',['driver'=>$driver]);
+
     }
 
     public function viewDriverRegistrationForm() {

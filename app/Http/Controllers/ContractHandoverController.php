@@ -124,25 +124,27 @@ class ContractHandoverController extends Controller
         $contract = Contract::findOrFail($contract_id);
         $handover = ContractHandover::findOrFail($handover_id);
         $driver = Driver::findOrFail($handover->driver->id);
-        //return view('contract',['contract'=>$contract,'handover'=>$handover]);
-        $driver_fileName = array();
-        $pdf = PDF::loadView('contract',['contract'=>$contract,'handover'=>$handover]);
-        File::delete('pdf/handover/'.$contract_id.'/handover_contract.pdf');
-        $pdf->save('pdf/handover/'.$contract_id.'/handover_contract.pdf');
-        $filename = 'contract' . $contract->id . '_handover-' . $handover->type . '.zip';
-        $zip_file_path = 'pdf/handover/' . $contract_id . '/' . $filename;
-        $zip_file = Zipper::make($zip_file_path)->add('pdf/handover/'.$contract_id.'/handover_contract.pdf');
-        foreach ($handover->files as $file) {
-            $full_url = url($file->full_url); 
-            $zip_file->addString($file->name,file_get_contents($full_url));
-        }
+        return \App\SiteFile::viewToPDF('contract',['contract'=>$contract]);
         
-        //$files = 
-        $headers = array(
-                    'Content-Type' => 'application/octet-stream',
-                );
+        //return view('contract',['contract'=>$contract,'handover'=>$handover]);
+        // $driver_fileName = array();
+        // $pdf = PDF::loadView('contract',['contract'=>$contract,'handover'=>$handover]);
+        // File::delete('pdf/handover/'.$contract_id.'/handover_contract.pdf');
+        // $pdf->save('pdf/handover/'.$contract_id.'/handover_contract.pdf');
+        // $filename = 'contract' . $contract->id . '_handover-' . $handover->type . '.zip';
+        // $zip_file_path = 'pdf/handover/' . $contract_id . '/' . $filename;
+        // $zip_file = Zipper::make($zip_file_path)->add('pdf/handover/'.$contract_id.'/handover_contract.pdf');
+        // foreach ($handover->files as $file) {
+        //     $full_url = url($file->full_url); 
+        //     $zip_file->addString($file->name,file_get_contents($full_url));
+        // }
+        
+        // //$files = 
+        // $headers = array(
+        //             'Content-Type' => 'application/octet-stream',
+        //         );
 
-        return redirect(url($zip_file_path));
+        // return redirect(url($zip_file_path));
         //return $pdf->download('pdf');
     }
     /**

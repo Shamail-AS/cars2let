@@ -257,7 +257,6 @@ class TicketController extends Controller
             // Show 404.
             return response("This ticket doesn't belong to this car", 404);
         $driver = Driver::findOrFail($car_ticket->driver->id);
-        $driver_fileName = array();
         return \App\SiteFile::viewToPDF('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);
         // $pdf = PDF::loadView('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);
         // File::delete('pdf/ticket/'.$ticket_id.'/ticket.pdf');

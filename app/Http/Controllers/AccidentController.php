@@ -208,22 +208,24 @@ class AccidentController extends Controller
         
         //return view('contract',['contract'=>$contract,'handover'=>$handover]);
         $accident = CarAccident::findOrFail($accident_id);
-        $pdf = PDF::loadView('accident',['accident'=>$accident]);
-        File::delete('pdf/accident/'.$accident_id.'/accident.pdf');
-        $pdf->save('pdf/accident/'.$accident_id.'/accident.pdf');
-        $filename = 'car' . $car_id . '_accident-' . $accident_id . '.zip';
-        $zip_file_path = 'pdf/accident/' . $accident_id . '/' . $filename;
-        $zip_file = Zipper::make($zip_file_path)->add('pdf/accident/'.$accident_id.'/accident.pdf');
-        foreach ($accident->files as $file) {
-            $full_url = url($file->full_url); 
-            $zip_file->addString($file->name,file_get_contents($full_url));
-        }
+        return \App\SiteFile::viewToPDF('accident',['accident'=>$accident]);
         
-        //$files = 
-        $headers = array(
-                    'Content-Type' => 'application/octet-stream',
-                );
+        // $pdf = PDF::loadView('accident',['accident'=>$accident]);
+        // File::delete('pdf/accident/'.$accident_id.'/accident.pdf');
+        // $pdf->save('pdf/accident/'.$accident_id.'/accident.pdf');
+        // $filename = 'car' . $car_id . '_accident-' . $accident_id . '.zip';
+        // $zip_file_path = 'pdf/accident/' . $accident_id . '/' . $filename;
+        // $zip_file = Zipper::make($zip_file_path)->add('pdf/accident/'.$accident_id.'/accident.pdf');
+        // foreach ($accident->files as $file) {
+        //     $full_url = url($file->full_url); 
+        //     $zip_file->addString($file->name,file_get_contents($full_url));
+        // }
+        
+        // //$files = 
+        // $headers = array(
+        //             'Content-Type' => 'application/octet-stream',
+        //         );
 
-        return redirect(url($zip_file_path));
+        // return redirect(url($zip_file_path));
     }
 }
