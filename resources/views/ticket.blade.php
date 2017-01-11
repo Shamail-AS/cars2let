@@ -169,10 +169,9 @@
 				<center><h4>Car Details</h4></center>
 			</a>
 		</div>
-		@forelse($driver->cars as $car)
 			<div class="list-group">
 				<a class="list-group-item list-group-item-action list-group-item-success">
-					<center><p>{{$car->reg_no}}</p></center>
+					<center><p>{{$ticket->car->reg_no}}</p></center>
 				</a>
 			</div>
 			<div class="row">
@@ -183,39 +182,39 @@
 								<tbody>
 									<tr>
 										<td>ID</td>
-										<td>{{$car->id}}</td>
+										<td>{{$ticket->car->id}}</td>
 									</tr>
 									<tr>
 										<td>Registration Number</td>
-										<td>{{$car->reg_no}}</td>
+										<td>{{$ticket->car->reg_no}}</td>
 									</tr>
 									<tr>
 										<td>Make</td>
-										<td>{{$car->make}}</td>
+										<td>{{$ticket->car->make}}</td>
 									</tr>
 									<tr>
 										<td>Available Since</td>
-										<td>{{$car->available_since}}</td>
+										<td>{{$ticket->car->available_since}}</td>
 									</tr>
 									<tr>
 										<td>Comments</td>
-										<td>{{$car->comments}}</td>
+										<td>{{$ticket->car->comments}}</td>
 									</tr>
 									<tr>
 										<td>Custom Id</td>
-										<td>{{$car->custom_id}}</td>
+										<td>{{$ticket->car->custom_id}}</td>
 									</tr>
 									<tr>
 										<td>Model</td>
-										<td>{{$car->model}}</td>
+										<td>{{$ticket->car->model}}</td>
 									</tr>
 									<tr>
 										<td>Year</td>
-										<td>{{$car->year}}</td>
+										<td>{{$ticket->car->year}}</td>
 									</tr>
 									<tr>
 										<td>color</td>
-										<td>{{$car->color}}</td>
+										<td>{{$ticket->car->color}}</td>
 									</tr>
 																					
 								</tbody>
@@ -230,35 +229,35 @@
 								<tbody>
 									<tr>
 										<td>Transmission</td>
-										<td>{{$car->transmission}}</td>
+										<td>{{$ticket->car->transmission}}</td>
 									</tr>
 									<tr>
 										<td>Fuel Type</td>
-										<td>{{$car->fuel_type}}</td>
+										<td>{{$ticket->car->fuel_type}}</td>
 									</tr>
 									<tr>
 										<td>Chasis Number</td>
-										<td>{{$car->chasis_num}}</td>
+										<td>{{$ticket->car->chasis_num}}</td>
 									</tr>
 									<tr>
 										<td>Engine Size</td>
-										<td>{{$car->engine_size}}</td>
+										<td>{{$ticket->car->engine_size}}</td>
 									</tr>
 									<tr>
 										<td>First Registration Date</td>
-										<td>{{$car->first_reg_date}}</td>
+										<td>{{$ticket->car->first_reg_date}}</td>
 									</tr>
 									<tr>
 										<td>Keeper</td>
-										<td>{{$car->keeper}}</td>
+										<td>{{$ticket->car->keeper}}</td>
 									</tr>
 									<tr>
 										<td>pco_license</td>
-										<td>{{$car->pco_licence}}</td>
+										<td>{{$ticket->car->pco_licence}}</td>
 									</tr>
 									<tr>
 										<td>PCO Expires at</td>
-										<td>{{$car->pco_expires_at}}</td>
+										<td>{{$ticket->car->pco_expires_at}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -272,11 +271,11 @@
 								<tbody>
 									<tr>
 										<td>Current Odo</td>
-										<td>{{$car->curr_odo}}</td>
+										<td>{{$ticket->car->curr_odo}}</td>
 									</tr>
 									<tr>
 										<td>Odo Read At</td>
-										<td>{{$car->odo_read_at}}</td>
+										<td>{{$ticket->car->odo_read_at}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -284,8 +283,8 @@
 					</div>
 				</div>
 			</div>
-		@empty
-		@endforelse
+		
+		
 		{{-- <div class="list-group">
 			<a class="list-group-item list-group-item-action active">
 				<center><h4>Revenue</h4></center>
