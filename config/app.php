@@ -160,9 +160,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-        Chumper\Zipper\ZipperServiceProvider::class,
-        Aws\Laravel\AwsServiceProvider::class,
-    ],
+        Chumper\Zipper\ZipperServiceProvider::class,    ],
 
     /*
     |--------------------------------------------------------------------------
