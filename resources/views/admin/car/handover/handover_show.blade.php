@@ -65,11 +65,11 @@
                             <tr>
                                 @if($file->type == 'image')
                                 <td>
-                                    <img class="img-responsive" src="{{url($file->full_url)}}" width="100">
+                                    <img class="img-responsive" src="{{$file->full_url}}" width="100"><a href="{{$file->full_url}}" class="btn btn-primary" download>Download</a>
                                 </td>
                                 @else
                                     <td>
-                                        <p>{{$file->name}}</p>
+                                        <p>{{$file->name}}</p><a href="{{$file->full_url}}" class="btn btn-primary" download>Download</a>
                                     </td>
                                 @endif
                             </tr> 
