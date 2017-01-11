@@ -162,7 +162,6 @@ return [
         Barryvdh\Snappy\ServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
         Aws\Laravel\AwsServiceProvider::class,
-        League\Flysystem\AwsS3v3\AwsS3Adapter::class,
     ],
 
     /*
@@ -215,7 +214,6 @@ return [
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
         'AWS' => Aws\Laravel\AwsFacade::class,
-        'AwsS3Adapter' => League\Flysystem\AwsS3v3\AwsS3Adapter::class
     ],
 
 ];
