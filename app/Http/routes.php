@@ -30,71 +30,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
         return view('welcome');
     });
-    Route::get('images/app/tickets/{filename}', function ($filename) {
-        $path = storage_path() . '\app\tickets\\' . $filename;
-       
-        if(!File::exists($path)) abort(404);
+    Route::get('images/app/tickets/{filename}', 'SiteFileController@getTicketFile');
+    Route::get('images/app/handovers/{filename}', 'SiteFileController@getHandoverFile');
+    Route::get('images/app/driver/{driver_id}/{filename}', 'SiteFileController@getDriverFile');
+    Route::get('images/app/car/{car_id}/{filename}', 'SiteFileController@getCarFile');
+    Route::get('images/app/accidents/{filename}', 'SiteFileController@getAccidentFile');
 
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    });
-    Route::get('images/app/handovers/{filename}', function ($filename) {
-        $path = storage_path() . '\app\handovers\\' . $filename;
-       
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    });
-    Route::get('images/app/driver/{driver_id}/{filename}', function ($driver_id,$filename) {
-        $path = storage_path() . '\app\driver\\'.$driver_id.'\\' . $filename;
-        
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    });
-    Route::get('images/app/car/{car_id}/{filename}', function ($car_id,$filename) {
-        $path = storage_path() . '\app\car\\'.$car_id.'\\' . $filename;
-        
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    });
-    Route::get('images/app/accidents/{filename}', function ($filename) {
-        $path = storage_path() . '\app\accident\\' . $filename;
-        
-        if(!File::exists($path)) abort(404);
-
-        $file = File::get($path);
-        $type = File::mimeType($path);
-
-        $response = Response::make($file, 200);
-        $response->header("Content-Type", $type);
-
-        return $response;
-    });
     Route::get('/myregister', function () {
         if (Auth::check())
             return redirect('/');
@@ -102,13 +43,6 @@ Route::group(['middleware' => 'web'], function () {
             return view('auth.myregister');
     });
     Route::post('/myregister','MyAuthController@register');
-
-    //check if user is an investor in our database
-//    Route::get('/check',function(){
-//        return redirect(url('/myregister'));
-//    });
-//    Route::post('/check','MyAuthController@check');
-
 
     //show the page where user can chose where to get the code
     Route::get('/code/destination', function() {
@@ -120,28 +54,16 @@ Route::group(['middleware' => 'web'], function () {
 
     //send code to where user has specified
     Route::post('/code/send', 'MyAuthController@sendCode');
-
-//    //show the page where user can enter the code they received
-//    Route::get('/activate/{id}','MyAuthController@getActivate');
-
     Route::get('/code/verify', function () {
         if (Auth::check() && Auth::user()->status != 'new')
             return redirect('/');
         else
             return view('auth.verify');
     });
-    //verify the code that user entered to match with database
-    //Route::post('/code/verify','MyAuthController@verifyCode');
-
     //Verify code sent to email
     Route::get('/verify/token/{token}', 'MyAuthController@verifyToken');
-
-
     Route::get('/home', 'HomeController@redirect');
-
     Route::get('/help', 'HomeController@help');
-
-//    Route::get('/password/first','InvestorController@activate');
 
     Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
     Route::get('/reset/password', 'MyAuthController@reset');
@@ -149,6 +71,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/disabled', function () {
         return view('errors.disabledUser');
     });
+
+    //FOR Driver Registration As an individual
+    Route::get('drivers/create/{car_reg}', 'DriverController@viewDriverRegistrationForm');
+    Route::post('drivers/store', 'DriverController@storeDriver');
 
 
 });
@@ -226,12 +152,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::get('suppliers/for/{type}', 'SupplierController@api_list');
 
 });
-    Route::group(['middleware' => ['web']], function () {
-    // FOR Driver Registration As an indivisual
-    Route::get('drivers/create','DriverController@viewDriverRegistrationForm');
-    Route::post('drivers/store','DriverController@storeDriver');
-    });
-    
 
 Route::group(['prefix' => 'super', 'middleware' => ['web', 'auth', 'super-admin']], function () {
     Route::group(['prefix' => 'api'], function () {
@@ -270,6 +190,8 @@ Route::group(['prefix'=>'api'],function(){
     Route::get('/investor/asset/summary','InvestorController@AssetsSummary')->middleware('web','auth');
 
     Route::get('/email/test','ApiController@sendMail');
+    Route::get('/pdf/test', 'ApiController@testPDF');
+    Route::get('/pdf/{view}', 'ApiController@testPDFView');
     Route::get('/email/code', 'ApiController@testCodeEmail');
     Route::post('/email/post', 'ApiController@testGuzzlePost');
     Route::get('/phpinfo', function () {
