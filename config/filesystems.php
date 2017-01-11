@@ -64,12 +64,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key'    => 'laravel-tgyv',
-            'secret' => 'Q4YQYKdy5v-pfndoGgWPGyB=7Qs7G2IGvCnaB0Yt22iaF6q-Qohi6ByX=cHxWZzo',
-            'region' => 'eu-west-1',
-            'bucket' => 'laravel-tgyv',
-            'server' => 'objects.eu2.frbit.com',
-            'host'   =>  'laravel-tgyv.objects.frb.io'
+            'key'    => 'your-key',
+            'secret' => 'your-secret',
+            'region' => 'your-region',
+            'bucket' => 'your-bucket',
         ],
 
         'rackspace' => [
