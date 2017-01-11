@@ -236,8 +236,6 @@ class TicketController extends Controller
 
     public function inferDriver($car_id, $unix_time)
     {
-
-
         $incident_dt = Carbon::createFromTimeStamp($unix_time);
         $contracts = Car::find($car_id)->contracts()->ongoing()->get();
 
@@ -250,7 +248,7 @@ class TicketController extends Controller
             }
         }
 
-        return $foundContract->driver;
+        return $foundContract == null ? 'No ongoing contract at the time' : $foundContract->driver;
     }
 
     public function downloadTicketPdf($car_id,$ticket_id) {
