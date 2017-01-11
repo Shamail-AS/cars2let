@@ -36,7 +36,7 @@
                     <thead class="thead-default">
                         <tr>
                             <th><h3 style="display: inline-block;">Uploaded Files</h3>
-                            <a href="{{url('api/admin/cars/'.$ticket->car->id.'/tickets/'.$ticket->id.'/pdf')}}" class="btn btn-success pull-right"> Download the Files</a>  
+                            <a href="{{url('api/admin/cars/'.$ticket->car->id.'/tickets/'.$ticket->id.'/pdf')}}" class="btn btn-success pull-right"> Download the Pdf</a>  
                             </th>
                         </tr>
                     </thead>
