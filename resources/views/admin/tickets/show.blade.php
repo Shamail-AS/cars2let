@@ -45,7 +45,7 @@
                             <tr>
                                 @if($file->type == 'image')
                                 <td>
-                                    <img class="img-responsive" src="{{url($file->full_url)}}" width="100">
+                                    <img class="img-responsive" src="{{$file->full_url}}" width="100">
                                 </td>
                                 @else
                                     <td>
