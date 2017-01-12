@@ -9,8 +9,11 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Car;
+use App\SiteFile;
+use Storage;
 use Illuminate\Support\Facades\Auth;
 use Log;
 
@@ -216,22 +219,47 @@ class CarController extends Controller
     {
         return $this->view($id, 'overview');
     }
-    public function attachmentUpload(Request $request,$id){
+
+    public function pictureUploadView($id){
         $car = Car::findOrFail($id);
-        if($request->file('attachment')){
-            if ($request->file('attachment')->isValid()) {
-                $site_file = new SiteFile;
-                $extension = $request->file('attachment')->getClientOriginalExtension();
-                $fileName = Str::random(8).'.'.$extension;
-                $stored_file = Storage::disk('local')->put('car/'.$car->id.'/'.$fileName, file_get_contents($request->file('attachment')));
-                $site_file->name = $fileName;
-                $site_file->full_url="images/app/car/".$car->id."/".$fileName;
-                $site_file->save();
-                $driver->files()->save($site_file);
-                return $site_file->full_url;
+        return view('admin.car.views.pictures',['car' => $car]);
+    }
+    public function attachmentUpload(Request $request,$id){
+        $ext = ['jpg','jpeg','png','JPG','gif'];
+        $car = Car::findOrFail($id);
+        if($request->file('file')){
+            foreach($request->file('file') as $file){
+                if ($file->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    if(in_array($extension, $ext)){
+                       $stored_file = Storage::disk('s3')->put('cars/'.$fileName, file_get_contents($file));
+                    }
+                    else {
+                        continue;
+                    }
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/cars/".$fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
+
+                    $site_file->save();
+                    $car->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
             }
-            return response("Invalid Attachment", 404);
+            return redirect('admin/car/'.$id.'/pictures');
         }
         return response("Attachment not found", 404);
+    }
+
+    public function listOfCars() {
+        $cars = Car::all();
+        return view ('admin.car.cars-list',['cars'=> $cars]);
     }
 }

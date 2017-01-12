@@ -224,6 +224,9 @@
                             Camera</a></li>
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/revenues')}}">Revenues</a>
                     </li>
+                    {{-- Addding car picture upload --}}
+                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/pictures')}}">Pictures</a>
+                    </li>
                 </ul>
                 <div id="comments">
                     <div class="form-group">
