@@ -73,6 +73,11 @@ class Car extends Model
     {
         return $this->hasMany('App\Contract');
     }
+    
+    public function files()
+    {
+        return $this->morphMany('App\SiteFile', 'origin');
+    }
 
     public function drivers()
     {

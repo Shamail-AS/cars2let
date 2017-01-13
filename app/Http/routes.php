@@ -76,7 +76,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('drivers/create/{car_reg}', 'DriverController@viewDriverRegistrationForm');
     Route::post('drivers/store', 'DriverController@storeDriver');
 
-
+    // For cars listing with pictures .. 
+    Route::get('cars/list','CarController@listOfCars');
 });
 Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],function(){
     Route::get('/','InvestorController@home');
@@ -125,6 +126,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
     Route::get('/car/{id}', 'CarController@admin_show');
     Route::get('/car/{id}/view/{page}', 'CarController@view');
+    Route::get('/car/{id}/pictures','CarController@pictureUploadView');
+    Route::post('/car/{id}/upload','CarController@attachmentUpload');
 
     //show form to create car
     Route::get('/car/create','CarController@create');

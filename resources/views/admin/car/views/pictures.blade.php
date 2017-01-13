@@ -12,46 +12,16 @@
                 <table class="table table-bordered table-striped">
                     <thead class="thead-default">
                         <tr>
-                            <th colspan="2"><center><h3> Ticket {{$ticket->id}}</h3></center>
-
+                            <th><h3 style="display: inline-block;">{{$car->reg_no}} Pictures</h3>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Car</td>
-                            <td>{{$ticket->car->reg_no or null}}</td>
-                        </tr>
-                        <tr>
-                            <td>Driver</td>
-                            <td>{{$ticket->driver->name or null}}</td>
-                        </tr>
-                    </tbody>
-                </table>    
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered table-striped">
-                    <thead class="thead-default">
-                        <tr>
-                            <th><h3 style="display: inline-block;">Uploaded Files</h3>
-                            <a href="{{url('api/admin/cars/'.$ticket->car->id.'/tickets/'.$ticket->id.'/pdf')}}" class="btn btn-success pull-right"> Download the Pdf</a>  
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($ticket->files as $file)
+                        @forelse($car->files as $file)
                             <tr>
-                                @if($file->type == 'image')
                                 <td>
                                     <img style="display: inline-block;"  class="img-responsive" src="{{$file->full_url}}" width="100"><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
                                 </td>
-                                @else
-                                    <td>
-                                        <p style="display: inline-block;">{{$file->name}}</p><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
-                                    </td>
-                                @endif
                             </tr> 
                         @empty
                             <tr>
@@ -67,7 +37,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>Upload Files</h3>
-                <form enctype="multipart/form-data" method="POST" action="{{url('api/admin/cars/'.$ticket->car->id.'/tickets/'.$ticket->id.'/attachment')}}"> 
+                <form enctype="multipart/form-data" method="POST" action="{{url('admin/car/'.$car->id.'/upload')}}"> 
                     {!! csrf_field() !!}
                     <label class="custom-file">
                           <input type="file" id="file" name="file[]" multiple>

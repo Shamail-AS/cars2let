@@ -111,9 +111,9 @@ class DriverController extends Controller
                 $site_file = new SiteFile;
                 $extension = $request->file('attachment')->getClientOriginalExtension();
                 $fileName = Str::random(8).'.'.$extension;
-                $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('attachment')));
+                $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('attachment')));
                 $site_file->name = $fileName;
-                $site_file->full_url="images/app/driver/".$driver->id."/".$fileName;
+                $site_file->full_url='https://laravel-tgyv.objects.frb.io/driver/'.$driver->id.'/'.$fileName;
                 $site_file->save();
                 $driver->files()->save($site_file);
                 return $site_file->full_url;
@@ -124,10 +124,9 @@ class DriverController extends Controller
     }
 
      public function downloadFullPDF($id){
-        $driver = Driver::findOrFail(1);
-        $pdf = PDF::loadView('sample',['driver'=>$driver]);
-        //return view('sample',['driver'=>$driver]);
-        return $pdf->download('pdf');
+        $driver = Driver::findOrFail($id);
+        return \App\SiteFile::viewToPDF('sample',['driver'=>$driver]);
+
     }
 
     public function viewDriverRegistrationForm() {
