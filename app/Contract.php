@@ -7,7 +7,49 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * App\Contract
+ *
  * @property mixed end_date
+ * @property integer $id
+ * @property integer $car_id
+ * @property integer $driver_id
+ * @property string $status
+ * @property \Carbon\Carbon $start_date
+ * @property \Carbon\Carbon $end_date
+ * @property float $rate
+ * @property string $currency
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property \Carbon\Carbon $act_start_dt
+ * @property \Carbon\Carbon $act_end_dt
+ * @property float $req_deposit
+ * @property float $rec_deposit
+ * @property string $comments
+ * @property-read \App\Car $car
+ * @property-read \App\Driver $driver
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarHistory[] $histories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ContractHandover[] $handovers
+ * @property-read mixed $investor
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Revenue[] $revenues
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Payment[] $payments
+ * @property-read mixed $rent
+ * @property-read mixed $rent_for_current_period
+ * @property-read mixed $revenue
+ * @property-read mixed $revenue_for_current_period
+ * @property-read mixed $weeks_done_for_current_period
+ * @property-read mixed $weeks_done
+ * @property-read mixed $weeks_total
+ * @property-read mixed $rent_allocations_count
+ * @property-read mixed $rent_for_next_period
+ * @property-read mixed $revenue_for_next_period
+ * @property-read mixed $weeks_done_for_next_period
+ * @property-read mixed $has_out_handover
+ * @property-read mixed $has_in_handover
+ * @property-read mixed $has_all_handovers
+ * @method static \Illuminate\Database\Query\Builder|\App\Contract status($status)
+ * @method static \Illuminate\Database\Query\Builder|\App\Contract ongoing()
+ * @method static \Illuminate\Database\Query\Builder|\App\Contract latest()
  */
 class Contract extends Model
 {

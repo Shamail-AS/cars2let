@@ -8,6 +8,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Log;
 use Mockery\CountValidator\Exception;
 
+/**
+ * App\Investor
+ *
+ * @property integer $id
+ * @property string $email
+ * @property string $name
+ * @property \Carbon\Carbon $dob
+ * @property string $passport_num
+ * @property string $phone
+ * @property \Carbon\Carbon $acc_period_start
+ * @property \Carbon\Carbon $acc_period_end
+ * @property string $tracking_url
+ * @property string $company
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Car[] $cars
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\BankAccount[] $bank
+ * @property-read mixed $drivers
+ * @property-read mixed $all_revenues
+ * @property-read mixed $revenue
+ * @property-read mixed $revenue_for_current_period
+ * @property-read mixed $revenue_for_next_period
+ * @property-read mixed $paid
+ * @property-read mixed $paid_for_current_period
+ * @property-read mixed $paid_for_next_period
+ * @property-read mixed $balance
+ * @property-read mixed $balance_for_current_period
+ * @property-read mixed $balance_for_next_period
+ */
 class Investor extends Model
 {
     use SoftDeletes;

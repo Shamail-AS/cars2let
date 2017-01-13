@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CarServiceOrder;
+use App\Contract;
+use App\ContractHandover;
+use App\Exceptions\Handler;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,7 +26,7 @@ class DeliveryController extends Controller
     public function index($car_id = null)
     {
         if($car_id){
-            $deliveries = Delivery::with('car')->where('car_id', $car_id)->get();
+            $deliveries = Delivery::where('car_id', $car_id)->with('order', 'car', 'receiver')->get();
             return $deliveries;
         }
         else 
@@ -60,8 +64,12 @@ class DeliveryController extends Controller
         }
         // find if supplier id is correct
         if ($request->order_id) {
-            $order = CarOrder::findOrFail($request->order_id);
-            $order->deliveries()->save($delivery);
+            try {
+                $order = CarOrder::findOrFail($request->order_id);
+                $order->deliveries()->save($delivery);
+            } catch (\Exception $ex) {
+                return response($ex->getMessage(), $ex->getCode());
+            }
         }
 
         // Creating a delivery
@@ -141,8 +149,20 @@ class DeliveryController extends Controller
         if($request->type)
             $delivery->type = $request->type;
         if($request->order_id){
-            $order = CarOrder::findOrFail($request->order_id);
-            $order->deliveries()->save($delivery);
+            $order = null;
+            try {
+                if ($delivery->type == 'contract-handover') {
+                    $order = ContractHandover::findOrFail($request->order_id);
+                } else if ($delivery->type == 'car-order') {
+                    $order = CarOrder::findOrFail($request->order_id);
+                } else if ($delivery->type == 'service-order') {
+                    $order = CarServiceOrder::findOrFail($request->order_id);
+                }
+                $order->deliveries()->save($delivery);
+            } catch (\Exception $ex) {
+
+                return response($ex->getMessage(), 404);
+            }
         }
         if($request->condition)
             $delivery->condition = $request->condition;
@@ -152,8 +172,10 @@ class DeliveryController extends Controller
             $delivery->location = $request->location;
         if ($request->status)
             $delivery->status = $request->status;
-        if($delivery->save())
-            return response("Update successful");
+        if ($delivery->save()) {
+            $delivery = $delivery->fresh();
+            return $delivery;
+        }
         else
             return response("Update failed", 500);
     }

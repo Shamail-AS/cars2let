@@ -4,6 +4,41 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * App\User
+ *
+ * @property integer $id
+ * @property string $email
+ * @property string $password
+ * @property integer $reg_attempt
+ * @property integer $login_attempt
+ * @property string $status
+ * @property string $type
+ * @property string $remember_token
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $access_level
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\AccountActivation[] $codes
+ * @property-read \App\Investor $investor
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Payment[] $payments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\PartDelivery[] $partDeliveries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Delivery[] $deliveries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarOrder[] $carOrders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\PartOrder[] $partOrders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarServiceOrder[] $serviceOrders
+ * @property-read mixed $is_super_admin
+ * @property-read mixed $is_admin
+ * @property-read mixed $is_investor
+ * @property-read mixed $is_driver
+ * @property-read mixed $is_active
+ * @property-read mixed $is_disabled
+ * @property-read mixed $is_read_only
+ * @property-read mixed $is_edit_only
+ * @property-read mixed $is_full_access
+ * @method static \Illuminate\Database\Query\Builder|\App\User is($type)
+ * @method static \Illuminate\Database\Query\Builder|\App\User active()
+ * @method static \Illuminate\Database\Query\Builder|\App\User matches($search)
+ */
 class User extends Authenticatable
 {
     /**

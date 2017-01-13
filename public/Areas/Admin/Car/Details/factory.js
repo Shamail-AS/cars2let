@@ -313,7 +313,7 @@ app.factory('servicesDataFactory', ['$http', function ($http) {
         return $http.post(URL_BASE + '/' + car_id + '/service_orders', data);
     };
     servicesDataFactory.updateOrder = function (data) {
-        return $http.put(URL_BASE + '/' + data.car.id + '/service_orders/' + data.id, data);
+        return $http.put(URL_BASE + '/' + data.car_id + '/service_orders/' + data.id, data);
     };
 
     return servicesDataFactory;
@@ -322,12 +322,27 @@ app.factory('servicesDataFactory', ['$http', function ($http) {
 app.factory('servicesDataModelFactory', ['moment', function (moment) {
 
     var servicesDataModelFactory = {};
-    servicesDataModelFactory.withExtras = function (orders) {
-        return orders;
+    servicesDataModelFactory.collectionWithExtras = function (orders) {
+        return _.map(orders, withExtras);
     };
+    servicesDataModelFactory.withExtras = function (order) {
+        return withExtras(order);
+    };
+
+    function withExtras(order) {
+        order.delivery = _.head(order.deliveries);
+        if (order.delivery) {
+            order.delivery.scheduled_at = moment(order.delivery.scheduled_at).toDate();
+        }
+        return order;
+    }
     servicesDataModelFactory.withoutObjects = function (order) {
-        order.car_id = order.car.id;
-        order.supplier_id = order.supplier.id;
+        var data = _.cloneDeep(order);
+        data.car_id = data.car.id;
+        data.supplier_id = data.supplier.id;
+        delete (data.car);
+        delete(data.supplier);
+        return data;
     };
 
     return servicesDataModelFactory;
@@ -391,11 +406,40 @@ app.factory('deliveriesDataFactory', ['$http', function ($http) {
 app.factory('deliveriesDataModelFactory', ['moment', function (moment) {
 
     var deliveriesDataModelFactory = {};
-    deliveriesDataModelFactory.withExtras = function (deliveries) {
-        return deliveries;
+    deliveriesDataModelFactory.collectionWithExtras = function (deliveries) {
+        return _.map(deliveries, withExtras);
     };
-    deliveriesDataModelFactory.withoutExtras = function (delivery) {
+    deliveriesDataModelFactory.withExtras = withExtras;
+
+    function withExtras(delivery) {
+        var type = "other";
+        if (delivery.order) {
+            switch (delivery.order_type) {
+                case "App\CarServiceOrder":
+                    type = "service-order";
+                    break;
+                case "App\Handover":
+                    type = "contract-handover";
+                    break;
+                case "App\CarOrder":
+                    type = "car-order";
+                    break;
+            }
+        }
+        else {
+            delivery.other_type = delivery.type;
+            delivery.type = type;
+        }
+        return delivery;
+    }
+
+    deliveriesDataModelFactory.withoutExtras = function (obj) {
+        var delivery = _.clone(obj);
+        if (delivery.type == 'other')
+            delivery.type = delivery.other_type;
+
         delete(delivery.car);
+        delete(delivery.other_type);
         return delivery;
     };
     return deliveriesDataModelFactory;
@@ -432,35 +476,49 @@ app.factory('accidentDataModelFactory', ['moment', function (moment) {
     };
     accidentDataModelFactory.withExtras = function (accident) {
         var m_date = moment(accident.incident_at);
-        var year = m_date.year();
-        var month = m_date.month();
-        var date = m_date.date();
-        var hour = m_date.hour();
-        var minute = m_date.minute();
-        accident.incident_at = moment([year, month, date, hour, minute]).toDate();
-        accident.incident_time = moment([year, month, date, hour, minute]).toDate();
+        // m_date.hours = accident.incident_time.hour();
+        // m_date.minutes = accident.incident_time.minutes();
+        // var comb_date = moment(m_date);
+        //
+        // console.log(comb_date);
+        //
+        // var year = m_date.year();
+        // var month = m_date.month();
+        // var date = m_date.date();
+        // var hour = m_date.hour();
+        // var minute = m_date.minute();
+        accident.incident_at = m_date.toDate();
+        accident.incident_time = m_date.toDate();
         accident.detailUrl = '/api/admin/cars/' + accident.car.id + '/accidents/' + accident.id;
         return accident;
     };
     accidentDataModelFactory.withoutExtras = function (accident) {
         accident.driver_id = accident.driver.id;
 
-        var m_incident = moment(accident.incident_at);
+        var m_date = moment(accident.incident_at).toObject();
         var m_time = moment(accident.incident_time);
-        var year = m_incident.year();
-        var month = m_incident.month();
-        var date = m_incident.date();
-        var hour = m_time.hour();
-        var minute = m_time.minute();
+        m_date.hours = m_time.hour();
+        m_date.minutes = m_time.minutes();
+        var comb_date = moment(m_date);
 
-        var final_date = moment([year, month, date, hour, minute]);
-        console.log(final_date);
+        // var m_incident = moment(accident.incident_at);
+        // var m_time = moment(accident.incident_time);
+        // var year = m_incident.year();
+        // var month = m_incident.month();
+        // var date = m_incident.date();
+        // var hour = m_time.hour();
+        // var minute = m_time.minute();
 
-        accident.incident_at = final_date.toDate();
+        // var final_date = moment([year, month, date, hour, minute]);
+
+        console.log(comb_date);
+        accident.incident_at = comb_date.toDate();
+        delete(accident.incident_time);
         delete(accident.driver);
         delete(accident.incident_open);
         delete(accident.isEdit);
-        return accident;
+
+        return _.clone(accident);
     };
     return accidentDataModelFactory;
 }]);

@@ -63,8 +63,11 @@ class AccidentController extends Controller
             $car = Car::findOrFail($car_id);
         else 
             $car = Car::findOrFail($request->car_id);
+        $data = $request->all();
+        //dd($data);
         $driver = Driver::findOrFail($request->driver_id);
-        $car_accident = CarAccident::create($request->all());
+        $car_accident = CarAccident::create($data);
+
         $car->accidents()->save($car_accident);
         $driver->accidents()->save($car_accident);
         $history = new CarHistory;

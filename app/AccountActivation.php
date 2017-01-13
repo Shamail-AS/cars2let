@@ -6,6 +6,23 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * App\AccountActivation
+ *
+ * @property integer $id
+ * @property string $delivered_to
+ * @property string $code
+ * @property string $source
+ * @property string $destination
+ * @property boolean $active
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\AccountActivation latest()
+ * @method static \Illuminate\Database\Query\Builder|\App\AccountActivation valid()
+ * @method static \Illuminate\Database\Query\Builder|\App\AccountActivation for ($email)
+ */
 class AccountActivation extends Model
 {
     //

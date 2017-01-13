@@ -4,6 +4,37 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\CarServiceOrder
+ *
+ * @property integer $id
+ * @property integer $supplier_id
+ * @property integer $car_id
+ * @property integer $auth_user_id
+ * @property string $auth_user
+ * @property string $status
+ * @property string $comments
+ * @property integer $cost
+ * @property string $type
+ * @property string $booked_dt
+ * @property string $handover_dt
+ * @property string $handover_person
+ * @property integer $insurance_claim_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \App\User $authorizedBy
+ * @property-read \App\Supplier $supplier
+ * @property-read \App\InsuranceClaim $claim
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Delivery[] $deliveries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarHistory[] $histories
+ * @property-read \App\Car $car
+ * @method static \Illuminate\Database\Query\Builder|\App\CarServiceOrder mot()
+ * @method static \Illuminate\Database\Query\Builder|\App\CarServiceOrder pco()
+ * @method static \Illuminate\Database\Query\Builder|\App\CarServiceOrder regular()
+ * @method static \Illuminate\Database\Query\Builder|\App\CarServiceOrder repair()
+ * @method static \Illuminate\Database\Query\Builder|\App\CarServiceOrder status($status)
+ */
 class CarServiceOrder extends Model
 {
     //
@@ -12,6 +43,11 @@ class CarServiceOrder extends Model
     public function authorizedBy()
     {
         return $this->belongsTo('App\User', 'auth_user_id');
+    }
+
+    public function supplier()
+    {
+        return $this->belongsTo('App\Supplier');
     }
 
     public function claim()

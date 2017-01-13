@@ -53,6 +53,10 @@
                                     <label>Cost</label>
                                     <input ng-model="order.cost" type="text" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                    <label>Authorized By</label>
+                                    <input ng-model="order.auth_user" type="text" class="form-control">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">

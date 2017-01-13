@@ -34,8 +34,9 @@
                     <td>@{{ order.comments }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="editOrder(order)">Edit</button>
-                        <a href="{{url('admin/service_orders/')}}@{{ order.id }}"
-                           class="btn btn-xs btn-info">Details</a>
+                        <a ng-if="order.insurance_claim_id"
+                           href="{{url('admin/service_orders/insurance')}}/@{{ order.id }}"
+                           class="btn btn-xs btn-info">Insurance</a>
                     </td>
                 </tr>
                 </tbody>

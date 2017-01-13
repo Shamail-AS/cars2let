@@ -4,6 +4,27 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\CarOrder
+ *
+ * @property integer $id
+ * @property integer $supplier_id
+ * @property integer $car_id
+ * @property integer $auth_user_id
+ * @property string $auth_user
+ * @property string $status
+ * @property string $comments
+ * @property float $cost
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \App\Supplier $supplier
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Delivery[] $deliveries
+ * @property-read \App\Car $car
+ * @property-read \App\User $authorizedBy
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarHistory[] $histories
+ * @method static \Illuminate\Database\Query\Builder|\App\CarOrder status($status)
+ */
 class CarOrder extends Model
 {
     //

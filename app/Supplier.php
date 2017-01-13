@@ -4,6 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Supplier
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property string $name
+ * @property string $contact_name
+ * @property string $contact_details
+ * @property string $type
+ * @property string $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\BankAccount[] $bank
+ * @property-read \App\CarOrder $order
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Camera[] $cameras
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarServiceOrder[] $serviceOrders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tracker[] $trackers
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier type($type)
+ */
 class Supplier extends Model
 {
     //

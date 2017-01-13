@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.2.45 on 2016-12-27.
+ * Generated for Laravel 5.2.45 on 2017-01-13.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -113,7 +113,7 @@ namespace {
          * Get the path to the bootstrap directory.
          *
          * @return string
-         * @static
+         * @static 
          */
         public static function bootstrapPath()
         {
@@ -238,7 +238,7 @@ namespace {
          * Get the fully qualified path to the environment file.
          *
          * @return string
-         * @static
+         * @static 
          */
         public static function environmentFilePath()
         {
@@ -678,7 +678,7 @@ namespace {
          *
          * @param string $locale
          * @return bool
-         * @static
+         * @static 
          */
         public static function isLocale($locale)
         {
@@ -1132,7 +1132,7 @@ namespace {
          *
          * @param \Symfony\Component\Console\Command\Command $command
          * @return void
-         * @static
+         * @static 
          */
         public static function registerCommand($command)
         {
@@ -1287,7 +1287,7 @@ namespace {
          * Get the user resolver callback.
          *
          * @return \Closure
-         * @static
+         * @static 
          */
         public static function userResolver()
         {
@@ -1299,7 +1299,7 @@ namespace {
          *
          * @param \Closure $userResolver
          * @return $this
-         * @static
+         * @static 
          */
         public static function resolveUsersUsing($userResolver)
         {
@@ -2478,7 +2478,7 @@ namespace {
          * @param array $bindings
          * @param bool $useReadPdo
          * @return \Generator
-         * @static
+         * @static 
          */
         public static function cursor($query, $bindings = array(), $useReadPdo = true)
         {
@@ -2591,7 +2591,7 @@ namespace {
         /**
          * Start a new database transaction.
          *
-         * @return void
+         * @return void 
          * @throws Exception
          * @static 
          */
@@ -2928,7 +2928,7 @@ namespace {
          * Get the fetch argument to be applied when selecting.
          *
          * @return mixed
-         * @static
+         * @static 
          */
         public static function getFetchArgument()
         {
@@ -2940,7 +2940,7 @@ namespace {
          * Get custom constructor arguments for the PDO::FETCH_CLASS fetch mode.
          *
          * @return array
-         * @static
+         * @static 
          */
         public static function getFetchConstructorArgument()
         {
@@ -3119,7 +3119,7 @@ namespace {
          * Get an array of global scopes that were removed from the query.
          *
          * @return array
-         * @static
+         * @static 
          */
         public static function removedScopes()
         {
@@ -3169,7 +3169,7 @@ namespace {
          * @param mixed $id
          * @param array $columns
          * @return \Illuminate\Database\Eloquent\Model
-         * @static
+         * @static 
          */
         public static function findOrNew($id, $columns = array())
         {
@@ -3181,7 +3181,7 @@ namespace {
          *
          * @param array $attributes
          * @return \Illuminate\Database\Eloquent\Model
-         * @static
+         * @static 
          */
         public static function firstOrNew($attributes)
         {
@@ -3193,7 +3193,7 @@ namespace {
          *
          * @param array $attributes
          * @return \Illuminate\Database\Eloquent\Model
-         * @static
+         * @static 
          */
         public static function firstOrCreate($attributes)
         {
@@ -3206,7 +3206,7 @@ namespace {
          * @param array $attributes
          * @param array $values
          * @return \Illuminate\Database\Eloquent\Model
-         * @static
+         * @static 
          */
         public static function updateOrCreate($attributes, $values = array())
         {
@@ -3262,7 +3262,7 @@ namespace {
          * Get a generator for the given query.
          *
          * @return \Generator
-         * @static
+         * @static 
          */
         public static function cursor()
         {
@@ -3288,7 +3288,7 @@ namespace {
          * @param callable $callback
          * @param string $column
          * @return bool
-         * @static
+         * @static 
          */
         public static function chunkById($count, $callback, $column = 'id')
         {
@@ -3401,7 +3401,7 @@ namespace {
          * @param bool $value
          * @param \Closure $callback
          * @return $this
-         * @static
+         * @static 
          */
         public static function when($value, $callback)
         {
@@ -3521,7 +3521,7 @@ namespace {
          *
          * @param \Illuminate\Database\Eloquent\Builder $relation
          * @return \Illuminate\Database\Eloquent\Builder|static
-         * @static
+         * @static 
          */
         public static function mergeModelDefinedRelationConstraints($relation)
         {
@@ -3533,7 +3533,7 @@ namespace {
          *
          * @param mixed $relations
          * @return $this
-         * @static
+         * @static 
          */
         public static function without($relations)
         {
@@ -3545,7 +3545,7 @@ namespace {
          *
          * @param mixed $relations
          * @return $this
-         * @static
+         * @static 
          */
         public static function withCount($relations)
         {
@@ -3557,7 +3557,7 @@ namespace {
          *
          * @param array $scopes
          * @return mixed
-         * @static
+         * @static 
          */
         public static function scopes($scopes)
         {
@@ -3833,7 +3833,7 @@ namespace {
          * @param string $operator
          * @param string $second
          * @return \Illuminate\Database\Query\Builder|static
-         * @static
+         * @static 
          */
         public static function crossJoin($table, $first = null, $operator = null, $second = null)
         {
@@ -3848,7 +3848,7 @@ namespace {
          * @param string|null $second
          * @param string|null $boolean
          * @return \Illuminate\Database\Query\Builder|static
-         * @static
+         * @static 
          */
         public static function whereColumn($first, $operator = null, $second = null, $boolean = 'and')
         {
@@ -3862,7 +3862,7 @@ namespace {
          * @param string|null $operator
          * @param string|null $second
          * @return \Illuminate\Database\Query\Builder|static
-         * @static
+         * @static 
          */
         public static function orWhereColumn($first, $operator = null, $second = null)
         {
@@ -4159,7 +4159,7 @@ namespace {
          * @param string $operator
          * @param int $value
          * @return \Illuminate\Database\Query\Builder|static
-         * @static
+         * @static 
          */
         public static function orWhereDate($column, $operator, $value)
         {
@@ -4174,7 +4174,7 @@ namespace {
          * @param int $value
          * @param string $boolean
          * @return \Illuminate\Database\Query\Builder|static
-         * @static
+         * @static 
          */
         public static function whereTime($column, $operator, $value, $boolean = 'and')
         {
@@ -4188,7 +4188,7 @@ namespace {
          * @param string $operator
          * @param int $value
          * @return \Illuminate\Database\Query\Builder|static
-         * @static
+         * @static 
          */
         public static function orWhereTime($column, $operator, $value)
         {
@@ -4351,7 +4351,7 @@ namespace {
          *
          * @param string $seed
          * @return $this
-         * @static
+         * @static 
          */
         public static function inRandomOrder($seed = '')
         {
@@ -4433,7 +4433,7 @@ namespace {
          * @param int $lastId
          * @param string $column
          * @return \Illuminate\Database\Query\Builder|static
-         * @static
+         * @static 
          */
         public static function forPageAfterId($perPage = 15, $lastId = 0, $column = 'id')
         {
@@ -4621,7 +4621,7 @@ namespace {
          * @param string $function
          * @param array $columns
          * @return float|int
-         * @static
+         * @static 
          */
         public static function numericAggregate($function, $columns = array())
         {
@@ -4657,7 +4657,7 @@ namespace {
          * @param array $attributes
          * @param array $values
          * @return bool
-         * @static
+         * @static 
          */
         public static function updateOrInsert($attributes, $values = array())
         {
@@ -5006,7 +5006,7 @@ namespace {
          *
          * @param string $path
          * @return string
-         * @static
+         * @static 
          */
         public static function sharedGet($path)
         {
@@ -5124,7 +5124,7 @@ namespace {
          *
          * @param string $path
          * @return string
-         * @static
+         * @static 
          */
         public static function basename($path)
         {
@@ -5136,7 +5136,7 @@ namespace {
          *
          * @param string $path
          * @return string
-         * @static
+         * @static 
          */
         public static function dirname($path)
         {
@@ -5299,7 +5299,7 @@ namespace {
          * @param string $to
          * @param bool $overwrite
          * @return bool
-         * @static
+         * @static 
          */
         public static function moveDirectory($from, $to, $overwrite = false)
         {
@@ -6292,7 +6292,7 @@ namespace {
          *
          * @param mixed $callback
          * @return void
-         * @static
+         * @static 
          */
         public static function exceptionOccurred($callback)
         {
@@ -6767,7 +6767,7 @@ namespace {
          *
          * @param array $query
          * @return string
-         * @static
+         * @static 
          */
         public static function fullUrlWithQuery($query)
         {
@@ -6832,7 +6832,7 @@ namespace {
          *
          * @param mixed  string
          * @return bool
-         * @static
+         * @static 
          */
         public static function fullUrlIs()
         {
@@ -6960,7 +6960,7 @@ namespace {
          *
          * @param array|mixed $keys
          * @return array
-         * @static
+         * @static 
          */
         public static function intersect($keys)
         {
@@ -7006,7 +7006,7 @@ namespace {
          * Get an array of all of the files on the request.
          *
          * @return array
-         * @static
+         * @static 
          */
         public static function allFiles()
         {
@@ -7041,7 +7041,7 @@ namespace {
          *
          * @param string $key
          * @return bool
-         * @static
+         * @static 
          */
         public static function hasHeader($key)
         {
@@ -8307,7 +8307,7 @@ namespace {
          * @param string $name
          * @param callable $macro
          * @return void
-         * @static
+         * @static 
          */
         public static function macro($name, $macro)
         {
@@ -8319,7 +8319,7 @@ namespace {
          *
          * @param string $name
          * @return bool
-         * @static
+         * @static 
          */
         public static function hasMacro($name)
         {
@@ -8420,7 +8420,7 @@ namespace {
          * @param \SplFileInfo|string $file
          * @param array $headers
          * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
-         * @static
+         * @static 
          */
         public static function file($file, $headers = array())
         {
@@ -8660,7 +8660,7 @@ namespace {
          * Set the unmapped global resource parameters to singular.
          *
          * @return void
-         * @static
+         * @static 
          */
         public static function singularResourceParameters()
         {
@@ -8672,7 +8672,7 @@ namespace {
          *
          * @param array $parameters
          * @return void
-         * @static
+         * @static 
          */
         public static function resourceParameters($parameters = array())
         {
@@ -8849,13 +8849,13 @@ namespace {
         
         /**
          * Add a middleware to the beginning of a middleware group.
-         *
+         * 
          * If the middleware is already in the group, it will not be added again.
          *
          * @param string $group
          * @param string $middleware
          * @return $this
-         * @static
+         * @static 
          */
         public static function prependMiddlewareToGroup($group, $middleware)
         {
@@ -8864,13 +8864,13 @@ namespace {
 
         /**
          * Add a middleware to the end of a middleware group.
-         *
+         * 
          * If the middleware is already in the group, it will not be added again.
          *
          * @param string $group
          * @param string $middleware
          * @return $this
-         * @static
+         * @static 
          */
         public static function pushMiddlewareToGroup($group, $middleware)
         {
@@ -9273,7 +9273,7 @@ namespace {
          * Enable foreign key constraints.
          *
          * @return bool
-         * @static
+         * @static 
          */
         public static function enableForeignKeyConstraints()
         {
@@ -9285,7 +9285,7 @@ namespace {
          * Disable foreign key constraints.
          *
          * @return bool
-         * @static
+         * @static 
          */
         public static function disableForeignKeyConstraints()
         {
@@ -9628,7 +9628,7 @@ namespace {
          * @param string $key
          * @param int $amount
          * @return mixed
-         * @static
+         * @static 
          */
         public static function increment($key, $amount = 1)
         {
@@ -9641,7 +9641,7 @@ namespace {
          * @param string $key
          * @param int $amount
          * @return int
-         * @static
+         * @static 
          */
         public static function decrement($key, $amount = 1)
         {
@@ -9942,7 +9942,7 @@ namespace {
          * Get a default cloud filesystem instance.
          *
          * @return \Illuminate\Contracts\Filesystem\Filesystem
-         * @static
+         * @static 
          */
         public static function cloud()
         {
@@ -10007,7 +10007,7 @@ namespace {
          * Get the default cloud driver name.
          *
          * @return string
-         * @static
+         * @static 
          */
         public static function getDefaultCloudDriver()
         {
@@ -10610,7 +10610,7 @@ namespace {
          * @param string $section
          * @param string $content
          * @return void
-         * @static
+         * @static 
          */
         public static function startPush($section, $content = '')
         {
@@ -10620,9 +10620,9 @@ namespace {
         /**
          * Stop injecting content into a push section.
          *
-         * @return string
+         * @return string 
          * @throws \InvalidArgumentException
-         * @static
+         * @static 
          */
         public static function stopPush()
         {
@@ -10635,7 +10635,7 @@ namespace {
          * @param string $section
          * @param string $default
          * @return string
-         * @static
+         * @static 
          */
         public static function yieldPushContent($section, $default = '')
         {
@@ -10881,13 +10881,13 @@ namespace {
 
     class Form extends \Collective\Html\FormFacade
     {
-
+        
         /**
          * Open up a new HTML form.
          *
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function open($options = array())
         {
@@ -10900,7 +10900,7 @@ namespace {
          * @param mixed $model
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function model($model, $options = array())
         {
@@ -10912,7 +10912,7 @@ namespace {
          *
          * @param mixed $model
          * @return void
-         * @static
+         * @static 
          */
         public static function setModel($model)
         {
@@ -10923,7 +10923,7 @@ namespace {
          * Close the current form.
          *
          * @return string
-         * @static
+         * @static 
          */
         public static function close()
         {
@@ -10934,7 +10934,7 @@ namespace {
          * Generate a hidden field with the current CSRF token.
          *
          * @return string
-         * @static
+         * @static 
          */
         public static function token()
         {
@@ -10948,7 +10948,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function label($name, $value = null, $options = array())
         {
@@ -10963,7 +10963,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function input($type, $name, $value = null, $options = array())
         {
@@ -10977,7 +10977,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function text($name, $value = null, $options = array())
         {
@@ -10990,7 +10990,7 @@ namespace {
          * @param string $name
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function password($name, $options = array())
         {
@@ -11004,7 +11004,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function hidden($name, $value = null, $options = array())
         {
@@ -11018,7 +11018,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function email($name, $value = null, $options = array())
         {
@@ -11032,7 +11032,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function tel($name, $value = null, $options = array())
         {
@@ -11046,7 +11046,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function number($name, $value = null, $options = array())
         {
@@ -11060,7 +11060,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function date($name, $value = null, $options = array())
         {
@@ -11074,7 +11074,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function datetime($name, $value = null, $options = array())
         {
@@ -11088,7 +11088,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function datetimeLocal($name, $value = null, $options = array())
         {
@@ -11102,7 +11102,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function time($name, $value = null, $options = array())
         {
@@ -11116,7 +11116,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function url($name, $value = null, $options = array())
         {
@@ -11129,7 +11129,7 @@ namespace {
          * @param string $name
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function file($name, $options = array())
         {
@@ -11143,7 +11143,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function textarea($name, $value = null, $options = array())
         {
@@ -11158,7 +11158,7 @@ namespace {
          * @param string $selected
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function select($name, $list = array(), $selected = null, $options = array())
         {
@@ -11174,7 +11174,7 @@ namespace {
          * @param string $selected
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function selectRange($name, $begin, $end, $selected = null, $options = array())
         {
@@ -11190,7 +11190,7 @@ namespace {
          * @param string $selected
          * @param array $options
          * @return mixed
-         * @static
+         * @static 
          */
         public static function selectYear()
         {
@@ -11205,7 +11205,7 @@ namespace {
          * @param array $options
          * @param string $format
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function selectMonth($name, $selected = null, $options = array(), $format = '%B')
         {
@@ -11219,7 +11219,7 @@ namespace {
          * @param string $value
          * @param string $selected
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function getSelectOption($display, $value, $selected)
         {
@@ -11234,7 +11234,7 @@ namespace {
          * @param bool $checked
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function checkbox($name, $value = 1, $checked = null, $options = array())
         {
@@ -11249,7 +11249,7 @@ namespace {
          * @param bool $checked
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function radio($name, $value = null, $checked = null, $options = array())
         {
@@ -11262,7 +11262,7 @@ namespace {
          * @param string $value
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function reset($value, $attributes = array())
         {
@@ -11276,7 +11276,7 @@ namespace {
          * @param string $name
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function image($url, $name = null, $attributes = array())
         {
@@ -11290,7 +11290,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function color($name, $value = null, $options = array())
         {
@@ -11303,7 +11303,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function submit($value = null, $options = array())
         {
@@ -11316,7 +11316,7 @@ namespace {
          * @param string $value
          * @param array $options
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function button($value = null, $options = array())
         {
@@ -11329,7 +11329,7 @@ namespace {
          * @param string $name
          * @param array $attributes
          * @return string
-         * @static
+         * @static 
          */
         public static function getIdAttribute($name, $attributes)
         {
@@ -11342,7 +11342,7 @@ namespace {
          * @param string $name
          * @param string $value
          * @return mixed
-         * @static
+         * @static 
          */
         public static function getValueAttribute($name, $value = null)
         {
@@ -11354,7 +11354,7 @@ namespace {
          *
          * @param string $name
          * @return mixed
-         * @static
+         * @static 
          */
         public static function old($name)
         {
@@ -11365,7 +11365,7 @@ namespace {
          * Determine if the old input is empty.
          *
          * @return bool
-         * @static
+         * @static 
          */
         public static function oldInputIsEmpty()
         {
@@ -11376,7 +11376,7 @@ namespace {
          * Get the session store implementation.
          *
          * @return \Illuminate\Session\SessionInterface $session
-         * @static
+         * @static 
          */
         public static function getSessionStore()
         {
@@ -11388,7 +11388,7 @@ namespace {
          *
          * @param \Illuminate\Session\SessionInterface $session
          * @return $this
-         * @static
+         * @static 
          */
         public static function setSessionStore($session)
         {
@@ -11401,7 +11401,7 @@ namespace {
          * @param string $name
          * @param callable $macro
          * @return void
-         * @static
+         * @static 
          */
         public static function macro($name, $macro)
         {
@@ -11413,7 +11413,7 @@ namespace {
          *
          * @param string $name
          * @return bool
-         * @static
+         * @static 
          */
         public static function hasMacro($name)
         {
@@ -11425,9 +11425,9 @@ namespace {
          *
          * @param string $method
          * @param array $parameters
-         * @return mixed
+         * @return mixed 
          * @throws \BadMethodCallException
-         * @static
+         * @static 
          */
         public static function macroCall($method, $parameters)
         {
@@ -11441,7 +11441,7 @@ namespace {
          * @param $view
          * @param array $signature
          * @return void
-         * @static
+         * @static 
          */
         public static function component($name, $view, $signature)
         {
@@ -11453,7 +11453,7 @@ namespace {
          *
          * @param $name
          * @return bool
-         * @static
+         * @static 
          */
         public static function hasComponent($name)
         {
@@ -11465,9 +11465,9 @@ namespace {
          *
          * @param string $method
          * @param array $parameters
-         * @return \Illuminate\Contracts\View\View|mixed
+         * @return \Illuminate\Contracts\View\View|mixed 
          * @throws \BadMethodCallException
-         * @static
+         * @static 
          */
         public static function componentCall($method, $parameters)
         {
@@ -11479,13 +11479,13 @@ namespace {
 
     class Html extends \Collective\Html\HtmlFacade
     {
-
+        
         /**
          * Convert an HTML string to entities.
          *
          * @param string $value
          * @return string
-         * @static
+         * @static 
          */
         public static function entities($value)
         {
@@ -11497,7 +11497,7 @@ namespace {
          *
          * @param string $value
          * @return string
-         * @static
+         * @static 
          */
         public static function decode($value)
         {
@@ -11511,7 +11511,7 @@ namespace {
          * @param array $attributes
          * @param bool $secure
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function script($url, $attributes = array(), $secure = null)
         {
@@ -11525,7 +11525,7 @@ namespace {
          * @param array $attributes
          * @param bool $secure
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function style($url, $attributes = array(), $secure = null)
         {
@@ -11540,7 +11540,7 @@ namespace {
          * @param array $attributes
          * @param bool $secure
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function image($url, $alt = null, $attributes = array(), $secure = null)
         {
@@ -11554,7 +11554,7 @@ namespace {
          * @param array $attributes
          * @param bool $secure
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function favicon($url, $attributes = array(), $secure = null)
         {
@@ -11569,7 +11569,7 @@ namespace {
          * @param array $attributes
          * @param bool $secure
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function link($url, $title = null, $attributes = array(), $secure = null)
         {
@@ -11583,7 +11583,7 @@ namespace {
          * @param string $title
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function secureLink($url, $title = null, $attributes = array())
         {
@@ -11598,7 +11598,7 @@ namespace {
          * @param array $attributes
          * @param bool $secure
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function linkAsset($url, $title = null, $attributes = array(), $secure = null)
         {
@@ -11612,7 +11612,7 @@ namespace {
          * @param string $title
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function linkSecureAsset($url, $title = null, $attributes = array())
         {
@@ -11627,7 +11627,7 @@ namespace {
          * @param array $parameters
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function linkRoute($name, $title = null, $parameters = array(), $attributes = array())
         {
@@ -11642,7 +11642,7 @@ namespace {
          * @param array $parameters
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function linkAction($action, $title = null, $parameters = array(), $attributes = array())
         {
@@ -11656,7 +11656,7 @@ namespace {
          * @param string $title
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function mailto($email, $title = null, $attributes = array())
         {
@@ -11668,7 +11668,7 @@ namespace {
          *
          * @param string $email
          * @return string
-         * @static
+         * @static 
          */
         public static function email($email)
         {
@@ -11681,7 +11681,7 @@ namespace {
          * @param array $list
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString|string
-         * @static
+         * @static 
          */
         public static function ol($list, $attributes = array())
         {
@@ -11694,7 +11694,7 @@ namespace {
          * @param array $list
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString|string
-         * @static
+         * @static 
          */
         public static function ul($list, $attributes = array())
         {
@@ -11707,7 +11707,7 @@ namespace {
          * @param array $list
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function dl($list, $attributes = array())
         {
@@ -11719,7 +11719,7 @@ namespace {
          *
          * @param array $attributes
          * @return string
-         * @static
+         * @static 
          */
         public static function attributes($attributes)
         {
@@ -11731,7 +11731,7 @@ namespace {
          *
          * @param string $value
          * @return string
-         * @static
+         * @static 
          */
         public static function obfuscate($value)
         {
@@ -11745,7 +11745,7 @@ namespace {
          * @param string $content
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function meta($name, $content, $attributes = array())
         {
@@ -11759,7 +11759,7 @@ namespace {
          * @param mixed $content
          * @param array $attributes
          * @return \Illuminate\Support\HtmlString
-         * @static
+         * @static 
          */
         public static function tag($tag, $content, $attributes = array())
         {
@@ -11772,7 +11772,7 @@ namespace {
          * @param string $name
          * @param callable $macro
          * @return void
-         * @static
+         * @static 
          */
         public static function macro($name, $macro)
         {
@@ -11784,7 +11784,7 @@ namespace {
          *
          * @param string $name
          * @return bool
-         * @static
+         * @static 
          */
         public static function hasMacro($name)
         {
@@ -11796,9 +11796,9 @@ namespace {
          *
          * @param string $method
          * @param array $parameters
-         * @return mixed
+         * @return mixed 
          * @throws \BadMethodCallException
-         * @static
+         * @static 
          */
         public static function macroCall($method, $parameters)
         {
@@ -11812,7 +11812,7 @@ namespace {
          * @param $view
          * @param array $signature
          * @return void
-         * @static
+         * @static 
          */
         public static function component($name, $view, $signature)
         {
@@ -11824,7 +11824,7 @@ namespace {
          *
          * @param $name
          * @return bool
-         * @static
+         * @static 
          */
         public static function hasComponent($name)
         {
@@ -11836,13 +11836,700 @@ namespace {
          *
          * @param string $method
          * @param array $parameters
-         * @return \Illuminate\Contracts\View\View|mixed
+         * @return \Illuminate\Contracts\View\View|mixed 
          * @throws \BadMethodCallException
-         * @static
+         * @static 
          */
         public static function componentCall($method, $parameters)
         {
             return \Collective\Html\HtmlBuilder::componentCall($method, $parameters);
+        }
+
+    }
+
+
+    class Excel extends \Maatwebsite\Excel\Facades\Excel
+    {
+
+        /**
+         * Create a new file
+         *
+         * @param $filename
+         * @param callable|null $callback
+         * @return \Maatwebsite\Excel\LaravelExcelWriter
+         * @static
+         */
+        public static function create($filename, $callback = null)
+        {
+            return \Maatwebsite\Excel\Excel::create($filename, $callback);
+        }
+
+        /**
+         * Load an existing file
+         *
+         * @param string $file The file we want to load
+         * @param callback|null $callback
+         * @param string|null $encoding
+         * @param bool $noBasePath
+         * @return \Maatwebsite\Excel\LaravelExcelReader
+         * @static
+         */
+        public static function load($file, $callback = null, $encoding = null, $noBasePath = false, $callbackConfigReader = null)
+        {
+            return \Maatwebsite\Excel\Excel::load($file, $callback, $encoding, $noBasePath, $callbackConfigReader);
+        }
+
+        /**
+         * Set select sheets
+         *
+         * @param $sheets
+         * @return \Maatwebsite\Excel\LaravelExcelReader
+         * @static
+         */
+        public static function selectSheets($sheets = array())
+        {
+            return \Maatwebsite\Excel\Excel::selectSheets($sheets);
+        }
+
+        /**
+         * Select sheets by index
+         *
+         * @param array $sheets
+         * @return $this
+         * @static
+         */
+        public static function selectSheetsByIndex($sheets = array())
+        {
+            return \Maatwebsite\Excel\Excel::selectSheetsByIndex($sheets);
+        }
+
+        /**
+         * Batch import
+         *
+         * @param $files
+         * @param callback $callback
+         * @return \Maatwebsite\Excel\PHPExcel
+         * @static
+         */
+        public static function batch($files, $callback)
+        {
+            return \Maatwebsite\Excel\Excel::batch($files, $callback);
+        }
+
+        /**
+         * Create a new file and share a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter
+         * @static
+         */
+        public static function shareView($view, $data = array(), $mergeData = array())
+        {
+            return \Maatwebsite\Excel\Excel::shareView($view, $data, $mergeData);
+        }
+
+        /**
+         * Create a new file and load a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter
+         * @static
+         */
+        public static function loadView($view, $data = array(), $mergeData = array())
+        {
+            return \Maatwebsite\Excel\Excel::loadView($view, $data, $mergeData);
+        }
+
+        /**
+         * Set filters
+         *
+         * @param array $filters
+         * @return \Maatwebsite\Excel\Excel
+         * @static
+         */
+        public static function registerFilters($filters = array())
+        {
+            return \Maatwebsite\Excel\Excel::registerFilters($filters);
+        }
+
+        /**
+         * Enable certain filters
+         *
+         * @param string|array $filter
+         * @param bool|false|string $class
+         * @return \Maatwebsite\Excel\Excel
+         * @static
+         */
+        public static function filter($filter, $class = false)
+        {
+            return \Maatwebsite\Excel\Excel::filter($filter, $class);
+        }
+
+        /**
+         * Get register, enabled (or both) filters
+         *
+         * @param string|boolean $key [description]
+         * @return array
+         * @static
+         */
+        public static function getFilters($key = false)
+        {
+            return \Maatwebsite\Excel\Excel::getFilters($key);
+        }
+
+    }
+
+
+    class PDF extends \Barryvdh\Snappy\Facades\SnappyPdf
+    {
+
+        /**
+         * Get the Snappy instance.
+         *
+         * @return \Knp\Snappy\Pdf
+         * @static
+         */
+        public static function snappy()
+        {
+            return \Barryvdh\Snappy\PdfWrapper::snappy();
+        }
+
+        /**
+         * Set the paper size (default A4)
+         *
+         * @param string $paper
+         * @param string $orientation
+         * @return $this
+         * @static
+         */
+        public static function setPaper($paper, $orientation = null)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::setPaper($paper, $orientation);
+        }
+
+        /**
+         * Set the orientation (default portrait)
+         *
+         * @param string $orientation
+         * @return $this
+         * @static
+         */
+        public static function setOrientation($orientation)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::setOrientation($orientation);
+        }
+
+        /**
+         * Show or hide warnings
+         *
+         * @param bool $warnings
+         * @return $this
+         * @deprecated
+         * @static
+         */
+        public static function setWarnings($warnings)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::setWarnings($warnings);
+        }
+
+        /**
+         *
+         *
+         * @param string $name
+         * @param mixed $value
+         * @return $this
+         * @static
+         */
+        public static function setOption($name, $value)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::setOption($name, $value);
+        }
+
+        /**
+         *
+         *
+         * @param array $options
+         * @return $this
+         * @static
+         */
+        public static function setOptions($options)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::setOptions($options);
+        }
+
+        /**
+         * Load a HTML string
+         *
+         * @param string $string
+         * @return $this
+         * @static
+         */
+        public static function loadHTML($string)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::loadHTML($string);
+        }
+
+        /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return $this
+         * @static
+         */
+        public static function loadFile($file)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::loadFile($file);
+        }
+
+        /**
+         * Load a View and convert to HTML
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return $this
+         * @static
+         */
+        public static function loadView($view, $data = array(), $mergeData = array())
+        {
+            return \Barryvdh\Snappy\PdfWrapper::loadView($view, $data, $mergeData);
+        }
+
+        /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @throws \InvalidArgumentException
+         * @static
+         */
+        public static function output()
+        {
+            return \Barryvdh\Snappy\PdfWrapper::output();
+        }
+
+        /**
+         * Save the PDF to a file
+         *
+         * @param $filename
+         * @return $this
+         * @static
+         */
+        public static function save($filename, $overwrite = false)
+        {
+            return \Barryvdh\Snappy\PdfWrapper::save($filename, $overwrite);
+        }
+
+        /**
+         * Make the PDF downloadable by the user
+         *
+         * @param string $filename
+         * @return \Illuminate\Http\Response
+         * @static
+         */
+        public static function download($filename = 'document.pdf')
+        {
+            return \Barryvdh\Snappy\PdfWrapper::download($filename);
+        }
+
+        /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @param string $filename
+         * @return \Illuminate\Http\Response
+         * @static
+         */
+        public static function inline($filename = 'document.pdf')
+        {
+            return \Barryvdh\Snappy\PdfWrapper::inline($filename);
+        }
+
+        /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\StreamedResponse
+         * @deprecated use inline() instead
+         * @static
+         */
+        public static function stream($filename = 'document.pdf')
+        {
+            return \Barryvdh\Snappy\PdfWrapper::stream($filename);
+        }
+
+    }
+
+
+    class SnappyImage extends \Barryvdh\Snappy\Facades\SnappyImage
+    {
+
+        /**
+         * Get the Snappy instance.
+         *
+         * @return \Knp\Snappy\Image
+         * @static
+         */
+        public static function snappy()
+        {
+            return \Barryvdh\Snappy\ImageWrapper::snappy();
+        }
+
+        /**
+         *
+         *
+         * @static
+         */
+        public static function setOption($name, $value)
+        {
+            return \Barryvdh\Snappy\ImageWrapper::setOption($name, $value);
+        }
+
+        /**
+         *
+         *
+         * @static
+         */
+        public static function setOptions($options)
+        {
+            return \Barryvdh\Snappy\ImageWrapper::setOptions($options);
+        }
+
+        /**
+         * Load a HTML string
+         *
+         * @param string $string
+         * @return static
+         * @static
+         */
+        public static function loadHTML($string)
+        {
+            return \Barryvdh\Snappy\ImageWrapper::loadHTML($string);
+        }
+
+        /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return static
+         * @static
+         */
+        public static function loadFile($file)
+        {
+            return \Barryvdh\Snappy\ImageWrapper::loadFile($file);
+        }
+
+        /**
+         *
+         *
+         * @static
+         */
+        public static function loadView($view, $data = array(), $mergeData = array())
+        {
+            return \Barryvdh\Snappy\ImageWrapper::loadView($view, $data, $mergeData);
+        }
+
+        /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @throws \InvalidArgumentException
+         * @static
+         */
+        public static function output()
+        {
+            return \Barryvdh\Snappy\ImageWrapper::output();
+        }
+
+        /**
+         * Save the image to a file
+         *
+         * @param $filename
+         * @return static
+         * @static
+         */
+        public static function save($filename, $overwrite = false)
+        {
+            return \Barryvdh\Snappy\ImageWrapper::save($filename, $overwrite);
+        }
+
+        /**
+         * Make the image downloadable by the user
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response
+         * @static
+         */
+        public static function download($filename = 'image.jpg')
+        {
+            return \Barryvdh\Snappy\ImageWrapper::download($filename);
+        }
+
+        /**
+         * Return a response with the image to show in the browser
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response
+         * @static
+         */
+        public static function stream($filename = 'image.jpg')
+        {
+            return \Barryvdh\Snappy\ImageWrapper::stream($filename);
+        }
+
+    }
+
+
+    class Zipper extends \Chumper\Zipper\Facades\Zipper
+    {
+
+        /**
+         * Create a new zip Archive if the file does not exists
+         * opens a zip archive if the file exists
+         *
+         * @param $pathToFile string The file to open
+         * @param \Chumper\Zipper\RepositoryInterface|string $type The type of the archive, defaults to zip, possible are zip, phar
+         * @return $this Zipper instance
+         * @static
+         */
+        public static function make($pathToFile, $type = 'zip')
+        {
+            return \Chumper\Zipper\Zipper::make($pathToFile, $type);
+        }
+
+        /**
+         * Create a new zip archive or open an existing one
+         *
+         * @param $pathToFile
+         * @return $this
+         * @static
+         */
+        public static function zip($pathToFile)
+        {
+            return \Chumper\Zipper\Zipper::zip($pathToFile);
+        }
+
+        /**
+         * Create a new phar file or open one
+         *
+         * @param $pathToFile
+         * @return $this
+         * @static
+         */
+        public static function phar($pathToFile)
+        {
+            return \Chumper\Zipper\Zipper::phar($pathToFile);
+        }
+
+        /**
+         * Extracts the opened zip archive to the specified location <br/>
+         * you can provide an array of files and folders and define if they should be a white list
+         * or a black list to extract.
+         *
+         * @param $path string The path to extract to
+         * @param array $files An array of files
+         * @param int $method The Method the files should be treated
+         * @static
+         */
+        public static function extractTo($path, $files = array(), $method = 2)
+        {
+            return \Chumper\Zipper\Zipper::extractTo($path, $files, $method);
+        }
+
+        /**
+         * Gets the content of a single file if available
+         *
+         * @param $filePath string The full path (including all folders) of the file in the zip
+         * @throws \Exception
+         * @return mixed returns the content or throws an exception
+         * @static
+         */
+        public static function getFileContent($filePath)
+        {
+            return \Chumper\Zipper\Zipper::getFileContent($filePath);
+        }
+
+        /**
+         * Add one or multiple files to the zip.
+         *
+         * @param $pathToAdd array|string An array or string of files and folders to add
+         * @return $this Zipper instance
+         * @static
+         */
+        public static function add($pathToAdd)
+        {
+            return \Chumper\Zipper\Zipper::add($pathToAdd);
+        }
+
+        /**
+         * Add a file to the zip using its contents
+         *
+         * @param $filename string The name of the file to create
+         * @param $content string The file contents
+         * @return $this Zipper instance
+         * @static
+         */
+        public static function addString($filename, $content)
+        {
+            return \Chumper\Zipper\Zipper::addString($filename, $content);
+        }
+
+        /**
+         * Gets the status of the zip.
+         *
+         * @return integer The status of the internal zip file
+         * @static
+         */
+        public static function getStatus()
+        {
+            return \Chumper\Zipper\Zipper::getStatus();
+        }
+
+        /**
+         * Remove a file or array of files and folders from the zip archive
+         *
+         * @param $fileToRemove array|string The path/array to the files in the zip
+         * @return $this Zipper instance
+         * @static
+         */
+        public static function remove($fileToRemove)
+        {
+            return \Chumper\Zipper\Zipper::remove($fileToRemove);
+        }
+
+        /**
+         * Returns the path of the current zip file if there is one.
+         *
+         * @return string The path to the file
+         * @static
+         */
+        public static function getFilePath()
+        {
+            return \Chumper\Zipper\Zipper::getFilePath();
+        }
+
+        /**
+         * Closes the zip file and frees all handles
+         *
+         * @static
+         */
+        public static function close()
+        {
+            return \Chumper\Zipper\Zipper::close();
+        }
+
+        /**
+         * Sets the internal folder to the given path.<br/>
+         * Useful for extracting only a segment of a zip file.
+         *
+         * @param $path
+         * @return $this
+         * @static
+         */
+        public static function folder($path)
+        {
+            return \Chumper\Zipper\Zipper::folder($path);
+        }
+
+        /**
+         * Resets the internal folder to the root of the zip file.
+         *
+         * @return $this
+         * @static
+         */
+        public static function home()
+        {
+            return \Chumper\Zipper\Zipper::home();
+        }
+
+        /**
+         * Deletes the archive file
+         *
+         * @static
+         */
+        public static function delete()
+        {
+            return \Chumper\Zipper\Zipper::delete();
+        }
+
+        /**
+         * Get the type of the Archive
+         *
+         * @return string
+         * @static
+         */
+        public static function getArchiveType()
+        {
+            return \Chumper\Zipper\Zipper::getArchiveType();
+        }
+
+        /**
+         * Get the current internal folder pointer
+         *
+         * @return string
+         * @static
+         */
+        public static function getCurrentFolderPath()
+        {
+            return \Chumper\Zipper\Zipper::getCurrentFolderPath();
+        }
+
+        /**
+         * Checks if a file is present in the archive
+         *
+         * @param $fileInArchive
+         * @return bool
+         * @static
+         */
+        public static function contains($fileInArchive)
+        {
+            return \Chumper\Zipper\Zipper::contains($fileInArchive);
+        }
+
+        /**
+         *
+         *
+         * @return \Chumper\Zipper\RepositoryInterface
+         * @static
+         */
+        public static function getRepository()
+        {
+            return \Chumper\Zipper\Zipper::getRepository();
+        }
+
+        /**
+         *
+         *
+         * @return \Chumper\Zipper\Filesystem
+         * @static
+         */
+        public static function getFileHandler()
+        {
+            return \Chumper\Zipper\Zipper::getFileHandler();
+        }
+
+        /**
+         * Gets the path to the internal folder
+         *
+         * @return string
+         * @static
+         */
+        public static function getInternalPath()
+        {
+            return \Chumper\Zipper\Zipper::getInternalPath();
+        }
+
+        /**
+         * List files that are within the archive
+         *
+         * @return array
+         * @static
+         */
+        public static function listFiles()
+        {
+            return \Chumper\Zipper\Zipper::listFiles();
         }
         
     }

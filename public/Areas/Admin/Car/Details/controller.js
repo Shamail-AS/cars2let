@@ -480,18 +480,23 @@ app.controller('accidentModalController',
                 return dt.format("MMM DD, YYYY");
             };
 
-            var record_accident = function (id, data) {
-                accidentDataFactory.newCarAccident(id, accidentDataModelFactory.withoutExtras(data))
+            var record_accident = function (id, accident) {
+                var data = accidentDataModelFactory.withoutExtras(accident);
+                accidentDataFactory.newCarAccident(id, data)
                     .then(function (result) {
-                        console.log(result.data);
+                        //console.log(result.data);
                         close(result.data);
+                    }, function (error) {
+
                     });
             };
-            var update_accident = function (id, data) {
-                accidentDataFactory.updateAccident(id, accidentDataModelFactory.withoutExtras(data))
+            var update_accident = function (id, accident) {
+                var data = accidentDataModelFactory.withoutExtras(accident);
+                accidentDataFactory.updateAccident(id, data)
                     .then(function (result) {
-                        console.log(result);
                         close('updated');
+                    }, function (error) {
+
                     });
             };
             var load_car = function (id) {
@@ -579,8 +584,9 @@ app.controller('servicesController', ['$scope', 'moment', 'ModalService', 'servi
         var load_orders = function (id) {
             servicesDataFactory.getOrders(id)
                 .then(function (result) {
-                    console.log(result);
-                    $scope.vm.orders = servicesDataModelFactory.withExtras(result.data);
+                    var orders = servicesDataModelFactory.collectionWithExtras(result.data);
+                    console.log(orders);
+                    $scope.vm.orders = orders;
                 });
         };
 
@@ -642,18 +648,22 @@ app.controller('serviceModalController',
                 return dt.format("MMM DD, YYYY");
             };
 
-            var save_order = function (data) {
-                data._token = $scope.vm.token;
-                servicesDataFactory.newOrder(data.car.id, servicesDataModelFactory.withoutObjects(data))
+            var save_order = function (order) {
+                order._token = $scope.vm.token;
+                var data = servicesDataModelFactory.withoutObjects(order);
+                console.log(data);
+                servicesDataFactory.newOrder(order.car.id, data)
                     .then(function (result) {
                         $scope.close(result.data);
                     });
             };
-            var update_order = function (data) {
-                data._token = $scope.vm.token;
+            var update_order = function (order) {
+                order._token = $scope.vm.token;
+                var data = servicesDataModelFactory.withoutObjects(order);
+                console.log(data);
                 servicesDataFactory.updateOrder(data)
                     .then(function (result) {
-
+                        console.log(result);
                     });
             };
 
@@ -748,6 +758,7 @@ app.controller('deliveriesController',
                 }).then(function (modal) {
                     modal.element.modal();
                     modal.close.then(function (result) {
+                        delivery = result;
                         console.log(result);
                     });
                 });
@@ -762,7 +773,7 @@ app.controller('deliveriesController',
             var load_deliveries = function (id) {
                 deliveriesDataFactory.getDeliveries(id)
                     .then(function (result) {
-                        $scope.vm.deliveries = deliveriesDataModelFactory.withExtras(result.data);
+                        $scope.vm.deliveries = deliveriesDataModelFactory.collectionWithExtras(result.data);
                     });
             };
 
@@ -816,14 +827,20 @@ app.controller('deliveriesModalController',
                 data._token = $scope.vm.token;
                 deliveriesDataFactory.newDelivery(data.car.id, deliveriesDataModelFactory.withoutExtras(data))
                     .then(function (result) {
-                        $scope.close(result.data);
+                        data = deliveriesDataModelFactory.withExtras(result.data);
+                        $scope.close(data);
+                    }, function (error) {
+                        alert(error.data);
                     });
             };
             var update_delivery = function (data) {
                 data._token = $scope.vm.token;
                 deliveriesDataFactory.updateDelivery(data.car.id, data.id, data)
                     .then(function (result) {
-                        $scope.close("Updated");
+                        data = deliveriesDataModelFactory.withExtras(result.data);
+                        $scope.close(data);
+                    }, function (error) {
+                        console.log(error.data);
                     });
             };
 
@@ -834,7 +851,7 @@ app.controller('deliveriesModalController',
                 $scope.vm.statuses.push('received');
             };
             var load_types = function () {
-                $scope.vm.types.push('contract-return');
+                $scope.vm.types.push('contract-handover');
                 $scope.vm.types.push('car-order');
                 $scope.vm.types.push('service-order');
                 $scope.vm.types.push('other');
@@ -850,6 +867,7 @@ app.controller('deliveriesModalController',
                     $scope.delivery.delivered_at = moment(data.delivery.delivered_at).toDate();
                     return;
                 }
+                $scope.delivery.type = 'other';
                 overviewDataFactory.getCar(data.car_id)
                     .then(function (result) {
                         $scope.delivery.car = result.data;

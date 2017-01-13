@@ -5,6 +5,20 @@ namespace App;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\SiteFile
+ *
+ * @property integer $id
+ * @property integer $origin_id
+ * @property string $origin_type
+ * @property string $name
+ * @property string $full_url
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property string $type
+ * @property-read \App\SiteFile $origin
+ */
 class SiteFile extends Model
 {
     //

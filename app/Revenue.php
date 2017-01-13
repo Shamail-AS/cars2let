@@ -7,7 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * App\Revenue
+ *
  * @property array|string amount_paid
+ * @property integer $id
+ * @property integer $contract_id
+ * @property float $amount_paid
+ * @property string $currency
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property integer $week
+ * @property-read \App\Contract $contract
+ * @property-read mixed $investor
+ * @property-read mixed $week_paid_on
  */
 class Revenue extends Model
 {

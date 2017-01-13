@@ -16,7 +16,7 @@ class CreateCarAccidentsTable extends Migration
             $table->increments('id');
             $table->integer('car_id');
             $table->integer('driver_id');
-            $table->timestamp('incident_at');
+            $table->dateTime('incident_at');
             $table->string('location');
             $table->string('type');
             $table->string('weather_cond');

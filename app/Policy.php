@@ -4,6 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Policy
+ *
+ * @property integer $id
+ * @property string $policy_num
+ * @property string $insurance_comp
+ * @property string $policy_start
+ * @property string $policy_end
+ * @property float $excess
+ * @property float $annual_insurance
+ * @property string $contactA
+ * @property string $contactB
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Car[] $cars
+ */
 class Policy extends Model
 {
     //

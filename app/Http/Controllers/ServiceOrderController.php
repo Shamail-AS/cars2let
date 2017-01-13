@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Delivery;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,15 +23,10 @@ class ServiceOrderController extends Controller
     public function index($car_id = null)
     {
         if($car_id){
-            $car = Car::findorFail($car_id);
-            $orders = $car->serviceOrders;
-            $orders->each(function ($order) {
-                $order->supplier = $order->supplier;
-            });
-            return $orders;
+            return CarServiceOrder::where('car_id', $car_id)->with('supplier', 'car', 'deliveries')->get();
         }
         else {
-            return CarServiceOrder::with('car','supplier')->get();
+            return CarServiceOrder::with('car', 'supplier', 'deliveries')->get();
         }
     }
 
@@ -60,24 +56,18 @@ class ServiceOrderController extends Controller
             $car = Car::findOrFail($car_id);
         else
             $car = Car::findOrFail($request->car_id);
-        // Findin the supplier
+        // Finding the supplier
         $supplier = Supplier::findorFail($request->supplier_id);
-        //$insurance = InsuranceClaim::findOrFail($request->insurance_claim_id);
+        $delivery = $request->delivery;
+        $data = $request->all();
+
+        unset($data['delivery']);
+
         // Finding if the user id is correct
         if($request->auth_user_id)
             $auth_user = User::findOrFail($request->auth_user_id);
         // Creating a car ticket
-        //$car_service_order = CarServiceOrder::create($request->all());
-        $car_service_order = new CarServiceOrder;
-        $car_service_order->auth_user_id = $request->auth_user_id;
-        $car_service_order->auth_user = $request->auth_user;
-        $car_service_order->status = $request->status;
-        $car_service_order->comments = $request->comments;
-        $car_service_order->cost = $request->cost;
-        $car_service_order->type = $request->type;
-        $car_service_order->handover_date = $request->handover_date;
-        $car_service_order->handover_person = $request->handover_person;
-        $car_service_order->save(); 
+        $car_service_order = CarServiceOrder::create($data);
         $car->serviceOrders()->save($car_service_order);
         $supplier->serviceOrders()->save($car_service_order);
         //$insurance->serviceOrder()->save($car_service_order);
@@ -85,6 +75,13 @@ class ServiceOrderController extends Controller
         $history->car_id = $car->id;
         $history->comments = "car ordered";
         $car_service_order->histories()->save($history);
+
+        if (strlen($delivery['scheduled_at']) > 0) {
+            $delivery = Delivery::create($delivery);
+            $car_service_order->deliveries()->save($delivery);
+            $car->deliveries()->save($delivery);
+        }
+
         // Get an instance of Monolog
         $monolog = Log::getMonolog();
         // Choose FirePHP as the log handler
@@ -92,7 +89,7 @@ class ServiceOrderController extends Controller
         // Start logging
         $monolog->debug('Created', [$car_service_order]);
 
-        return $car_service_order;
+        return CarServiceOrder::with('supplier', 'car', 'deliveries')->find($car_service_order->id);
     }
 
     /**
@@ -104,15 +101,13 @@ class ServiceOrderController extends Controller
     public function show($car_id,$service_order_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($car_service_order = $car->order()->where('id', $service_order_id)->first()))
+        if (!($car_service_order = $car->serviceOrders()->where('id', $service_order_id)
+            ->with('supplier', 'car', 'deliveries')
+            ->first())
+        )
             // Show 404.
-            return response("This ticket does'nt belong to this car", 404);
+            return response("This ticket doesn't belong to this car", 404);
 
-        // sending the supplier info
-        $car_service_order->supplier = $car_service_order->supplier;
-        // sending car info
-        $car_service_order->car = $car;
-        // return the car object
         return $car_service_order;
     }
 
@@ -137,7 +132,7 @@ class ServiceOrderController extends Controller
     public function update(Request $request, $car_id,$service_order_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($car_service_order= $car->servicOrder()->where('id', $service_order_id)->first()))
+        if (!($car_service_order = $car->serviceOrders()->where('id', $service_order_id)->first()))
             // Show 404.
             return response("This Service does'nt belong to this car", 404);
         if($request->supplier_id){
@@ -166,15 +161,24 @@ class ServiceOrderController extends Controller
         if($request->handover_person) {
             $car_service_order->handover_person  = $request->handover_person;
         }
-        if($request->insurance_claim_id){
-            $insurance = InsuranceClaim::findOrFail($request->insurance_claim_id);
-            $car_service_order->insurance_claim_id = $request->insurance_claim_id;
+        if ($request->delivery) {
+            $delivery = $request->delivery;
+            $old_delivery = Delivery::find($delivery['id']);
+            $old_delivery->scheduled_at = $delivery['scheduled_at'];
+            $old_delivery->location = $delivery['location'];
+            $old_delivery->comments = $delivery['comments'];
+            $old_delivery->save();
         }
+        // TODO: ADD INSURANCE CLAIMS ONCE FIELDS AND WORKFLOW IS DECIDED
+//        if($request->insurance_claim_id){
+//            $insurance = InsuranceClaim::findOrFail($request->insurance_claim_id);
+//            $car_service_order->insurance_claim_id = $request->insurance_claim_id;
+//        }
         if($request->cost) {
             $car_service_order->cost  = $request->cost;
         }
         if($car_service_order->save())
-            return response("Update successful");
+            return CarServiceOrder::with('supplier', 'car', 'deliveries')->find($car_service_order->id);
         else
             return response("Update failed", 500);
     }

@@ -4,6 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Camera
+ *
+ * @property integer $id
+ * @property integer $supplier_id
+ * @property string $model
+ * @property integer $car_id
+ * @property string $installed_at
+ * @property string $status
+ * @property string $comments
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Supplier $supplier
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\PartOrder[] $orders
+ * @property-read \App\Car $car
+ */
 class Camera extends Model
 {
     //

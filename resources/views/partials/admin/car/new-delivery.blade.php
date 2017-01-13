@@ -14,15 +14,17 @@
                             <div class="form">
                                 <div class="form-group">
                                     <label>Type</label>
-                                    <ui-select ng-model="delivery.type">
-                                        <ui-select-match allow-clear="true">
-                                            <span ng-bind="delivery.type"></span>
-                                        </ui-select-match>
-                                        <ui-select-choices
-                                                repeat="type in (vm.types | filter: $select.search) track by $index">
-                                            <span ng-bind="type"></span>
-                                        </ui-select-choices>
-                                    </ui-select>
+                                    {{--<ui-select ng-model="delivery.type">--}}
+                                    {{--<ui-select-match allow-clear="true">--}}
+                                    {{--<span ng-bind="delivery.type"></span>--}}
+                                    {{--</ui-select-match>--}}
+                                    {{--<ui-select-choices--}}
+                                    {{--repeat="type in (vm.types | filter: $select.search) track by $index">--}}
+                                    {{--<span ng-bind="type"></span>--}}
+                                    {{--</ui-select-choices>--}}
+                                    {{--</ui-select>--}}
+                                    <input readonly class="form-control" ng-model="delivery.type">
+                                    {{--<input placeholder="Enter Order ID" ng-if="delivery.type != 'other'" class="form-control" ng-model="delivery.order_id">--}}
                                 </div>
 
                                 <div class="form-group">
@@ -78,11 +80,11 @@
                                 <input ng-model="delivery.odo_reading" type="text" class="form-control">
                             </div>
 
-                            <div class="form-group">
-                                <label>Origin Order (Optional)</label>
-                                <br>
-                                <a href="#">@{{ delivery.order ? delivery.order.id : 'No associated order' }}</a>
-                            </div>
+                            {{--<div class="form-group">--}}
+                            {{--<label>Origin Order (Optional)</label>--}}
+                            {{--<br>--}}
+                            {{--<a href="#">@{{ delivery.order ? delivery.order.id : 'No associated order' }}</a>--}}
+                            {{--</div>--}}
                             <div class="form-group">
                                 <label>Person Handed To</label>
                                 <input ng-model="delivery.received_by" type="text" class="form-control">

@@ -23,7 +23,7 @@
                 <tbody>
                 <tr ng-repeat="delivery in vm.deliveries">
                     <td>@{{ delivery.order.id || 'No Order' }}</td>
-                    <td>@{{delivery.type }}</td>
+                    <td>@{{ delivery.type == 'other' ? delivery.other_type : delivery.type }}</td>
                     <td>@{{ formatDate(delivery.scheduled_at )}}</td>
                     <td>@{{ formatDate(delivery.delivered_at )}}</td>
                     <td>@{{ delivery.received_by }}</td>

@@ -4,6 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Tracker
+ *
+ * @property integer $id
+ * @property string $imei
+ * @property string $model
+ * @property integer $supplier_id
+ * @property integer $car_id
+ * @property string $installed_at
+ * @property string $status
+ * @property string $comments
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \App\Supplier $supplier
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\PartOrder[] $orders
+ * @property-read \App\Car $car
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Sim[] $sims
+ */
 class Tracker extends Model
 {
     //

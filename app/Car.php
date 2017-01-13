@@ -6,6 +6,61 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Car
+ *
+ * @property integer $id
+ * @property integer $investor_id
+ * @property string $reg_no
+ * @property string $make
+ * @property string $available_since
+ * @property string $comments
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property string $custom_id
+ * @property string $supplier_id
+ * @property \Carbon\Carbon $warranty_exp_at
+ * @property \Carbon\Carbon $road_side_exp_at
+ * @property \Carbon\Carbon $road_tax_exp_at
+ * @property string $model
+ * @property integer $year
+ * @property string $colour
+ * @property string $transmission
+ * @property string $fuel_type
+ * @property string $chassis_num
+ * @property string $engine_size
+ * @property \Carbon\Carbon $first_reg_date
+ * @property string $keeper
+ * @property string $pco_licence
+ * @property \Carbon\Carbon $pco_expires_at
+ * @property string $status
+ * @property integer $curr_odo
+ * @property string $odo_read_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Contract[] $contracts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Driver[] $drivers
+ * @property-read \App\Investor $investor
+ * @property-read \App\CarOrder $order
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarServiceOrder[] $serviceOrders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarTicket[] $tickets
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Delivery[] $deliveries
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Policy[] $policies
+ * @property-read \App\Supplier $supplier
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Camera[] $cameras
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Tracker[] $trackers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarHistory[] $histories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\CarAccident[] $accidents
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ContractHandover[] $handovers
+ * @property-read mixed $current_contract
+ * @property-read mixed $total_revenue
+ * @property-read mixed $total_rent
+ * @property-read mixed $total_revenue_for_current_period
+ * @property-read mixed $total_rent_for_current_period
+ * @property-read mixed $total_weeks
+ * @property-read mixed $total_contracts
+ * @property-read mixed $current_driver
+ * @property-read mixed $notifications
+ */
 class Car extends Model
 {
     use SoftDeletes;

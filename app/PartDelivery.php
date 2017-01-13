@@ -4,6 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\PartDelivery
+ *
+ * @property integer $id
+ * @property integer $part_order_id
+ * @property string $scheduled_at
+ * @property string $delivered_at
+ * @property integer $rec_user_id
+ * @property string $received_by
+ * @property string $comments
+ * @property string $location
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\PartOrder $order
+ * @property-read \App\User $receiver
+ */
 class PartDelivery extends Model
 {
     //
