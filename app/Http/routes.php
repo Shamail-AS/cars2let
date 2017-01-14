@@ -73,7 +73,7 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     //FOR Driver Registration As an individual
-    Route::get('drivers/create/{car_reg}', 'DriverController@viewDriverRegistrationForm');
+    Route::get('drivers/new/', 'DriverController@viewDriverRegistrationForm');
     Route::post('drivers/store', 'DriverController@storeDriver');
 
     // For cars listing with pictures .. 
@@ -354,6 +354,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/revenues', 'ContractController@api_revenues');
             Route::get('/{id}/action/{action}', 'ContractController@api_action');
             Route::post('/{id}/pdf','ContractController@downloadFullPDF');
+            Route::get('/{id}/approve','ContractController@contractApproval');
             Route::group(['prefix' => '{contract_id}/handovers', 'middleware' => ['web', 'auth']], function () {
                 Route::get('/', 'ContractHandoverController@index');
                 Route::get('/create','ContractHandoverController@create');

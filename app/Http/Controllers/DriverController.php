@@ -129,8 +129,9 @@ class DriverController extends Controller
 
     }
 
-    public function viewDriverRegistrationForm() {
-        return view('admin.driver.driver_registration');
+    public function viewDriverRegistrationForm(Request $request) {
+        $car_reg_no = $request->car_reg_no;
+        return view('admin.driver.driver_registration',['car_reg_no' => $car_reg_no]);
     }
 
 
@@ -153,6 +154,8 @@ class DriverController extends Controller
             'no_of_years_driving'=>'required',
             'agree_radio'=>'required',
             'dbs_radio' => 'required',
+            'con_start_date' => 'required',
+            'con_end_date' => 'required'
             // 'driving_licence_file' => 'mimes:jpeg,png,gif,jpg,pdf',
             // 'pco_licence_file' =>'mimes:jpeg,png,gif,jpg,pdf',
             // 'passport_file' => 'mimes:jpeg,png,gif,jpg,pdf',
@@ -223,6 +226,20 @@ class DriverController extends Controller
             $driver->penalty_points = $request->penelty_points;
             $driver->save();
         }
+        $car = \App\Car::where('reg_no',$request->car_reg_no)->first();
+        $contract = new \App\Contract;
+        $contract->car_id = $car->id;
+        $contract->driver_id = $driver->id;
+        $contract->status = 'suspended';
+        $contract->start_date = $request->con_start_date;
+        $contract->end_date = $request->con_end_date;
+        $contract->status = 'suspended';
+        if($car->rate)
+            $contract->rate = $car->rate;
+        else
+            $contract->rate = 10;
+        $contract->currency = 'GPB';
+        $contract->save();
         if($request->file('driving_licence_file')){
             foreach($request->file('driving_licence_file') as $file){
                 if ($file->isValid()) {
@@ -335,6 +352,8 @@ class DriverController extends Controller
                 else return response("Invalid file", 404);
             }
         }
-        return redirect('/drivers/create');
+
+        return redirect('/cars/list');
     }
+
 }

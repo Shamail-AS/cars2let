@@ -8,9 +8,9 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <h3>Driver Registration</h3>
+        <h3>Driver Registration for Car : {{$car_reg_no}}</h3>
 
-        <form enctype="multipart/form-data" method="POST" action="{{url('drivers/store')}}">
+        <form enctype="multipart/form-data" method="POST" action="{{url('drivers/store?car_reg_no='.$car_reg_no)}}">
             {!! csrf_field() !!}
             <div class="row">
                 <div class="col-md-6">
@@ -290,15 +290,37 @@
                     </div>
                     <div class="list-group">
                         <a class="list-group-item list-group-item-action active">
+                            <center><h4>Contract Details</h4></center>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="con_start_date">Contract Start Date (YYYY-MM-DD)</label>
+                                <input type="text" class="form-control" name="con_start_date" id="con_start_date" value="{{old('con_start_date')}}">
+                                @if ($errors->has('con_start_date')) <p class="help-block">{{ $errors->first('con_start_date') }}</p> @endif
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="con_end_date">Contract End Date (YYYY-MM-DD)</label>
+                                <input type="text" class="form-control" name="con_end_date" id="con_end_date" value="{{old('con_end_date')}}">
+                                @if ($errors->has('con_end_date')) <p class="help-block">{{ $errors->first('con_end_date') }}</p> @endif
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action active">
                             <center><h4>I Declare</h4></center>
                         </a>
-                        <p>By clicking on the “ I agree” button you are confirming that the facts set out in this application for private vehicle hire are, to the best of my knowledge, true and complete. I understand that if I entered into an agreement, and it is subsequently found that I have failed to give correct information or failed to declare any material fact, this could lead to termination of agreement without notice</p>
-                        <label class="radio-inline">
-                            <input type="radio" name="agree_radio">I Agree
-                        </label>
-                        @if ($errors->has('agree_radio')) <p class="help-block">{{ $errors->first('agree_radio') }}</p> @endif
-                        <div class="g-recaptcha" data-sitekey="6Ld39AkUAAAAAGYjkCoGBhwtofGD10eiLHGEvDah"></div>
                     </div>
+                    <p>By clicking on the “ I agree” button you are confirming that the facts set out in this application for private vehicle hire are, to the best of my knowledge, true and complete. I understand that if I entered into an agreement, and it is subsequently found that I have failed to give correct information or failed to declare any material fact, this could lead to termination of agreement without notice</p>
+                    <label class="radio-inline">
+                        <input type="radio" name="agree_radio">I Agree
+                    </label>
+                    @if ($errors->has('agree_radio')) <p class="help-block">{{ $errors->first('agree_radio') }}</p> @endif
+                    <div class="g-recaptcha" data-sitekey="6Ld39AkUAAAAAGYjkCoGBhwtofGD10eiLHGEvDah"></div>
                     <input type="submit" name="submit" class="btn btn-primary">
                 </div>                        
             </div>

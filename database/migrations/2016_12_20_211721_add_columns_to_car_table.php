@@ -28,6 +28,7 @@ class AddColumnsToCarTable extends Migration
             $table->string('engine_size');
             $table->date('first_reg_date');
             $table->string('keeper');
+            $table->string('price');
 
             //$table->integer('camera_id');
             //$table->date('cam_installed_at');

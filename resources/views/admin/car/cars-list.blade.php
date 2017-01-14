@@ -29,7 +29,7 @@
                                 <li> Chasis Number:{{$car->chassis_num}}</li>
                                 <li> Status : {{$car->status}}</li>
                             </ul>
-                            <p><a href="{{url('drivers/create/'.$car->reg_no)}}" class="btn btn-success btn-xs" role="button">Register Yourself</a></p>    
+                            <p><a href="{{url('drivers/new/?car_reg_no='.$car->reg_no)}}" class="btn btn-success btn-xs" role="button">Register Yourself</a></p>    
                         </div>
                     </div>
                 </div>

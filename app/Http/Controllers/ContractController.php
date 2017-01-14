@@ -308,4 +308,15 @@ class ContractController extends Controller
         return $pdf->download('contractpdf');
     } 
 
+    public function contractApproval($id){
+        $contract = Contract::findOrFail($id);
+        $contract->approved_by = $request->user()->id;
+        return ['Contract approved'];
+    }
+
+    public function getAllUnapprovedDrivers() {
+        $unapprovedDrivers = Contract::where('approved_by',null)->get();
+        
+    }
+
 }
