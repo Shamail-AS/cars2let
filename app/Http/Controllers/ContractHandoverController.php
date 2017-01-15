@@ -165,9 +165,12 @@ class ContractHandoverController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($contract_id,$handover_id)
     {
-        //
+        if ($contract_id)
+            $contract = Contract::findOrFail($contract_id);
+        $handover = ContractHandover::findOrFail($handover_id);
+        return view('admin.car.handover.handover-edit', ['contract' => $contract, 'contract_id' => $contract_id,'handover'=>$handover]);
     }
 
     /**

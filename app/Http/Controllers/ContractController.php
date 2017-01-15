@@ -308,15 +308,27 @@ class ContractController extends Controller
         return $pdf->download('contractpdf');
     } 
 
-    public function contractApproval($id){
+    public function contractApproval(Request $request, $id){
+        
         $contract = Contract::findOrFail($id);
         $contract->approved_by = $request->user()->id;
-        return ['Contract approved'];
+        $contract->save();
+        return redirect('/admin');
     }
 
     public function getAllUnapprovedDrivers() {
-        $unapprovedDrivers = Contract::where('approved_by',null)->get();
-        
+        $unapprovedContracts = Contract::where('approved_by',null)->get();
+
+        return view('admin.driver.unapproved-drivers',['unapprovedContracts'=>$unapprovedContracts]);
+    }
+
+    public function getUnapprovedDriver($id) {
+        $contract = Contract::findOrFail($id);
+        return view('admin.driver.unapproved-driver-detail',['contract'=> $contract]);
+    }
+    public function downloadUnapprovedDriverPdf($id) {
+        $contract = Contract::findOrFail($id);
+        return \App\SiteFile::viewToPDF('admin.driver.unapproved-driver-detail-pdf',['contract'=> $contract]);
     }
 
 }

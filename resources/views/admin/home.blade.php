@@ -24,6 +24,10 @@
                            <i class="fa fa-5x fa-user"></i>
                            <h1>Drivers</h1>
                        </a>
+                       <a href="{{url('admin/unapproved/all')}}" class="admin-box nostyle">
+                           <i class="fa fa-5x fa-user"></i>
+                           <h1>Unapproved Drivers</h1>
+                       </a>
                        @if(Auth::user()->isSuperAdmin)
                            <a href="{{url('super/admin/all')}}" class="admin-box nostyle">
                                <i class="fa fa-5x fa-user"></i>

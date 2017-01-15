@@ -153,6 +153,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
     //TODO: replace uses of this route with the one under api group - deprecate this
     Route::get('suppliers/for/{type}', 'SupplierController@api_list');
+    // All Unapproved Drivers List
+    
+    Route::get('unapproved/all','ContractController@getAllUnapprovedDrivers');
+    Route::get('unapproved/{id}','ContractController@getUnapprovedDriver');
+    Route::get('contracts/{id}/approve','ContractController@contractApproval');
+    Route::get('contracts/{id}/pdf','ContractController@downloadUnapprovedDriverPdf');
 
 });
 
@@ -354,12 +360,13 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/revenues', 'ContractController@api_revenues');
             Route::get('/{id}/action/{action}', 'ContractController@api_action');
             Route::post('/{id}/pdf','ContractController@downloadFullPDF');
-            Route::get('/{id}/approve','ContractController@contractApproval');
+            
             Route::group(['prefix' => '{contract_id}/handovers', 'middleware' => ['web', 'auth']], function () {
                 Route::get('/', 'ContractHandoverController@index');
                 Route::get('/create','ContractHandoverController@create');
                 Route::post('/', 'ContractHandoverController@store');
                 Route::get('/{handover_id}', 'ContractHandoverController@show');
+                Route::get('/{handover_id}/edit', 'ContractHandoverController@show');
                 Route::put('/{handover_id}', 'ContractHandoverController@update');
                 Route::delete('/{handover_id}', 'ContractHandoverController@delete');
                 Route::post('/{handover_id}/attachment','ContractHandoverController@attachmentUpload');
