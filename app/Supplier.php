@@ -46,6 +46,9 @@ class Supplier extends Model
     public function trackers() {
     	return $this->hasMany('App\Tracker');
     }
+    public function policies() {
+        return $this->hasMany('App\Policy');
+    }
 
     public function scopeType($query, $type)
     {

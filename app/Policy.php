@@ -30,4 +30,8 @@ class Policy extends Model
     {
         return $this->belongsToMany('App\Car');
     }
+    public function supplier()
+    {
+        return $this->belongsTo('App\Supplier','insurance_comp');
+    }
 }

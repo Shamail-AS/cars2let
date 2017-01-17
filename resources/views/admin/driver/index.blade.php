@@ -22,7 +22,7 @@
                 <th></th>
                 <th></th>
             </tr>
-
+            
             <tr ng-repeat="driver in vm.drivers | orderBy : '-id'">
 
                 <td>@{{ driver.id }}</td>

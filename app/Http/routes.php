@@ -143,6 +143,13 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
     //save data received
     Route::post('/driver/store','DriverController@store');
+    // Policies
+    Route::get('/insurance/all', 'PolicyController@index');    
+    //save data received
+    Route::post('/insurance/store','PolicyController@store');
+    // Supplier
+    Route::get('/supplier/all','SupplierController@main');
+    Route::post('/supplier/store','SupplierController@store');
 
     //TICKETS
     Route::get('tickets/{ticket_id}', 'TicketController@show');
@@ -251,7 +258,24 @@ Route::group(['prefix'=>'api'],function(){
                 Route::get('/', 'AccidentController@index');
                 Route::post('/', 'AccidentController@store');
         });
-
+        Route::group(['prefix'=>'policies'], function(){
+            Route::get('/all', 'PolicyController@api_all');
+            Route::get('/{id}', 'PolicyController@api_get');
+            Route::put('/{id}/update', 'PolicyController@api_update');
+            Route::put('/post', 'PolicyController@api_new');
+            Route::get('/{id}/delete', 'PolicyController@api_delete');
+            Route::post('/{id}/attachment','PolicyController@attachmentUpload');
+            Route::get('/{id}/pdf','PolicyController@downloadFullPDF');
+        });
+        Route::group(['prefix'=>'suppliers'], function(){
+            Route::get('/all', 'SupplierController@api_all');
+            Route::get('/{id}', 'SupplierController@api_get');
+            Route::put('/{id}/update', 'SupplierController@api_update');
+            Route::put('/post', 'SupplierController@api_new');
+            Route::get('/{id}/delete', 'SupplierController@api_delete');
+            Route::post('/{id}/attachment','SupplierController@attachmentUpload');
+            Route::get('/{id}/pdf','SupplierController@downloadFullPDF');
+        });
         Route::group(['prefix' => 'cars'], function () {
             Route::get('/all', 'CarController@api_all');
             Route::get('/{id}', 'CarController@api_get');

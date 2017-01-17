@@ -230,6 +230,101 @@ app.factory('driverDataModelFactory', ['moment', function (moment) {
     };
     return driverDataModelFactory;
 }]);
+
+app.factory('policyDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/policies';
+    var policyDataFactory = {};
+
+    policyDataFactory.getPolicies = function () {
+        return $http.get(URL_BASE + '/' + 'all');
+    };
+    policyDataFactory.getPolicy = function (id) {
+        return $http.get(URL_BASE + '/' + id);
+    };
+    policyDataFactory.updatePolicy = function (id, data) {
+        return $http.put(URL_BASE + '/' + id + '/' + 'update', data);
+    };
+    policyDataFactory.newPolicy = function (data) {
+        return $http.put(URL_BASE + '/' + 'post', data);
+    };
+    policyDataFactory.deletePolicy = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/' + 'delete');
+    };
+
+    return policyDataFactory;
+}]);
+app.factory('policyDataModelFactory', ['moment', function (moment) {
+    var policyDataModelFactory = {};
+    policyDataModelFactory.withExtras = function (policy) {
+        policy.policy_start = moment(policy.policy_start).toDate();
+        policy.policy_end = moment(policy.policy_end).toDate();
+        
+    };
+    policyDataModelFactory.withoutExtras = function (policy) {
+        delete(policy.policy_start);
+        delete(policy.policy_end);
+
+        delete(policy.edit_mode);
+        delete(policy.picker_open);
+        return policy;
+    };
+    policyDataModelFactory.withExtras = function (policies) {
+        _.each(policies, function (policy) {
+            policy.edit_mode = false;
+            policy.picker_open = false;
+        });
+        return policies;
+    };
+    return policyDataModelFactory;
+}]);
+
+app.factory('supplierDataFactory', ['$http', function ($http) {
+    var URL_BASE = '/api/admin/suppliers';
+    var supplierDataFactory = {};
+
+    supplierDataFactory.getSuppliers = function () {
+        return $http.get(URL_BASE + '/' + 'all');
+    };
+    supplierDataFactory.getSupplier = function (id) {
+        return $http.get(URL_BASE + '/' + id);
+    };
+    supplierDataFactory.updateSupplier = function (id, data) {
+        return $http.put(URL_BASE + '/' + id + '/' + 'update', data);
+    };
+    supplierDataFactory.newSupplier = function (data) {
+        return $http.put(URL_BASE + '/' + 'post', data);
+    };
+    supplierDataFactory.deleteSupplier = function (id) {
+        return $http.get(URL_BASE + '/' + id + '/' + 'delete');
+    };
+
+    return supplierDataFactory;
+}]);
+app.factory('supplierDataModelFactory', ['moment', function (moment) {
+    var supplierDataModelFactory = {};
+    supplierDataModelFactory.withExtras = function (supplier) {
+        supplier.supplier_start = moment(supplier.supplier_start).toDate();
+        supplier.supplier_end = moment(supplier.supplier_end).toDate();
+        
+    };
+    supplierDataModelFactory.withoutExtras = function (supplier) {
+        delete(supplier.supplier_start);
+        delete(supplier.supplier_end);
+
+        delete(supplier.edit_mode);
+        delete(supplier.picker_open);
+        return supplier;
+    };
+    supplierDataModelFactory.withExtras = function (suppliers) {
+        _.each(suppliers, function (supplier) {
+            supplier.edit_mode = false;
+            supplier.picker_open = false;
+        });
+        return suppliers;
+    };
+    return supplierDataModelFactory;
+}]);
+
 app.factory('revenueDataFactory', ['$http', function ($http) {
     var URL_BASE = '/api/admin/revenues';
     var revenueDataFactory = {};
