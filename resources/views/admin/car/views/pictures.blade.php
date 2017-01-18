@@ -20,7 +20,9 @@
                         @forelse($car->files as $file)
                             <tr>
                                 <td>
-                                    <img style="display: inline-block;"  class="img-responsive" src="{{$file->full_url}}" width="100"><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                    <img style="display: inline-block;"  class="img-responsive" src="{{$file->full_url}}" width="100">
+                                    <a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                    <a href="{{url('admin/car/'.$car->id.'/file/'.$file->id)}}" class="btn btn-danger pull-right">Delete</a>
                                 </td>
                             </tr> 
                         @empty

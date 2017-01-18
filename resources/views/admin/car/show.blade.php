@@ -26,6 +26,10 @@
                             <input class="form-control" type="text" ng-model="vm.car.reg_no">
                         </div>
                         <div class="form-group">
+                            <label>Price</label>
+                            <input class="form-control" type="text" ng-model="vm.car.price">
+                        </div>
+                        <div class="form-group">
                             <label>PCO Licence</label>
                             <input class="form-control" type="text" ng-model="vm.car.pco_licence">
                         </div>

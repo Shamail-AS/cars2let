@@ -68,7 +68,7 @@ class CarController extends Controller
         $car->road_tax_exp_at = $request->input('road_tax_exp_at');
         $car->status = $request->input('status');
         $car->curr_odo = $request->input('curr_odo');
-
+        $car->price = $request->input('price');
         $car->supplier_id = $supplier_id;
         $car->investor_id = $investor_id;
         $last_updated = $car->updated_at;
@@ -261,5 +261,9 @@ class CarController extends Controller
     public function listOfCars() {
         $cars = Car::all();
         return view ('admin.car.cars-list',['cars'=> $cars]);
+    }
+    public function deletePicture($car_id,$file_id){
+        SiteFile::destroy($file_id);
+        return redirect('admin/car/'.$car_id.'/pictures');
     }
 }

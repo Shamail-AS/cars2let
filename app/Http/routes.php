@@ -128,6 +128,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::get('/car/{id}/view/{page}', 'CarController@view');
     Route::get('/car/{id}/pictures','CarController@pictureUploadView');
     Route::post('/car/{id}/upload','CarController@attachmentUpload');
+    Route::get('/car/{id}/file/{file_id}','CarController@deletePicture');
 
     //show form to create car
     Route::get('/car/create','CarController@create');
