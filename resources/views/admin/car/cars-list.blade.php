@@ -19,8 +19,26 @@
                         <img src="{{asset('img/no-img.png')}}" class="img-responsive">
                         @endforelse
                         <div class="caption">
-                            <h4 class="">{{$car->reg_no}}</h4>
-                            <h5>£{{$car->price}}/week</h5> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="">{{$car->reg_no}}</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="pull-right">£{{$car->price}}/week</h4> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"> 
+                                @if($car->status == 'off-rent')
+                                <img src="{{asset('img/greendot.jpg')}}" width="10" height="10">
+                                &nbsp; &nbsp; Available
+                                @else 
+                                    <img src="{{asset('img/reddot.jpg')}}" width="10" height="10">
+                                    &nbsp; &nbsp; Unavailable
+                                @endif
+                                </div>
+                            </div>
+                            <hr>
                             <ul>
                                 <li> Make: {{$car->make}}</li>
                                 <li> Year: {{$car->year}}</li>
@@ -28,7 +46,6 @@
                                 <li> Color: {{$car->colour}}</li>
                                 <li> Transmission:{{$car->transmission}}</li>
                                 <li> Chasis Number:{{$car->chassis_num}}</li>
-                                <li> Status : <h4>@if($car->status == 'off-road')Available @else Unavailable @endif</h4></li>
                             </ul>
                             <p><a href="{{url('drivers/new/?car_reg_no='.$car->reg_no)}}" class="btn btn-success btn-xs" role="button">Book Now</a></p>    
                         </div>

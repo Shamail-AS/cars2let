@@ -316,6 +316,14 @@ class ContractController extends Controller
         return redirect('/admin');
     }
 
+    public function unapproveMany(Request $request){
+        foreach ($request->contracts as $id) {
+            $contract = Contract::findOrFail($id);
+            $contract->approved_by = -1;
+            $contract->save();
+        }
+        return redirect('/admin');
+    }
     public function getAllUnapprovedDrivers() {
         $unapprovedContracts = Contract::where('approved_by',null)->get();
 

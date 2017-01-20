@@ -3,41 +3,69 @@
 @section("styles")
 
     <link href="{{asset('css/admin/admin.css')}}" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+@endsection
+@section('scripts')
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#drivers").DataTable();
+        });
+    </script>
 @endsection
 
 @section("content")
+    <div class="container">
     <div class="wrapper">
         <h1>Approve Drivers</h1>
-        <table class="table table-striped">
-            <tr>
-                <th>#</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>License No.</th>
-                <th>PCO License No.</th>
-                <th>DOB</th>
-                <th>Phone</th>
-                <th></th>
-                <th></th>
-            </tr>
-
-            @forelse($unapprovedContracts as $contract)
-            <tr>
-                <td>{{ $contract->driver['id'] }}</td>
-                <td>{{ $contract->driver['email'] }}</td>
-                <td>{{ $contract->driver['name']}}</td>
-                <td>{{ $contract->driver['license_no'] }}</td>
-                <td>{{ $contract->driver['pco_license_no'] }}</td>
-                <td>{{$contract->driver['dob']}}</td>
-                <td>{{ $contract->driver['phone'] }}</td>
-                <td><a href="{{url('admin/unapproved/'.$contract->id)}}" class="btn btn-success"> Details</a></td>
-            </tr>
-            @empty
-            <td>No Record</td>
-            @endforelse
+        <form action="{{url('admin/unapproved/many')}}" method="POST">
+            {{ csrf_field() }}
+        <table class="table table-striped" id="drivers">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>License No.</th>
+                    <th>PCO License No.</th>
+                    <th>DOB</th>
+                    <th>Phone</th>
+                    <th>Action</th>  
+                </tr>
+            </thead>
+            
+            <tbody>
+                @forelse($unapprovedContracts as $contract)
+                <tr>
+                    <td><input type="checkbox" name="contracts[]" value="{{$contract->id}}"></td>
+                    <td>{{ $contract->driver['id'] }}</td>
+                    <td>{{ $contract->driver['email'] }}</td>
+                    <td>{{ $contract->driver['name']}}</td>
+                    <td>{{ $contract->driver['license_no'] }}</td>
+                    <td>{{ $contract->driver['pco_license_no'] }}</td>
+                    <td>{{$contract->driver['dob']}}</td>
+                    <td>{{ $contract->driver['phone'] }}</td>
+                    <td><a href="{{url('admin/unapproved/'.$contract->id)}}" class="btn btn-success"> Details</a></td>
+                </tr>
+                @empty
+                <td>No Record</td>
+                @endforelse
+            </tbody>
         </table>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <div>
+                    <button type="submit" class="btn btn-success">Unpprove Selected</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</form>
+</div>
 
 
 @endsection

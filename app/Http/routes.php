@@ -165,6 +165,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     
     Route::get('unapproved/all','ContractController@getAllUnapprovedDrivers');
     Route::get('unapproved/{id}','ContractController@getUnapprovedDriver');
+    Route::post('unapproved/many','ContractController@unapproveMany');
     Route::get('contracts/{id}/approve','ContractController@contractApproval');
     Route::get('contracts/{id}/pdf','ContractController@downloadUnapprovedDriverPdf');
 
