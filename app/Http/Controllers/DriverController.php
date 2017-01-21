@@ -240,119 +240,119 @@ class DriverController extends Controller
             $contract->rate = 10;
         $contract->currency = 'GPB';
         $contract->save();
-        dd($request->file('driving_licence_file'));
-        if($request->file('driving_licence_file')) {
-            foreach($request->file('driving_licence_file') as $file){
-                if ($file->isValid()) {
-                    $site_file = new SiteFile;
-                    $extension = $file->getClientOriginalExtension();
-                    $fileName = Str::random(8).'.'.$extension;
-                    $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-                    $site_file->name = $fileName;
-                    $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-                    if(in_array($extension,$ext)){
-                        $site_file->type = "image";
-                    }
-                    else {
-                        $site_file->type = "file";
-                    }
+        
+        // if($request->file('driving_licence_file')) {
+        //     foreach($request->file('driving_licence_file') as $file){
+        //         if ($file->isValid()) {
+        //             $site_file = new SiteFile;
+        //             $extension = $file->getClientOriginalExtension();
+        //             $fileName = Str::random(8).'.'.$extension;
+        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
+        //             $site_file->name = $fileName;
+        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
+        //             if(in_array($extension,$ext)){
+        //                 $site_file->type = "image";
+        //             }
+        //             else {
+        //                 $site_file->type = "file";
+        //             }
 
-                    $site_file->save();
-                    $driver->files()->save($site_file);
-                }
-                else return response("Invalid file", 404);
-            }
-        }
-        if($request->file('pco_licence_file')) {
-            foreach($request->file('pco_licence_file') as $file){
-                if ($file->isValid()) {
-                    $site_file = new SiteFile;
-                    $extension = $file->getClientOriginalExtension();
-                    $fileName = Str::random(8).'.'.$extension;
-                    $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-                    $site_file->name = $fileName;
-                    $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-                    if(in_array($extension,$ext)){
-                        $site_file->type = "image";
-                    }
-                    else {
-                        $site_file->type = "file";
-                    }
+        //             $site_file->save();
+        //             $driver->files()->save($site_file);
+        //         }
+        //         else return response("Invalid file", 404);
+        //     }
+        // }
+        // if($request->file('pco_licence_file')) {
+        //     foreach($request->file('pco_licence_file') as $file){
+        //         if ($file->isValid()) {
+        //             $site_file = new SiteFile;
+        //             $extension = $file->getClientOriginalExtension();
+        //             $fileName = Str::random(8).'.'.$extension;
+        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
+        //             $site_file->name = $fileName;
+        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
+        //             if(in_array($extension,$ext)){
+        //                 $site_file->type = "image";
+        //             }
+        //             else {
+        //                 $site_file->type = "file";
+        //             }
 
-                    $site_file->save();
-                    $driver->files()->save($site_file);
-                }
-                else return response("Invalid file", 404);
-            }
-        }
+        //             $site_file->save();
+        //             $driver->files()->save($site_file);
+        //         }
+        //         else return response("Invalid file", 404);
+        //     }
+        // }
 
-        if($request->file('passport_file')){
-            foreach($request->file('passport_file') as $file){
-                if ($file->isValid()) {
-                    $site_file = new SiteFile;
-                    $extension = $file->getClientOriginalExtension();
-                    $fileName = Str::random(8).'.'.$extension;
-                    $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-                    $site_file->name = $fileName;
-                    $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-                    if(in_array($extension,$ext)){
-                        $site_file->type = "image";
-                    }
-                    else {
-                        $site_file->type = "file";
-                    }
+        // if($request->file('passport_file')){
+        //     foreach($request->file('passport_file') as $file){
+        //         if ($file->isValid()) {
+        //             $site_file = new SiteFile;
+        //             $extension = $file->getClientOriginalExtension();
+        //             $fileName = Str::random(8).'.'.$extension;
+        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
+        //             $site_file->name = $fileName;
+        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
+        //             if(in_array($extension,$ext)){
+        //                 $site_file->type = "image";
+        //             }
+        //             else {
+        //                 $site_file->type = "file";
+        //             }
 
-                    $site_file->save();
-                    $driver->files()->save($site_file);
-                }
-                else return response("Invalid file", 404);
-            }
-        }
+        //             $site_file->save();
+        //             $driver->files()->save($site_file);
+        //         }
+        //         else return response("Invalid file", 404);
+        //     }
+        // }
 
-        if($request->file('crb_file')){
-            foreach($request->file('crb_file') as $file){
-                if ($file->isValid()) {
-                    $site_file = new SiteFile;
-                    $extension = $file->getClientOriginalExtension();
-                    $fileName = Str::random(8).'.'.$extension;
-                    $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-                    $site_file->name = $fileName;
-                    $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-                    if(in_array($extension,$ext)){
-                        $site_file->type = "image";
-                    }
-                    else {
-                        $site_file->type = "file";
-                    }
+        // if($request->file('crb_file')){
+        //     foreach($request->file('crb_file') as $file){
+        //         if ($file->isValid()) {
+        //             $site_file = new SiteFile;
+        //             $extension = $file->getClientOriginalExtension();
+        //             $fileName = Str::random(8).'.'.$extension;
+        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
+        //             $site_file->name = $fileName;
+        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
+        //             if(in_array($extension,$ext)){
+        //                 $site_file->type = "image";
+        //             }
+        //             else {
+        //                 $site_file->type = "file";
+        //             }
 
-                    $site_file->save();
-                    $driver->files()->save($site_file);
-                }
-                else return response("Invalid file", 404);
-            }
-        }
-        if($request->file('address_file')){
-            foreach($request->file('address_file') as $file){
-                if ($file->isValid()) {
-                    $site_file = new SiteFile;
-                    $extension = $file->getClientOriginalExtension();
-                    $fileName = Str::random(8).'.'.$extension;
-                    $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-                    $site_file->name = $fileName;
-                    $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-                    if(in_array($extension,$ext)){
-                        $site_file->type = "image";
-                    }
-                    else {
-                        $site_file->type = "file";
-                    }
+        //             $site_file->save();
+        //             $driver->files()->save($site_file);
+        //         }
+        //         else return response("Invalid file", 404);
+        //     }
+        // }
+        // if($request->file('address_file')){
+        //     foreach($request->file('address_file') as $file){
+        //         if ($file->isValid()) {
+        //             $site_file = new SiteFile;
+        //             $extension = $file->getClientOriginalExtension();
+        //             $fileName = Str::random(8).'.'.$extension;
+        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
+        //             $site_file->name = $fileName;
+        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
+        //             if(in_array($extension,$ext)){
+        //                 $site_file->type = "image";
+        //             }
+        //             else {
+        //                 $site_file->type = "file";
+        //             }
 
-                    $site_file->save();
-                    $driver->files()->save($site_file);
-                }
-                else return response("Invalid file", 404);
-            }
-        }
+        //             $site_file->save();
+        //             $driver->files()->save($site_file);
+        //         }
+        //         else return response("Invalid file", 404);
+        //     }
+        // }
 
         return redirect('/cars/list');
     }
