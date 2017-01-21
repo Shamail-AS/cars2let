@@ -240,7 +240,8 @@ class DriverController extends Controller
             $contract->rate = 10;
         $contract->currency = 'GPB';
         $contract->save();
-        if($request->file('driving_licence_file')){
+        dd($request->file('driving_licence_file'));
+        if($request->file('driving_licence_file')) {
             foreach($request->file('driving_licence_file') as $file){
                 if ($file->isValid()) {
                     $site_file = new SiteFile;
@@ -262,7 +263,7 @@ class DriverController extends Controller
                 else return response("Invalid file", 404);
             }
         }
-        if($request->file('pco_licence_file')){
+        if($request->file('pco_licence_file')) {
             foreach($request->file('pco_licence_file') as $file){
                 if ($file->isValid()) {
                     $site_file = new SiteFile;
