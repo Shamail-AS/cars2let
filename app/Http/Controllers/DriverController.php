@@ -186,7 +186,7 @@ class DriverController extends Controller
         // If validation fails.
         // Validation fails  
         if ($validator->fails()) {
-           return redirect('/drivers/create')
+           return redirect('/drivers/new?car_reg_no='.$request->car_reg_no)
                         ->withErrors($validator)
                         ->withInput();
         }

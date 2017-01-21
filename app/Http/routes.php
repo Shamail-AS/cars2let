@@ -143,7 +143,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::get('/driver/create','DriverController@create');
 
     //save data received
-    Route::post('/drivers/store','DriverController@store');
+    Route::post('/driver/store','DriverController@store');
     // Policies
     Route::get('/insurance/all', 'PolicyController@index');    
     //save data received
