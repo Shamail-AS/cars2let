@@ -24,13 +24,15 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>#</th>
-                    <th>Email</th>
                     <th>Name</th>
-                    <th>License No.</th>
-                    <th>PCO License No.</th>
-                    <th>DOB</th>
                     <th>Phone</th>
+                    <th>Email</th>
+                    <th>Car Reg No </th>
+                    <th>Price </th>
+                    <th>Driving Licence Issue</th>
+                    <th>Date Of Birth</th>
+                    <th>Contract Start Date</th>
+                    <th>Contract End Date</th>
                     <th>Action</th>  
                 </tr>
             </thead>
@@ -39,13 +41,11 @@
                 @forelse($unapprovedContracts as $contract)
                 <tr>
                     <td><input type="checkbox" name="contracts[]" value="{{$contract->id}}"></td>
-                    <td>{{ $contract->driver['id'] }}</td>
-                    <td>{{ $contract->driver['email'] }}</td>
                     <td>{{ $contract->driver['name']}}</td>
-                    <td>{{ $contract->driver['license_no'] }}</td>
-                    <td>{{ $contract->driver['pco_license_no'] }}</td>
-                    <td>{{$contract->driver['dob']}}</td>
                     <td>{{ $contract->driver['phone'] }}</td>
+                    <td>{{ $contract->driver['email'] }}</td>
+                    <td>{{ $contract->driver['license_no'] }}</td>
+                    <td>{{$contract->driver['dob']}}</td>
                     <td><a href="{{url('admin/unapproved/'.$contract->id)}}" class="btn btn-success"> Details</a></td>
                 </tr>
                 @empty

@@ -80,16 +80,8 @@
                                             <td>{{$contract->driver->license_no}}</td>
                                         </tr>
                                         <tr>
-                                            <td>License No</td>
-                                            <td>{{$contract->driver->license_no}}</td>
-                                        </tr>
-                                        <tr>
                                             <td>PCO License No</td>
                                             <td>{{$contract->driver->pco_license_no}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>License No</td>
-                                            <td>{{$contract->driver->license_no}}</td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
@@ -100,7 +92,7 @@
                                             <td>{{$contract->driver->phone}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Date Of Birthday</td>
+                                            <td>Date Of Birth</td>
                                             <td>{{date("M d, Y",strtotime($contract->driver->dob))}}</td>
                                         </tr>
                                                                                         
@@ -139,11 +131,11 @@
                                             <td>{{$contract->driver->emerg_num}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Years in Uk</td>
+                                            <td>Years living in the Uk</td>
                                             <td>{{$contract->driver->years_in_uk}}</td>
                                         </tr>
                                         <tr>
-                                            <td>PCO Expires in </td>
+                                            <td>PCO Expires on </td>
                                             <td>{{ date("M d, Y",strtotime($contract->driver->pco_expires_at)) }}</td>
                                         </tr>
                                     </tbody>
@@ -165,7 +157,7 @@
                                             <td>{{$contract->driver->type}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Nino</td>
+                                            <td>National Insurance Number</td>
                                             <td>{{$contract->driver->nino}}</td>
                                         </tr>
                                         <tr>

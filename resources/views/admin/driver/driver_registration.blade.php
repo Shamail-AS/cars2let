@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <h3>Driver Registration for Car : {{$car_reg_no}}</h3>
 
-        <form enctype="multipart/form-data" method="POST" action="{{url('drivers/store?car_reg_no='.$car_reg_no)}}">
+        <form enctype="multipart/form-data" method="POST" action="{{url('admin/drivers/store?car_reg_no='.$car_reg_no)}}">
             {!! csrf_field() !!}
             <div class="row">
                 <div class="col-md-6">
