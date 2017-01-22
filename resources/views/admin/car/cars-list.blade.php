@@ -45,7 +45,6 @@
                                 <li> Model: {{$car->model}}</li>
                                 <li> Color: {{$car->colour}}</li>
                                 <li> Transmission:{{$car->transmission}}</li>
-                                <li> Chasis Number:{{$car->chassis_num}}</li>
                             </ul>
                             <p><a href="{{url('drivers/new/?car_reg_no='.$car->reg_no)}}" class="btn btn-success btn-xs" role="button">Book Now</a></p>    
                         </div>
