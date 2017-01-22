@@ -202,7 +202,7 @@ class DriverController extends Controller
                     $fileName = Str::random(8).'.'.$extension;
                     $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('passport')));
                     $site_file->name = $fileName;
-                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/driver/".$driver->id."/".$fileName;
                     if(in_array($extension,$ext)){
                         $site_file->type = "image";
                     }
@@ -222,7 +222,7 @@ class DriverController extends Controller
                     $fileName = Str::random(8).'.'.$extension;
                     $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('proof')));
                     $site_file->name = $fileName;
-                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/driver/".$driver->id."/".$fileName;
                     if(in_array($extension,$ext)){
                         $site_file->type = "image";
                     }
@@ -242,7 +242,7 @@ class DriverController extends Controller
                     $fileName = Str::random(8).'.'.$extension;
                     $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('driving_licence')));
                     $site_file->name = $fileName;
-                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/driver/".$driver->id."/".$fileName;
                     if(in_array($extension,$ext)){
                         $site_file->type = "image";
                     }
@@ -262,7 +262,7 @@ class DriverController extends Controller
                     $fileName = Str::random(8).'.'.$extension;
                     $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('pco_licence')));
                     $site_file->name = $fileName;
-                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/driver/".$driver->id."/".$fileName;
                     if(in_array($extension,$ext)){
                         $site_file->type = "image";
                     }
