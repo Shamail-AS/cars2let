@@ -94,8 +94,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="password">Car Parking Address</label>
-                                        <input type='text' id='password' name="password" class="form-control"/>
+                                        <label for="password">Password</label>
+                                        <input type='password' id='password' name="password" class="form-control"/>
                                         @if ($errors->has('password')) <p class="help-block">{{ $errors->first('password') }}</p> @endif
                                     </div>
                                 </div>
