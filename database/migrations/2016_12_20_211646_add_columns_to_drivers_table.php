@@ -16,6 +16,7 @@ class AddColumnsToDriversTable extends Migration
         Schema::table('drivers', function (Blueprint $table) {
             //PERSONAL
             $table->string('address');
+            $table->string('alt_address');
             $table->string('passport')->nullable();
             $table->date('pass_exp_at')->nullable();
             $table->string('nationality');
@@ -31,10 +32,12 @@ class AddColumnsToDriversTable extends Migration
             $table->string('right_to_work'); //Yes, No, N/A
 
             //DRIVING
-            $table->integer('driving_since');
+            $table->date('driving_licence_start_date');
+            $table->date('driving_mini_cab_from');
+            $table->integer('uber_rating')
             $table->integer('penalty_points')->default(0);
             $table->string('history')->nullable();
-
+            $table->string('comments')->nullable();
             //BACKGROUND
             $table->boolean('can_dbs_check')->default(false);
             $table->boolean('dbs_checked')->default(false);

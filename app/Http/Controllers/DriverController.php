@@ -130,54 +130,28 @@ class DriverController extends Controller
     }
 
     public function viewDriverRegistrationForm(Request $request) {
-        $car_reg_no = $request->car_reg_no;
-        return view('admin.driver.driver_registration',['car_reg_no' => $car_reg_no]);
+        $car = \App\Car::where('reg_no',$request->car_reg_no)->first(); 
+        
+        return view('admin.driver.driver_registration',['car' => $car]);
     }
 
 
     public function storeDriver(Request $request) {
         $validator = Validator::make($request->all(), [
-            'first_name' =>'required|max:255',
-            'last_name' => 'required|max:255',
+            'name' =>'required|max:255',
             'dob'=>'required',
             'passport'=>'required',
-            'pass_exp_at'=>'required',
+            'password'=>'required',
             'address'=>'required',
-            'mobile'=>'required',
-            'emergency_person' => 'required',
-            'emergency_no' => 'required',
+            'phone'=>'required',
             'email' =>'required|email|max:255',
-            'years_in_uk'=>'required|integer',
-            'curr_pco_num'=>'required',
-            'curr_pco_expiry'=>'required',
-            'curr_driving_licence_no'=>'required',
-            'no_of_years_driving'=>'required',
-            'agree_radio'=>'required',
-            'dbs_radio' => 'required',
-            'con_start_date' => 'required',
-            'con_end_date' => 'required'
-            // 'driving_licence_file' => 'mimes:jpeg,png,gif,jpg,pdf',
-            // 'pco_licence_file' =>'mimes:jpeg,png,gif,jpg,pdf',
-            // 'passport_file' => 'mimes:jpeg,png,gif,jpg,pdf',
-            // 'crb_file' =>'mimes:jpeg,png,gif,jpg,pdf',
-            // 'address_file' => 'mimes:jpeg,png,gif,jpg,pdf'
+            'driving_licence_start_date' => 'required',
+            'nino' =>'required',
+            'driving_licence' => 'required',
+            'start_date' =>'required',
+            'end_date' =>'required'
+
         ]);
-        $validator->sometimes('penelty_points', 'required|integer', function ($input) {
-            //dd($input);
-            return $input->penelty_points_radio == 'yes';
-        });
-        $validator->sometimes('conv_date', 'required', function ($input) {
-            //dd($input);
-            return $input->criminal_radio == 'yes';
-        });
-        $validator->sometimes('conv_place', 'required', function ($input) {
-            //dd($input);
-            return $input->criminal_radio == 'yes';
-        });
-        $validator->sometimes('detail_of_conviction', 'required', function ($input) {
-            //dd($input);
-            return $input->criminal_radio == 'yes';
-        });
         // $validator->sometimes('crb_file[]', 'required', function ($input) {
         //     //dd($input);
         //     return $input->dbs_radio == 'yes';
@@ -193,47 +167,27 @@ class DriverController extends Controller
         $ext = ['jpg','jpeg','png','JPG','gif'];
 
         $driver = new Driver;
-        $driver->name = $request->first_name.' '.$request->last_name;
+        $driver->name = $request->name;
         $driver->email = $request->email;
         $driver->dob = $request->dob;
-        $driver->passport = $request->passport;
-        $driver->phone = $request->mobile;
+        $driver->phone = $request->phone;
         $driver->address = $request->address;
-        $driver->pass_exp_at = $request->pass_exp_at;
-        $driver->nationality = $request->nationality;
-        $driver->emerg_person = $request->emergency_person;
-        $driver->emerg_num = $request->emergency_no;
-        $driver->years_in_uk = $request->years_in_uk;
-        $driver->pco_expires_at = $request->curr_pco_expiry;
-        $driver->pco_license_no = $request->curr_pco_num;
-        $driver->license_no = $request->curr_driving_licence_no;
-        $driver->licence_exp_at = $request->curr_driving_expiry;
-        $driver->nino = 'yes';
+        $driver->alt_address = $request->alt_address;
+        $driver->driving_licence_start_date = $request->driving_licence_start_date;
+        $driver->driving_mini_cab_from = $request->driving_mini_cab_from;
+        $driver->uber_rating = $request->uber_rating;
+        $driver->comments = $request->comments;
+        $driver->nino = $request->nino;
         $driver->right_to_work = 'yes';
-        $driver->driving_since = $request->no_of_years_driving;
-        if($request->dbs_radio == 'yes')
-            $driver->can_dbs_check = 1;
-        else
-            $driver->can_dbs_check = 0;
+        $driver->driving_since = $request->driving_mini_cab_from;
         $driver->save();
-        if($request->penelty_points_radio == 'yes'){
-            $conviction  = new \App\DriverConviction;
-            $conviction->details = $request->detail_of_conviction;
-            $conviction->convicted_at = $request->conv_date;
-            $conviction->place = $request->conv_place;
-            $conviction->penalty_points = $request->penelty_points;
-            $driver->convictions()->save($conviction);
-            $driver->penalty_points = $request->penelty_points;
-            $driver->save();
-        }
         $car = \App\Car::where('reg_no',$request->car_reg_no)->first();
         $contract = new \App\Contract;
         $contract->car_id = $car->id;
         $contract->driver_id = $driver->id;
-        $contract->status = 'suspended';
-        $contract->start_date = $request->con_start_date;
-        $contract->end_date = $request->con_end_date;
-        $contract->status = 'suspended';
+        $contract->status = 2;
+        $contract->start_date = $request->start_date;
+        $contract->end_date = $request->end_date;
         if($car->rate)
             $contract->rate = $car->rate;
         else
@@ -241,118 +195,93 @@ class DriverController extends Controller
         $contract->currency = 'GPB';
         $contract->save();
         
-        // if($request->file('driving_licence_file')) {
-        //     foreach($request->file('driving_licence_file') as $file){
-        //         if ($file->isValid()) {
-        //             $site_file = new SiteFile;
-        //             $extension = $file->getClientOriginalExtension();
-        //             $fileName = Str::random(8).'.'.$extension;
-        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-        //             $site_file->name = $fileName;
-        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-        //             if(in_array($extension,$ext)){
-        //                 $site_file->type = "image";
-        //             }
-        //             else {
-        //                 $site_file->type = "file";
-        //             }
+        if($request->file('passport')) {
+                if ($request->file('passport')->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $request->file('passport')->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('passport')));
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
 
-        //             $site_file->save();
-        //             $driver->files()->save($site_file);
-        //         }
-        //         else return response("Invalid file", 404);
-        //     }
-        // }
-        // if($request->file('pco_licence_file')) {
-        //     foreach($request->file('pco_licence_file') as $file){
-        //         if ($file->isValid()) {
-        //             $site_file = new SiteFile;
-        //             $extension = $file->getClientOriginalExtension();
-        //             $fileName = Str::random(8).'.'.$extension;
-        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-        //             $site_file->name = $fileName;
-        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-        //             if(in_array($extension,$ext)){
-        //                 $site_file->type = "image";
-        //             }
-        //             else {
-        //                 $site_file->type = "file";
-        //             }
+                    $site_file->save();
+                    $driver->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
+        }
+        if($request->file('proof')) {
+                if ($request->file('proof')->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $request->file('proof')->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('proof')));
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
 
-        //             $site_file->save();
-        //             $driver->files()->save($site_file);
-        //         }
-        //         else return response("Invalid file", 404);
-        //     }
-        // }
+                    $site_file->save();
+                    $driver->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
+        }
+        if($request->file('driving_licence')) {
+                if ($request->file('driving_licence')->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $request->file('driving_licence')->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('driving_licence')));
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
 
-        // if($request->file('passport_file')){
-        //     foreach($request->file('passport_file') as $file){
-        //         if ($file->isValid()) {
-        //             $site_file = new SiteFile;
-        //             $extension = $file->getClientOriginalExtension();
-        //             $fileName = Str::random(8).'.'.$extension;
-        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-        //             $site_file->name = $fileName;
-        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-        //             if(in_array($extension,$ext)){
-        //                 $site_file->type = "image";
-        //             }
-        //             else {
-        //                 $site_file->type = "file";
-        //             }
+                    $site_file->save();
+                    $driver->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
+        }
+        if($request->file('pco_licence')) {
+                if ($request->file('pco_licence')->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $request->file('pco_licence')->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($request->file('pco_licence')));
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/tickets/".$driver->id."/".$fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
 
-        //             $site_file->save();
-        //             $driver->files()->save($site_file);
-        //         }
-        //         else return response("Invalid file", 404);
-        //     }
-        // }
-
-        // if($request->file('crb_file')){
-        //     foreach($request->file('crb_file') as $file){
-        //         if ($file->isValid()) {
-        //             $site_file = new SiteFile;
-        //             $extension = $file->getClientOriginalExtension();
-        //             $fileName = Str::random(8).'.'.$extension;
-        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-        //             $site_file->name = $fileName;
-        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-        //             if(in_array($extension,$ext)){
-        //                 $site_file->type = "image";
-        //             }
-        //             else {
-        //                 $site_file->type = "file";
-        //             }
-
-        //             $site_file->save();
-        //             $driver->files()->save($site_file);
-        //         }
-        //         else return response("Invalid file", 404);
-        //     }
-        // }
-        // if($request->file('address_file')){
-        //     foreach($request->file('address_file') as $file){
-        //         if ($file->isValid()) {
-        //             $site_file = new SiteFile;
-        //             $extension = $file->getClientOriginalExtension();
-        //             $fileName = Str::random(8).'.'.$extension;
-        //             $stored_file = Storage::disk('local')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
-        //             $site_file->name = $fileName;
-        //             $site_file->full_url = "images/app/driver/".$driver->id."/".$fileName;
-        //             if(in_array($extension,$ext)){
-        //                 $site_file->type = "image";
-        //             }
-        //             else {
-        //                 $site_file->type = "file";
-        //             }
-
-        //             $site_file->save();
-        //             $driver->files()->save($site_file);
-        //         }
-        //         else return response("Invalid file", 404);
-        //     }
-        // }
+                    $site_file->save();
+                    $driver->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
+        }
+        // Creating a new User
+        $user = new \App\User;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->status = 'active';
+        $user->type = 'driver';
+        $user->save();
 
         return redirect('/cars/list');
     }

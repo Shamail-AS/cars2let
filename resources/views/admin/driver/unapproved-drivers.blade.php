@@ -44,8 +44,14 @@
                     <td>{{ $contract->driver['name']}}</td>
                     <td>{{ $contract->driver['phone'] }}</td>
                     <td>{{ $contract->driver['email'] }}</td>
-                    <td>{{ $contract->driver['license_no'] }}</td>
+                    <td>{{$contract->car['reg_no']}}</td>
+                    <td>{{$contract->car['price']}}</td>
+                    <td>{{ $contract->driver['driving_licence_start_date'] }}</td>
                     <td>{{$contract->driver['dob']}}</td>
+                    <td>{{ $contract->start_date}}</td>
+                    <td>{{ $contract->end_date}}</td>
+                    
+
                     <td><a href="{{url('admin/unapproved/'.$contract->id)}}" class="btn btn-success"> Details</a></td>
                 </tr>
                 @empty
