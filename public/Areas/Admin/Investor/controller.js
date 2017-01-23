@@ -112,7 +112,6 @@ app.controller('investorController',
             };
             $scope.dateOptions = {
                 'start_date': {
-                    'minDate': new Date(),
                     'maxDate': $scope.dirty.contract.dt_end_date
                 },
                 'end_date': {
