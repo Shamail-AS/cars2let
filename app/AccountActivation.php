@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
+
 /**
  * App\AccountActivation
  *
@@ -57,6 +58,24 @@ class AccountActivation extends Model
             $m->from('registration@cars2let.com', 'Cars2Let Investor Registration');
 
             $m->to($email, $email)->subject('Your Authentication Code');
+        });
+    }
+
+    public function sendActivationNotification($recipients)
+    {
+
+        $investorEmail = $this->delivered_to;
+        $data = [
+            'tos' => $recipients,
+            'cc' => $investorEmail
+        ];
+
+
+        Mail::send('emails.investorSignupNoti', $data, function ($message) use ($data) {
+            $message->from('registration@cars2let.com', 'Cars2Let Investor Registration');
+            $message->to($data['tos'], 'admins');
+            $message->cc($data['cc'], 'investor');
+            $message->subject("Investor signed up");
         });
     }
 

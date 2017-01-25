@@ -33,6 +33,7 @@ class PasswordController extends Controller
         $this->middleware('guest');
     }
 
+    //USED BY INVESTORS, AFTER THEY ENTER THEIR EMAIL
     public function sendResetLinkEmail(Request $request)
     {
         $this->validate($request, [

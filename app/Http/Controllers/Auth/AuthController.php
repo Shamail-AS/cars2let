@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\AccountActivation;
 use App\Investor;
 use App\User;
 use Validator;
@@ -68,12 +69,20 @@ class AuthController extends Controller
             'name' => $data['name'],
         ]);
 
+        $activator = AccountActivation::where('delivered_to', $in->email)->valid()->first();
+        $adminEmails = User::is(['admin', 'super-admin'])->active()->get()->pluck('email')->all();
+        $activator->sendActivationNotification($adminEmails);
+        $activator->deactivate();
+
+
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'status' => 'active',
+            'access_level' => 'full',
             'type' => 'investor'
         ]);
+
     }
 
 

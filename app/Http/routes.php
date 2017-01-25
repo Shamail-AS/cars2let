@@ -62,10 +62,13 @@ Route::group(['middleware' => 'web'], function () {
     });
     //Verify code sent to email
     Route::get('/verify/token/{token}', 'MyAuthController@verifyToken');
+
+    //Once code is verified, let investors set their password
+    Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
+
     Route::get('/home', 'HomeController@redirect');
     Route::get('/help', 'HomeController@help');
 
-    Route::post('/password/first', 'InvestorController@resetFirstTimePassword');
     Route::get('/reset/password', 'MyAuthController@reset');
 
     Route::get('/disabled', function () {

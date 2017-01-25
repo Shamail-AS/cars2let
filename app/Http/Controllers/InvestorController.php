@@ -221,23 +221,24 @@ class InvestorController extends Controller
         return redirect(url('/admin/investor/all'));
     }
 
-    public function activate($token)
-    {
-        $activator = AccountActivation::valid()->latest();
-        if($token == $activator->code)
-        {
-            $user = $activator->user;
+//    public function activate($token)
+//    {
+//        $activator = AccountActivation::valid()->latest();
+//        if($token == $activator->code)
+//        {
+//            $user = $activator->user;
+//
+//            $user->status = 'first-time-password-change-pending';
+//            $user->save();
+//            return view('auth.passwords.firstTimePassword',compact('token'));
+//        }
+//        else
+//        {
+//
+//        }
+//    }
 
-            $user->status = 'first-time-password-change-pending';
-            $user->save();
-            return view('auth.passwords.firstTimePassword',compact('token'));
-        }
-        else
-        {
-
-        }
-    }
-
+    //USED WHEN INVESTOR ALREADY EXISTS, JUST NEED TO RESET PASSWORD
     public function resetFirstTimePassword(Request $request)
     {
         $this->validate($request,[
@@ -251,7 +252,7 @@ class InvestorController extends Controller
         $user = User::where('email', $email)->first();
         $user->password = bcrypt($request->input('password'));
         $user->status = 'active';
-
+        $user->access_level = 'full';
         $user->save();
         $activator->deactivate();
 
