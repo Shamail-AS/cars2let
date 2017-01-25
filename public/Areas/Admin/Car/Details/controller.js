@@ -35,7 +35,7 @@ app.controller('detailsController', ['$scope', 'detailsDataFactory', 'detailsDat
 
         $scope.vm.transmissions = _.concat($scope.vm.transmissions, ['automatic', 'semi-automatic', 'manual']);
         $scope.vm.fuels = _.concat($scope.vm.fuels, ['petrol', 'diesel', 'lpg', 'bio']);
-        $scope.vm.statuses = _.concat($scope.vm.statuses, ['on-road', 'off-road']);
+        $scope.vm.statuses = _.concat($scope.vm.statuses, ['on-road', 'off-road','off-rent']);
 
     };
     var load_car = function (id) {
