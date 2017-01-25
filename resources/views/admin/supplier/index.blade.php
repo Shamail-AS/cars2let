@@ -71,7 +71,7 @@
     @if(Auth::user()->isFullAccess)
     <div class="fixed-footer-button-container">
         <div class="card-container">
-            @include('partials.form.Supplier-create',['admin'=>true])
+            @include('partials.form.supplier-create',['admin'=>true])
         </div>
         <div class="flex-container">
             <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
