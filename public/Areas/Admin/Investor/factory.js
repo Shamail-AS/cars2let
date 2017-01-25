@@ -166,6 +166,9 @@ app.factory('contractDataModelFactory', ['moment', function (moment) {
         if (contract.outHandover) contract.outUrl = '/api/admin/contracts/' + contract.id + '/handovers/' + contract.outHandover.id;
         if (contract.inHandover) contract.inUrl = '/api/admin/contracts/' + contract.id + '/handovers/' + contract.inHandover.id;
 
+        contract.total_payments = _.sumBy(contract.payments, function (payment) {
+            return parseFloat(payment.amount);
+        });
         return contract;
     };
 

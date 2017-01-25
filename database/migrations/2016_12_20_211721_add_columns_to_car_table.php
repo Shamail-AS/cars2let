@@ -29,15 +29,13 @@ class AddColumnsToCarTable extends Migration
             $table->date('first_reg_date');
             $table->string('keeper');
             $table->string('price');
-
-            //$table->integer('camera_id');
-            //$table->date('cam_installed_at');
             $table->string('pco_licence');
             $table->date('pco_expires_at');
-            //$table->integer('tracker_id');
             $table->string('status');
             $table->integer('curr_odo');
             $table->date('odo_read_at');
+            $table->integer('approved_by')->unsigned()->nullable();
+
         });
     }
 
@@ -65,15 +63,12 @@ class AddColumnsToCarTable extends Migration
                 'engine_size',
                 'first_reg_date',
                 'keeper',
-
-                //'camera_id',
-                //'cam_installed_at',
                 'pco_licence',
                 'pco_expires_at',
-                //'tracker_id',
                 'status',
                 'curr_odo',
-                'odo_read_at'
+                'odo_read_at',
+                'approved_by'
             ]);
         });
     }

@@ -3,7 +3,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal"
+                    <button type="button" class="close" ng-click="close()" data-dismiss="modal"
                             aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Contract Payments</h4>
                 </div>
@@ -77,7 +77,7 @@
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">
+                        <button type="button" ng-click="close()" class="btn btn-default" data-dismiss="modal">
                             Done
                         </button>
                     </div>

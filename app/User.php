@@ -147,7 +147,11 @@ class User extends Authenticatable
 
     public function scopeIs($query, $type)
     {
-        return $query->where('type', $type);
+        if (is_array($type)) {
+            return $query->whereIn('type', $type);
+        } else {
+            return $query->where('type', $type);
+        }
     }
 
     public function scopeActive($query)

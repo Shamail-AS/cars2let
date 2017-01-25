@@ -56,6 +56,9 @@ app.controller('investorController',
                     modal.element.modal();
                     modal.close.then(function (result) {
                         console.log(result);
+                        if (result) {
+                            _.concat(contract.payments, result);
+                        }
                     });
                 });
             };
@@ -291,12 +294,10 @@ app.controller('investorController',
             };
 
             $scope.getAge = function (date) {
-
                 return moment(date).fromNow(true);
             };
 
             $scope.formatDate = function (date) {
-
                 if (!date)return "-";
                 var dt = moment(date);
                 return dt.format("DD, MMM YYYY");

@@ -16,12 +16,11 @@ class AddColumnsToContractsTable extends Migration
         Schema::table('contracts', function (Blueprint $table) {
             $table->date('act_start_dt')->nullable();
             $table->date('act_end_dt')->nullable();
-
             $table->decimal('req_deposit')->default(500);
             $table->decimal('rec_deposit')->default(0);
-
-
             $table->text('comments')->nullable();
+            $table->integer('approved_by')->unsigned()->nullable();
+
 
         });
     }
@@ -40,7 +39,8 @@ class AddColumnsToContractsTable extends Migration
                 'act_end_dt',
                 'req_deposit',
                 'rec_deposit',
-                'comments'
+                'comments',
+                'approved_by'
             ]);
         });
     }

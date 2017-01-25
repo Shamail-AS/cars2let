@@ -37,6 +37,7 @@ class MyAuthController extends Controller
         }
     }
 
+    //USED WHEN INVESTORS GET SENT THEIR FIRST CODE
     public function sendCode(Request $request)
     {
         $email = $request->session()->get('email');
@@ -96,64 +97,7 @@ class MyAuthController extends Controller
         $activation->send();
     }
 
-//    //MANUAL ENTRY OF CODE
-//    //TODO : REMOVE THIS FUNCTION USE URL based AUTH INSTEAD
-//    public function verifyCode(VerifyCodeRequest $request)
-//    {
-//        $email = $request->session()->get('email');
-//
-//        $activator = AccountActivation::valid()->for($email)->latest()->first();
-//
-//        $expected_code = $activator->code;
-//        $actual_code = $request->input('code');
-//
-//        if($actual_code == $expected_code)
-//        {
-//            $user = User::where('email', $email)->first();
-//            if (isset($user)) {
-//
-//                //$activator->deactivate();
-//                return view('auth.passwords.firstTimePassword', compact('email', 'actual_code'));
-//            } else {
-//                return redirect(url('register'))->withInput(['email' => $email]);
-//            }
-//        }
-//        else{
-//            $request->session()->flash('code_mismatch','The provided code doesn\'t match');
-//            return view('auth.verify');
-//        }
-//    }
-
-//    public function check(Request $request)
-//    {
-//
-//        $investor = Investor::where('email','=',$request->input('email'))->first();
-//
-//        if(is_null($investor))
-//        {
-//            return view('errors.investorNotFound',['message' => 'Sorry, but you are not a known investor.']);
-//        }
-//        $matches = false;
-//        if(strlen($request->input('passport_num')) > 0 || strlen($request->input('licence_num')) > 0 ) {
-//            $matches = $investor->passport_num == $request->input('passport_num')
-//                || $investor->passport_num == $request->input('passport_num');
-//
-//        }
-//
-//
-//        if(!$matches)
-//        {
-//            $request->session()->flash('detail_mismatch','Your details don\'t match our records.');
-//            return redirect(url('/myregister'))->withInput();
-//        }
-//        else
-//        {
-//            $request->session()->put('investor',$investor);
-//            return redirect(url('/code/destination'));
-//        }
-//
-//    }
-
+    //USED WHEN INVESTORS OPEN LINK IN EMAIL
     public function verifyToken($token)
     {
         $activator = AccountActivation::where('code', $token)->valid()->first();
@@ -165,8 +109,6 @@ class MyAuthController extends Controller
                 $user = User::where('phone', $dest)->first();
 
             if (isset($user)) {
-
-                //$activator->deactivate();
                 return view('auth.passwords.firstTimePassword', compact('dest', 'token'));
             } else {
                 if ($activator->destination == 'email')
@@ -181,6 +123,7 @@ class MyAuthController extends Controller
         }
     }
 
+    //USED WHEN INVESTORS SIGN UP THEMSELVES
     public function register(Request $request)
     {
         $this->validate($request, [

@@ -47,6 +47,8 @@ class AddColumnsToDriversTable extends Migration
             $table->string('pay_method')->default('bank');
             $table->integer('week_pay_day')->default(0); //0 - 6 : 7 days
 
+            $table->integer('approved_by')->unsigned()->nullable();
+
         });
     }
 
@@ -79,7 +81,8 @@ class AddColumnsToDriversTable extends Migration
                 'dbs_checked',
                 'bank_account_id',
                 'pay_method',
-                'week_pay_day'
+                'week_pay_day',
+                'approved_by'
             ]);
 
         });

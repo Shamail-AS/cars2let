@@ -18,12 +18,12 @@ class ContractController extends Controller
     // API METHODS
     public function api_all()
     {
-        return Contract::with('driver', 'car', 'handovers')->get()->all();
+        return Contract::with('driver', 'car', 'handovers', 'payments')->get()->all();
     }
 
     public function api_get($id)
     {
-        return Contract::with('driver', 'car', 'handovers')->where('id', $id)->first();
+        return Contract::with('driver', 'car', 'handovers', 'payments')->where('id', $id)->first();
     }
 
     // ONLY USED IF CONTRACT STATUS is NEW //
@@ -31,13 +31,13 @@ class ContractController extends Controller
     {
 
         $contract = Contract::find($request->input('id'));
-        $contract->start_date = $request->input('start_date');
-        $contract->end_date = $request->input('end_date');
-        $contract->rate = $request->input('rate');
-        $contract->req_deposit = $request->req_deposit;
-        $contract->rec_deposit = $request->rec_deposit;
-        $contract->car_id = $request->input('car.id');
-        $contract->driver_id = $request->input('driver.id');
+        if ($request->has('start_date')) $contract->start_date = $request->start_date;
+        if ($request->has('end_date')) $contract->end_date = $request->end_date;
+        if ($request->has('rate')) $contract->rate = $request->rate;
+        if ($request->has('req_deposit')) $contract->req_deposit = $request->req_deposit;
+        if ($request->has('rec_deposit')) $contract->rec_deposit = $request->rec_deposit;
+        if ($request->has('car.id')) $contract->car_id = $request->input('car.id');
+        if ($request->has('driver.id')) $contract->driiver_id = $request->input('driver.id');
 
         $contract->save();
         return $contract;
