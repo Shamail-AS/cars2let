@@ -77,11 +77,11 @@
     </div>
     @if(Auth::user()->isFullAccess)
     <div class="fixed-footer-button-container">
-        <div class="card-container">
+        {{-- <div class="card-container">
             @include('partials.form.driver-create',['admin'=>true])
-        </div>
+        </div> --}}
         <div class="flex-container">
-            <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
+            <a href="/cars/list"><span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span></a>
         </div>
     </div>
     @endif
