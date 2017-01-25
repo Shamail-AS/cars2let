@@ -130,8 +130,8 @@ class DriverController extends Controller
     }
 
     public function viewDriverRegistrationForm(Request $request) {
-        $car = \App\Car::where('reg_no',$request->car_reg_no)->first(); 
-        
+        $car = \App\Car::where('reg_no',$request->car_reg_no)->first();
+
         return view('admin.driver.driver_registration',['car' => $car]);
     }
 
@@ -158,7 +158,7 @@ class DriverController extends Controller
         // });
 
         // If validation fails.
-        // Validation fails  
+        // Validation fails
         if ($validator->fails()) {
            return redirect('/drivers/new?car_reg_no='.$request->car_reg_no)
                         ->withErrors($validator)
@@ -179,7 +179,6 @@ class DriverController extends Controller
         $driver->comments = $request->comments;
         $driver->nino = $request->nino;
         $driver->right_to_work = 'yes';
-        $driver->driving_since = $request->driving_mini_cab_from;
         $driver->save();
         $car = \App\Car::where('reg_no',$request->car_reg_no)->first();
         $contract = new \App\Contract;
@@ -194,7 +193,7 @@ class DriverController extends Controller
             $contract->rate = 10;
         $contract->currency = 'GPB';
         $contract->save();
-        
+
         if($request->file('passport')) {
                 if ($request->file('passport')->isValid()) {
                     $site_file = new SiteFile;

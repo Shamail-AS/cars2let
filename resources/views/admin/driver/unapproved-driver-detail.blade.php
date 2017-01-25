@@ -3,9 +3,33 @@
 @section("styles")
 
     <link href="{{asset('css/admin/admin.css')}}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css">
 
 @endsection
+@section('scripts')
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#start_date").datetimepicker({format:"YYYY-MM-DD"});
+      $("#end_date").datetimepicker({
+          useCurrent: false,
+          format:"YYYY-MM-DD"
+      });
+      $("#start_date").on("dp.change", function (e) {
+          $("#end_date").data("DateTimePicker").minDate(e.date);
+      });
+      $("#end_date").on("dp.change", function (e) {
+          $("#start_date").data("DateTimePicker").maxDate(e.date);
+      });
+      $("#driving_licence_start_date").datetimepicker({format:"YYYY-MM-DD"});
+      $("#dob").datetimepicker({format:"YYYY-MM-DD"});
+      $("#driving_mini_cab_from").datetimepicker({format:"YYYY-MM-DD"});
+    });
+  </script>
 
+@endsection
 @section("content")
     <br>
     <div class="container">
@@ -15,14 +39,16 @@
                     <div class="col-md-4">
                         <h3>Driver Details </h3>
                     </div>
-                    <div class="col-md-4">     
+                    <div class="col-md-4">
                         <h3><a href="{{url('/admin/contracts/'.$contract->id.'/approve')}}" class="btn btn-danger pull-right">Approve Driver</a></h3>
                     </div>
-                    <div class="col-md-4">     
+                    <div class="col-md-4">
                         <h3><a href="{{url('/admin/contracts/'.$contract->id.'/pdf')}}" class="btn btn-success pull-right">Download Pdf</a></h3>
                     </div>
                 </div>
                 <br>
+                <form method="post" action="{{ url('admin/driver/update/'.$contract->driver->id) }}">
+                  {!! csrf_field() !!}
                 <div class="list-group">
                     <a class="list-group-item list-group-item-action active">
                         <center><h4>Contract Information</h4></center>
@@ -36,11 +62,31 @@
                                     <tbody>
                                         <tr>
                                             <td>Start Date</td>
-                                            <td>{{date("M d, Y",strtotime($contract->start_date))}}</td>
+                                            <td>
+                                              <div class="form-group">
+                                                  <div class='input-group date'>
+                                                      <input type='text' id='start_date' name="start_date" class="form-control" value="{{$contract->start_date}}" />
+                                                      <span class="input-group-addon">
+                                                          <span class="glyphicon glyphicon-calendar"></span>
+                                                      </span>
+                                                  </div>
+                                                  @if ($errors->has('start_date')) <p class="help-block">{{ $errors->first('start_date') }}</p> @endif
+                                              </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>End Date</td>
-                                            <td>{{date("M d, Y",strtotime($contract->end_date))}}</td>
+                                            <td>
+                                              <div class="form-group">
+                                                <div class='input-group date'>
+                                                    <input type='text' id='end_date' name="end_date" class="form-control" value="{{$contract->end_date}}" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                @if ($errors->has('end_date')) <p class="help-block">{{ $errors->first('end_date') }}</p> @endif
+                                            </div>
+                                          </td>
                                         </tr>
                                         <tr>
                                             <td>Rate</td>
@@ -49,7 +95,7 @@
                                         <tr>
                                             <td>Currency</td>
                                             <td>{{$contract->currrency}}</td>
-                                        </tr>                                           
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -73,15 +119,30 @@
                                         </tr>
                                         <tr>
                                             <td>Name</td>
-                                            <td>{{$contract->driver->name}}</td>
+                                            <td>
+                                              <div class="form-group">
+                                                   <input type='text' id='name' name="name" class="form-control" value="{{$contract->driver->name}}"/>
+                                                   @if ($errors->has('name')) <p class="help-block">{{ $errors->first('name') }}</p> @endif
+                                               </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>License No</td>
-                                            <td>{{$contract->driver->license_no}}</td>
+                                            <td>
+                                              <div class="form-group">
+                                                   <input type='text' id='licence_no' name="licence_no" class="form-control" value="{{$contract->driver->licence_no}}"/>
+                                                   @if ($errors->has('licence_no')) <p class="help-block">{{ $errors->first('licence_no') }}</p> @endif
+                                               </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>PCO License No</td>
-                                            <td>{{$contract->driver->pco_license_no}}</td>
+                                            <td>
+                                              <div class="form-group">
+                                                   <input type='text' id='licence_no' name="licence_no" class="form-control" value="{{$contract->driver->licence_no}}"/>
+                                                   @if ($errors->has('licence_no')) <p class="help-block">{{ $errors->first('licence_no') }}</p> @endif
+                                               </div>
+                                              {{$contract->driver->pco_license_no}}</td>
                                         </tr>
                                         <tr>
                                             <td>Email</td>
@@ -95,7 +156,7 @@
                                             <td>Date Of Birth</td>
                                             <td>{{date("M d, Y",strtotime($contract->driver->dob))}}</td>
                                         </tr>
-                                                                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -186,18 +247,29 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                      <table class="table table-bordered table-striped">
+                        <tbody>
                         @forelse($contract->driver->files as $file)
                             <tr>
                                 @if($file->type == 'image')
                                 <td>
-                                    <img style="display: inline-block;"  class="img-responsive" src="{{$file->full_url}}" width="100"><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                    <img style="display: inline-block;" class="img-responsive" src="{{$file->full_url}}" width="100">
+                                    <a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                    <a href="{{url('admin/driver/'.$contract->driver->id.'/file/'.$file->id)}}" class="btn btn-danger pull-right">Delete</a>
+
                                 </td>
+                            </tr>
                                 @else
+                                  <tr>
                                     <td>
-                                        <p style="display: inline-block;">{{$file->name}}</p><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                        <p style="display: inline-block;">{{$file->name}}</p>
+                                        <a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                        <a href="{{url('admin/driver/'.$contract->driver->id.'/file/'.$file->id)}}" class="btn btn-danger pull-right">Delete</a>
+
                                     </td>
+                                  </tr>
                                 @endif
-                            </tr> 
+                            </tr>
                         @empty
                             <tr>
                                 <td>
@@ -205,7 +277,9 @@
                                 </td>
                             </tr>
                         @endforelse
-                    </div>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
                 <div class="list-group">
                     <a class="list-group-item list-group-item-action active">
@@ -254,7 +328,7 @@
                                             <td>color</td>
                                             <td>{{$contract->car->color}}</td>
                                         </tr>
-                                                                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -307,5 +381,3 @@
         </div>
     </div>
 @endsection
-
-

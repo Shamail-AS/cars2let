@@ -7,5 +7,6 @@ Homestead.json
 .env
 _ide_helper.php
 
+config/database.php
 public/pdf/handover/
 public/pdf/ticket/1/

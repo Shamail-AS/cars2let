@@ -15,7 +15,7 @@ class CreatePoliciesTable extends Migration
         Schema::create('policies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('policy_num');
-            $table->int('insurance_comp');
+            $table->integer('insurance_comp');
             $table->date('policy_start');
             $table->date('policy_end');
             $table->decimal('excess');

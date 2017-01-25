@@ -5,15 +5,15 @@
     <link href="{{asset('css/admin/assets/tickets.css')}}" rel="stylesheet">
     <link href="{{asset('css/jquery.steps.css')}}" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css">
-     
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css">
+
 @endsection
 
 @section('content')
     <br>
     <div class="container">
-        
-        <form method="post" action="{{url('drivers/store?car_reg_no='.$car->reg_no)}}" id="driver-form" enctype="multipart/form-data"> 
+
+        <form method="post" action="{{url('drivers/store?car_reg_no='.$car->reg_no)}}" id="driver-form" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="row">
                 <div class="col-md-12">
@@ -39,7 +39,7 @@
                                             </span>
                                         </div>
                                         @if ($errors->has('start_date')) <p class="help-block">{{ $errors->first('start_date') }}</p> @endif
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -64,7 +64,7 @@
                                         <label for="name">Name</label>
                                         <input type='text' id='name' name="name" class="form-control" value="{{old('name')}}"/>
                                         @if ($errors->has('name')) <p class="help-block">{{ $errors->first('name') }}</p> @endif
-                                    </div> 
+                                    </div>
 
                                 </div>
                                 <div class="col-md-3">
@@ -87,7 +87,7 @@
                                         <label for="dob">Date Of Birth</label>
                                         <input type='text' id='dob' name="dob" class="form-control" value="{{old('dob')}}"/>
                                         @if ($errors->has('dob')) <p class="help-block">{{ $errors->first('dob') }}</p> @endif
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                         <label for="address">Car Parking Address</label>
                                         <input type='text' id='address' name="address" class="form-control" value="{{old('address')}}"/>
                                         @if ($errors->has('address')) <p class="help-block">{{ $errors->first('address') }}</p> @endif
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -121,8 +121,8 @@
                                         <label for="alt_address">Alternative Car Parking Address</label>
                                         <input type='text' id='alt_address' name="alt_address" class="form-control" value="{{old('alt_address')}}"/>
                                         @if ($errors->has('alt_address')) <p class="help-block">{{ $errors->first('alt_address') }}</p> @endif
-                                        
-                                    </div> 
+
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -137,7 +137,7 @@
                                         Upload Passport
                                         <input type="file" id="passport" name="passport" >
                                         @if ($errors->has('passport')) <p class="help-block">{{ $errors->first('passport') }}</p> @endif
-                                        
+
                                     </label>
                                 </div>
                                 <div class="col-md-6">
@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group"> 
+                                    <div class="form-group">
                                         <label>
                                             PCO Licence
                                             <input type="file" id="pco_licence" name="pco_licence">
@@ -214,7 +214,7 @@
                                         <label for="uber_rating" class="control-label">Uber Rating</label>
                                         <input id="uber_rating" name="uber_rating" class="form-control" value="{{old('uber_rating')}}">
                                         @if ($errors->has('uber_rating')) <p class="help-block">{{ $errors->first('uber_rating') }}</p> @endif
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                         <h2>Questions</h2>
                         <section>
                             <div class="row">
-                                <div class="col-md-12"> 
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="comments" class="control-label">Questions or Requests</label>
                                         <textarea class="form-control" name="comments" id="comments"></textarea>
@@ -235,7 +235,7 @@
                 </div>
             </div>
         </form>
-    </div>     
+    </div>
 
 
 @endsection
@@ -243,9 +243,9 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
-    
+
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-    
+
     <script type="text/javascript" src="{{asset('js/jquery.steps.min.js')}}"></script>
     <style type="text/css">
         .help-block{
@@ -261,7 +261,7 @@
                 onFinished: function (event, currentIndex)
                     {
                         var form = $("#driver-form");
-                         
+
                         // Submit form input
                         form.submit();
                     }
@@ -269,7 +269,7 @@
             $("#start_date").datetimepicker({format:"YYYY-MM-DD"});
             $("#end_date").datetimepicker({
                 useCurrent: false,
-                format:"YYYY-MM-DD"     
+                format:"YYYY-MM-DD"
             });
             $("#start_date").on("dp.change", function (e) {
                 $("#end_date").data("DateTimePicker").minDate(e.date);

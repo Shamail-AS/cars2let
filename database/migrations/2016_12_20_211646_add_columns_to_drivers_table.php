@@ -34,7 +34,7 @@ class AddColumnsToDriversTable extends Migration
             //DRIVING
             $table->date('driving_licence_start_date');
             $table->date('driving_mini_cab_from');
-            $table->integer('uber_rating')
+            $table->integer('uber_rating');
             $table->integer('penalty_points')->default(0);
             $table->string('history')->nullable();
             $table->string('comments')->nullable();
