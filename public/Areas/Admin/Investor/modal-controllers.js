@@ -1,4 +1,5 @@
-app.controller('revenueModalController', function ($scope, data, moment, contractDataFactory, revenueDataFactory, close) {
+app.controller('revenueModalController',
+    function ($scope, $element, $log, data, moment, contractDataFactory, revenueDataFactory, close) {
 
     $scope.vm = {
         loading: true,
@@ -12,8 +13,18 @@ app.controller('revenueModalController', function ($scope, data, moment, contrac
         if (!date) return "-";
         return format_date(date);
     };
+        $scope.allocated = function () {
+            var allocated = 0;
+            if (!$scope.loading && $scope.vm.revenues) {
+                allocated = _.sumBy($scope.vm.revenues, function (rev) {
+                    return parseFloat(rev.amount_received || 0);
+                });
+            }
+            return parseFloat(allocated);
+        };
     $scope.save = function () {
         update_revenues();
+        update_contract_deposit();
     };
 
     var format_date = function (date) {
@@ -54,13 +65,37 @@ app.controller('revenueModalController', function ($scope, data, moment, contrac
     };
 
     var update_revenues = function () {
+        $scope.vm.loading = true;
         var allocations = $scope.vm.revenues;
         revenueDataFactory.updateAllocations(allocations)
             .then(function (result) {
-                alert(result.data);
                 console.log(result);
-            })
+            }, function (error) {
+                alert(error)
+            }).finally(function () {
+            $scope.vm.loading = false;
+        });
     };
+
+        var update_contract_deposit = function () {
+            var data = {
+                id: $scope.vm.contract.id,
+                rec_deposit: $scope.vm.contract.rec_deposit,
+                req_deposit: $scope.vm.contract.req_deposit
+            };
+            $scope.vm.loading = true;
+            contractDataFactory.updateContract(data.id, data)
+                .then(function (result) {
+                    console.log(result);
+                }, function (error) {
+                    alert(error);
+                }).finally(function () {
+                $scope.vm.loading = false;
+                $element.modal('hide');
+                $scope.close('Saved');
+            });
+
+        };
     var init = function () {
         load_revenues($scope.vm.contract.id);
     };
@@ -91,9 +126,11 @@ app.controller('contractPaymentsModalController',
         function ($scope, paymentDataFactory, data, close) {
 
             $scope.close = function (result) {
-                close(result, 500); // close, but give 500ms for bootstrap to animate
+                var new_payments = _.filter($scope.vm.contract.payments, ['isNew', true]);
+                //send back new payments to append to the contract's payment collection
+                // send back empty collection is new_payments is null or undefined
+                close(new_payments || [], 500); // close, but give 500ms for bootstrap to animate
             };
-
             $scope.dirty = {};
             $scope.vm = {
                 contract: data
@@ -114,6 +151,7 @@ app.controller('contractPaymentsModalController',
                 paymentDataFactory.newPayment(data)
                     .then(function (resp) {
                         console.log(resp.data);
+                        resp.data.isNew = true;
                         $scope.vm.contract.payments.push(resp.data);
                     });
             };

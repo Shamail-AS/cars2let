@@ -282,3 +282,7 @@ table.reduced td {
 .modal-dialog #revenues .disabled {
     opacity: 0.4;
 }
+
+.modal-dialog .centered {
+    text-align: center;
+}

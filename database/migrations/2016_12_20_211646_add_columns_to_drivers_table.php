@@ -34,7 +34,7 @@ class AddColumnsToDriversTable extends Migration
             //DRIVING
             $table->date('driving_licence_start_date');
             $table->date('driving_mini_cab_from');
-            $table->integer('uber_rating')
+            $table->integer('uber_rating');
             $table->integer('penalty_points')->default(0);
             $table->string('history')->nullable();
             $table->string('comments')->nullable();
@@ -46,6 +46,8 @@ class AddColumnsToDriversTable extends Migration
             $table->integer('bank_account_id')->nullable();
             $table->string('pay_method')->default('bank');
             $table->integer('week_pay_day')->default(0); //0 - 6 : 7 days
+
+            $table->integer('approved_by')->unsigned()->nullable();
 
         });
     }
@@ -79,7 +81,8 @@ class AddColumnsToDriversTable extends Migration
                 'dbs_checked',
                 'bank_account_id',
                 'pay_method',
-                'week_pay_day'
+                'week_pay_day',
+                'approved_by'
             ]);
 
         });
