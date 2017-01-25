@@ -284,5 +284,36 @@ class DriverController extends Controller
 
         return redirect('/cars/list');
     }
+    public function uploadDriverFiles(Request $request,$id) {
+        $ext = ['jpg','jpeg','png','JPG','gif'];
+        $driver = Driver::findOrFail($id);
+        if($request->file('file')){
+            foreach($request->file('file') as $file){
+                if ($file->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    $stored_file = Storage::disk('s3')->put('driver/'.$driver->id.'/'.$fileName, file_get_contents($file));
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/driver/".$driver->id."/".$fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
 
+                    $site_file->save();
+                    $driver->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
+            }
+            return back();
+        }
+        return response("Attachment not found", 404);
+    }
+    public function deleteFile($car_id,$file_id){
+        SiteFile::destroy($file_id);
+        return back();
+    }
 }

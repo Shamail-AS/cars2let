@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Validator;
 use Log;
 use PDF;
 class ContractController extends Controller
@@ -332,11 +334,79 @@ class ContractController extends Controller
 
     public function getUnapprovedDriver($id) {
         $contract = Contract::findOrFail($id);
-        return view('admin.driver.unapproved-driver-detail',['contract'=> $contract]);
+        $cars = \App\Car::all();
+        return view('admin.driver.unapproved-driver-detail',['contract' => $contract,'cars' => $cars]);
     }
     public function downloadUnapprovedDriverPdf($id) {
         $contract = Contract::findOrFail($id);
         return \App\SiteFile::viewToPDF('admin.driver.unapproved-driver-detail-pdf',['contract'=> $contract]);
+    }
+    // Update the driver and contract of the unapproved contracts
+    public function updateContractAndDriver(Request $request,$id){
+        $validator = Validator::make($request->all(), [
+            'name' =>'required|max:255',
+            'dob'=>'required',
+            'address'=>'required',
+            'phone'=>'required',
+            'email' =>'required|email|max:255',
+            'driving_licence_start_date' => 'required',
+            'nino' =>'required',
+            'start_date' =>'required',
+            'end_date' =>'required'
+
+        ]);
+        // $validator->sometimes('crb_file[]', 'required', function ($input) {
+        //     //dd($input);
+        //     return $input->dbs_radio == 'yes';
+        // });
+
+        // If validation fails.
+        // Validation fails
+        if ($validator->fails()) {
+           return redirect('admin/unapproved/'.$id)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $contract = Contract::findOrFail($id);
+        $contract->start_date = $request->start_date;
+        $contract->end_date = $request->end_date;
+        $contract->save();
+        $driver = $contract->driver;
+        $driver->name = $request->name;
+        $driver->email = $request->email;
+        $driver->license_no = $request->license_no;
+        $driver->pco_license_no = $request->pco_license_no;
+        $driver->phone = $request->phone;
+        $driver->dob = $request->dob;
+        $driver->address = $request->address;
+        $driver->alt_address = $request->alt_address;
+        $driver->passport = $request->passport;
+        $driver->pass_exp_at = $request->pass_exp_at;
+        $driver->nationality = $request->nationality;
+        $driver->emerg_person = $request->emerg_person;
+        $driver->emerg_num  = $request->emerg_num;
+        $driver->years_in_uk = $request->years_in_uk;
+        $driver->pco_expires_at = $request->pco_expires_at;
+        $driver->licence_exp_at = $request->licence_expires_at;
+        $driver->type = $request->type;
+        $driver->nino = $request->nino;
+        $driver->right_to_work = $request->right_to_work;
+        $driver->driving_since = $request->driving_since;
+        $driver->driving_licence_start_date = $request->driving_licence_start_date;
+        $driver->driving_mini_cab_from = $request->driving_mini_cab_from;
+        $driver->uber_rating = $request->uber_rating;
+        $driver->penalty_points = $request->penelty_points;
+        $driver->save();
+        return back();
+    }
+    public function updateContractCar(Request $request, $id) {
+        $contract = Contract::findOrFail($id);
+        $car = \App\Car::findOrFail($request->car_id);
+        $contract->car_id = $request->car_id;
+        $contract->rate = $car->price;
+        $contract->save();
+        return back();
     }
 
 }

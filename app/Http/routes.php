@@ -141,12 +141,16 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
 
     //DRIVERS//
     Route::get('/driver/all', 'DriverController@index');
-
+    Route::post('/driver/add/files/{id}','DriverController@uploadDriverFiles');
+    Route::get('/driver/{id}/file/{file_id}','DriverController@deleteFile');
     //show form to create driver
     Route::get('/driver/create','DriverController@create');
 
     //save data received
     Route::post('/driver/store','DriverController@store');
+    // Save updated contract data and driver data
+    
+
     // Policies
     Route::get('/insurance/all', 'PolicyController@index');    
     //save data received
@@ -171,6 +175,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::post('unapproved/many','ContractController@unapproveMany');
     Route::get('contracts/{id}/approve','ContractController@contractApproval');
     Route::get('contracts/{id}/pdf','ContractController@downloadUnapprovedDriverPdf');
+    Route::post('contracts/{id}/update','ContractController@updateContractAndDriver');
+    Route::post('/contract/{id}/car_update','ContractController@updateContractCar');
 
 });
 
