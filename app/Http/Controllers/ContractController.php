@@ -39,7 +39,7 @@ class ContractController extends Controller
         if ($request->has('req_deposit')) $contract->req_deposit = $request->req_deposit;
         if ($request->has('rec_deposit')) $contract->rec_deposit = $request->rec_deposit;
         if ($request->has('car.id')) $contract->car_id = $request->input('car.id');
-        if ($request->has('driver.id')) $contract->driiver_id = $request->input('driver.id');
+        if ($request->has('driver.id')) $contract->driver_id = $request->input('driver.id');
 
         $contract->save();
         return $contract;
