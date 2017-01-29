@@ -104,6 +104,19 @@ Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],func
 
 });
 
+Route::group(['prefix'=>'driver','middleware'=>['web','auth']],function(){
+    Route::get('/','DriverController@home');
+    Route::get('/cars','DriverController@listAllCars');
+    Route::get('contract/create','DriverController@createContract');
+    Route::post('contract/store','DriverController@storeContract');
+    Route::get('files','DriverController@viewFiles');
+    Route::post('files','DriverController@uploadDriverFiles');
+    Route::get('files/{id}/delete','DriverController@deleteFiles');
+    Route::get('edit','DriverController@editInfo');
+    Route::post('update','DriverController@updateInfo');
+    Route::get('approvedContracts','DriverController@approvedContracts');
+});
+
 Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(){
 
     Route::get('/','AdminController@home');
@@ -142,7 +155,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     //DRIVERS//
     Route::get('/driver/all', 'DriverController@index');
     Route::post('/driver/add/files/{id}','DriverController@uploadDriverFiles');
-    Route::get('/driver/{id}/file/{file_id}','DriverController@deleteFile');
+    Route::get('/driver/{id}/file/{file_id}/delete','DriverController@deleteFile');
+    Route::get('/driver/{id}/files','DriverController@viewFiles');
     //show form to create driver
     Route::get('/driver/create','DriverController@create');
 
@@ -150,7 +164,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     Route::post('/driver/store','DriverController@store');
     // Save updated contract data and driver data
     
-
+    Route::get('/driver/{id}','DriverController@admin_show');
+    Route::get('/driver/{id}/tickets','DriverController@ticketsShow');
+    Route::get('/driver/{id}/convictions','DriverController@convictionsShow');
+    Route::post('/driver/{id}/convictions','DriverController@convictionsStore');
+    Route::get('/driver/{id}/convictions/{conviction_id}/delete','DriverController@convictionsDelete');
     // Policies
     Route::get('/insurance/all', 'PolicyController@index');    
     //save data received
@@ -287,6 +305,7 @@ Route::group(['prefix'=>'api'],function(){
             Route::post('/{id}/attachment','SupplierController@attachmentUpload');
             Route::get('/{id}/pdf','SupplierController@downloadFullPDF');
         });
+
         Route::group(['prefix' => 'cars'], function () {
             Route::get('/all', 'CarController@api_all');
             Route::get('/{id}', 'CarController@api_get');
@@ -418,6 +437,16 @@ Route::group(['prefix'=>'api'],function(){
             Route::get('/{id}/delete', 'DriverController@api_delete');
             Route::post('/{id}/attachment','DriverController@attachmentUpload');
             Route::get('/{id}/pdf','DriverController@downloadFullPDF');
+            Route::get('/{id}/overview', 'DriverController@api_overview');
+            Route::group(['prefix' => '{driver_id}/tickets'], function () {
+                Route::get('/','DriverController@getAllDriverTickets');
+                Route::post('/', 'TicketController@store');
+                Route::get('/{ticket_id}', 'TicketController@api_get');
+                Route::put('/{ticket_id}', 'TicketController@update');
+                Route::delete('/{ticket_id}', 'TicketController@delete');
+                Route::post('/{ticket_id}/attachment','TicketController@attachmentUpload');
+                Route::get('/{ticket_id}/pdf','TicketController@downloadTicketPdf');                
+            });
 
         });
 

@@ -19,7 +19,7 @@ class SuperAdminUserSeeder extends Seeder
             'type'=>'super-admin'
         ]);
         \App\User::create([
-            'email' => 'investor@cars2let.com',
+            'email' => 'alpha@cars2let.com',
             'password' => bcrypt('demo'),
             'status' => 'active',
             'type' => 'investor'

@@ -75,6 +75,12 @@ class Driver extends Model
     {
         return $this->belongsToMany('App\Car','contracts');
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\User','email','email');
+    }
+    
     public function revenues()
     {
         return $this->hasManyThrough('App\Revenue','App\Contracts');
@@ -204,5 +210,124 @@ class Driver extends Model
                 $data->push($contract);
         }
         return $data;
+    }
+
+    //=============Over view ===========\\
+    
+    
+    
+    public function getTotalRentAttribute()
+    {
+        $contracts =  $this->contracts;
+        $rent = 0;
+        foreach ($contracts as $contract){
+            $rent += $contract->rent;
+        }
+        return $rent;
+
+    }
+    public function getTotalRentForCurrentPeriodAttribute()
+    {
+        $contracts =  $this->contracts;
+        $rent = 0;
+        foreach ($contracts as $contract){
+            $rent += $contract->rentForCurrentPeriod;
+        }
+        return $rent;
+
+    }
+    public function getCurrentDriverAttribute()
+    {
+        return $this->currentContract->driver;
+    }
+
+    public function getNotificationsAttribute()
+    {
+        $notis = [
+            'danger' => collect([]),
+            'warning' => collect([]),
+            'info' => collect([]),
+            'other' => collect([])
+        ];
+
+        $alerts = $this->overview()['regular'];
+        $now = Carbon::now();
+
+        $date = $alerts['pco_exp'];
+        $class = $this->getNotiClass($date, 31);
+        if ($class != 'other') {
+            $notis[$class]->push([
+                'date' => $date,
+                'message' => $this->getNotiMessage('pco', $date)
+            ]);
+        }
+        $date = $alerts['contract_finish'];
+        $class = $this->getNotiClass($date, 31);
+        if ($class != 'other') {
+            $notis[$class]->push([
+                'date' => $date,
+                'message' => $this->getNotiMessage('contract', $date)
+            ]);
+        }
+        
+
+        return $notis;
+
+    }
+
+    private function getNotiMessage($type, $date)
+    {
+        $dateString = $date->toFormattedDateString();
+        $lookup = [
+            'pco' => [
+                'title' => 'PCO Expiry : ' . $dateString,
+                'text' => $date->diffForHumans()
+            ],
+            'contract' => [
+                'title' => 'Contract Expiry : ' . $dateString,
+                'text' => $date->diffForHumans()
+            ],
+        ];
+
+        return $lookup[$type];
+    }
+
+    private function getNotiClass($date, $threshold)
+    {
+
+        $class = 'other';
+        if ($date == null) return $class; // temp patch to workaround null date columns
+
+        $now = Carbon::now();
+        $days_left = $now->diffInDays($date, false);
+        if ($days_left < -999) return $class; // temp patch to workaround null date columns
+
+        if ($days_left < $threshold / 4)
+            $class = 'danger';
+        else if ($days_left < $threshold / 2)
+            $class = 'warning';
+        else if ($days_left < $threshold)
+            $class = 'info';
+        else
+            $class = 'other';
+        return $class;
+    }
+
+
+    public function overview()
+    {
+
+        $driver = $this;
+        $current_contract = $driver->currentContract;
+
+        $alerts = [
+            'regular' => [
+                'pco_exp' => $driver->pco_expires_at,
+                'contract_finish' => $current_contract != null ? $current_contract->end_date : null,
+            ],
+            
+        ];
+
+        return collect($alerts);
     }
 }

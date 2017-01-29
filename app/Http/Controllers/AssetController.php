@@ -55,7 +55,7 @@ class AssetController extends Controller
         $contract->end_date = $dt;
         $contract->rate = (float)$request->input('rate');
         $contract->currency = "GBP";
-        $contract->status = $request->input('status');
+        $contract->status = 2;
         $contract->car_id = $request->input('car');
         $contract->driver_id = $request->input('driver');
 

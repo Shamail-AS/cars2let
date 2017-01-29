@@ -75,6 +75,9 @@
             @if(!Auth::guest() && Auth::user()->isInvestor)
                 <p>Check out your <a href="{{ url('investor') }}">Dashboard</a></p>
             @endif
+            @if(!Auth::guest() && Auth::user()->isDriver)
+                <p>Check out your <a href="{{ url('driver') }}">Dashboard</a></p>
+            @endif
             <br>
             @if(!Auth::guest() && Auth::user()->isAdmin)
                 <p>Check out your <a href="{{ url('investor') }}">Dashboard</a></p>

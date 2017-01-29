@@ -99,7 +99,7 @@
                     <td>Status</td>
                     <td>Start Date</td>
                     <td>End Date</td>
-                    <td>Driver</td>
+                    <td>Car Reg No</td>
                     <td>Rent/week (£)</td>
                     <td>Weeks done/total</td>
                     <td>Revenue (£)</td>
@@ -123,7 +123,7 @@
                         @endif
                         <td>{{$contract->start_date->toFormattedDateString()}}</td>
                         <td>{{$contract->end_date->toFormattedDateString()}}</td>
-                        <td>{{$contract->driver->name}} ({{$contract->driver->license_no}})</td>
+                        <td>{{$contract->car->reg_no}}</td>
 
                         <td>{{$contract->rate}}</td>
                         <td>{{$contract->weeksDone}}/{{$contract->weeksTotal}}</td>

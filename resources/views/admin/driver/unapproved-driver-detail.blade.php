@@ -136,8 +136,8 @@
                                             <td>License No</td>
                                             <td>
                                               <div class="form-group">
-                                                   <input type='text' id='licence_no' name="licence_no" class="form-control" value="{{$contract->driver->licence_no}}"/>
-                                                   @if ($errors->has('licence_no')) <p class="help-block">{{ $errors->first('licence_no') }}</p> @endif
+                                                   <input type='text' id='licence_no' name="license_no" class="form-control" value="{{$contract->driver->license_no}}"/>
+                                                   @if ($errors->has('license_no')) <p class="help-block">{{ $errors->first('licence_no') }}</p> @endif
                                                </div>
                                             </td>
                                         </tr>
@@ -145,8 +145,8 @@
                                             <td>PCO License No</td>
                                             <td>
                                               <div class="form-group">
-                                                   <input type='text' id='pco_licence_no' name="pco_licence_no" class="form-control" value="{{$contract->driver->pco_licence_no}}"/>
-                                                   @if ($errors->has('pco_licence_no')) <p class="help-block">{{ $errors->first('pco_licence_no') }}</p> @endif
+                                                   <input type='text' id='pco_licence_no' name="pco_license_no" class="form-control" value="{{$contract->driver->pco_license_no}}"/>
+                                                   @if ($errors->has('pco_license_no')) <p class="help-block">{{ $errors->first('pco_licence_no') }}</p> @endif
                                                </div>
                                             </td>
                                         </tr>

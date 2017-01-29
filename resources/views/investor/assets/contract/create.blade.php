@@ -41,7 +41,7 @@
                                ng-click="openEndPicker()"/>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <input type="hidden"  name="status" value="@{{ selected.status.value }}" ng-model="selected.status.value">
                         <label>Status</label>
                         <ui-select ng-model="selected.status">
@@ -59,7 +59,7 @@
                                 </div>
                             </ui-select-choices>
                         </ui-select>
-                    </div>
+                    </div> --}}
 
 
                     <div class="form-group">
@@ -100,7 +100,7 @@
                                 <i class="fa fa-btn fa-times"></i>Cancel
                             </button>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-btn fa-file-text-o"></i>Create
+                                <i class="fa fa-btn fa-file-text-o"></i>Submit For Approval
                             </button>
                         </div>
                     </div>

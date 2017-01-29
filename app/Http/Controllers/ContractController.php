@@ -392,7 +392,6 @@ class ContractController extends Controller
         $driver->type = $request->type;
         $driver->nino = $request->nino;
         $driver->right_to_work = $request->right_to_work;
-        $driver->driving_since = $request->driving_since;
         $driver->driving_licence_start_date = $request->driving_licence_start_date;
         $driver->driving_mini_cab_from = $request->driving_mini_cab_from;
         $driver->uber_rating = $request->uber_rating;

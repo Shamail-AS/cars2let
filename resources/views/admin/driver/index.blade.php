@@ -25,8 +25,8 @@
             
             <tr ng-repeat="driver in vm.drivers | orderBy : '-id'">
 
-                <td>@{{ driver.id }}</td>
-                <td ng-if="!driver.edit_mode">@{{ driver.email }}</td>
+                <td><a href="/admin/driver/@{{ driver.id }}">@{{ driver.id }}</a></td>
+                <td ng-if="!driver.edit_mode"><a href="/admin/driver/@{{ driver.id }}">@{{ driver.email }}</a></td>
                 <td ng-if="driver.edit_mode"><input class="form-control" ng-model="driver.email"></td>
 
                 <td ng-if="!driver.edit_mode">@{{ driver.name }}</td>

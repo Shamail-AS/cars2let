@@ -37,7 +37,7 @@ class TicketController extends Controller
                     $ticket->files = $ticket->files;
                 });
                 return $tickets;
-            }
+            }   
             else
                 return response("No Ticket of this car", 404);
         }
@@ -45,6 +45,23 @@ class TicketController extends Controller
             return CarTicket::with('car', 'driver', 'files')->get()->all();
         }
 
+    }
+    // get all driver tickets
+    public function getAllDriverTickets($diver_id){
+        if($driver_id){
+            $driver = Driver::findOrFail($driver_id);
+            if ($driver->tickets) {
+                $tickets = $car->tickets;
+                $tickets->each(function ($ticket) {
+                    $ticket->car = $ticket->car;
+                    $ticket->driver = $ticket->driver;
+                    $ticket->files = $ticket->files;
+                });
+                return $tickets;
+            }   
+            else
+                return response("No Ticket of this car", 404);
+        }
     }
 
     public function show($id)
@@ -284,4 +301,6 @@ class TicketController extends Controller
         // return redirect(url($zip_file_path));
         //return $pdf->download('pdf');
     }
+
+
 }

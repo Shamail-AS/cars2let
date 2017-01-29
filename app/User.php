@@ -68,7 +68,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Investor', 'email', 'email');
     }
-
+    public function driver(){
+        return $this->belongsTo('App\Driver','email','email');
+    }
     public function payments()
     {
         return $this->hasMany('App\Payment', 'auth_user_id');
