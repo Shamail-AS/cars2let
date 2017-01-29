@@ -46,7 +46,7 @@
                                 <li> Color: {{$car->colour}}</li>
                                 <li> Transmission:{{$car->transmission}}</li>
                             </ul>
-                            @if(Auth::user()->isDriver)
+                            @if(Auth::user() && Auth::user()->isDriver)
                                 <p><a href="{{url('driver/contract/create/?car_reg_no='.$car->reg_no)}}" class="btn btn-success btn-xs" role="button">Book Now</a></p>
                             @else
                             <p><a href="{{url('drivers/new/?car_reg_no='.$car->reg_no)}}" class="btn btn-success btn-xs" role="button">Book Now</a></p>
