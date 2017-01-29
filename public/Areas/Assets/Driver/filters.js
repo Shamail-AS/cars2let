@@ -28,14 +28,14 @@ app.filter("driverFilter", function () {
         var returnCollection = [];
         for (var i = 0; i < items.length; i++) {
             var _name = items[i].name.toLowerCase();
-            if(items[i].license_no != null)
-                var _license = items[i].license_no.toLowerCase();
-            else 
+            if(!items[i].license_no)
                 var _license  = '';
-            if(items[i].pco_license_no != null)
-                var _pco = items[i].pco_license_no.toLowerCase();
-            else
+            else 
+                var _license = items[i].license_no.toLowerCase();
+            if(!items[i].pco_license_no)
                 var _pco = '';
+            else
+                var _pco = items[i].pco_license_no.toLowerCase();
             var _email = items[i].email.toLowerCase();
             var _phone = items[i].phone.toLowerCase();
             if (_name.includes(text)
