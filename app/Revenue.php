@@ -82,7 +82,9 @@ class Revenue extends Model
 
     public function inPeriod($period_start, $period_end)
     {
-        return ($this->created_at >= $period_start && $this->created_at <= $period_end);
+        $contract = $this->contract;
+        $start = $contract->start_date->addDays(($this->week - 1) * 7);
+        return ($start >= $period_start && $start <= $period_end);
     }
 
     public function getWeekPaidOnAttribute()

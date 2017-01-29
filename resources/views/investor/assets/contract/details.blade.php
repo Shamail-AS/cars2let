@@ -123,30 +123,18 @@
 
                     </tr>
                     <tr>
-                        <td>Investor Revenue</td>
-                        <td ng-repeat="week in vm.contract.revenue"> @{{ week.revenue }}</td>
+                        <td>Amount Due</td>
+                        <td ng-repeat="week in vm.contract.revenue"> @{{ week.amount_due }}</td>
 
                     </tr>
-                    <tr >
-                        <td>Paid to investor</td>
-                        <td ng-repeat="week in vm.contract.revenue">
-                            <button type="button"
-                                    class="btn btn-sm btn-info"
-                                    uib-popover-template="popover.revenueListUrl"
-
-                                    popover-placement="top"
-                                    popover-title="@{{ popover.title }}"
-                                    popover-class="revenue-popover-wrapper"
-                                    >
-                                @{{ week.paid }}
-                            </button>
-                            @include('partials.investor.revenue_list')
-                        </td>
+                    <tr>
+                        <td>Amount Recieved</td>
+                        <td ng-repeat="week in vm.contract.revenue"> @{{ week.amount_received }}</td>
 
                     </tr>
                     <tr>
                         <td>Balance</td>
-                        <td ng-repeat="week in vm.contract.revenue"> @{{ week.balance }}</td>
+                        <td ng-repeat="week in vm.contract.revenue"> @{{ week.amount_due - week.amount_received }}</td>
 
                     </tr>
                 </table>

@@ -228,7 +228,7 @@ Route::group(['prefix'=>'api'],function(){
     Route::get('/contract/filter/{search}','ContractController@filterContractsByCarDriver');
     Route::get('/contract/andfilter/{search}','ContractController@filterContractsByCarAndDriver');
     Route::get('/contract/orfilter/{search}','ContractController@filterContractsByCarOrDriver');
-    Route::get('/contract/{id}/revenue/summary','ContractController@ContractRevenueSummary');
+    Route::get('/contract/{id}/revenue/summary','ContractController@api_revenues');
     Route::get('/contract/{id}/revenue/detail','ContractController@ContractRevenueDetail');
 
     Route::get('/investor/revenue/summary','InvestorController@RevenueSummary')->middleware('web','auth');

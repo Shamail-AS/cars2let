@@ -463,6 +463,8 @@ app.controller('investorController',
 
             var new_car = function (car) {
                 car.available_since = moment(car.dt_available_since).format("DD-MM-YYYY");
+                delete(car.picker_open);
+                delete(car.dt_available_since);
                 carDataFactory.newCar(car)
                     .success(function (result) {
                         $scope.vm.investor.cars.push(car);
