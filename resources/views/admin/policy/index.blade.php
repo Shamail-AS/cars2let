@@ -51,6 +51,8 @@
                         <button ng-if="!policy.edit_mode" ng-click="editPolicy(policy)"
                                 class="btn btn-xs btn-primary">Edit
                         </button>
+                        <button ng-if="!policy.edit_mode" ng-click="deletepolicy(policy)"
+                                class="btn btn-xs btn-danger">Delete
                         <button ng-if="policy.edit_mode" ng-click="updatePolicy(policy)" class="btn btn-xs btn-warning">
                             Update
                         </button>

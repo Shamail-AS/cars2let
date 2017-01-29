@@ -35,12 +35,16 @@ app.controller('supplierController',
                 console.log(supplier);
                 supplier.edit_mode = true
             };
+            $scope.deletesupplier = function(supplier){
+                delete_supplier(supplier);
+            }
             $scope.cancelEdit = function (supplier) {
                 supplier.edit_mode = false;
             };
             $scope.updatesupplier = function (supplier) {
                 update_supplier(supplier);
             };
+
 
             //Private methods
             var get_suppliers = function () {
@@ -59,6 +63,13 @@ app.controller('supplierController',
                     .success(function (result) {
                         alert(result);
                         supplier.edit_mode = false;
+                    });
+            };
+            var delete_supplier = function (supplier) {
+                console.log(supplier);
+                supplierDataFactory.deleteSupplier(supplier.id)
+                    .success(function (result) {
+                        location.reload(); 
                     });
             };
 

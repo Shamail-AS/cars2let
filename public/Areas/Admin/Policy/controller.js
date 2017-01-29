@@ -35,6 +35,9 @@ app.controller('policyController',
                 console.log(policy);
                 policy.edit_mode = true
             };
+            $scope.deletepolicy = function(policy){
+                delete_policy(policy);
+            }
             $scope.cancelEdit = function (policy) {
                 policy.edit_mode = false;
             };
@@ -66,7 +69,13 @@ app.controller('policyController',
                         policy.edit_mode = false;
                     });
             };
-
+            var delete_policy = function (policy) {
+                console.log(policy);
+                policyDataFactory.deletePolicy(policy.id)
+                    .success(function (result) {
+                        location.reload(); 
+                    });
+            };
 
             var init = function () {
                 get_policies();

@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"re",
+				"return"
+			],
+			[
+				"id",
+				"car_id"
+			],
+			[
+				"find",
+				"findOrFail"
+			],
+			[
 				"req",
 				"request"
 			],
@@ -19,95 +31,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/opt/lampp/htdocs/laravel-tgyv/app/Http/routes.php",
-			"settings":
-			{
-				"buffer_size": 22697,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<?php\n\nnamespace App\\Http\\Controllers;\n\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Str;\nuse Carbon\\Carbon;\n\nuse App\\Http\\Requests;\nuse App\\Car;\nuse App\\SiteFile;\nuse App\\CarTicket;\nuse App\\Driver;\nuse Log;\nuse Storage;\nuse Image;\nuse PDF;\nuse Zipper;\nuse File;\n\nclass TicketController extends Controller\n{\n    /**\n     * Display a listing of the resource.\n     *\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function index($car_id = null)\n    {\n        if($car_id){\n            $car = Car::findOrFail($car_id);\n            if ($car->tickets) {\n                $tickets = $car->tickets;\n                $tickets->each(function ($ticket) {\n                    $ticket->car = $ticket->car;\n                    $ticket->driver = $ticket->driver;\n                    $ticket->files = $ticket->files;\n                });\n                return $tickets;\n            }\n            else\n                return response(\"No Ticket of this car\", 404);\n        }\n        else{\n            return CarTicket::with('car', 'driver', 'files')->get()->all();\n        }\n\n    }\n\n    public function show($id)\n    {\n\n        $ticket = CarTicket::with('car', 'driver')->where('id', $id)->first();\n        return view('admin.tickets.show', compact('ticket'));\n    }\n\n    /**\n     * Show the form for creating a new resource.\n     *\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function create()\n    {\n        //\n    }\n\n    /**\n     * Store a newly created resource in storage.\n     *\n     * @param  \\Illuminate\\Http\\Request  $request\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function store(Request $request,$car_id=null)\n    {\n\n        // Finding if the car id is correct\n        if($car_id)\n            $car = Car::findOrFail($car_id);\n        else\n            $car = Car::findOrFail($request->car_id);\n        // Finding if driver id is incorrect\n        if ($request->driver)\n            $driver = Driver::findOrFail($request->driver['id']);\n\n        // Creating a car ticket\n        $car_ticket = new CarTicket();\n        $car_ticket->ticket_num = $request->ticket_num;\n        $car_ticket->cause = $request->cause;\n        $car_ticket->incident_dt = $request->incident_dt;\n        $car_ticket->issue_dt = $request->issue_dt;\n        $car_ticket->amount = $request->amount;\n        $car_ticket->comments = $request->comments;\n        $car_ticket->status = $request->status;\n        $car_ticket->save();\n\n        $car->tickets()->save($car_ticket);\n        if($request->driver)\n            $driver->tickets()->save($car_ticket);\n\n\n        $car_ticket->car = $car_ticket->car;\n        $car_ticket->driver = $car->driver;\n        // Get an instance of Monolog\n        $monolog = Log::getMonolog();\n        // Choose FirePHP as the log handler\n        $monolog->pushHandler(new \\Monolog\\Handler\\FirePHPHandler());\n        // Start logging\n        $monolog->debug('Created', [$car_ticket]);\n        return $car_ticket;\n    }\n\n    /**\n     * Display the specified resource.\n     *\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function api_get($car_id, $ticket_id)\n    {\n        $car = Car::findOrFail($car_id);\n        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->with('car', 'driver', 'files')->first()))\n            // Show 404.\n            return response(\"This ticket doesn't belong to this car\", 404);\n        // sending the driver info\n        //$car_ticket->driver = $car_ticket->driver;\n        // sending car info\n        //$car_ticket->car = $car;\n\n        //return CarTicket::with('car','driver')->where('id',$ticket_id)->first();\n        return $car_ticket;\n    }\n\n    /**\n     * Show the form for editing the specified resource.\n     *\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function edit($id)\n    {\n        //\n    }\n\n    /**\n     * Update the specified resource in storage.\n     *\n     * @param  \\Illuminate\\Http\\Request  $request\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function update(Request $request, $car_id, $ticket_id)\n    {\n        $car = Car::findOrFail($car_id);\n        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))\n            // Show 404.\n            return response(\"This ticket does'nt belong to this car\", 404);\n        if($request->type)\n            $car_ticket->type = $request->type;\n        if($request->ticket_num)\n            $car_ticket->ticket_num = $request->ticket_num;\n        if($request->cause)\n            $car_ticket->cause = $request->cause;\n        if($request->driver_id){\n            $car_ticket->driver_id = $request->driver_id;\n        }\n        if($request->incident_dt)\n            $car_ticket->incident_dt = $request->incident_dt;\n        if($request->issue_dt)\n            $car_ticket->issue_dt = $request->issue_dt;\n        if($request->amount)\n            $car_ticket->amount = $request->amount;\n        if($request->paid)\n            $car_ticket->paid = $request->paid;\n        if($request->comments)\n            $car->comments = $request->comments;\n        if($request->status)\n            $car->status = $request->status;\n        if($car_ticket->save())\n            return response(\"Update successful\");\n        else\n            return response(\"Update failed\", 500);\n    }\n\n    /**\n     * Remove the specified resource from storage.\n     *\n     * @param  int  $id\n     * @return \\Illuminate\\Http\\Response\n     */\n    public function destroy($car_id,$ticket_id)\n    {\n        $car = Car::findOrFail($car_id);\n        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))\n            // Show 404.\n            return response(\"This ticket does'nt belong to this car\", 404);\n        $car_ticket->delete();\n        return $car_ticket->trashed();\n    }\n\n    public function attach(Request $request)\n    {\n\n    }\n\n    public function attachmentUpload(Request $request,$car_id,$ticket_id){\n        $ext = ['jpg','jpeg','png','JPG','gif'];\n        $car = Car::findOrFail($car_id);\n        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))\n            // Show 404.\n            return response(\"This ticket doesn't belong to this car\", 404);\n        if($request->file('file')){\n            foreach($request->file('file') as $file){\n                if ($file->isValid()) {\n                    $site_file = new SiteFile;\n                    $extension = $file->getClientOriginalExtension();\n                    $fileName = Str::random(8).'.'.$extension;\n                    $stored_file = Storage::disk('s3')->put('tickets/'.$fileName, file_get_contents($file));\n                    $site_file->name = $fileName;\n                    $site_file->full_url = \"https://laravel-tgyv.objects.frb.io/tickets/\".$fileName;\n                    if(in_array($extension,$ext)){\n                        $site_file->type = \"image\";\n                    }\n                    else {\n                        $site_file->type = \"file\";\n                    }\n\n                    $site_file->save();\n                    $car_ticket->files()->save($site_file);\n                }\n                else return response(\"Invalid file\", 404);\n            }\n            return redirect('admin/tickets/'.$ticket_id);\n        }\n        return response(\"Attachment not found\", 404);\n    }\n\n    public function inferDriver($car_id, $unix_time)\n    {\n        $incident_dt = Carbon::createFromTimeStamp($unix_time);\n        $contracts = Car::find($car_id)->contracts()->ongoing()->get();\n\n        $foundContract = null;\n\n        foreach ($contracts as $contract) {\n            if ($contract->isDateDuringContract($incident_dt)) {\n                $foundContract = $contract;\n                break;\n            }\n        }\n\n        return $foundContract == null ? 'No ongoing contract at the time' : $foundContract->driver;\n    }\n\n    public function downloadTicketPdf($car_id,$ticket_id) {\n        $car = Car::findOrFail($car_id);\n        if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))\n            // Show 404.\n            return response(\"This ticket doesn't belong to this car\", 404);\n        $driver = Driver::findOrFail($car_ticket->driver->id);\n        return \\App\\SiteFile::viewToPDF('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);\n        // $pdf = PDF::loadView('ticket',['driver'=>$driver,'ticket'=>$car_ticket]);\n        // File::delete('pdf/ticket/'.$ticket_id.'/ticket.pdf');\n        // $pdf->save('pdf/ticket/'.$ticket_id.'/ticket.pdf');\n        // $zip_file_path = 'pdf/ticket/'.$ticket_id.'/'.Str::random(8).'_ticket.zip';\n        // $zip_file = Zipper::make($zip_file_path)->add('pdf/ticket/'.$ticket_id.'/ticket.pdf');\n        // foreach ($driver->files as $file ) {\n        //     $full_url = url($file->full_url);\n        //     $driver_fileName[] = $full_url;\n        //     $zip_file->addString($file->name,file_get_contents($full_url));\n        // }\n        // $ticket_fileName = array();\n        // foreach ($car_ticket->files as $file) {\n        //     $full_url = url($file->full_url);\n        //     $ticket_fileName[] = $full_url; \n        //     $zip_file->addString($file->name,file_get_contents($full_url));\n        // }\n        \n        // //return view('sample',['driver'=>$driver]);\n        // //$files = \n        // $headers = array(\n        //             'Content-Type' => 'application/octet-stream',\n        //         );\n\n        // return redirect(url($zip_file_path));\n        //return $pdf->download('pdf');\n    }\n\n\n\n    // Methods for the Tickets and Driver\n\n    public function driver_ticket_index($driver_id){\n        \n    }\n}\n",
-			"file": "TicketController.php",
-			"file_size": 9546,
-			"file_write_time": 131296861585348335,
-			"settings":
-			{
-				"buffer_size": 9660,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/opt/lampp/htdocs/laravel-tgyv/app/Driver.php",
-			"settings":
-			{
-				"buffer_size": 5795,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "DriverController.php",
-			"settings":
-			{
-				"buffer_size": 13742,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/opt/lampp/htdocs/laravel-tgyv/app/User.php",
-			"settings":
-			{
-				"buffer_size": 4495,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/show.blade.php",
-			"settings":
-			{
-				"buffer_size": 11945,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "show.blade.php"
-			}
-		},
-		{
-			"file": "/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/factory.js",
-			"settings":
-			{
-				"buffer_size": 26381,
-				"encoding": "UTF-8",
-				"line_ending": "Unix",
-				"name": "factory.js"
-			}
-		},
-		{
-			"file": "/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/controller.js",
-			"settings":
-			{
-				"buffer_size": 42383,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "CarController.php",
-			"settings":
-			{
-				"buffer_size": 8678,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -153,34 +76,70 @@
 		"/opt/lampp/htdocs/laravel-tgyv/app",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Middleware",
 		"/opt/lampp/htdocs/laravel-tgyv/public",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Driver",
 		"/opt/lampp/htdocs/laravel-tgyv/resources",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver"
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/investor",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/contract",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/driver"
 	],
 	"file_history":
 	[
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/index.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/CarController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/controller.js",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/factory.js",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/contract/create.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/DriverController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/driver/detail.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Driver.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/driver/contracts.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views/overview.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/driver/edit.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/routes.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/AssetController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Driver/filters.js",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/cars-list.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Investor.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Car.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/User.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/tickets.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views/tickets.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/admin/car/new-ticket.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/admin/driver/new-conviction.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views/convictions.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/show.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/unapproved-driver-detail.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/driver/home.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/InvestorController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/home.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/ContractController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/driver/new_contract.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views/uploadfile.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/welcome.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/TicketController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/show.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/index.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/BankAccount.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/overview.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details/factory.js",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/driver/detail.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/DriverController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/factory.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/module.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/module.js",
-		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/CarController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details/controller.js"
 	],
 	"find":
@@ -199,6 +158,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"car",
+			"contract",
+			"edit",
+			"ticketDataModelFactoryProvider",
+			"car",
+			"Car",
+			"car",
+			"car_id",
 			"Car",
 			"licence_start_date",
 			"driving_licence_start_date",
@@ -241,309 +208,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/opt/lampp/htdocs/laravel-tgyv/app/Http/routes.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 22697,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								21177,
-								21177
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 6060.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "TicketController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9660,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9659,
-								9659
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4005.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/opt/lampp/htdocs/laravel-tgyv/app/Driver.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5795,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 855.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "DriverController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13742,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2143,
-								2143
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 365.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/opt/lampp/htdocs/laravel-tgyv/app/User.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4495,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3852,
-								3852
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1755.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/show.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11945,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9651,
-								9651
-							]
-						],
-						"settings":
-						{
-							"auto_name": "show.blade.php",
-							"syntax": "Packages/Laravel Blade Highlighter/blade.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": false
-						},
-						"translation.x": 33.0,
-						"translation.y": 1710.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/factory.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 26381,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								137,
-								137
-							]
-						],
-						"settings":
-						{
-							"auto_name": "factory.js",
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 45.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/controller.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 42383,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1934,
-								1934
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": -0.0,
-						"translation.y": 526.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "CarController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8678,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6540,
-								6540
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2835.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				}
 			]
 		}
 	],

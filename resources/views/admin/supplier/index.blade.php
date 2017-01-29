@@ -50,6 +50,8 @@
                         <button ng-if="!supplier.edit_mode" ng-click="editsupplier(supplier)"
                                 class="btn btn-xs btn-primary">Edit
                         </button>
+                        <button ng-if="!supplier.edit_mode" ng-click="deletesupplier(supplier)"
+                                class="btn btn-xs btn-danger">Delete
                         <button ng-if="supplier.edit_mode" ng-click="updatesupplier(supplier)" class="btn btn-xs btn-warning">
                             Update
                         </button>
