@@ -521,6 +521,9 @@ class DriverController extends Controller
             'histories' => $histories,
             'alerts' => $alerts
         ];
-
+    }
+    public function carInfo($id) {
+        $car = \App\Car::findOrFail($id);
+        return view('driver.car-details',compact('car'));
     }
 }

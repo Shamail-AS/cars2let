@@ -107,6 +107,7 @@ Route::group(['prefix'=>'investor','middleware'=>['web','auth','investor']],func
 Route::group(['prefix'=>'driver','middleware'=>['web','auth']],function(){
     Route::get('/','DriverController@home');
     Route::get('/cars','DriverController@listAllCars');
+    Route::get('/cars/{id}','DriverController@carInfo');
     Route::get('contract/create','DriverController@createContract');
     Route::post('contract/store','DriverController@storeContract');
     Route::get('files','DriverController@viewFiles');

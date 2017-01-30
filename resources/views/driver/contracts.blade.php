@@ -39,7 +39,7 @@
                         <i ng-if="contract.status == 4" class="fa fa-circle complete"></i>
                         @endif
                     </span></td>
-                    <td>{{$contract->car['reg_no']}}</td>
+                    <td><a href="{{ url('driver/cars/'.$contract->car['id']) }}"> {{$contract->car['reg_no']}} </a></td>
                     <td>{{ $contract->start_date}}</td>
                     <td>{{ $contract->end_date}}</td>
                     <td>{{$contract->car['price']}}</td>
