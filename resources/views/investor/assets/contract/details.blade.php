@@ -160,7 +160,7 @@
         </div>
     </div>
 
-
+@include('partials.admin.investor.contract-filters')
 
 @endsection
 
