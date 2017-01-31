@@ -146,6 +146,13 @@ class Contract extends Model
         return $duration*$this->rate;
     }
 
+    public function getDayRevenueAttribute()
+    {
+        $duration = $this->daysDone;
+        if($duration<0) dd($this);
+        return $duration*($this->rate/7);
+    }
+
     public function getWeeksDoneForCurrentPeriodAttribute()
     {
         $acc_periods = $this->investor->getAccountingPeriods();
@@ -162,6 +169,15 @@ class Contract extends Model
     public function getWeeksTotalAttribute()
     {
         return $this->end_date->diffInWeeks($this->start_date,true);
+    }
+
+    public function getDaysDoneAttribute(){
+        $d_done = $this->start_date->diffInDays(Carbon::now());
+        return min($d_done,$this->daysTotal);
+    }
+    public function getDaysTotalAttribute()
+    {
+        return $this->end_date->diffInDays($this->start_date,true);
     }
 
     public function getRentAllocationsCountAttribute()

@@ -104,8 +104,8 @@ class ContractController extends Controller
             //$contract->revenues = $contract->revenues;
             $contract->revenue = $contract->revenue;
             $contract->rent = $contract->rent;
-            $contract->weeksDone = $contract->weeksDone;
-            $contract->weeksTotal = $contract->weeksTotal;
+            $contract->daysDone = $contract->daysDone;
+            $contract->daysTotal = $contract->daysTotal;
             $contract->car_reg = $contract->car->reg_no;
             $contract->driver_name = $contract->driver->name;
             unset($contract->car);

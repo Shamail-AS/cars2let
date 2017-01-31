@@ -208,6 +208,31 @@ class CarController extends Controller
 
     }
 
+    public function updateCarDetails($id,Request $request){
+        $car = Car::findOrFail($id);
+
+        $car->custom_id = $request->input('custom_id');
+        $car->model = $request->input('model');
+        $car->year = $request->input('year');
+        $car->colour = $request->input('colour');
+        $car->transmission = $request->input('transmission');
+        $car->fuel_type = $request->input('fuel_type');
+        $car->chassis_num = $request->input('chassis_num');
+        $car->engine_size = $request->input('engine_size');
+        $car->first_reg_date = $request->input('first_reg_date');
+        $car->keeper = $request->input('keeper');
+        $car->pco_licence = $request->input('pco_licence');
+        $car->pco_expires_at = $request->input('pco_expires_at');
+        $car->warranty_exp_at = $request->input('warranty_exp_at');
+        $car->road_side_exp_at = $request->input('road_side_exp_at');
+        $car->road_tax_exp_at = $request->input('road_tax_exp_at');
+        $car->curr_odo = $request->input('curr_odo');
+        $car->price = $request->input('price');
+        $car->save();
+        return back();
+
+    }
+
     public function view($id, $page)
     {
         $car = Car::findOrFail($id);

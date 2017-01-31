@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <input type="hidden"  name="car" value="@{{ selected.car.id }}" ng-model="selected.car.id">
                         <label>Car</label>
-                        <ui-select ng-model="selected.car">
+                        <ui-select ng-model="selected.car" ng-change="addprice(selected.car)">
                             <ui-select-match allow-clear="true" >
                                 <span ng-bind="selected.car.reg_no"></span>
                             </ui-select-match>
@@ -91,7 +91,7 @@
 
                     <div class="form-group">
                         <label>Per week rate (£)</label>
-                        <input class="form-control" type="number" name="rate" value="{{old('rate')}}">
+                        <input class="form-control" type="number" name="rate" id="rate" value="{{old('rate')}}">
                     </div>
 
                     <div class="form-group">
@@ -150,6 +150,11 @@
             $scope.dirty.start_picker_open = true;
             $scope.dateOptions.start_date.maxDate = $scope.dirty.end_date;
         }
+
+        $scope.addprice = function(selectedcar) {
+            console.log(selectedcar.price);
+            $('#rate').val(selectedcar.price);
+        };
 
         var init = function(){
             $.get("/api/car/all").success(function(data){
