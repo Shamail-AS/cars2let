@@ -254,7 +254,7 @@ class TicketController extends Controller
     public function inferDriver($car_id, $unix_time)
     {
         $incident_dt = Carbon::createFromTimeStamp($unix_time);
-        $contracts = Car::find($car_id)->contracts()->ongoing()->get();
+        $contracts = Car::find($car_id)->contracts()->get();
 
         $foundContract = null;
 
