@@ -84,7 +84,7 @@
         <div class="detail-section">
 
             <div class="fixed-footer-button-container">
-                <a href="#">
+                <a href="#" ng-click="openFilters()">
                     <span class="fixed-footer-button blue"><i class="fa fa-filter fa-2x"></i></span>
                 </a>
                 <a href="{{url('/investor/assets/create/contract')}}">
@@ -168,6 +168,7 @@
 
     <script src="{{asset('Areas/Assets/Contract/module.js')}}"></script>
     <script src="{{asset('Areas/Assets/Contract/factory.js')}}"></script>
+    <script src="{{asset('Areas/Assets/Contract/modal-controller.js')}}"></script>
     <script src="{{asset('Areas/Assets/Contract/controller.js')}}"></script>
     <script src="{{asset('Areas/Assets/Contract/filters.js')}}"></script>
 @endsection

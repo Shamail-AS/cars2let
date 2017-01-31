@@ -3,8 +3,9 @@ app.controller('contractController',
         '$scope',
         'contractDataFactory',
         'contractDataModelFactory',
+        'ModalService',
         'moment',
-        function ($scope, contractDataFactory, contractDataModelFactory, moment) {
+        function ($scope, contractDataFactory, contractDataModelFactory,ModalService, moment) {
 
             //Objects
             $scope.vm = {
@@ -28,6 +29,19 @@ app.controller('contractController',
                 'date_from': moment().subtract(5, 'year').format("YYYY-MM-DD"),
                 'date_to': moment().add(5, 'year').format("YYYY-MM-DD")
 
+            };
+
+            $scope.openFilters = function () {
+                ModalService.showModal({
+                    scope: $scope,
+                    templateUrl: "contract-filters.html",
+                    controller: "contractFilterModalController"
+                }).then(function (modal) {
+                    modal.element.modal();
+                    modal.close.then(function (result) {
+                        console.log(result);
+                    });
+                });
             };
 
             //Public methods
