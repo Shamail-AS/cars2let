@@ -89,7 +89,7 @@ class MyAuthController extends Controller
     }
 
     public function passwordChange(){
-        return view('reset-password');
+        return view('auth.passwords.reset-password');
     }
     public function passwordUpdate(Request $request){
         $user = Auth::user();
