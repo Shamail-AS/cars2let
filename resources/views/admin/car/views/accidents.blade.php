@@ -29,7 +29,8 @@
                     <td>
                         <div>
                             <a ng-href="@{{ accident.detailUrl }}" class="btn btn-xs btn-info">Details</a>
-                            <button class="btn btn-xs btn-warning" ng-click="editAccident(accident)">Edit</button>
+                            <button class="btn btn-xs btn-primary" ng-click="editAccident(accident)">Edit</button>
+                            <button class="btn btn-xs btn-danger" ng-click="deleteAccident(accident)">Delete</button>
                         </div>
                     </td>
                 </tr>

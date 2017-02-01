@@ -33,7 +33,8 @@
                     <td>@{{ delivery.comments }}</td>
                     <td>
                         <button class="btn btn-xs btn-primary" ng-click="editDelivery(delivery)">Edit</button>
-                        <a href="{{url('admin/deliveries')}}/@{{ delivery.id }}" class="btn btn-xs btn-info">Details</a>
+                        <button class="btn btn-xs btn-danger" ng-click="deleteDelivery(delivery)">Delete</button>{{-- 
+                        <a href="{{url('admin/deliveries')}}/@{{ delivery.id }}" class="btn btn-xs btn-info">Details</a> --}}
                     </td>
                 </tr>
                 </tbody>

@@ -315,6 +315,9 @@ app.factory('servicesDataFactory', ['$http', function ($http) {
     servicesDataFactory.updateOrder = function (data) {
         return $http.put(URL_BASE + '/' + data.car_id + '/service_orders/' + data.id, data);
     };
+    servicesDataFactory.deleteOrder = function (data) {
+        return $http.delete(URL_BASE + '/' + data.car_id + '/service_orders/' + data.id, data);
+    };
 
     return servicesDataFactory;
 
@@ -400,7 +403,9 @@ app.factory('deliveriesDataFactory', ['$http', function ($http) {
     deliveriesDataFactory.updateDelivery = function (car_id, delivery_id, data) {
         return $http.put(URL_BASE + '/' + car_id + '/deliveries/' + delivery_id, data);
     };
-
+    deliveriesDataFactory.deleteDelivery = function (data) {
+        return $http.delete(URL_BASE + '/' + data.car_id + '/deliveries/' + delivery_id, data);
+    };
     return deliveriesDataFactory;
 }]);
 app.factory('deliveriesDataModelFactory', ['moment', function (moment) {
@@ -462,7 +467,6 @@ app.factory('accidentDataFactory', ['$http', function ($http) {
     accidentDataFactory.updateAccident = function (car_id, data) {
         return $http.put(URL_BASE + '/' + car_id + '/accidents/' + data.id, data);
     };
-
     return accidentDataFactory;
 
 }]);
