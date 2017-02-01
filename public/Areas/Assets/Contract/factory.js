@@ -47,5 +47,22 @@ app.factory('contractDataModelFactory', function () {
 
         return array;
     };
+
+    contractDataModelFactory.withExtras = function (contractCollection) {
+        return _.each(contractCollection, function (contract) {
+            if (contract.status == 1) {
+                contract.x_status = {"key": "Ongoing", "value": 1}
+            }
+            else if (contract.status == 2) {
+                contract.x_status = {"key": "Suspended", "value": 2}
+            }
+            else if (contract.status == 3) {
+                contract.x_status = {"key": "Terminated", "value": 3}
+            }
+            else if (contract.status == 4) {
+                contract.x_status = {"key": "Complete", "value": 4}
+            }
+        });
+    };
     return contractDataModelFactory;
 });

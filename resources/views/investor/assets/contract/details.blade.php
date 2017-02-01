@@ -52,10 +52,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="contract in vm.contract_collection
-                        | filter : {car_reg:filters.car}
-                        | filter : {driver_name:filters.driver}
-                        | dateFilter : filters.date_from : filters.date_to
-                        | filter : {status : filters.selected_status.value}
+                        | newContractFilter : filters.contract | orderBy:'-id'
                         "
                         ng-class="contract.selected ? 'selected' : ''">
 

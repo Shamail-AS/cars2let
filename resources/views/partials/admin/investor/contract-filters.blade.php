@@ -64,13 +64,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Status</label>
-                                <ui-select ng-model="filters.contract.status">
+                                <ui-select ng-model="filters.contract.x_status">
                                     <ui-select-match allow-clear="true">
-                                        <span ng-bind="filters.contract.status"></span>
+                                        <span ng-bind="filters.contract.x_status.key"></span>
                                     </ui-select-match>
                                     <ui-select-choices
                                             repeat="status in (vm.statuses | filter: $select.search) track by $index">
-                                        <span ng-bind="status"></span>
+                                        <span ng-bind="status.key"> </span>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
