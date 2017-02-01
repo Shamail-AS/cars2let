@@ -66,13 +66,13 @@
                             </div>
                             <div class="form-group">
                                 <label>Handover Date (leave empty if NA)</label>
-                                {{--<input ng-model="order.incident_dt" type="text" class="form-control">--}}
+                                {{--<input ng-model="order.handover_date" type="text" class="form-control">--}}
                                 <input type="text" class="form-control" uib-datepicker-popup
-                                       ng-model="order.incident_dt"
-                                       is-open="dirty.incident_open"
+                                       ng-model="order.handover_dt"
+                                       is-open="dirty.handover_open"
                                        ng-required="true"
                                        close-text="Close"
-                                       ng-click="dirty.incident_open = true"/>
+                                       ng-click="dirty.handover_open = true"/>
                             </div>
                             <div class="form-group">
                                 <label>Person Handed To</label>
@@ -120,7 +120,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Expected Return On</label>
-                                    {{--<input ng-model="order.incident_dt" type="text" class="form-control">--}}
+                                    {{--<input ng-model="order.handover_date" type="text" class="form-control">--}}
                                     <input type="text" class="form-control" uib-datepicker-popup
                                            ng-model="order.delivery.scheduled_at"
                                            is-open="dirty.delivery.schedule_open"
@@ -132,7 +132,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Expected Return Location</label>
-                                    {{--<input ng-model="order.incident_dt" type="text" class="form-control">--}}
+                                    {{--<input ng-model="order.handover_date" type="text" class="form-control">--}}
                                     <input type="text" class="form-control" ng-model="order.delivery.location"/>
                                 </div>
                             </div>
