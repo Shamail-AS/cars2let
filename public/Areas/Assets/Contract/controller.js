@@ -27,7 +27,8 @@ app.controller('contractController',
                 'driver': '',
                 'selected_status': {},
                 'date_from': moment().subtract(5, 'year').format("YYYY-MM-DD"),
-                'date_to': moment().add(5, 'year').format("YYYY-MM-DD")
+                'date_to': moment().add(5, 'year').format("YYYY-MM-DD"),
+                'contract': {}
 
             };
 
@@ -66,7 +67,7 @@ app.controller('contractController',
                 $scope.vm.loading.contracts = true;
                 contractDataFactory.getContracts()
                     .success(function (data) {
-                        $scope.vm.contract_collection = data;
+                        $scope.vm.contract_collection = contractDataModelFactory.withExtras(data);
                         if($scope.vm.contract.id){
                             select_contract($scope.vm.contract.id);
                         }
