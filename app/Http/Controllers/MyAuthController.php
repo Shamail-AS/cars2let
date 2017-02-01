@@ -8,7 +8,7 @@ use App\Investor;
 use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
 use Auth;
 use Session;
@@ -88,7 +88,28 @@ class MyAuthController extends Controller
         return redirect(url('/code/verify'));
     }
 
+    public function passwordChange(){
+        return view('reset-password');
+    }
+    public function passwordUpdate(Request $request){
+        $user = Auth::user();
+        if ($user->isDisabled)
+            return redirect('/disabled');
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6'
+        ]);
 
+        if ($validator->fails()) {
+            return redirect('change/password')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        $user->password = bcrypt($request->password);
+        $user->save();
+        Auth::logout();
+        return redirect('/login');
+    }
     public function resendCode(Request $request)
     {
         $email = $request->session()->get('email');

@@ -26,7 +26,7 @@
                             </span>
                         @endif
                     </div>
-                    <div class="form-group {{$error->has('password_confirmation') ? 'has-error':''}}">
+                    <div class="form-group {{$errors->has('password_confirmation') ? 'has-error':''}}">
                         <label class="form-control">Confirm Password</label>
                         <input class="form-control" type="text" name="password_confirmation">
                         @if ($errors->has('password_confirmation'))

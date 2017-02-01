@@ -160,7 +160,7 @@
         </div>
     </div>
 
-@include('partials.admin.investor.contract-filters')
+@include('partials.investor.contract-filters')
 
 @endsection
 
@@ -168,7 +168,7 @@
 
     <script src="{{asset('Areas/Assets/Contract/module.js')}}"></script>
     <script src="{{asset('Areas/Assets/Contract/factory.js')}}"></script>
-    <script src="{{asset('Areas/Assets/Contract/modal-controller.js')}}"></script>
+    <script src="{{asset('Areas/Assets/Contract/modal-controllers.js')}}"></script>
     <script src="{{asset('Areas/Assets/Contract/controller.js')}}"></script>
     <script src="{{asset('Areas/Assets/Contract/filters.js')}}"></script>
 @endsection

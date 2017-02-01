@@ -70,6 +70,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/help', 'HomeController@help');
 
     Route::get('/reset/password', 'MyAuthController@reset');
+    Route::get('/change/password', 'MyAuthController@passwordChange');
+    Route::post('/change/password', 'MyAuthController@passwordUpdate');
 
     Route::get('/disabled', function () {
         return view('errors.disabledUser');

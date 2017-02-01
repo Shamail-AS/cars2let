@@ -104,7 +104,7 @@
                                 @endif
                                 <li><a href="{{ url('/help') }}"><i
                                                 class="fa fa-question-circle fa-btn"></i>Help</a></li>
-                                <li><a href="{{ url('reset/password') }}"><i
+                                <li><a href="{{ url('/change/password') }}"><i
                                                 class="fa fa-cog fa-btn"></i>Reset Password</a></li>
 
                                 <li><a href="{{ url('/logout') }}"><i
