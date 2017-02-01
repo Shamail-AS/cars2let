@@ -86,6 +86,7 @@
             <div class="fixed-footer-button-container">
                 <a href="#" ng-click="openFilters()">
                     <span class="fixed-footer-button blue"><i class="fa fa-filter fa-2x"></i></span>
+                    @include('partials.investor.contract-filters')
                 </a>
                 <a href="{{url('/investor/assets/create/contract')}}">
                     <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>
@@ -160,7 +161,6 @@
         </div>
     </div>
 
-@include('partials.investor.contract-filters')
 
 @endsection
 
