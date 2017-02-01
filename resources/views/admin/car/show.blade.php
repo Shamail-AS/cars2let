@@ -225,8 +225,8 @@
                     <li class="list-group-item"><a
                                 href="{{url('admin/car/'.$car->id.'/view/deliveries')}}">Deliveries</a></li>
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/parts')}}">Tracker +
-                            Camera</a></li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/revenues')}}">Revenues</a>
+                            Camera</a></li>{{-- 
+                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/revenues')}}">Revenues</a> --}}
                     </li>
                     {{-- Addding car picture upload --}}
                     <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/pictures')}}">Pictures</a>

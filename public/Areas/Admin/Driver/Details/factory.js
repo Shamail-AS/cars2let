@@ -12,12 +12,7 @@ app.factory('detailsDataFactory', ['$http', function ($http) {
     detailsDataFactory.updateSelective = function (id, data) {
         return $http.put(URL_BASE + '/' + id + '/update/selective', data);
     };
-    // detailsDataFactory.getInvestors = function () {
-    //     return $http.get('/api/admin/investors/all');
-    // };
-    // detailsDataFactory.getSuppliers = function () {
-    //     return $http.get('/api/admin/suppliers/all');
-    // };
+    
     return detailsDataFactory;
 
 }]);
