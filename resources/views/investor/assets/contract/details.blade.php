@@ -69,7 +69,7 @@
                         <td ng-click="getContract(contract.id )">@{{contract.car_reg}}</td>
                         <td ng-click="getContract(contract.id )">@{{contract.driver_name}}</td>
                         <td ng-click="getContract(contract.id )">@{{contract.rate}}</td>
-                        <td ng-click="getContract( contract.id )">@{{contract.daysDone}}/@{{contract.daysTotal}}</td>
+                        <td ng-click="getContract( contract.id )">@{{contract.daysDone}}</td>
                         <td ng-click="getContract( contract.id )">@{{contract.revenue}}</td>
                         <td ng-click="getContract( contract.id )">@{{contract.rent}}</td>
                     </tr>
