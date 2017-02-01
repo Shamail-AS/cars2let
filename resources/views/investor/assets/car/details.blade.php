@@ -23,10 +23,13 @@
                 <tr>
                     <td>Make</td>
                     <td>Date Available Since</td>
+                    <td>Model</td>
+                    <td>Year</td>
+                    <td>PCO Number</td>{{-- 
                     <td>Total Contracts</td>
                     <td>Weeks Available Since</td>
                     <td>Total Revenue (£)</td>
-                    <td>Paid to investor (£)</td>
+                    <td>Paid to investor (£)</td> --}}
                     <td> </td>
                 </tr>
                 </thead>
@@ -34,13 +37,17 @@
                 <tr>
                     <td>{{$car->make}}</td>
                     <td>{{ Carbon\Carbon::parse($car->available_since)->toFormattedDateString() }}</td>
+                    <td>{{$car->model}}</td>
+                    <td>{{$car->year}}</td>
+                    <td>{{$car->pco_licence}}</td>{{-- 
                     <td>{{$car->totalContracts}}</td>
                     <td>{{$car->totalWeeks}}</td>
                     <td>{{$car->totalRevenue}}</td>
-                    <td>{{$car->totalRent}}</td>
+                    <td>{{$car->totalRent}}</td> --}}
                     <td>
                         {{--<button class="btn btn-xs btn-success" onclick="$('#cardDetails').slideToggle('fast')">Details</button>--}}
-                        <a id="modaltrigger" href="#loginmodal" class="btn btn-xs btn-danger" onclick="edit()">Edit</a>
+                        <a href="#loginmodal" class="btn btn-xs btn-danger modaltrigger" onclick="edit()">Edit</a>
+                        <a href="#detailmodal" class="btn btn-xs btn-success modaltrigger" onclick="edit()">Details</a>
                     </td>
                 </tr>
                 </tbody>
@@ -48,10 +55,160 @@
         </div>
 
     </div>
-    <div class="card" >
+    <div id="cardDetails" class="card" >
         <div class="card-body">
-            <h3>Car Detail</h3>
+            <h3>Revenue Overview</h3>
+            <table class="table table-bordered">
+                <tr>
+                    <th>       </th>
+                    <th>Since Joining</th>
+                    <th>For current accounting period </th>
+                    {{--ASSUMPTION  current month &&  only completed weeks--}}
+                </tr>
+                <tr>
+                    <td>Investor Revenue (£)</td>
+                    <td>{{$car->totalRevenue}}</td>
+                    <td>{{$car->totalRevenueForCurrentPeriod}}</td>
+                </tr>
+                <tr>
+                    <td>Paid to investor (£)</td>
+                    <td>{{$car->totalRent}}</td>
+                    <td>{{$car->totalRentForCurrentPeriod}}</td>
+                </tr>
+                <tr>
+                    <td>Balance</td>
+                    <td>{{$car->totalRevenue - $car->totalRent}}</td>
+                    <td>{{$car->totalRevenueForCurrentPeriod - $car->totalRentForCurrentPeriod}}</td>
+                </tr>
+            </table>
+            <div class="heading">
+                <h4>*Subject to adjustments for VAT and other expenses</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="contract-details-table">
+        <div class="cell row">
+            <h3>Contracts</h3>
+            <div class="cell bordered row padded">
+                <p>Key : </p>
+                <i class="fa fa-circle ongoing"></i><p>Ongoing</p>
+                <i class="fa fa-circle complete"></i><p>Completed</p>
+                <i class="fa fa-circle terminated"></i><p>Terminated</p>
+                <i class="fa fa-circle suspended"></i><p>Suspended</p>
+            </div>
+        </div>
+
+        <div class="cell bordered">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td>Status</td>
+                    <td>Start Date</td>
+                    <td>End Date</td>
+                    <td>Driver</td>
+                    <td>Rent/week (£)</td>
+                    <td>Weeks done/total</td>
+                    <td>Revenue (£)</td>
+                    <td>Paid to Investor (£)</td>
+                    <td> </td>
+                </tr>
+                </thead>
+                <tbody>
+
+                @foreach($car->contracts as $contract)
+
+                    <tr>
+                        @if($contract->status==1)
+                            <td><i class="fa fa-circle ongoing"></i></td>
+                        @elseif($contract->status==2)
+                            <td><i class="fa fa-circle suspended"></i></td>
+                        @elseif($contract->status == 3)
+                            <td><i class="fa fa-circle terminated"></i></td>
+                        @else
+                            <td><i class="fa fa-circle complete"></i></td>
+
+                        @endif
+                        <td>{{$contract->start_date->toFormattedDateString()}}</td>
+                        <td>{{$contract->end_date->toFormattedDateString()}}</td>
+                        <td>{{$contract->driver->name}} ({{$contract->driver->license_no}})</td>
+                        <td>{{$contract->rate}}</td>
+                        <td>{{$contract->weeksDone}}/{{$contract->weeksTotal}}</td>
+                        <td>{{$contract->revenue}}</td>
+                        <td>{{$contract->rent}}</td>
+                        <td><a href="{{url('/investor/contracts/'.$contract->id)}}" class="btn btn-xs btn-info">View</a> </td>
+
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="loginmodal" style="display:none;">
+        <form class="form" id="loginform" name="loginform" method="post"
+              action="{{url('/investor/cars/'.$car->id.'/update')}}">
+            {!! csrf_field() !!}
+            <input type="hidden" value="{{$car->id}}" name="id">
             <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Registration No</label>
+                        <input class="form-control" type="text" name="reg_no" value="{{$car->reg_no}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Make</label>
+                        <input class="form-control" type="text" name="make" value="{{$car->make}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Model</label>
+                        <input class="form-control" type="text" name="model" value="{{$car->model}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input class="form-control" type="text" name="year" value="{{$car->year}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">            
+                    <div class="form-group">
+                        <label>PCO Number</label>
+                        <input class="form-control" type="text" name="pco_licence" value="{{$car->pco_licence}}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <label>Available Since</label>
+                        <input class="form-control dp" type="date" name="available_since"
+                               value="{{$car->available_since}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Comments</label>
+                <input class="form-control" type="text" name="comments"
+                       value="{{$car->comments}}">
+            </div>
+            <div class="center">
+                <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Update"
+                       tabindex="3">
+            </div>
+        </form>
+    </div>
+    <div id="detailmodal" style="display:none;">
+        <h3>Cars Details</h3>
+        <div class="row">
                     <div class="col-lg-4">
                         <div class="row">
                             <div class="col-md-12">
@@ -65,15 +222,6 @@
                                               <div class="form-group">
                                                    <input type='text' id='price' name="price" class="form-control" value="{{$car->price}}" />
                                                    @if ($errors->has('price')) <p class="help-block">{{ $errors->first('price') }}</p> @endif
-                                               </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>PCO License No</td>
-                                            <td>
-                                              <div class="form-group">
-                                                   <input type='text' id='pco_licence_no' name="pco_license_no" class="form-control" value="{{$car->pco_licence}}" />
-                                                   @if ($errors->has('pco_license_no')) <p class="help-block">{{ $errors->first('pco_licence_no') }}</p> @endif
                                                </div>
                                             </td>
                                         </tr>
@@ -144,20 +292,6 @@
                             <div class="col-md-12">
                                 <table class="table table-bordered responsive">
                                     <tbody>
-                                        <tr>
-                                            <td>Model</td>
-                                            <td>
-                                                <input type='text' id='model' name="model" class="form-control" value="{{$car->model}}"/>
-                                                @if ($errors->has('model')) <p class="help-block">{{ $errors->first('model') }}</p> @endif
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Year</td>
-                                            <td>
-                                                <input type='text' id='year' name="year" class="form-control" value="{{$car->year}}"/>
-                                                @if ($errors->has('year')) <p class="help-block">{{ $errors->first('year') }}</p> @endif
-                                            </td>
-                                        </tr>
                                         <tr>
                                             <td>Transmission</td>
                                             <td>
@@ -257,138 +391,13 @@
                     </div>
                 </div>
                 </form>
-            <div class="heading">
-                <h4>*Subject to adjustments for VAT and other expenses</h4>
-            </div>
-        </div>
-    </div>
-    <div id="cardDetails" class="card" >
-        <div class="card-body">
-            <h3>Revenue Overview</h3>
-            <table class="table table-bordered">
-                <tr>
-                    <th>       </th>
-                    <th>Since Joining</th>
-                    <th>For current accounting period </th>
-                    {{--ASSUMPTION  current month &&  only completed weeks--}}
-                </tr>
-                <tr>
-                    <td>Investor Revenue (£)</td>
-                    <td>{{$car->totalRevenue}}</td>
-                    <td>{{$car->totalRevenueForCurrentPeriod}}</td>
-                </tr>
-                <tr>
-                    <td>Paid to investor (£)</td>
-                    <td>{{$car->totalRent}}</td>
-                    <td>{{$car->totalRentForCurrentPeriod}}</td>
-                </tr>
-                <tr>
-                    <td>Balance</td>
-                    <td>{{$car->totalRevenue - $car->totalRent}}</td>
-                    <td>{{$car->totalRevenueForCurrentPeriod - $car->totalRentForCurrentPeriod}}</td>
-                </tr>
-            </table>
-            <div class="heading">
-                <h4>*Subject to adjustments for VAT and other expenses</h4>
-            </div>
-        </div>
-    </div>
-
-    <div class="contract-details-table">
-        <div class="cell row">
-            <h3>Contracts</h3>
-            <div class="cell bordered row padded">
-                <p>Key : </p>
-                <i class="fa fa-circle ongoing"></i><p>Ongoing</p>
-                <i class="fa fa-circle complete"></i><p>Completed</p>
-                <i class="fa fa-circle terminated"></i><p>Terminated</p>
-                <i class="fa fa-circle suspended"></i><p>Suspended</p>
-            </div>
-        </div>
-
-        <div class="cell bordered">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <td>Status</td>
-                    <td>Start Date</td>
-                    <td>End Date</td>
-                    <td>Driver</td>
-                    <td>Rent/week (£)</td>
-                    <td>Weeks done/total</td>
-                    <td>Revenue (£)</td>
-                    <td>Paid to Investor (£)</td>
-                    <td> </td>
-                </tr>
-                </thead>
-                <tbody>
-
-                @foreach($car->contracts as $contract)
-
-                    <tr>
-                        @if($contract->status==1)
-                            <td><i class="fa fa-circle ongoing"></i></td>
-                        @elseif($contract->status==2)
-                            <td><i class="fa fa-circle suspended"></i></td>
-                        @elseif($contract->status == 3)
-                            <td><i class="fa fa-circle terminated"></i></td>
-                        @else
-                            <td><i class="fa fa-circle complete"></i></td>
-
-                        @endif
-                        <td>{{$contract->start_date->toFormattedDateString()}}</td>
-                        <td>{{$contract->end_date->toFormattedDateString()}}</td>
-                        <td>{{$contract->driver->name}} ({{$contract->driver->license_no}})</td>
-                        <td>{{$contract->rate}}</td>
-                        <td>{{$contract->weeksDone}}/{{$contract->weeksTotal}}</td>
-                        <td>{{$contract->revenue}}</td>
-                        <td>{{$contract->rent}}</td>
-                        <td><a href="{{url('/investor/contracts/'.$contract->id)}}" class="btn btn-xs btn-info">View</a> </td>
-
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div id="loginmodal" style="display:none;">
-        <form class="form" id="loginform" name="loginform" method="post"
-              action="{{url('/investor/cars/'.$car->id.'/update')}}">
-            {!! csrf_field() !!}
-            <input type="hidden" value="{{$car->id}}" name="id">
-
-            <div class="form-group">
-                <label>Registration No</label>
-                <input class="form-control" type="text" name="reg_no" value="{{$car->reg_no}}">
-            </div>
-
-            <div class="form-group">
-                <label>Make</label>
-                <input class="form-control" type="number" name="make" value="{{$car->make}}">
-            </div>
-            <div class="form-group ">
-                <label>Available Since</label>
-                <input class="form-control dp" type="date" name="available_since"
-                       value="{{$car->available_since}}">
-            </div>
-            <div class="form-group">
-                <label>Comments</label>
-                <input class="form-control" type="text" name="comments"
-                       value="{{$car->comments}}">
-            </div>
-            <div class="center">
-                <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Update"
-                       tabindex="3">
-            </div>
-        </form>
     </div>
 @endsection
 
 @section('scripts')
     <script>
         $().ready(function () {
-            $('#modaltrigger').leanModal({top: 110, overlay: 0.45, closeButton: ".hidemodal"});
+            $('.modaltrigger').leanModal({top: 110, overlay: 0.45, closeButton: ".hidemodal"});
         });
 
     </script>

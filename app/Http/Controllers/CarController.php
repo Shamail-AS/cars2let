@@ -202,6 +202,9 @@ class CarController extends Controller
         $dt_avail = new Carbon($request->input('available_since'));
         $car->available_since = $dt_avail->format("d-m-Y");
         $car->comments = $request->input('comments');
+        $car->model = $request->input('model');
+        $car->year = $request->input('year');
+        $car->pco_licence = $request->input('pco_licence');
         $car->save();
         return redirect(url('/investor/cars/' . $car->id));
 
@@ -212,8 +215,7 @@ class CarController extends Controller
         $car = Car::findOrFail($id);
 
         $car->custom_id = $request->input('custom_id');
-        $car->model = $request->input('model');
-        $car->year = $request->input('year');
+        
         $car->colour = $request->input('colour');
         $car->transmission = $request->input('transmission');
         $car->fuel_type = $request->input('fuel_type');
@@ -221,7 +223,6 @@ class CarController extends Controller
         $car->engine_size = $request->input('engine_size');
         $car->first_reg_date = $request->input('first_reg_date');
         $car->keeper = $request->input('keeper');
-        $car->pco_licence = $request->input('pco_licence');
         $car->pco_expires_at = $request->input('pco_expires_at');
         $car->warranty_exp_at = $request->input('warranty_exp_at');
         $car->road_side_exp_at = $request->input('road_side_exp_at');

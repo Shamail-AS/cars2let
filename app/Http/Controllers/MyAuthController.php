@@ -97,8 +97,10 @@ class MyAuthController extends Controller
             return redirect('/disabled');
         $validator = Validator::make($request->all(), [
             'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6'
-        ]);
+            'password_confirmation' => 'required|min:6',
+            'old_password' => 'required|old_password:' . Auth::user()->password
+        ],['old_password'=>'The :attribute is incorrect']);
+        
 
         if ($validator->fails()) {
             return redirect('change/password')

@@ -10,6 +10,19 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/change/password') }}">
                         {!! csrf_field() !!}
 
+                        <div class="form-group{{ $errors->has('old_password') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Old Password</label>
+
+                            <div class="col-md-6">
+                                <input type="password" class="form-control" name="old_password" ">
+
+                                @if ($errors->has('old_password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('old_password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">New Password</label>
 

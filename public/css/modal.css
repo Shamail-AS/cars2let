@@ -80,6 +80,17 @@
     -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
 }
+#detailmodal {
+    width: auto;
+    padding: 15px 20px;
+    background: #f3f6fa;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
 
 #loginform {
     /* no default styles */
