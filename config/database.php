@@ -57,7 +57,7 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host' => env('DB_HOST', 'laravel-tgyv.mysql.eu2.frbit.com'),
-            'unix_socket'   => '/opt/lampp/var/mysql/mysql.sock', 
+            //'unix_socket'   => '/opt/lampp/var/mysql/mysql.sock', 
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'laravel-tgyv'),
             'username' => env('DB_USERNAME', 'laravel-tgyv'),

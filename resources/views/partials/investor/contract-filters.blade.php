@@ -75,10 +75,6 @@
                                 </ui-select>
                             </div>
                             <div class="form-group">
-                                <label>Incomplete deposit</label>
-                                <input type="checkbox" class="form-control" ng-model="filters.contract.low_deposit"/>
-                            </div>
-                            <div class="form-group">
                                 <label>Actual Start Date</label>
                                 {{--<input ng-model="order.issue_dt" type="text" class="form-control">--}}
                                 <input type="text" class="form-control" uib-datepicker-popup

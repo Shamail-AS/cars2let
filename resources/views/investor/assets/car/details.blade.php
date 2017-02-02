@@ -46,8 +46,9 @@
                     <td>{{$car->totalRent}}</td> --}}
                     <td>
                         {{--<button class="btn btn-xs btn-success" onclick="$('#cardDetails').slideToggle('fast')">Details</button>--}}
-                        <a href="#loginmodal" class="btn btn-xs btn-danger modaltrigger" onclick="edit()">Edit</a>
-                        <a href="#detailmodal" class="btn btn-xs btn-success modaltrigger" onclick="edit()">Details</a>
+                        <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#mainedit">Edit</button>
+                        <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#detailedit">Details</button>
+                        
                     </td>
                 </tr>
                 </tbody>
@@ -144,67 +145,270 @@
             </table>
         </div>
     </div>
-
-    <div id="loginmodal" style="display:none;">
-        <form class="form" id="loginform" name="loginform" method="post"
-              action="{{url('/investor/cars/'.$car->id.'/update')}}">
-            {!! csrf_field() !!}
-            <input type="hidden" value="{{$car->id}}" name="id">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Registration No</label>
-                        <input class="form-control" type="text" name="reg_no" value="{{$car->reg_no}}">
-                    </div>
+    <div class="modal fade"  id="mainedit" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Edit Cars</h4>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Make</label>
-                        <input class="form-control" type="text" name="make" value="{{$car->make}}">
+                <div class="modal-body">
+                    <form class="form" id="loginform" name="loginform" method="post" action="{{url('/investor/cars/'.$car->id.'/update')}}">
+                        {!! csrf_field() !!}
+                        <input type="hidden" value="{{$car->id}}" name="id">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Registration No</label>
+                                    <input class="form-control" type="text" name="reg_no" value="{{$car->reg_no}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Make</label>
+                                    <input class="form-control" type="text" name="make" value="{{$car->make}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Model</label>
+                                    <input class="form-control" type="text" name="model" value="{{$car->model}}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Year</label>
+                                    <input class="form-control" type="text" name="year" value="{{$car->year}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">            
+                                <div class="form-group">
+                                    <label>PCO Number</label>
+                                    <input class="form-control" type="text" name="pco_licence" value="{{$car->pco_licence}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <label>Available Since</label>
+                                    <input class="form-control dp" type="date" name="available_since"
+                                           value="{{$car->available_since}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Comments</label>
+                            <input class="form-control" type="text" name="comments"
+                                   value="{{$car->comments}}">
+                        </div>
+                        
+                    <div class="modal-footer">
+                        <input type="submit" name="loginbtn" id="loginbtn" class="btn btn-success" value="Update">
                     </div>
+                    </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Model</label>
-                        <input class="form-control" type="text" name="model" value="{{$car->model}}">
-                    </div>
+        </div>
+    </div>
+    <div class="modal fade"  id="detailedit" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"  data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Car Details</h4>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Year</label>
-                        <input class="form-control" type="text" name="year" value="{{$car->year}}">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form class="form" action="{{url('investor/cars/'.$car->id.'/update_details')}}" method="post">
+                                    {!! csrf_field() !!}
+                                    <table class="table table-bordered responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td>Price</td>
+                                                <td>
+                                                  <div class="form-group">
+                                                       <input type='text' id='price' name="price" class="form-control" value="{{$car->price}}" />
+                                                       @if ($errors->has('price')) <p class="help-block">{{ $errors->first('price') }}</p> @endif
+                                                   </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>PCO Expires on </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <input type='text' id='pco_expires_at' name="pco_expires_at" class="form-control" value="{{$car->pco_expires_at}}" />
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                        @if ($errors->has('pco_expires_at')) <p class="help-block">{{ $errors->first('pco_expires_at') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Warranty Expires on</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <input type='text' id='warranty_exp_at' name="warranty_exp_at" class="form-control" value="{{$car->warranty_exp_at}}" />
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                        @if ($errors->has('warranty_exp_at')) <p class="help-block">{{ $errors->first('warranty_exp_at') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Roadside Assistance Expires on</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <input type='text' id='roadside_exp_at' name="roadside_exp_at" class="form-control" value="{{$car->roadside_exp_at}}" />
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                        @if ($errors->has('roadside_exp_at')) <p class="help-block">{{ $errors->first('roadside_exp_at') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Roadside Assistance Expires on</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <input type='text' id='road_tax_exp_at' name="road_tax_exp_at" class="form-control" value="{{$car->road_tax_exp_at}}" />
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                        @if ($errors->has('road_tax_exp_at')) <p class="help-block">{{ $errors->first('road_tax_exp_at') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td>Transmission</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <select class="form-control" name="transmission" id="transmission">
+                                                                <option @if($car->transmission == '') selected @endif value="">Select the transmission</option>
+                                                                <option @if($car->transmission == 'automatic') selected @endif value="automatic">Automatic</option>
+                                                                <option @if($car->transmission == 'semi-automatic') selected @endif value="semi-automatic">Semi Automatic</option>
+                                                                <option @if($car->transmission == 'manual') selected @endif value="manual">Manual</option>
+                                                            </select>
+                                                        </div>
+                                                        @if ($errors->has('transmission')) <p class="help-block">{{ $errors->first('transmission') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fuel Type</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <select class="form-control" name="fuel_type" id="fuel_type">
+                                                                <option @if($car->fuel_type == '') selected @endif value="">Select the Fuel Type</option>
+                                                                <option @if($car->fuel_type == 'petrol') selected @endif value="petrol">Petrol</option>
+                                                                <option @if($car->fuel_type == 'diesel') selected @endif value="diesel">Diesel</option>
+                                                                <option @if($car->fuel_type == 'lpg') selected @endif value="lpg">Lpg</option>
+                                                                <option @if($car->fuel_type == 'bio') selected @endif value="bio">Bio</option>
+                                                            </select>
+                                                        </div>
+                                                        @if ($errors->has('fuel_type')) <p class="help-block">{{ $errors->first('fuel_type') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Engine Size</td>
+                                                <td>    
+                                                    <div class="form-group">
+                                                       <input type='text' id='engine_size' name="engine_size" class="form-control" value="{{$car->engine_size}}" />
+                                                       @if ($errors->has('engine_size')) <p class="help-block">{{ $errors->first('engine_size') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Chasis #</td>
+                                                <td>
+                                                   <input type='text' id='chassis_num' name="chassis_num" class="form-control" value="{{$car->chasis_num}}" />
+                                                   @if ($errors->has('chassis_num')) <p class="help-block">{{ $errors->first('chassis_num') }}</p> @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Keeper</td>
+                                                <td>
+                                                    <input type='text' id='keeper' name="keeper" class="form-control" value="{{$car->keeper}}" />
+                                                    @if ($errors->has('keeper')) <p class="help-block">{{ $errors->first('keeper') }}</p> @endif
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-bordered responsive">
+                                        <tbody>
+                                            <tr>
+                                                <td>Custom Id</td>
+                                                <td>    
+                                                    <input type='text' id='custom_id' name="custom_id" class="form-control" value="{{$car->custom_id}}" />
+                                                    @if ($errors->has('custom_id')) <p class="help-block">{{ $errors->first('custom_id') }}</p> @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>First Registration Date</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <input type='text' id='first_reg_date' name="first_reg_date" class="form-control" value="{{$car->first_reg_date}}" />
+                                                            <span class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </span>
+                                                        </div>
+                                                        @if ($errors->has('first_reg_date')) <p class="help-block">{{ $errors->first('first_reg_date') }}</p> @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="modal-footer">
+                        <input type="submit" name="loginbtn" id="loginbtn" class="btn btn-success" value="Update">
+                    </div>
+                    </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">            
-                    <div class="form-group">
-                        <label>PCO Number</label>
-                        <input class="form-control" type="text" name="pco_licence" value="{{$car->pco_licence}}">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group ">
-                        <label>Available Since</label>
-                        <input class="form-control dp" type="date" name="available_since"
-                               value="{{$car->available_since}}">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Comments</label>
-                <input class="form-control" type="text" name="comments"
-                       value="{{$car->comments}}">
-            </div>
-            <div class="center">
-                <input type="submit" name="loginbtn" id="loginbtn" class="flatbtn-blu hidemodal" value="Update"
-                       tabindex="3">
-            </div>
-        </form>
+        </div>
     </div>
     <div id="detailmodal" style="display:none;">
         <h3>Cars Details</h3>
