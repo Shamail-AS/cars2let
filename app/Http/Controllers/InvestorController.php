@@ -35,6 +35,8 @@ class InvestorController extends Controller
     {
 
         $investor = Investor::where('id', $id)->with('cars', 'contracts', 'contracts.driver', 'contracts.car')->first();
+        $investor->period_start = $investor->periodStart()->toDateString();
+        $investor->period_end = $investor->periodEnd()->toDateString();
         $investor->cars = $investor->cars->each(function ($car) {
             $car->available = Carbon::parse($car->available_since)->toFormattedDateString();
             $car->currentContract = $car->currentContract;
@@ -56,12 +58,12 @@ class InvestorController extends Controller
         $investor->name = $request->input('name');
         $investor->passport_num = $request->input('passport_num');
         $investor->dob = $request->input('dob');
-        $investor->acc_period_start = $request->input('acc_period_start');
-        $investor->acc_period_end = $request->input('acc_period_end');
+        $investor->accPeriodStart = $request->input('acc_period_start');
+        $investor->accPeriodEnd = $request->input('acc_period_end');
         $investor->phone = $request->input('phone');
         $investor->tracking_url = $request->input('tracking_url');
         $investor->save();
-        return;
+        return $investor;
     }
 
     public function api_revenues($id)

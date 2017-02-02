@@ -28,7 +28,7 @@ class AddColumnsToCarTable extends Migration
             $table->string('engine_size');
             $table->date('first_reg_date');
             $table->string('keeper');
-            $table->string('price');
+            $table->integer('price')->unsigned()->default(0);
             $table->string('pco_licence');
             $table->date('pco_expires_at');
             $table->string('status');

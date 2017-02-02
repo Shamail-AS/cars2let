@@ -135,8 +135,8 @@
 
                 investor.loading = true;
                 investor.dob = moment(investor.dt_dob).format("DD-MM-YYYY");
-                investor.acc_period_start = moment(investor.dt_acc_period_start).format("DD-MM-YYYY");
-                investor.acc_period_end = moment(investor.dt_acc_period_end).format("DD-MM-YYYY");
+                investor.acc_period_start = moment(investor.dt_acc_period_start).unix();
+                investor.acc_period_end = moment(investor.dt_acc_period_end).unix();
                 $http.put('/api/admin/investors/' + id + '/update', investor)
                         .success(function () {
                             investor.loading = false;
@@ -148,8 +148,8 @@
                 $http.get('/api/admin/investors/' + id)
                         .success(function (investor) {
                             investor.dt_dob = moment(investor.dob).toDate();
-                            investor.dt_acc_period_start = moment(investor.acc_period_start).toDate();
-                            investor.dt_acc_period_end = moment(investor.acc_period_end).toDate();
+                            investor.dt_acc_period_start = moment(investor.period_start).toDate();
+                            investor.dt_acc_period_end = moment(investor.period_end).toDate();
                             $scope.vm.investor = investor;
                             $scope.vm.investor.loading = false;
                         });

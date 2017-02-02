@@ -71,15 +71,9 @@ class Investor extends Model
         $dt_end = $this->acc_period_end;
         $duration = $dt_start->diffInMinutes($dt_end) + 1440;//add an extra day
 
-        $period_start = Carbon::createFromDate(Carbon::now()->year
-            , $dt_start->month
-            , $dt_start->day)->addMinutes($back_shift * $duration);
+        $period_start = $this->periodStart()->addMinutes($back_shift * $duration);
 
-        $in_same_year = $dt_end->month > $dt_start->month;
-
-        $period_end = Carbon::createFromDate(Carbon::now()->addYears($in_same_year ? 0 : 1)->year
-            , $dt_end->month
-            , $dt_end->day)->addMinutes($back_shift * $duration);
+        $period_end = $this->periodEnd()->addMinutes($back_shift * $duration);
 
 //        // Get an instance of Monolog
 //        $monolog = Log::getMonolog();
@@ -189,24 +183,37 @@ class Investor extends Model
 
     }
 
+    public function periodStart()
+    {
+        $dt = $this->acc_period_start;
+        return Carbon::createFromDate(Carbon::now()->year
+            , $dt->month
+            , $dt->day);
+    }
+
+    public function periodEnd()
+    {
+        $dt_end = $this->acc_period_end;
+        $dt_start = $this->acc_period_start;
+        $in_same_year = $dt_end->month > $dt_start->month;
+        return Carbon::createFromDate(Carbon::now()->addYears($in_same_year ? 0 : 1)->year
+            , $dt_end->month
+            , $dt_end->day);
+    }
+
     public function setAccPeriodStartAttribute($value)
     {
-        try {
-            $this->attributes['acc_period_start'] = Carbon::createFromFormat('d-m-Y', $value);
-        } catch (\InvalidArgumentException $e) {
-            $this->attributes['acc_period_start'] = Carbon::createFromFormat('Y-m-d', $value);
-
+        if (is_integer($value)) {
+            $this->attributes['acc_period_start'] = Carbon::createFromTimestamp(strval($value));
         }
     }
 
     public function setAccPeriodEndAttribute($value)
     {
-        try {
-            $this->attributes['acc_period_end'] = Carbon::createFromFormat('d-m-Y', $value);
-        } catch (\InvalidArgumentException $e) {
-            $this->attributes['acc_period_end'] = Carbon::createFromFormat('Y-m-d', $value);
-
+        if (is_integer($value)) {
+            $this->attributes['acc_period_end'] = Carbon::createFromTimestamp(strval($value));
         }
+
     }
 
 }
