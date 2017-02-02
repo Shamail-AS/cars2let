@@ -16,7 +16,6 @@
                             <th>Actual Start</th>
                             <th>Planned End</th>
                             <th>Actual End</th>
-                            <th>Deposit</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -25,14 +24,6 @@
                             <td>@{{ formatDate(vm.contract.act_start_dt) }}</td>
                             <td>@{{ formatDate(vm.contract.end_date) }}</td>
                             <td>@{{ formatDate(vm.contract.act_end_dt) }}</td>
-                            <td>
-                                <div class="form-inline">
-                                    <input class="form-control input-sm" ng-model="vm.contract.rec_deposit">
-                                    /
-                                    <input class="form-control input-sm" ng-model="vm.contract.req_deposit">
-                                </div>
-
-                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -42,16 +33,37 @@
                     <div ng-if="vm.contract.hasTerminatedEarly" class="alert alert-danger">
                         <strong>This contract was terminated early!</strong>
                     </div>
-                    <div class="centered">
-                        <p>
-                        <h3>Overall Balance:
-                            £@{{ vm.contract.total_payments - vm.contract.rec_deposit - allocated() }}</h3>
-                        <small>payments(@{{ vm.contract.total_payments }}) - deposit(@{{ vm.contract.rec_deposit }}) -
-                            allocated(@{{ allocated() }})
-                        </small>
-                        </p>
-
+                    <div ng-if="unallocated() < 0" class="alert alert-danger">
+                        <strong>You can't allocate more than the receipts</strong>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="centered">
+                                <p>
+                                <h3>Unallocated Receipts:
+                                    £@{{ unallocated() | number:2 }}</h3>
+                                <small>payments(@{{ vm.contract.total_payments }}) -
+                                    deposit(@{{ vm.contract.rec_deposit }}) -
+                                    allocated(@{{ allocated() | number:2 }})
+                                </small>
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="centered">
+                                <p>
+                                <h3>Net Balance:
+                                    £@{{ (grossBalance() + unallocated()) | number:2 }}</h3>
+                                <small>gross(@{{ grossBalance() | number:2 }}) +
+                                    unallocated(@{{ unallocated() | number:2 }})
+                                </small>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
 
                     <table class="table table-striped" id="revenues">
                         <thead>
@@ -65,6 +77,17 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>-</td>
+                            <td>@{{ vm.contract.req_deposit }} (Deposit)</td>
+                            <td>
+                                <input type="number" step="0.01" class="form-control"
+                                       ng-model="vm.contract.rec_deposit">
+                            </td>
+                            <td>@{{ formatDate(vm.contract.updated_at) }}</td>
+                            <td>@{{ (vm.contract.rec_deposit - vm.contract.req_deposit) | number : 2 }}</td>
+                        </tr>
                         <tr ng-repeat="rev in vm.revenues " ng-class="rev.class">
                             <td>@{{ rev.week }}</td>
                             <td>@{{ rev.date_string }}</td>
@@ -73,12 +96,20 @@
                                                                       min="0" max="@{{ rev.amount_due }}" size="5"
                                                                       ng-model="rev.amount_received"></td>
                             <td ng-if="rev.class == 'enabled'">@{{ formatDate(rev.last_payment.date) }}</td>
-                            <td ng-if="rev.class == 'enabled'">@{{ rev.amount_received - rev.amount_due }}</td>
+                            <td ng-if="rev.class == 'enabled'">@{{ (rev.amount_received - rev.amount_due) | number:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <th>Gross Balance</th>
+                            <th>@{{ grossBalance() | number:2 }}</th>
                         </tr>
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" ng-click="save()" class="btn btn-primary">
+                        <button ng-disabled="!canSave()" type="button" ng-click="save()" class="btn btn-primary">
                             <i class="fa fa-spinner fa-spin" ng-show="vm.loading"></i> Save
                         </button>
                         <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">

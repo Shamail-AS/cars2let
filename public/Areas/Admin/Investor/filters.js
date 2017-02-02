@@ -42,8 +42,8 @@ app.filter('newContractFilter', function (moment) {
             var end = moment(item.end_date);
             var act_start = moment(item.act_start_dt);
             var act_end = moment(item.act_end_dt);
-            var car = item.car_reg.toUpperCase();
-            var driver = item.driver_name.toLowerCase();
+            var car = item.car.reg_no.toUpperCase();
+            var driver = item.driver.name.toLowerCase();
             var status = item.x_status.key.toLowerCase();
 
             var filtrate = true;
@@ -51,8 +51,8 @@ app.filter('newContractFilter', function (moment) {
             filtrate = filtrate && isBetween(end, obj.end_date1, obj.end_date2);
             filtrate = filtrate && isBetween(act_start, obj.act_start_date1, obj.act_start_date2);
             filtrate = filtrate && isBetween(act_end, obj.act_end_date1, obj.act_end_date2);
-            filtrate = filtrate && (!obj.car_reg || car.includes(obj.car_reg.toUpperCase()));
-            filtrate = filtrate && (!obj.driver_name || driver.includes(obj.driver_name.toLowerCase()));
+            filtrate = filtrate && (!obj.car_reg || car.includes(obj.car.reg_no.toUpperCase()));
+            filtrate = filtrate && (!obj.driver_name || driver.includes(obj.driver.name.toLowerCase()));
             filtrate = filtrate && (!obj.status || status.includes(obj.status.toLowerCase()));
 
 
