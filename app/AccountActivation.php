@@ -64,18 +64,19 @@ class AccountActivation extends Model
     public function sendActivationNotification($recipients)
     {
 
-        $investorEmail = $this->delivered_to;
+        $userEmail = $this->delivered_to;
+        //$user = User::where('email',$userEmail)->first();
         $data = [
             'tos' => $recipients,
-            'cc' => $investorEmail
+            'cc' => $userEmail
         ];
 
 
-        Mail::send('emails.investorSignupNoti', $data, function ($message) use ($data) {
-            $message->from('registration@cars2let.com', 'Cars2Let Investor Registration');
+        Mail::send('emails.welcome', $data, function ($message) use ($data) {
+            $message->from('registration@cars2let.com', 'Cars2Let Registration');
             $message->to($data['tos'], 'admins');
-            $message->cc($data['cc'], 'investor');
-            $message->subject("Investor signed up");
+            $message->cc($data['cc']);
+            $message->subject("Welcome to Cars2let!");
         });
     }
 

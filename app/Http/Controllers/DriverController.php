@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Car;
+use App\Contract;
+use App\DriverConviction;
 use App\Http\Requests\RegisterDriverRequest;
 use App\Revenue;
 use Carbon\Carbon;
@@ -27,7 +30,7 @@ class DriverController extends Controller
     {
         return Driver::all();
         $drivers = Driver::with('cars','contracts')->get();
-        $drivers->each(function ($car) {
+        $drivers->each(function ($driver) {
             //$car->overview = $car->overview();
             $driver->notis = $driver->notifications;
         });
@@ -164,8 +167,8 @@ class DriverController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        $car = \App\Car::where('reg_no',$request->car_reg_no)->first();
-        $contract = new \App\Contract;
+        $car = Car::where('reg_no', $request->car_reg_no)->first();
+        $contract = new Contract;
         $contract->car_id = $car->id;
         $contract->driver_id = \Auth::user()->driver->id;
         $contract->status = 2;
@@ -220,7 +223,7 @@ class DriverController extends Controller
     }
 
     public function convictionsDelete($driver_id,$conviction_id){
-        \App\DriverConviction::destroy($conviction_id);
+        DriverConviction::destroy($conviction_id);
         return back();   
     }
 
@@ -365,8 +368,8 @@ class DriverController extends Controller
         $driver->nino = $request->nino;
         $driver->right_to_work = 'yes';
         $driver->save();
-        $car = \App\Car::where('reg_no',$request->car_reg_no)->first();
-        $contract = new \App\Contract;
+        $car = Car::where('reg_no', $request->car_reg_no)->first();
+        $contract = new Contract();
         $contract->car_id = $car->id;
         $contract->driver_id = $driver->id;
         $contract->status = 2;
@@ -460,14 +463,24 @@ class DriverController extends Controller
                 else return response("Invalid file", 404);
         }
         // Creating a new User
-        $user = new \App\User;
+        $user = new User();
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->status = 'active';
+        $user->status = 'new';
         $user->type = 'driver';
+        $user->access_level = 'full';
         $user->save();
 
-        return redirect('/cars/list');
+        $activator = AccountActivation::create([
+            'delivered_to' => $user->email,
+            'active' => true,
+            'destination' => 'email',
+            'source' => 'registration_form'
+        ]);
+        $activator->renew();
+        $activator->send();
+
+        return redirect('/code/verify');
     }
     public function uploadDriverFiles(Request $request,$id=null) {
         $ext = ['jpg','jpeg','png','JPG','gif'];

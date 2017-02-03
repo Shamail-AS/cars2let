@@ -433,8 +433,8 @@ app.controller('accidentController', ['$scope', 'ModalService', 'accidentDataFac
         init();
     }]);
 app.controller('accidentModalController',
-    ['$scope', 'moment', 'accidentDataFactory', 'ticketDataFactory', 'accidentDataModelFactory', 'data', 'close',
-        function ($scope, moment, accidentDataFactory, ticketDataFactory, accidentDataModelFactory, data, close) {
+    ['$scope', '$element', 'moment', 'accidentDataFactory', 'ticketDataFactory', 'accidentDataModelFactory', 'data', 'close',
+        function ($scope, $element, moment, accidentDataFactory, ticketDataFactory, accidentDataModelFactory, data, close) {
 
             $scope.vm = {
                 car_id: data.car_id,
@@ -486,8 +486,8 @@ app.controller('accidentModalController',
                 var data = accidentDataModelFactory.withoutExtras(accident);
                 accidentDataFactory.newCarAccident(id, data)
                     .then(function (result) {
-                        //console.log(result.data);
-                        close(result.data);
+                        //$element.modal('hide');
+                        $scope.close(result.data);
                     }, function (error) {
                         alert('There was an error in processing your request');
                     });
@@ -496,7 +496,8 @@ app.controller('accidentModalController',
                 var data = accidentDataModelFactory.withoutExtras(accident);
                 accidentDataFactory.updateAccident(id, data)
                     .then(function (result) {
-                        close('updated');
+                        $element.modal('hide');
+                        $scope.close('updated');
                     }, function (error) {
                          alert('There was an error in processing your request');
                     });

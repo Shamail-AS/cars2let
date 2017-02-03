@@ -132,6 +132,13 @@ class MyAuthController extends Controller
                 $user = User::where('phone', $dest)->first();
 
             if (isset($user)) {
+                if ($user->type == 'driver') {
+                    $user->status = 'active';
+                    $adminEmails = User::is(['admin', 'super-admin'])->active()->get()->pluck('email')->all();
+                    $activator->sendActivationNotification($adminEmails);
+                    $activator->deactivate();
+                    return redirect('/');
+                }
                 return view('auth.passwords.firstTimePassword', compact('dest', 'token'));
             } else {
                 if ($activator->destination == 'email')
