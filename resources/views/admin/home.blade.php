@@ -28,7 +28,7 @@
                     <div class="flex-admin-areas">
                        <a href="{{url('admin/unapproved/all')}}" class="admin-box nostyle">
                            <i class="fa fa-5x fa-user"></i>
-                           <h1>Unapproved Drivers</h1>
+                           <h1>Unapproved Contracts</h1>
                        </a>
                        <a href="{{url('admin/insurance/all')}}" class="admin-box nostyle">
                            <i class="fa fa-5x fa-user"></i>

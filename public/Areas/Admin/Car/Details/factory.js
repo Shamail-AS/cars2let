@@ -497,8 +497,11 @@ app.factory('accidentDataModelFactory', ['moment', function (moment) {
         return accident;
     };
     accidentDataModelFactory.withoutExtras = function (accident) {
+        if (typeof accident.driver !== 'undefined') {
         accident.driver_id = accident.driver.id;
-
+  // your code here
+        }
+        else  accident.driver_id = null;
         var m_date = moment(accident.incident_at).toObject();
         var m_time = moment(accident.incident_time);
         m_date.hours = m_time.hour();

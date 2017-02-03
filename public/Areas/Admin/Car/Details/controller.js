@@ -52,6 +52,7 @@ app.controller('detailsController', ['$scope', 'detailsDataFactory', 'detailsDat
         detailsDataFactory.updateCar(car.id, data)
             .success(function (data) {
                 $scope.vm.loading = false;
+                alert('The Car Updated Successfully');
             });
     };
     var update_comments = function (car) {
@@ -460,6 +461,7 @@ app.controller('accidentModalController',
                     update_accident(car_id, data);
                 }
                 else {
+                    console.log('hello');
                     record_accident(car_id, data);
                 }
                 $scope.dirty.driver = driver;
@@ -487,7 +489,7 @@ app.controller('accidentModalController',
                         //console.log(result.data);
                         close(result.data);
                     }, function (error) {
-
+                        alert('There was an error in processing your request');
                     });
             };
             var update_accident = function (id, accident) {
@@ -496,7 +498,7 @@ app.controller('accidentModalController',
                     .then(function (result) {
                         close('updated');
                     }, function (error) {
-
+                         alert('There was an error in processing your request');
                     });
             };
             var load_car = function (id) {

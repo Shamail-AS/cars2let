@@ -184,7 +184,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     //TICKETS
     Route::get('tickets/{ticket_id}', 'TicketController@show');
     Route::post('tickets/{ticket_id}/attach', 'TicketController@attach');
-
+    //TICKETS
+    Route::get('deliveries/{delivery_id}', 'DeliveryController@imagesView');
+    Route::post('deliveries/{delivery_id}/upload', 'DeliveryController@attach');
+    Route::get('deliveries/{delivery_id}/file/{file_id}/delete', 'DeliveryController@deleteFile');
+    
     //SUPPLIERS
     Route::get('suppliers/all', 'SupplierController@api_all');
 

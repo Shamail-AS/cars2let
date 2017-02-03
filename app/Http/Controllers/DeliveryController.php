@@ -9,10 +9,17 @@ use App\Exceptions\Handler;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Str;
 use App\Car;
 use App\Delivery;
 use App\User;
 use App\CarOrder;
+use App\SiteFile;
+use Storage;
+use Image;
+use PDF;
+use Zipper;
+use File;
 
 use Log;
 
@@ -107,6 +114,49 @@ class DeliveryController extends Controller
         return $delivery;
     }
 
+    public function imagesView($delivery_id){
+        $delivery = Delivery::findOrFail($delivery_id);
+        return view('admin.deliveries.show', compact('delivery'));
+    }
+
+    public function attach($delivery_id, Request $request){
+        $ext = ['jpg','jpeg','png','JPG','gif'];
+        $delivery = Delivery::findOrFail($delivery_id);
+        if($request->file('file')){
+            foreach($request->file('file') as $file){
+                if ($file->isValid()) {
+                    $site_file = new SiteFile;
+                    $extension = $file->getClientOriginalExtension();
+                    $fileName = Str::random(8).'.'.$extension;
+                    if(in_array($extension, $ext)){
+                       $stored_file = Storage::disk('s3')->put('deliveries/'.$fileName, file_get_contents($file));
+                    }
+                    else {
+                        continue;
+                    }
+                    $site_file->name = $fileName;
+                    $site_file->full_url = "https://laravel-tgyv.objects.frb.io/deliveries/".$fileName;
+                    if(in_array($extension,$ext)){
+                        $site_file->type = "image";
+                    }
+                    else {
+                        $site_file->type = "file";
+                    }
+
+                    $site_file->save();
+                    $delivery->files()->save($site_file);
+                }
+                else return response("Invalid file", 404);
+            }
+            return back();
+        }
+        return response("Attachment not found", 404);
+    }
+
+    public function deleteFile($delivery_id,$file_id){
+        SiteFile::destroy($file_id);
+        return back();
+    }
     /**
      * Show the form for editing the specified resource.
      *

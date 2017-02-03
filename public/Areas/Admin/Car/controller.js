@@ -38,6 +38,9 @@ app.controller('carController',
             $scope.updateCar = function (car) {
                 update_car(car);
             };
+            $scope.deleteCar = function (car) {
+                delete_car(car);
+            };
 
             $scope.formatDate = function (date) {
                 var dt = moment(date);
@@ -60,6 +63,12 @@ app.controller('carController',
                     .success(function (result) {
                         alert(result);
                         car.edit_mode = false;
+                    });
+            };
+            var delete_car = function (car) {
+                carDataFactory.deleteCar(car.id)
+                    .success(function (result) {
+                        location.reload();
                     });
             };
             var get_investors = function () {

@@ -43,33 +43,57 @@ class CarController extends Controller
 
     public function api_update(Request $request)
     {
+        
         $investor_id = $request->input('investor')['id'];
         $supplier_id = $request->input('supplier')['id'];
         $car = Car::find($request->input('id'));
-
+        if($request->input('reg_no'))
         $car->reg_no = $request->input('reg_no');
+        if($request->input('make'))
         $car->make = $request->input('make');
+        if($request->input('available_since'))
         $car->available_since = $request->input('available_since');
+        if($request->input('comments'))
         $car->comments = $request->input('comments');
+        if($request->input('custom_id'))
         $car->custom_id = $request->input('custom_id');
+        if($request->input('model'))
         $car->model = $request->input('model');
+        if($request->input('year'))
         $car->year = $request->input('year');
+        if($request->input('colour'))
         $car->colour = $request->input('colour');
+        if($request->input('transmission'))
         $car->transmission = $request->input('transmission');
+        if($request->input('fuel_type'))
         $car->fuel_type = $request->input('fuel_type');
+        if($request->input('chassis_num'))
         $car->chassis_num = $request->input('chassis_num');
+        if($request->input('engine_size'))
         $car->engine_size = $request->input('engine_size');
+        if($request->input('first_reg_date'))
         $car->first_reg_date = $request->input('first_reg_date');
+        if($request->input('keeper'))
         $car->keeper = $request->input('keeper');
+        if($request->input('pco_licence'))
         $car->pco_licence = $request->input('pco_licence');
+        if(!empty($request->input('pco_expires_at')))
         $car->pco_expires_at = $request->input('pco_expires_at');
+        if($request->input('warranty_exp_at'))
         $car->warranty_exp_at = $request->input('warranty_exp_at');
+        if($request->input('road_side_exp_at'))
         $car->road_side_exp_at = $request->input('road_side_exp_at');
+        if($request->input('road_tax_exp_at'))
         $car->road_tax_exp_at = $request->input('road_tax_exp_at');
+        if($request->input('status'))
         $car->status = $request->input('status');
+        if($request->input('curr_odo'))
         $car->curr_odo = $request->input('curr_odo');
+        if($request->input('price'))
         $car->price = $request->input('price');
-        $car->supplier_id = $supplier_id;
+        if($request->input('investor')['id'])
+        $car->supplier_id = $request->input('supplier')['id'];
+        if($request->input('supplier')['id'])
         $car->investor_id = $investor_id;
         $last_updated = $car->updated_at;
 
@@ -87,7 +111,7 @@ class CarController extends Controller
         $value = $request->input('value');
 
         $car = Car::findOrFail($car_id);
-        if ($prop == 'comments')
+        if ($prop == 'comments')    
             $car->comments = $value;
 
         $last_updated = $car->updated_at;

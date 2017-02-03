@@ -64,6 +64,8 @@
                     <div class="btn-group-xs">
                         <button ng-if="!car.edit_mode" ng-click="editCar(car)" class="btn btn-xs btn-primary">Edit
                         </button>
+                        <button ng-if="!car.edit_mode" ng-click="deleteCar(car)" class="btn btn-xs btn-danger">Delete
+                        </button>
                         <button ng-if="car.edit_mode" ng-click="updateCar(car)" class="btn btn-xs btn-warning">Update
                         </button>
                         <button ng-if="car.edit_mode" ng-click="cancelEdit(car)" class="btn btn-xs btn-default">

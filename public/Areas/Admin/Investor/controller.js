@@ -45,6 +45,10 @@ app.controller('investorController',
                     });
                 });
             };
+            $scope.addprice = function(selectedcar) {
+                console.log(selectedcar.price);
+                $('#rate').val(selectedcar.price);
+            };
             $scope.openPayments = function (contract) {
                 ModalService.showModal({
                     templateUrl: "contract-payments.html",
@@ -280,7 +284,10 @@ app.controller('investorController',
                 console.log($scope.dirty.contract);
                 new_contract(_.cloneDeep($scope.dirty.contract));
             };
-
+            $scope.addprice = function(selectedcar) {
+            console.log(selectedcar);
+            $('#rate').val(selectedcar.price);
+            };
             $scope.openPicker = function (obj) {
                 obj.picker_open = true;
             };

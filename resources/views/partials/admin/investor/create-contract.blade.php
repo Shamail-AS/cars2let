@@ -28,7 +28,7 @@
                         <div class="form-group">
                             {{--<input type="hidden" name="car" value="@{{ dirty.contract.car.id }}" ng-model="selected.car.id">--}}
                             <label>Car</label>
-                            <ui-select ng-model="dirty.contract.car">
+                            <ui-select ng-model="dirty.contract.car" ng-change="addprice(dirty.contract.car)">
                                 <ui-select-match allow-clear="true">
                                     <span ng-bind="dirty.contract.car.reg_no"></span>
                                 </ui-select-match>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label>Rent/Week (£)</label>
-                            <input ng-model="dirty.contract.rate" class="form-control" placeholder="20">
+                            <input ng-model="dirty.contract.rate" class="form-control" id="rate" placeholder="20">
                         </div>
                     </div>
                 </div>
