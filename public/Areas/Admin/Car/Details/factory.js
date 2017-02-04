@@ -25,24 +25,60 @@ app.factory('detailsDataModelFactory', ['moment', function (moment) {
     var detailsDataModelFactory = {};
 
     detailsDataModelFactory.withExtras = function (car) {
-        car.x_available_since = moment(car.available_since).toDate();
-        car.x_first_reg_date = moment(car.first_reg_date).toDate();
-        car.x_pco_expires_at = moment(car.pco_expires_at).toDate();
-        car.x_warranty_exp_at = moment(car.warranty_exp_at).toDate();
-        car.x_roadside_exp_at = moment(car.road_side_exp_at).toDate();
-        car.x_road_tax_exp_at = moment(car.road_tax_exp_at).toDate();
+        console.log(car);
+        if(car.available_since)
+            car.x_available_since = moment(car.available_since).toDate();
+        else 
+            car.x_available_since = null;
+        if(car.first_reg_date)
+            car.x_first_reg_date = moment(car.first_reg_date).toDate();
+        else
+            car.x_first_reg_date = null    
+        if(car.pco_expires_at)
+            car.x_pco_expires_at = moment(car.pco_expires_at).toDate();
+        else
+            car.x_pco_expires_at = null;
+        if(car.warranty_exp_at)
+            car.x_warranty_exp_at = moment(car.warranty_exp_at).toDate();
+        else
+            car.x_warranty_exp_at = null;
+        if(car.road_side_exp_at)
+            car.x_roadside_exp_at = moment(car.road_side_exp_at).toDate();
+        else
+            car.x_roadside_exp_at = null;
+        if(car.road_tax_exp_at)
+            car.x_road_tax_exp_at = moment(car.road_tax_exp_at).toDate();
+        else
+            car.x_road_tax_exp_at = null;    
         return car;
     };
     detailsDataModelFactory.removeExtras = function (car_data) {
 
         var car = _.cloneDeep(car_data);
-        car.available_since = moment(car.x_available_since).format('YYYY-MM-DD');
-        car.first_reg_date = moment(car.x_first_reg_date).format('YYYY-MM-DD');
-        car.pco_expires_at = moment(car.x_pco_expires_at).format('YYYY-MM-DD');
-        car.warranty_exp_at = moment(car.x_warranty_exp_at).format('YYYY-MM-DD');
-        car.road_side_exp_at = moment(car.x_roadside_exp_at).format('YYYY-MM-DD');
-        car.road_tax_exp_at = moment(car.x_road_tax_exp_at).format('YYYY-MM-DD');
-
+        if(car.x_available_since && car.x_available_since != "Invalid date")
+            car.available_since = moment(car.x_available_since).format('YYYY-MM-DD');
+        else 
+            car.available_since = null;
+        if(car.x_first_reg_date && car.x_first_reg_date != "Invalid date")
+            car.first_reg_date = moment(car.x_first_reg_date).format('YYYY-MM-DD');
+        else
+            car.first_reg_date = null;
+        if(car.x_pco_expires_at && car.x_pco_expires_at != "Invalid date")
+            car.pco_expires_at = moment(car.x_pco_expires_at).format('YYYY-MM-DD');
+        else
+            car.pco_expires_at = null;
+        if(car.x_warranty_exp_at && car.x_warranty_exp_at != "Invalid date")
+            car.warranty_exp_at = moment(car.x_warranty_exp_at).format('YYYY-MM-DD');
+        else
+            car.warranty_exp_at = null;
+        if(car.x_roadside_exp_at && car.x_roadside_exp_at != "Invalid date")    
+            car.road_side_exp_at = moment(car.x_roadside_exp_at).format('YYYY-MM-DD');
+        else
+            car.road_side_exp_at = null;
+        if (car.x_road_tax_exp_at && car.x_road_tax_exp_at != "Invalid date")
+            car.road_tax_exp_at = moment(car.x_road_tax_exp_at).format('YYYY-MM-DD');
+        else
+            car.road_tax_exp_at = null;
         delete(car.x_available_since);
         delete(car.x_first_reg_date);
         delete(car.x_pco_expires_at);

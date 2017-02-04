@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"x_",
+				"x_available_since"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"delive",
+				"delivery"
+			],
+			[
+				"delie",
+				"delivery_id"
+			],
+			[
 				"re",
 				"request"
 			],
@@ -84,17 +100,16 @@
 		"/opt/lampp/htdocs/laravel-tgyv/app",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers",
-		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Middleware",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Providers",
 		"/opt/lampp/htdocs/laravel-tgyv/config",
 		"/opt/lampp/htdocs/laravel-tgyv/database",
 		"/opt/lampp/htdocs/laravel-tgyv/database/seeds",
 		"/opt/lampp/htdocs/laravel-tgyv/public",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Investor",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Supplier",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Car",
@@ -106,7 +121,6 @@
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/investor",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/supplier",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/car",
@@ -114,21 +128,37 @@
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/admin",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/admin/investor",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/form",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/investor",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/vendor"
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/form"
 	],
 	"file_history":
 	[
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details/factory.js",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/investor/contract-filters.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details/controller.js",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/services.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/form/car-create.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/routes.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/show.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/index.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/CarController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Car.php",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details/controller.js",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/Details/factory.js",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Driver.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/deliveries.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/factory.js",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/admin/car/new-accident.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/contract/create.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/home.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/DeliveryController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/deliveries/show.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/pictures.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Delivery.php",
+		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/TicketController.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/admin/investor/create-contract.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Investor/controller.js",
+		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/controller.js",
+		"/opt/lampp/htdocs/laravel-tgyv/storage/logs/laravel.log",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/partials/investor/contract-filters.blade.php",
+		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/services.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/ServiceOrderController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/car/details.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/deliveries.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/show.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/factory.js",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/SupplierController.php",
@@ -136,7 +166,6 @@
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/auth/passwords/reset-password.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Contract/filters.js",
 		"/opt/lampp/htdocs/laravel-tgyv/config/database.php",
-		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/CarController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Contract/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/contract/details.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/ContractController.php",
@@ -157,9 +186,7 @@
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Investor/factory.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Contract/module.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Contract/modal-controllers.js",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Investor/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Investor/modal-controllers.js",
-		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/contract/create.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/InvestorController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Contract.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/supplier/index.blade.php",
@@ -171,14 +198,12 @@
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Supplier/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Policy/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/investor/assets/driver/detail.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/app/Driver.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/driver/contracts.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views/overview.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/driver/edit.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/AssetController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Assets/Driver/filters.js",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/cars-list.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/app/Car.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/User.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/tickets.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views/tickets.blade.php",
@@ -192,24 +217,22 @@
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/driver/new_contract.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/views/uploadfile.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/welcome.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/app/Http/Controllers/TicketController.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/driver/index.blade.php",
 		"/opt/lampp/htdocs/laravel-tgyv/app/BankAccount.php",
 		"/opt/lampp/htdocs/laravel-tgyv/resources/views/admin/car/views/overview.blade.php",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/factory.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Driver/Details/module.js",
-		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/controller.js",
 		"/opt/lampp/htdocs/laravel-tgyv/public/Areas/Admin/Car/module.js"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
 		"height": 88.0,
 		"where_history":
 		[
+			"/opt/lampp/htdocs/laravel-tgyv",
 			"/opt/lampp/htdocs/laravel-tgyv/public/Areas",
 			"/opt/lampp/htdocs/laravel-tgyv/resources",
 			"/opt/lampp/htdocs/laravel-tgyv"
@@ -220,6 +243,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"road_side_exp_at",
+			"warranty_exp_at",
+			"pco_expires_at",
+			"first_reg_date",
+			"s",
+			"        }",
+			"cars",
+			"get",
+			"$dates",
+			"dates",
+			"Invalid date",
+			"createFromFormat",
+			"createFromForma",
+			"chassis_num",
 			"detailedit",
 			"x_status",
 			"        \n",

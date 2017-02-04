@@ -42,12 +42,14 @@ app.controller('investorController',
                     modal.element.modal();
                     modal.close.then(function (result) {
                         console.log(result);
+                        contract.payments.push(result);
                     });
                 });
             };
             $scope.addprice = function(selectedcar) {
                 console.log(selectedcar.price);
-                $('#rate').val(selectedcar.price);
+
+                //$('#rate').val(selectedcar.price);
             };
             $scope.openPayments = function (contract) {
                 ModalService.showModal({
@@ -286,7 +288,7 @@ app.controller('investorController',
             };
             $scope.addprice = function(selectedcar) {
             console.log(selectedcar);
-            $('#rate').val(selectedcar.price);
+            $scope.dirty.contract.rate = selectedcar.price;
             };
             $scope.openPicker = function (obj) {
                 obj.picker_open = true;
@@ -403,7 +405,7 @@ app.controller('investorController',
 
             var load_contract_statuses = function () {
                 $scope.vm.statuses.push({"key": "New", "value": 2});
-                $scope.vm.statuses.push({"key": "Ongoing", "value": 1});
+                //$scope.vm.statuses.push({"key": "Ongoing", "value": 1});
 
                 /* DEPRECATED - Contract can only be in suspended or ongoing status*/
                 //$scope.vm.statuses.push({"key": "Terminated", "value": 3});
@@ -488,7 +490,8 @@ app.controller('investorController',
                     .success(function (result) {
                         contract.id = result.id;
                         contract.req_deposit = result.req_deposit;
-                        $scope.vm.investor.contracts.push(contract);
+                        //$scope.vm.investor.contracts.push(contract);
+                        alert('Contract Saved But Pending Approval');
                         cancel_add();
                     });
             };

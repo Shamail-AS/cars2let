@@ -112,6 +112,10 @@ class Contract extends Model
     {
         return $query->orderBy('created_at', 'desc');
     }
+
+    public function scopeApproved($query){
+        return $query->where('approved_by','<>','null');
+    }
     public function getRentAttribute()
     {
         $revenues = $this->revenues;

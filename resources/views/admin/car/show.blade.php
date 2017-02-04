@@ -38,7 +38,6 @@
                             <input type="text" class="form-control" uib-datepicker-popup
                                    ng-model="vm.car.x_pco_expires_at"
                                    is-open="vm.car.pco_expire_picker_open" datepicker-options="dateOptions.pco_expire"
-                                   ng-required="true"
                                    close-text="Close"
                                    ng-click="vm.car.pco_expire_picker_open = true"/>
                         </div>
@@ -48,7 +47,6 @@
                                    ng-model="vm.car.x_warranty_exp_at"
                                    is-open="vm.car.warranty_exp_picker_open"
                                    datepicker-options="dateOptions.warranty_exp"
-                                   ng-required="true"
                                    close-text="Close"
                                    ng-click="vm.car.warranty_exp_picker_open = true"/>
                         </div>
@@ -58,7 +56,6 @@
                                    ng-model="vm.car.x_roadside_exp_at"
                                    is-open="vm.car.x_roadside_exp_picker_open"
                                    datepicker-options="dateOptions.roadside_exp"
-                                   ng-required="true"
                                    close-text="Close"
                                    ng-click="vm.car.x_roadside_exp_picker_open = true"/>
                         </div>
@@ -68,7 +65,6 @@
                                    ng-model="vm.car.x_road_tax_exp_at"
                                    is-open="vm.car.x_road_tax_exp_picker_open"
                                    datepicker-options="dateOptions.road_tax_exp"
-                                   ng-required="true"
                                    close-text="Close"
                                    ng-click="vm.car.x_road_tax_exp_picker_open = true"/>
                         </div>
@@ -150,7 +146,6 @@
                             <input type="text" class="form-control" uib-datepicker-popup
                                    ng-model="vm.car.x_available_since"
                                    is-open="vm.car.avail_since_picker_open" datepicker-options="dateOptions.avail_since"
-                                   ng-required="true"
                                    close-text="Close"
                                    ng-click="vm.car.avail_since_picker_open = true"/>
                         </div>
@@ -159,7 +154,6 @@
                             <input type="text" class="form-control" uib-datepicker-popup
                                    ng-model="vm.car.x_first_reg_date"
                                    is-open="vm.car.first_reg_picker_open" datepicker-options="dateOptions.first_reg"
-                                   ng-required="true"
                                    close-text="Close"
                                    ng-click="vm.car.first_reg_picker_open = true"/>
                         </div>

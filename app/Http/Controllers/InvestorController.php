@@ -94,6 +94,7 @@ class InvestorController extends Controller
 
     public function api_drivers($id)
     {
+        
         return Investor::find($id)->drivers;
     }
 

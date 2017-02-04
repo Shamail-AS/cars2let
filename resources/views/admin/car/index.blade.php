@@ -84,7 +84,7 @@
     @if(Auth::user()->isFullAccess)
     <div class="fixed-footer-button-container">
         <div class="card-container">
-            @include('partials.form.car-create',['admin'=>true])
+            @include('partials.form.car-create',['admin'=>true,'investor'=>$investors])
         </div>
         <div class="flex-container">
             <span class="fixed-footer-button"><i class="fa fa-plus fa-2x"></i></span>

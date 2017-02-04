@@ -29,6 +29,14 @@
                 <input class="form-control dp" type="text" name="available_since"
                        value="{{old('available_since')}}">
             </div>
+            <div class="form-group ">
+                <label>Investor</label>
+                <select class="form-control" name="investor_id">
+                    @foreach($investors as $investor)
+                        <option value="{{$investor->id}}">{{$investor->name}}</option>
+                    @endforeach 
+                </select>
+            </div>
             <div class="form-group">
                 {{--<div class="form-group {{$error->has('comments') ? 'has-error':''}}">--}}
                 <label>Comments</label>

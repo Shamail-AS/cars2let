@@ -168,7 +168,8 @@ app.controller('contractPaymentsModalController',
                     .then(function (resp) {
                         console.log(resp.data);
                         resp.data.isNew = true;
-                        $scope.vm.contract.payments.push(resp.data);
+                        $scope.close(resp.data);
+                        //$scope.vm.contract.payments.push(resp.data);
                     });
             };
 

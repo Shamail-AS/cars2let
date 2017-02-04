@@ -182,7 +182,8 @@ class CarController extends Controller
     public function index()
     {
         $carList = Car::orderBy('available_since')->get();
-        return view('admin.car.index',compact('carList'));
+        $investors = \App\Investor::all();
+        return view('admin.car.index',compact('carList','investors'));
     }
     public function create()
     {

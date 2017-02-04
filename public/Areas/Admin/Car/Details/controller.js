@@ -47,7 +47,9 @@ app.controller('detailsController', ['$scope', 'detailsDataFactory', 'detailsDat
     };
 
     var save_car = function (car) {
+        console.log(car);
         var data = detailsDataModelFactory.removeExtras(car);
+
         $scope.vm.loading = true;
         detailsDataFactory.updateCar(car.id, data)
             .success(function (data) {

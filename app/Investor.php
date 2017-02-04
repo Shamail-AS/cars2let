@@ -86,7 +86,7 @@ class Investor extends Model
     }
     public function getDriversAttribute()
     {
-        $contracts = $this->contracts;
+        $contracts = $this->contracts()->approved()->get();
         $drivers = collect([]);
         foreach($contracts as $contract)
         {

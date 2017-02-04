@@ -39,6 +39,7 @@ app.factory('investorDataModelFactory', ['moment', 'contractDataModelFactory', '
     };
     investorDataModelFactory.withDriverExtras = function (drivers) {
         _.each(drivers, function (driver) {
+            if(!driver) return;
             driverDataModelFactory.withExtras(driver);
         });
         return drivers;
@@ -225,9 +226,11 @@ app.factory('driverDataModelFactory', ['moment', function (moment) {
     };
     driverDataModelFactory.withExtras = function (drivers) {
         _.each(drivers, function (driver) {
-            driver.edit_mode = false;
-            driver.picker_open = false;
-            driver.dt_dob = moment(driver.dob).toDate();
+            if(driver){
+                driver.edit_mode = false;
+                driver.picker_open = false;
+                driver.dt_dob = moment(driver.dob).toDate();
+            }
         });
         return drivers;
     };

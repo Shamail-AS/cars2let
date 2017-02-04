@@ -65,7 +65,7 @@ class Car extends Model
 {
     use SoftDeletes;
     //
-    protected $guarded = ['id', 'investor_id', 'created_at', 'updated_at', 'deleted_at'];
+    protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
     protected $dates = ['deleted_at', 'first_reg_date', 'pco_expires_at', 'warranty_exp_at', 'road_side_exp_at', 'road_tax_exp_at'];
 
@@ -335,12 +335,12 @@ class Car extends Model
 
         $alerts = [
             'regular' => [
-                'pco_exp' => $car->pco_expires_at,
+                'pco_exp' => $car->pco_expires_at != null ? $car->pco_expires_at : null,
                 'contract_finish' => $current_contract != null ? $current_contract->end_date : null,
                 'mot_due' => $mot != null ? $mot->booked_dt : null,
-                'warranty_exp' => $car->warranty_exp_at,
-                'roadside_exp' => $car->road_side_exp_at,
-                'road_tax_due' => $car->road_tax_exp_at,
+                'warranty_exp' => $car->warranty_exp_at != null ? $car->warranty_exp_at : null,
+                'roadside_exp' => $car->road_side_exp_at != null ? $car->road_side_exp_at : null,
+                'road_tax_due' => $car->road_tax_exp_at != null ? $car->road_tax_exp_at : null,
             ],
             'deliveries' => $deliveries,
             'orders' => $orders
@@ -348,15 +348,102 @@ class Car extends Model
 
         return collect($alerts);
     }
+    // public function setAvailableSinceAttribute($value)
+    // {
+    //     try {
+    //         $this->attributes['available_since'] = Carbon::createFromFormat('d-m-Y', $value);
+    //     } catch (\InvalidArgumentException $e) {
+    //         $this->attributes['available_since'] = Carbon::createFromFormat('Y-m-d', $value);
+
+    //     }
+    // }
+
     public function setAvailableSinceAttribute($value)
     {
-        try {
-            $this->attributes['available_since'] = Carbon::createFromFormat('d-m-Y', $value);
-        } catch (\InvalidArgumentException $e) {
-            $this->attributes['available_since'] = Carbon::createFromFormat('Y-m-d', $value);
+        if (strlen($value)) {
+            try {
+                $this->attributes['available_since'] = Carbon::createFromFormat('d-m-Y', $value);
+            } catch (\InvalidArgumentException $e) {
+                $this->attributes['available_since'] = Carbon::createFromFormat('Y-m-d', $value);
 
+            }
+        } 
+        else {
+            $this->attributes['available_since'] = null;
         }
     }
+    //protected $dates = ['deleted_at', 'first_reg_date', 'pco_expires_at', 'warranty_exp_at', 'road_side_exp_at', 'road_tax_exp_at'];
+
+    public function setFirstRegDateAttribute($value) {
+        if (strlen($value)) {
+            try {
+                $this->attributes['first_reg_date'] = Carbon::createFromFormat('d-m-Y', $value);
+            } catch (\InvalidArgumentException $e) {
+                $this->attributes['first_reg_date'] = Carbon::createFromFormat('Y-m-d', $value);
+
+            }
+        } 
+        else {
+            $this->attributes['first_reg_date'] = null;
+        }
+    }
+
+    public function setPcoExpiresAtAttribute($value) {
+        if (strlen($value)) {
+            try {
+                $this->attributes['pco_expires_at'] = Carbon::createFromFormat('d-m-Y', $value);
+            } catch (\InvalidArgumentException $e) {
+                $this->attributes['pco_expires_at'] = Carbon::createFromFormat('Y-m-d', $value);
+
+            }
+        } 
+        else {
+            $this->attributes['pco_expires_at'] = null;
+        }
+    }
+
+    public function setWarrantyExpAtAttribute($value) {
+        if (strlen($value)) {
+            try {
+                $this->attributes['warranty_exp_at'] = Carbon::createFromFormat('d-m-Y', $value);
+            } catch (\InvalidArgumentException $e) {
+                $this->attributes['warranty_exp_at'] = Carbon::createFromFormat('Y-m-d', $value);
+
+            }
+        } 
+        else {
+            $this->attributes['warranty_exp_at'] = null;
+        }
+    }
+    
+    public function setRoadSideExpAtAttribute($value) {
+        if (strlen($value)) {
+            try {
+                $this->attributes['road_side_exp_at'] = Carbon::createFromFormat('d-m-Y', $value);
+            } catch (\InvalidArgumentException $e) {
+                $this->attributes['road_side_exp_at'] = Carbon::createFromFormat('Y-m-d', $value);
+
+            }
+        } 
+        else {
+            $this->attributes['road_side_exp_at'] = null;
+        }
+    }
+
+    public function setRoadTaxExpAtAttribute($value) {
+        if (strlen($value)) {
+            try {
+                $this->attributes['road_tax_exp_at'] = Carbon::createFromFormat('d-m-Y', $value);
+            } catch (\InvalidArgumentException $e) {
+                $this->attributes['road_tax_exp_at'] = Carbon::createFromFormat('Y-m-d', $value);
+
+            }
+        } 
+        else {
+            $this->attributes['road_tax_exp_at'] = null;
+        }
+    }
+
 
     public function setRegNoAttribute($value)
     {
