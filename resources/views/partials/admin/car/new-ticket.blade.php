@@ -181,7 +181,7 @@
                 </div>    
 
                     <div class="modal-footer">
-                        <button type="button" ng-click="save()" class="btn btn-primary" data-dismiss="modal">Save
+                        <button type="button" ng-click="save()" class="btn btn-primary">Save
                         </button>
                         <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">
                             Cancel
@@ -190,6 +190,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </script>
 

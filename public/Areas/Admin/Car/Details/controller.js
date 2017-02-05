@@ -251,7 +251,9 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
         init();
     }]);
 
-app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close', function ($scope, moment, data, overviewDataFactory, ticketDataFactory, close) {
+app.controller('ticketModalController',
+    ['$scope', '$element', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close',
+        function ($scope, $element, moment, data, overviewDataFactory, ticketDataFactory, close) {
 
     $scope.vm = {
         types: [],
@@ -267,6 +269,7 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
 
     };
     $scope.close = function (result) {
+
         close(result, 500); // close, but give 500ms for bootstrap to animate
     };
     $scope.formatDate = function (date) {
@@ -285,11 +288,9 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
 
     $scope.save = function () {
         if (!$scope.dirty.isNew) {
-            //console.log('update');
             update_ticket($scope.ticket);
         }
         else {
-            //console.log('save');
             save_ticket($scope.ticket);
         }
     };
@@ -304,15 +305,18 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
         console.log(data);
         ticketDataFactory.newTicket(data.car.id, data)
             .then(function (result) {
+                $element.modal('hide');
                 $scope.close(result.data);
+                alert('Recorded');
             });
     };
     var update_ticket = function (data) {
         data._token = $scope.vm.token;
         ticketDataFactory.updateTicket(data.car.id, data)
             .then(function (result) {
-                console.log(result);
-                alert()
+                $element.modal('hide');
+                $scope.close(result.data);
+                alert("Updated");
             });
     };
 

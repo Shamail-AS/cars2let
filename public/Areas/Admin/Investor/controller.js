@@ -47,11 +47,7 @@ app.controller('investorController',
             };
             $scope.addprice = function(selectedcar) {
                 console.log(selectedcar.price);
-<<<<<<< HEAD
 
-                //  $('#rate').val(selectedcar.price);
-=======
->>>>>>> 1a28d18b056acdb1f3eee2a1c7afde4cbc136282
             };
             $scope.openPayments = function (contract) {
                 ModalService.showModal({
