@@ -67,7 +67,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="payment in vm.contract.payments | orderBy : '-id'">
+                        <tr ng-if="vm.contract.payments.length > 0"
+                            ng-repeat="payment in vm.contract.payments | orderBy:'-id' track by $index ">
                             <td>@{{ payment.id }}</td>
                             <td>@{{ formatDate(payment.value_dt) }}</td>
                             <td>@{{ payment.amount }}</td>
@@ -77,8 +78,8 @@
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" ng-click="close()" class="btn btn-default" data-dismiss="modal">
-                            Done
+                        <button type="button" ng-click="save()" class="btn btn-primary">
+                            Save
                         </button>
                     </div>
                 </div>

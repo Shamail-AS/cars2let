@@ -17,7 +17,7 @@ class PaymentController extends Controller
         if (!isset($contract))
             return response("Contract not found");
         else {
-            return $contract->payments()->with('authorizedBy')->get();
+            return $contract->payments()->with('authorizedBy')->orderBy('id', 'desc')->get();
         }
 
     }
