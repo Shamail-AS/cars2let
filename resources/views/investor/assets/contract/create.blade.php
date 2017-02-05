@@ -91,7 +91,7 @@
 
                     <div class="form-group">
                         <label>Per week rate (£)</label>
-                        <input class="form-control" type="number" name="rate" id="rate" value="{{old('rate')}}">
+                        <input ng-model="dirty.contract.rate" class="form-control" id="rate" placeholder="20" name="rate">
                     </div>
 
                     <div class="form-group">

@@ -574,6 +574,7 @@ app.factory('cameraDataModelFactory', function (moment, partOrderDataModelFactor
         camera.supplier_id = camera.supplier.id;
         var data = _.cloneDeep(camera);
         delete(data.supplier);
+        delete(data.loading);
         return data;
     };
 
@@ -612,6 +613,7 @@ app.factory('trackerDataModelFactory', function (moment, partOrderDataModelFacto
         tracker.supplier_id = tracker.supplier.id;
         var data = _.cloneDeep(tracker);
         delete(data.supplier);
+        delete(data.loading);
         return data;
     };
     factory.withExtras = function (tracker) {
@@ -655,6 +657,7 @@ app.factory('simDataModelFactory', function (moment, partOrderDataModelFactory, 
         sim.supplier_id = sim.supplier.id;
         var data = _.cloneDeep(sim);
         delete(data.supplier);
+        delete(data.loading);
         return data;
     };
     factory.withExtras = function (sim) {
