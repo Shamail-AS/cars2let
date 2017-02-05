@@ -254,7 +254,7 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
 app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close', function ($scope, moment, data, overviewDataFactory, ticketDataFactory, close) {
 
     $scope.vm = {
-        causes: [],
+        types: [],
         statuses: [],
         token: data.token
     };
@@ -301,6 +301,7 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
 
     var save_ticket = function (data) {
         data._token = $scope.vm.token;
+        console.log(data);
         ticketDataFactory.newTicket(data.car.id, data)
             .then(function (result) {
                 $scope.close(result.data);
@@ -311,23 +312,28 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
         ticketDataFactory.updateTicket(data.car.id, data)
             .then(function (result) {
                 console.log(result);
+                alert()
             });
     };
 
-    var load_causes = function () {
-        $scope.vm.causes.push('pco');
-        $scope.vm.causes.push('lsp');
-        $scope.vm.causes.push('ffd');
+    var load_types = function () {
+        $scope.vm.types.push('First Notice');
+        $scope.vm.types.push('Second Notice');
+        $scope.vm.types.push('Acceptance');
+        $scope.vm.types.push('Rejection');
+        $scope.vm.types.push('Enforcement');
     };
 
     var load_statuses = function () {
-        $scope.vm.statuses.push('new');
-        $scope.vm.statuses.push('appealing');
-        $scope.vm.statuses.push('closed');
+        $scope.vm.statuses.push('PaidC2L');
+        $scope.vm.statuses.push('TA');
+        $scope.vm.statuses.push('TP');
+        $scope.vm.statuses.push('TR');
+        $scope.vm.statuses.push('U');
     };
 
     var init = function () {
-        load_causes();
+        load_types();
         load_statuses();
         if (data.ticket) {
             $scope.ticket = data.ticket;

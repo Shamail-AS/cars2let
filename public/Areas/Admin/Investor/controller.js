@@ -49,7 +49,7 @@ app.controller('investorController',
             $scope.addprice = function(selectedcar) {
                 console.log(selectedcar.price);
 
-                //$('#rate').val(selectedcar.price);
+                //  $('#rate').val(selectedcar.price);
             };
             $scope.openPayments = function (contract) {
                 ModalService.showModal({

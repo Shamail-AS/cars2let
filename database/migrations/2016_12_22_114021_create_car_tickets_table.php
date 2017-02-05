@@ -14,17 +14,26 @@ class CreateCarTicketsTable extends Migration
     {
         Schema::create('car_tickets', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('type')->default('pcn'); // PCN, FPN, Other
             $table->string('ticket_num');
-            $table->string('cause'); // local council, dart charge, red route, congestion charge, low emission
             $table->integer('car_id');
+            $table->date('latest_due_date')->nullable();
+            $table->string('status')->nullable(); // PaidC2L,TA,TA,TP,TR,TP,U
+            $table->date('actual_due_date')->nullable();
+            $table->dateTime('incident_dt')->nullable();
+            $table->date('date_of_notice')->nullable();
+            $table->string('type')->nullable(); // First Notice, Second Notice, acceptance, Rejection, enforcement
+            $table->string('website')->nullable();
+            $table->date('paid_date')->nullable();
+            $table->decimal('amount')->nullable();
+            $table->string('payment_reference')->nullable();
+            $table->string('liability_of')->nullable();
             $table->integer('driver_id')->nullable();
-            $table->dateTime('incident_dt');
-            $table->date('issue_dt');
-            $table->decimal('amount');
-            $table->string('comments');
-            $table->string('status'); //new , appealing, closed
+            $table->string('case_handler')->nullable();
+            $table->string('payment_account')->nullable();
+            $table->string('authorized_by')->nullable();
+            $table->text('comments')->nullable();
+          
+
             $table->timestamps();
         });
     }

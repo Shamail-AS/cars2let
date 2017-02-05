@@ -4,7 +4,15 @@
     <link href="{{asset('css/admin/assets/layout.css')}}" rel="stylesheet">
     <link href="{{asset('css/admin/assets/tickets.css')}}" rel="stylesheet">
 @endsection
+@section('scripts')
+  <script type="text/javascript">
+    $(document).ready(function() {
+      
+      $('[data-toggle="popover"]').popover();
 
+    });
+  </script>
+@endsection
 @section('content')
     <div class="container">
         <div class="row">
@@ -46,10 +54,22 @@
                                 @if($file->type == 'image')
                                 <td>
                                     <img style="display: inline-block;"  class="img-responsive" src="{{$file->full_url}}" width="100"><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                    <button type="button" class="btn btn-danger pull-right" data-container="body" data-toggle="popover" data-html="true" data-placement="left" data-trigger="focus" title="Warning!"
+                                        data-content='<p>Are you sure you want to proceed?</p>
+                                            <a href="{{url('admin/tickets/'.$file->id.'/delete')}}" class="btn btn-danger">Yes</a>
+                                            <span class="btn btn-default">No</span>
+                                        </form>
+                                    '><i class="entypo-cancel"></i>Delete</button>
                                 </td>
                                 @else
                                     <td>
                                         <p style="display: inline-block;">{{$file->name}}</p><a href="{{$file->full_url}}" class="btn btn-primary pull-right" download="true">Download</a>
+                                        <button type="button" class="btn btn-danger pull-right" data-container="body" data-toggle="popover" data-html="true" data-placement="left" data-trigger="focus" title="Warning!"
+                                        data-content='<p>Are you sure you want to proceed?</p>
+                                            <a href="{{url('admin/tickets/'.$file->id.'/delete')}}" class="btn btn-danger">Yes</a>
+                                            <span class="btn btn-default">No</span>
+                                        </form>
+                                    '><i class="entypo-cancel"></i>Delete</button>
                                     </td>
                                 @endif
                             </tr> 

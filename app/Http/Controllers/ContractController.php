@@ -98,7 +98,7 @@ class ContractController extends Controller
     {
 
         $collection = Auth::user()->investor->contracts()
-            ->with('car', 'driver', 'handovers')
+            ->with('car', 'driver', 'handovers')->where('approved_by','<>',null)->orWhere('approved_by','>',0)
             ->orderBy('created_at', 'desc')->get();
         foreach ($collection as $contract) {
             //$contract->revenues = $contract->revenues;

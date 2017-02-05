@@ -362,27 +362,51 @@
 			<table class="table table-striped table-bordered">
 	            <thead>
 	            <tr>
-	                <td>Ticket Number</td>
-	                <td>Cause</td>
-	                <td>Incident Date</td>
-	                <td>Issue Date</td>
-	                <td>Amount</td>
-	                <td>Paid</td>
-	                <td>Comments</td>
-	                <td>Status</td>
-	            </tr>
-	            </thead>
-	            <tbody>
-	            <tr>
-	                <td>{{$ticket->ticket_num}}</td>
-	                <td>{{$ticket->cause}}</td>
-	                <td>{{$ticket->incident_dt}}</td>
-	                <td>{{$ticket->issue_dt}}</td>
-	                <td>{{$ticket->amount}}</td>
-	                <td>{{$ticket->paid}}</td>
-	                <td>{{$ticket->comments}}</td>
-	                <td>{{$ticket->status}}</td>
-	            </tr>
+                    <th>Ticket Num</th>
+                    {{--<th>Car</th>--}}
+                    <th>Driver</th>
+                    <th>Latest Due Date</th>
+                    <th>Status</th>
+                    <th>Actual Due Date</th>
+                    <th>Incident Date</th>
+                    <th>Date Of Notice</th>
+                    <th>Type</th>
+                    <th>Website</th>
+                    <th>Paid Date</th>
+                    <th>Amount</th>
+                    <th>Payment Reference</th>
+                    <th>Liability Of</th>
+                    <th>Case Handler</th>
+                    <th>Payment Account</th>
+                    <th>Authorized By</th>
+                    <th>Comments</th>
+                </tr>
+                </thead>
+                <tbody>
+	                <tr>
+	                    <td>{{ $ticket->ticket_num }}</td>
+	                    <td>{{ $ticket->latest_due_date}}</td>
+	                    <td>{{ $ticket->status }}</td>
+	                    <td>{{ $ticket->actual_due_date }}</td>
+
+	                    <td>{{ $ticket->incident_dt) }}</td>
+	                    <td>{{ $ticket->date_of_notice) }}</td>
+	                    <td>{{ $ticket->type }}</td>
+	                    <td>{{ $ticket->website }}</td>
+	                    <td>{{ $ticket->paid_date) }}</td>
+	                    <td>{{ $ticket->amount }}</td>
+	                    <td>{{ $ticket->payment_reference }}</td>
+	                    <td>{{ $ticket->liability_of }}</td>
+	                    <td>{{ $ticket->case_handler }}</td>
+	                    <td>{{ $ticket->payment_account }}</td>
+	                    <td>{{ $ticket->authorized_by }}</td>
+	                    <td>{{ $ticket->comments }}</td>
+	                    
+	                    <td>
+	                        <a class="btn btn-xs btn-info" href="{{url('admin/tickets')}}/@{{ ticket.id }}">Images</a>
+	                        <button class="btn btn-xs btn-primary" ng-click="editTicket(ticket)">Edit</button>
+	                    </td>
+	                </tr>
 	            </tbody>
             </table>
             @forelse($ticket->files as $file)

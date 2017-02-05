@@ -184,6 +184,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web','auth','admin']],function(
     //TICKETS
     Route::get('tickets/{ticket_id}', 'TicketController@show');
     Route::post('tickets/{ticket_id}/attach', 'TicketController@attach');
+    Route::get('tickets/{file_id}/delete','TicketController@deleteFiles');
     //TICKETS
     Route::get('deliveries/{delivery_id}', 'DeliveryController@imagesView');
     Route::post('deliveries/{delivery_id}/upload', 'DeliveryController@attach');

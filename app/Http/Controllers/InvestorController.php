@@ -126,7 +126,8 @@ class InvestorController extends Controller
     public function cars()
     {
         $cars = Auth::user()->investor->cars()->orderBy('created_at','desc')->get();
-        return view('investor.cars',compact('cars'));
+        $investors = \App\Investor::all();
+        return view('investor.cars',compact('cars','investors'));
     }
     public function contracts()
     {

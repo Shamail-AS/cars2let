@@ -102,12 +102,21 @@ class TicketController extends Controller
         // Creating a car ticket
         $car_ticket = new CarTicket();
         $car_ticket->ticket_num = $request->ticket_num;
-        $car_ticket->cause = $request->cause;
-        $car_ticket->incident_dt = $request->incident_dt;
-        $car_ticket->issue_dt = $request->issue_dt;
-        $car_ticket->amount = $request->amount;
-        $car_ticket->comments = $request->comments;
+        $car_ticket->latest_due_date = $request->latest_due_date;
         $car_ticket->status = $request->status;
+        $car_ticket->actual_due_date = $request->actual_due_date;
+        $car_ticket->incident_dt = $request->incident_dt;
+        $car_ticket->date_of_notice = $request->date_of_notice;
+        $car_ticket->type = $request->type;
+        $car_ticket->website = $request->website;
+        $car_ticket->paid_date = $request->paid_date;
+        $car_ticket->amount = $request->amount;
+        $car_ticket->payment_reference = $request->payment_reference;
+        $car_ticket->liability_of = $request->liability_of;
+        $car_ticket->case_handler = $request->case_handler;
+        $car_ticket->payment_account = $request->payment_account;
+        $car_ticket->authorized_by = $request->authorized_by;
+        $car_ticket->comments = $request->comments; 
         $car_ticket->save();
 
         $car->tickets()->save($car_ticket);
@@ -171,27 +180,26 @@ class TicketController extends Controller
         if (!($car_ticket = $car->tickets()->where('id', $ticket_id)->first()))
             // Show 404.
             return response("This ticket does'nt belong to this car", 404);
-        if($request->type)
-            $car_ticket->type = $request->type;
-        if($request->ticket_num)
-            $car_ticket->ticket_num = $request->ticket_num;
-        if($request->cause)
-            $car_ticket->cause = $request->cause;
-        if($request->driver_id){
-            $car_ticket->driver_id = $request->driver_id;
-        }
-        if($request->incident_dt)
-            $car_ticket->incident_dt = $request->incident_dt;
-        if($request->issue_dt)
-            $car_ticket->issue_dt = $request->issue_dt;
-        if($request->amount)
-            $car_ticket->amount = $request->amount;
-        if($request->paid)
-            $car_ticket->paid = $request->paid;
-        if($request->comments)
-            $car->comments = $request->comments;
-        if($request->status)
-            $car->status = $request->status;
+        if ($request->driver)
+            $driver = Driver::findOrFail($request->driver['id']);
+
+        $car_ticket->ticket_num = $request->ticket_num;
+        $car_ticket->latest_due_date = $request->latest_due_date;
+        $car_ticket->status = $request->status;
+        $car_ticket->actual_due_date = $request->actual_due_date;
+        $car_ticket->incident_dt = $request->incident_dt;
+        $car_ticket->date_of_notice = $request->date_of_notice;
+        $car_ticket->type = $request->type;
+        $car_ticket->website = $request->website;
+        $car_ticket->paid_date = $request->paid_date;
+        $car_ticket->amount = $request->amount;
+        $car_ticket->payment_reference = $request->payment_reference;
+        $car_ticket->liability_of = $request->liability_of;
+        $car_ticket->case_handler = $request->case_handler;
+        $car_ticket->payment_account = $request->payment_account;
+        $car_ticket->authorized_by = $request->authorized_by;
+        $car_ticket->comments = $request->comments; 
+        
         if($car_ticket->save())
             return response("Update successful");
         else
@@ -218,7 +226,10 @@ class TicketController extends Controller
     {
 
     }
-
+    public function deleteFiles($file_id){
+        SiteFile::destroy($file_id);
+        return back();
+    }
     public function attachmentUpload(Request $request,$car_id,$ticket_id){
         $ext = ['jpg','jpeg','png','JPG','gif'];
         $car = Car::findOrFail($car_id);

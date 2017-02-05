@@ -206,24 +206,25 @@
         <div class="col-md-2">
             <div id="right-side-bar" ng-controller="detailsController">
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id)}}">Notifications</a></li>
-                    {{--                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/contracts')}}">Contracts</a>--}}
+                    <li class="list-group-item">
+                        <a href="{{url('admin/car/'.$car->id)}}">Notifications</a>
                     </li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/tickets')}}">Tickets</a>
+                    <li class="list-group-item">
+                        <a href="{{url('admin/car/'.$car->id.'/view/tickets')}}">Tickets</a>
                     </li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/accidents')}}">Accidents</a>
+                    <li class="list-group-item">
+                        <a href="{{url('admin/car/'.$car->id.'/view/accidents')}}">Accidents</a>
                     </li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/services')}}">Service +
-                            Repairs</a>
+                    <li class="list-group-item">
+                        <a href="{{url('admin/car/'.$car->id.'/view/services')}}">Service +Repairs</a>
                     </li>
-                    <li class="list-group-item"><a
-                                href="{{url('admin/car/'.$car->id.'/view/deliveries')}}">Deliveries</a></li>
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/parts')}}">Tracker +
-                            Camera</a></li>{{-- 
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/view/revenues')}}">Revenues</a> --}}
+                    <li class="list-group-item">
+                        <a href="{{url('admin/car/'.$car->id.'/view/deliveries')}}">Deliveries</a></li>
+                    <li class="list-group-item">
+                        <a href="{{url('admin/car/'.$car->id.'/view/parts')}}">Tracker +Camera</a>
                     </li>
-                    {{-- Addding car picture upload --}}
-                    <li class="list-group-item"><a href="{{url('admin/car/'.$car->id.'/pictures')}}">Pictures</a>
+                    <li class="list-group-item">
+                        <a href="{{url('admin/car/'.$car->id.'/pictures')}}">Pictures</a>
                     </li>
                 </ul>
                 <div id="comments">
