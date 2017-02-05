@@ -678,7 +678,7 @@ app.factory('partOrderDataFactory', ['$http', function ($http) {
 
     partOrderDataFactory.updateOrder = function (id, data) {
         delete(data.loading);
-        
+
         return $http.put(URL_BASE + '/' + id, data);
     };
 
@@ -699,9 +699,11 @@ app.factory('partDeliveryDataFactory', ['$http', function ($http) {
     var partDeliveryDataFactory = {};
 
     partDeliveryDataFactory.newDelivery = function (order_id, data) {
+         delete(data.loading);
         return $http.post(URL_BASE + '/' + order_id, data);
     };
     partDeliveryDataFactory.updateDelivery = function (id, data) {
+         delete(data.loading);
         return $http.put(URL_BASE + '/' + id, data);
     };
 
