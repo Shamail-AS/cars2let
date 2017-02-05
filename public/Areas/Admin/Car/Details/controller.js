@@ -311,26 +311,17 @@ app.controller('ticketModalController',
             .then(function (result) {
                 $element.modal('hide');
                 $scope.close(result.data);
-<<<<<<< HEAD
-                alert('New Ticket Successfully Saved');
-=======
                 alert('Recorded');
->>>>>>> 348f474120056133d494a587933693be22a741fc
             });
     };
     var update_ticket = function (data) {
         data._token = $scope.vm.token;
         ticketDataFactory.updateTicket(data.car.id, data)
             .then(function (result) {
-<<<<<<< HEAD
-                console.log(result);
-                $scope.close(result.data);
-                alert('Updated Successfully');
-=======
+
                 $element.modal('hide');
                 $scope.close(result.data);
                 alert("Updated");
->>>>>>> 348f474120056133d494a587933693be22a741fc
             });
     };
 
@@ -592,6 +583,7 @@ app.controller('servicesController', ['$scope', 'moment', 'ModalService', 'servi
         };
 
         $scope.editOrder = function (order) {
+            console.log('new'+order);
             ModalService.showModal({
                 scope: $scope,
                 templateUrl: "new-service.html",
