@@ -4,6 +4,7 @@ namespace App;
 
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\SiteFile
@@ -21,7 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SiteFile extends Model
 {
+    use SoftDeletes;
     //
+    protected $dates = ['deleted_at'];
     protected $guarded = ['id'];
 
 

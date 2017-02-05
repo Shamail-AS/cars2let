@@ -271,7 +271,9 @@ app.factory('ticketDataFactory', ['$http', function ($http) {
     ticketDataFactory.updateTicket = function (car_id, data) {
         return $http.put(URL_BASE + '/' + car_id + '/tickets/' + data.id, data);
     };
-
+    ticketDataFactory.deleteTicket = function (data) {
+        return $http.delete(URL_BASE + '/' + data.car.id+ '/tickets/' + data.id, data);
+    };
     ticketDataFactory.inferDriver = function (car_id, unix_date) {
         return $http.get('/api/admin/tickets/infer_driver/' + car_id + '/' + unix_date);
     };
@@ -422,7 +424,8 @@ app.factory('deliveriesDataFactory', ['$http', function ($http) {
         return $http.put(URL_BASE + '/' + car_id + '/deliveries/' + delivery_id, data);
     };
     deliveriesDataFactory.deleteDelivery = function (data) {
-        return $http.delete(URL_BASE + '/' + data.car_id + '/deliveries/' + delivery_id, data);
+        console.log(data);
+        return $http.delete(URL_BASE + '/' + data.car_id + '/deliveries/' + data.id, data);
     };
     return deliveriesDataFactory;
 }]);
@@ -484,6 +487,9 @@ app.factory('accidentDataFactory', ['$http', function ($http) {
     };
     accidentDataFactory.updateAccident = function (car_id, data) {
         return $http.put(URL_BASE + '/' + car_id + '/accidents/' + data.id, data);
+    };
+    accidentDataFactory.deleteAccident = function (data) {
+        return $http.delete(URL_BASE + '/' + data.car_id + '/accidents/' + data.id, data);
     };
     return accidentDataFactory;
 

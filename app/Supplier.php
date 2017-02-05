@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Supplier
@@ -25,7 +26,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Supplier extends Model
 {
+    use SoftDeletes;
     //
+    protected $dates = ['deleted_at'];
     protected $guarded = ['id'];
 
     public function bank()

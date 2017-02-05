@@ -182,7 +182,16 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
             var dt = moment(date);
             return dt.format("DD MMM, YYYY");
         };
-
+        $scope.deleteTicket = function (ticket) {
+                delete_ticket(ticket);
+            };
+        var delete_ticket = function (ticket){
+                ticketDataFactory.deleteTicket(ticket)
+                    .then(function (result) {
+                        console.log(result);
+                        location.reload();
+                    });
+            }
         $scope.newTicket = function () {
             ModalService.showModal({
                 scope: $scope,
@@ -396,7 +405,16 @@ app.controller('accidentController', ['$scope', 'ModalService', 'accidentDataFac
                 });
             });
         };
-
+        $scope.deleteAccident = function (accident) {
+                delete_accident(accident);
+            };
+        var delete_accident = function (accident){
+                accidentDataFactory.deleteAccident(accident)
+                    .then(function (result) {
+                        console.log(result);
+                        location.reload();
+                    });
+            }
         $scope.editAccident = function (accident) {
             ModalService.showModal({
                 scope: $scope,
@@ -763,6 +781,16 @@ app.controller('deliveriesController',
                 return format_date(date);
             };
 
+            $scope.deleteDelivery = function (delivery) {
+                delete_delivery(delivery);
+            };
+            var delete_delivery = function (delivery){
+                deliveriesDataFactory.deleteDelivery(delivery)
+                    .then(function (result) {
+                        console.log(result);
+                        location.reload();
+                    });
+            }
             $scope.newDelivery = function () {
                 ModalService.showModal({
                     scope: $scope,

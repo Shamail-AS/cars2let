@@ -219,7 +219,7 @@ class TicketController extends Controller
             // Show 404.
             return response("This ticket does'nt belong to this car", 404);
         $car_ticket->delete();
-        return $car_ticket->trashed();
+        return response('Deleted');
     }
 
     public function attach(Request $request)

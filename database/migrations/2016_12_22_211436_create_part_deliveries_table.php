@@ -22,6 +22,7 @@ class CreatePartDeliveriesTable extends Migration
             $table->string('comments');
             $table->string('location');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

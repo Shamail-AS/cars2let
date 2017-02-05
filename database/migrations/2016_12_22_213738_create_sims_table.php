@@ -20,6 +20,7 @@ class CreateSimsTable extends Migration
             $table->string('passcode');
             $table->integer('tracker_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

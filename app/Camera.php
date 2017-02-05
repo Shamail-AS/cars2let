@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Camera
@@ -22,9 +23,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Camera extends Model
 {
+    use SoftDeletes;
     //
     protected $guarded = ['id'];
-
+    protected $dates = ['deleted_at'];
     public function supplier()
     {
         return $this->belongsTo('App\Supplier');

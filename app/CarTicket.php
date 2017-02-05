@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\CarTicket
@@ -28,6 +29,9 @@ use Illuminate\Database\Eloquent\Model;
 class CarTicket extends Model
 {
     //
+    use SoftDeletes;
+    //
+    protected $dates = ['deleted_at'];
     protected $guarded = ['id'];
 
     public function files()

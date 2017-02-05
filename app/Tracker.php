@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * App\Tracker
  *
@@ -25,7 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tracker extends Model
 {
+    use SoftDeletes;
     //
+    protected $dates = ['deleted_at'];
     protected $guarded = ['id'];
 
     public function supplier()

@@ -346,7 +346,7 @@ Route::group(['prefix'=>'api'],function(){
                 Route::post('/', 'TicketController@store');
                 Route::get('/{ticket_id}', 'TicketController@api_get');
                 Route::put('/{ticket_id}', 'TicketController@update');
-                Route::delete('/{ticket_id}', 'TicketController@delete');
+                Route::delete('/{ticket_id}', 'TicketController@destroy');
                 Route::post('/{ticket_id}/attachment','TicketController@attachmentUpload');
                 Route::get('/{ticket_id}/pdf','TicketController@downloadTicketPdf');                
             });
@@ -356,7 +356,7 @@ Route::group(['prefix'=>'api'],function(){
                 Route::post('/', 'DeliveryController@store');
                 Route::get('/{delivery_id}', 'DeliveryController@show');
                 Route::put('/{delivery_id}', 'DeliveryController@update');
-                Route::delete('/{delivery_id}', 'DeliveryController@delete');
+                Route::delete('/{delivery_id}', 'DeliveryController@destroy');
             });
             Route::group(['prefix' => '{car_id}/suppliers'], function () {
                 Route::get('/', 'SupplierController@index');
@@ -385,7 +385,7 @@ Route::group(['prefix'=>'api'],function(){
                 Route::post('/', 'AccidentController@store');
                 Route::get('/{accident_id}', 'AccidentController@show');
                 Route::put('/{accident_id}', 'AccidentController@update');
-                Route::delete('/{accident_id}', 'AccidentController@delete');
+                Route::delete('/{accident_id}', 'AccidentController@destroy');
                 Route::post('/{accident_id}/attachment','AccidentController@attachmentUpload');
                 Route::get('/{accident_id}/pdf','AccidentController@downloadAccidentPdf');                
                 

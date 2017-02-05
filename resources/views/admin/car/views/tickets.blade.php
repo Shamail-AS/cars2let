@@ -56,6 +56,7 @@
                     <td>
                         <a class="btn btn-xs btn-info" href="{{url('admin/tickets')}}/@{{ ticket.id }}">Images</a>
                         <button class="btn btn-xs btn-primary" ng-click="editTicket(ticket)">Edit</button>
+                        <button class="btn btn-xs btn-danger" ng-click="deleteTicket(ticket)">Delete</button>
                     </td>
                 </tr>
                 </tbody>

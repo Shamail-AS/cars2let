@@ -28,6 +28,7 @@ class CreateDeliveriesTable extends Migration
             $table->string('location');
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
