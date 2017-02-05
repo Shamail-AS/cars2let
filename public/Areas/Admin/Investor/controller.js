@@ -42,14 +42,11 @@ app.controller('investorController',
                     modal.element.modal();
                     modal.close.then(function (result) {
                         console.log(result);
-                        contract.payments.push(result);
                     });
                 });
             };
             $scope.addprice = function(selectedcar) {
                 console.log(selectedcar.price);
-
-                //$('#rate').val(selectedcar.price);
             };
             $scope.openPayments = function (contract) {
                 ModalService.showModal({
@@ -61,9 +58,11 @@ app.controller('investorController',
                 }).then(function (modal) {
                     modal.element.modal();
                     modal.close.then(function (result) {
-                        console.log(result);
                         if (result) {
-                            _.concat(contract.payments, result);
+                            contract.payments = _.concat(contract.payments, result);
+                            contract.total_payments += _.sumBy(result, function (payment) {
+                                return parseFloat(payment.amount);
+                            });
                         }
                     });
                 });

@@ -447,6 +447,7 @@ app.controller('accidentModalController',
             $scope.dirty = {};
 
             $scope.close = function (result) {
+                $element.modal('hide');
                 close(result, 500); // close, but give 500ms for bootstrap to animate
             };
             $scope.formatDate = function (date) {
@@ -488,7 +489,7 @@ app.controller('accidentModalController',
                 var data = accidentDataModelFactory.withoutExtras(accident);
                 accidentDataFactory.newCarAccident(id, data)
                     .then(function (result) {
-                        //$element.modal('hide');
+
                         $scope.close(result.data);
                     }, function (error) {
                         alert('There was an error in processing your request');
@@ -498,7 +499,6 @@ app.controller('accidentModalController',
                 var data = accidentDataModelFactory.withoutExtras(accident);
                 accidentDataFactory.updateAccident(id, data)
                     .then(function (result) {
-                        $element.modal('hide');
                         $scope.close('updated');
                     }, function (error) {
                          alert('There was an error in processing your request');
