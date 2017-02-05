@@ -251,7 +251,10 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
         init();
     }]);
 
-app.controller('ticketModalController', ['$scope','$element', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close', function ($scope,$element ,moment, data, overviewDataFactory, ticketDataFactory, close) {
+
+app.controller('ticketModalController',
+    ['$scope', '$element', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close',
+        function ($scope, $element, moment, data, overviewDataFactory, ticketDataFactory, close) {
 
     $scope.vm = {
         types: [],
@@ -267,7 +270,10 @@ app.controller('ticketModalController', ['$scope','$element', 'moment', 'data', 
 
     };
     $scope.close = function (result) {
+
         $element.modal('hide');
+
+
         close(result, 500); // close, but give 500ms for bootstrap to animate
     };
     $scope.formatDate = function (date) {
@@ -286,11 +292,9 @@ app.controller('ticketModalController', ['$scope','$element', 'moment', 'data', 
 
     $scope.save = function () {
         if (!$scope.dirty.isNew) {
-            //console.log('update');
             update_ticket($scope.ticket);
         }
         else {
-            //console.log('save');
             save_ticket($scope.ticket);
         }
     };
@@ -305,17 +309,28 @@ app.controller('ticketModalController', ['$scope','$element', 'moment', 'data', 
         console.log(data);
         ticketDataFactory.newTicket(data.car.id, data)
             .then(function (result) {
+                $element.modal('hide');
                 $scope.close(result.data);
+<<<<<<< HEAD
                 alert('New Ticket Successfully Saved');
+=======
+                alert('Recorded');
+>>>>>>> 348f474120056133d494a587933693be22a741fc
             });
     };
     var update_ticket = function (data) {
         data._token = $scope.vm.token;
         ticketDataFactory.updateTicket(data.car.id, data)
             .then(function (result) {
+<<<<<<< HEAD
                 console.log(result);
                 $scope.close(result.data);
                 alert('Updated Successfully');
+=======
+                $element.modal('hide');
+                $scope.close(result.data);
+                alert("Updated");
+>>>>>>> 348f474120056133d494a587933693be22a741fc
             });
     };
 
