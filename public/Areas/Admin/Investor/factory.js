@@ -170,6 +170,7 @@ app.factory('contractDataModelFactory', ['moment', function (moment) {
         contract.total_payments = _.sumBy(contract.payments, function (payment) {
             return parseFloat(payment.amount);
         });
+        contract.rec_deposit = parseFloat(contract.rec_deposit);
         return contract;
     };
 

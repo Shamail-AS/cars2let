@@ -138,11 +138,12 @@ app.controller('contractFilterModalController',
         }]);
 
 app.controller('contractPaymentsModalController',
-    ['$scope', 'paymentDataFactory', 'data', 'close',
-        function ($scope, paymentDataFactory, data, close) {
+    ['$scope', '$element', 'paymentDataFactory', 'data', 'close',
+        function ($scope, $element, paymentDataFactory, data, close) {
 
             $scope.close = function (result) {
                 var new_payments = _.filter($scope.vm.contract.payments, ['isNew', true]);
+                $element.modal('hide');
                 //send back new payments to append to the contract's payment collection
                 // send back empty collection is new_payments is null or undefined
                 close(new_payments || [], 500); // close, but give 500ms for bootstrap to animate
@@ -150,6 +151,9 @@ app.controller('contractPaymentsModalController',
             $scope.dirty = {};
             $scope.vm = {
                 contract: data
+            };
+            $scope.save = function () {
+                $scope.close();
             };
             $scope.formatDate = function (date) {
                 if (!date) return "-";
@@ -168,8 +172,8 @@ app.controller('contractPaymentsModalController',
                     .then(function (resp) {
                         console.log(resp.data);
                         resp.data.isNew = true;
-                        $scope.close(resp.data);
-                        //$scope.vm.contract.payments.push(resp.data);
+                        //$scope.close(resp.data);
+                        $scope.vm.contract.payments.push(resp.data);
                     });
             };
 

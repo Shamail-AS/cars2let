@@ -77,8 +77,8 @@
                         </tbody>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" ng-click="close()" class="btn btn-default" data-dismiss="modal">
-                            Done
+                        <button type="button" ng-click="save()" class="btn btn-primary">
+                            Save
                         </button>
                     </div>
                 </div>
