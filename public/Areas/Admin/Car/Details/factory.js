@@ -504,17 +504,6 @@ app.factory('accidentDataModelFactory', ['moment', function (moment) {
     };
     accidentDataModelFactory.withExtras = function (accident) {
         var m_date = moment(accident.incident_at);
-        // m_date.hours = accident.incident_time.hour();
-        // m_date.minutes = accident.incident_time.minutes();
-        // var comb_date = moment(m_date);
-        //
-        // console.log(comb_date);
-        //
-        // var year = m_date.year();
-        // var month = m_date.month();
-        // var date = m_date.date();
-        // var hour = m_date.hour();
-        // var minute = m_date.minute();
         accident.incident_at = m_date.toDate();
         accident.incident_time = m_date.toDate();
         accident.detailUrl = '/api/admin/cars/' + accident.car.id + '/accidents/' + accident.id;
@@ -531,16 +520,6 @@ app.factory('accidentDataModelFactory', ['moment', function (moment) {
         m_date.hours = m_time.hour();
         m_date.minutes = m_time.minutes();
         var comb_date = moment(m_date);
-
-        // var m_incident = moment(accident.incident_at);
-        // var m_time = moment(accident.incident_time);
-        // var year = m_incident.year();
-        // var month = m_incident.month();
-        // var date = m_incident.date();
-        // var hour = m_time.hour();
-        // var minute = m_time.minute();
-
-        // var final_date = moment([year, month, date, hour, minute]);
 
         console.log(comb_date);
         accident.incident_at = comb_date.toDate();
@@ -683,16 +662,23 @@ app.factory('partOrderDataFactory', ['$http', function ($http) {
         return $http.get('/api/admin/suppliers/all');
     };
     partOrderDataFactory.orderCamera = function (id, data) {
+        delete(data.loading);
         return $http.post(URL_BASE + '/camera/' + id, data);
     };
     partOrderDataFactory.orderTracker = function (id, data) {
+        delete(data.loading);
+        
         return $http.post(URL_BASE + '/tracker/' + id, data);
     };
     partOrderDataFactory.orderSim = function (id, data) {
+        delete(data.loading);
+        
         return $http.post(URL_BASE + '/sim/' + id, data);
     };
 
     partOrderDataFactory.updateOrder = function (id, data) {
+        delete(data.loading);
+        
         return $http.put(URL_BASE + '/' + id, data);
     };
 

@@ -21,6 +21,7 @@ class CreateCamerasTable extends Migration
             $table->string('status'); // ordered, delivered, fitted, faulty, removed, deactivated
             $table->string('comments');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
