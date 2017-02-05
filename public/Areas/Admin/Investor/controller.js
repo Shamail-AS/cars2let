@@ -164,6 +164,13 @@ app.controller('investorController',
 
             };
 
+            var delete_driver = function(driver){
+                driverDataFactory.deleteDriver(driver.id)
+                    .then(function (result) {
+                        console.log(result);
+                        location.reload();
+                    });
+            }
             //INVESTOR
             $scope.updateInvestor = function (investor) {
                 investor.edit_mode = false;

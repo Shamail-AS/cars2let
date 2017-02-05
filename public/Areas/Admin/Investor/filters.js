@@ -43,7 +43,8 @@ app.filter('newContractFilter', function (moment) {
             var act_start = moment(item.act_start_dt);
             var act_end = moment(item.act_end_dt);
             var car = item.car.reg_no.toUpperCase();
-            var driver = item.driver.name.toLowerCase();
+            if(item.driver) var driver = item.driver.name.toLowerCase();
+            else var driver = null;
             var status = item.x_status.key.toLowerCase();
 
             var filtrate = true;
@@ -69,16 +70,20 @@ app.filter("driverFilter", function () {
 
         var returnCollection = [];
         for (var i = 0; i < items.length; i++) {
-            if(items[i].name) var _name = items[i].name.toLowerCase();
-            else var _name = null;
-            if(items[i].license_no) var _license = items[i].license_no.toLowerCase();
-            else var _licence = null;
-            if(items[i].pco_license_no) var _pco = items[i].pco_license_no.toLowerCase();
-            else var _pco = null;
-            if(items[i].email) var _email = items[i].email.toLowerCase();
-            else var _email = null;
-            if(items[i].phone) var _phone = items[i].phone.toLowerCase();
-            else var _phone = null;
+            if(items[i]){
+                if(items[i].name) var _name = items[i].name.toLowerCase();
+                else var _name = null;
+                if(items[i].license_no) var _license = items[i].license_no.toLowerCase();
+                else var _licence = null;
+                if(items[i].pco_license_no) var _pco = items[i].pco_license_no.toLowerCase();
+                else var _pco = null;
+                if(items[i].email) var _email = items[i].email.toLowerCase();
+                else var _email = null;
+                if(items[i].phone) var _phone = items[i].phone.toLowerCase();
+                else var _phone = null;
+            }
+            else
+                continue;
             if (_name.includes(text)
                 || _license.includes(text)
                 || _email.includes(text)
