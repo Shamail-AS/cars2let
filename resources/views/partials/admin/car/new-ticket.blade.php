@@ -4,7 +4,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal"
+                    <button type="button" class="close"  data-dismiss="modal"
                             aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Create new Ticket</h4>
                 </div>
@@ -181,9 +181,9 @@
                 </div>    
 
                     <div class="modal-footer">
-                        <button type="button" ng-click="save()" class="btn btn-primary" data-dismiss="modal">Save
+                        <button type="button" ng-click="save()" class="btn btn-primary">Save
                         </button>
-                        <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
                             Cancel
                         </button>
                     </div>

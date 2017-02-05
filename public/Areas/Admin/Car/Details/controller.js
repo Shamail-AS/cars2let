@@ -251,7 +251,7 @@ app.controller('ticketsController', ['$scope', 'moment', 'ModalService', 'ticket
         init();
     }]);
 
-app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close', function ($scope, moment, data, overviewDataFactory, ticketDataFactory, close) {
+app.controller('ticketModalController', ['$scope','$element', 'moment', 'data', 'overviewDataFactory', 'ticketDataFactory', 'close', function ($scope,$element ,moment, data, overviewDataFactory, ticketDataFactory, close) {
 
     $scope.vm = {
         types: [],
@@ -267,6 +267,7 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
 
     };
     $scope.close = function (result) {
+        $element.modal('hide');
         close(result, 500); // close, but give 500ms for bootstrap to animate
     };
     $scope.formatDate = function (date) {
@@ -305,6 +306,7 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
         ticketDataFactory.newTicket(data.car.id, data)
             .then(function (result) {
                 $scope.close(result.data);
+                alert('New Ticket Successfully Saved');
             });
     };
     var update_ticket = function (data) {
@@ -312,7 +314,8 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
         ticketDataFactory.updateTicket(data.car.id, data)
             .then(function (result) {
                 console.log(result);
-                alert()
+                $scope.close(result.data);
+                alert('Updated Successfully');
             });
     };
 
@@ -339,6 +342,8 @@ app.controller('ticketModalController', ['$scope', 'moment', 'data', 'overviewDa
             $scope.ticket = data.ticket;
             $scope.dirty.isNew = false;
             $scope.ticket.incident_dt = moment(data.ticket.incident_dt).toDate();
+            $scope.ticket.latest_due_date = moment(data.ticket.latest_due_date).toDate();
+            $scope.ticket.latest_due_date = moment(data.ticket.latest_due_date).toDate();
             $scope.ticket.issue_dt = moment(data.ticket.issue_dt).toDate();
             return;
         }
