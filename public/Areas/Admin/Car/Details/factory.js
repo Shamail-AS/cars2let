@@ -144,25 +144,7 @@ app.factory('overviewDataModelFactory', ['moment', function (moment) {
         });
         console.log(displayed);
         return displayed;
-        //var regulars = notis.regular;
-        //var displayed = [];
-        //
-        //var pco_exp_m = moment(regulars.pco_exp);
-        //var contract_end_m = moment(regulars.contract_finish);
-        //var mot_due_m = moment(regulars.mot_due);
-        //var warranty_exp_m = moment(regulars.warranty_exp);
-        //var roadside_exp_m = moment(regulars.roadside_exp);
-        //var road_tax_due_m = moment(regulars.road_tax_due);
-        //var now = moment();
-        //
-        //buildNotification(pco_exp_m,now,'PCO expiry: ','Please call DVLA to renew the licence. You will need your car details',displayed);
-        //buildNotification(contract_end_m,now,'Current contract expiry: ','The car will be marked OFF ROAD then',displayed);
-        //buildNotification(mot_due_m,now,'MOT due: ','Call your garage to book MOT checkup.',displayed);
-        //buildNotification(warranty_exp_m,now,'Warranty expiry: ','No action required, this will disappear when warranty expires',displayed);
-        //buildNotification(roadside_exp_m,now,'Road side assistance expiry: ','Please renew the agreement with the provider',displayed);
-        //buildNotification(road_tax_due_m,now,'Road tax payment due: ','Please ensure timely payment and update the due date',displayed);
-        //
-        //return displayed;
+        
 
 
     };

@@ -349,7 +349,7 @@ app.controller('ticketModalController',
             $scope.dirty.isNew = false;
             $scope.ticket.incident_dt = moment(data.ticket.incident_dt).toDate();
             $scope.ticket.latest_due_date = moment(data.ticket.latest_due_date).toDate();
-            $scope.ticket.latest_due_date = moment(data.ticket.latest_due_date).toDate();
+            $scope.ticket.actual_due_date = moment(data.ticket.actual_due_date).toDate();
             $scope.ticket.issue_dt = moment(data.ticket.issue_dt).toDate();
             return;
         }
@@ -560,7 +560,16 @@ app.controller('servicesController', ['$scope', 'moment', 'ModalService', 'servi
             var dt = moment(date);
             return dt.format("DD MMM, YYYY");
         };
-
+        $scope.deleteOrder = function (order) {
+                delete_order(order);
+            };
+        var delete_order = function (order){
+                servicesDataFactory.deleteOrder(order)
+                    .then(function (result) {
+                        console.log(result);
+                        location.reload();
+                    });
+            }
         $scope.newOrder = function () {
             ModalService.showModal({
                 scope: $scope,
@@ -581,9 +590,14 @@ app.controller('servicesController', ['$scope', 'moment', 'ModalService', 'servi
                 });
             });
         };
+        
 
         $scope.editOrder = function (order) {
-            console.log('new'+order);
+            console.log(order);
+            console.log(order.deliveries[0]);
+            order.delivery = order.deliveries[0];
+            order.delivery.scheduled_at = moment(order.delivery.scheduled_at).toDate();
+
             ModalService.showModal({
                 scope: $scope,
                 templateUrl: "new-service.html",
@@ -666,6 +680,9 @@ app.controller('serviceModalController',
                 }
             };
 
+            
+            
+
             var format_date = function (date) {
                 var dt = moment(date);
                 return dt.format("MMM DD, YYYY");
@@ -689,7 +706,6 @@ app.controller('serviceModalController',
                         console.log(result);
                     });
             };
-
             var load_types = function () {
                 $scope.vm.types.push('PCO');
                 $scope.vm.types.push('MOT');

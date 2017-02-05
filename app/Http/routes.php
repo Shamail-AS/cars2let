@@ -337,7 +337,7 @@ Route::group(['prefix'=>'api'],function(){
                 Route::post('/', 'ServiceOrderController@store');
                 Route::get('/{service_order_id}', 'ServiceOrderController@show');
                 Route::put('/{service_order_id}', 'ServiceOrderController@update');
-                Route::delete('/{service_order_id}', 'ServiceOrderController@delete');
+                Route::delete('/{service_order_id}', 'ServiceOrderController@destroy');
             });
 
             // Route for the tickets

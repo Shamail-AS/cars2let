@@ -192,7 +192,7 @@ class ServiceOrderController extends Controller
     public function destroy($car_id,$service_order_id)
     {
         $car = Car::findOrFail($car_id);
-        if (!($car_service_order = $car->order()->where('id', $service_order_id)->first()))
+        if (!($car_service_order = $car->serviceOrders()->where('id', $service_order_id)->first()))
             // Show 404.
             return response("This Service does'nt belong to this car", 404);
         $car_service_order->delete();    
