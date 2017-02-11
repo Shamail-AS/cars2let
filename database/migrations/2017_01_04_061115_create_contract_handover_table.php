@@ -34,6 +34,6 @@ class CreateContractHandoverTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('contract_handovers');
     }
 }

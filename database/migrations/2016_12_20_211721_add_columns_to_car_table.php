@@ -63,6 +63,7 @@ class AddColumnsToCarTable extends Migration
                 'engine_size',
                 'first_reg_date',
                 'keeper',
+                'price',
                 'pco_licence',
                 'pco_expires_at',
                 'status',
